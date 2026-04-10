@@ -8,14 +8,38 @@ import InputField from '@/components/InputField';
 export default function SignIn() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   });
+  const [errorMSG, setErrorMSG] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Sign in data:', formData);
-    router.push('/dashboard');
+    setErrorMSG('');
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to sign in');
+      }
+
+      // Store token on successful signin
+      localStorage.setItem('token', data.token);
+      router.push('/dashboard');
+    } catch (err: any) {
+      setErrorMSG(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -27,13 +51,20 @@ export default function SignIn() {
           <p className="text-gray-600 mt-2">Welcome back! Please sign in to continue</p>
         </div>
 
+        {errorMSG && (
+          <div className="bg-red-50 text-red-600 p-3 rounded mb-4 text-sm text-center">
+            {errorMSG}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <InputField
-            label="Username"
-            id="username"
-            value={formData.username}
-            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-            placeholder="Enter your username"
+            label="Email Address"
+            type="email"
+            id="email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            placeholder="Enter your email"
             required
           />
 
@@ -49,9 +80,11 @@ export default function SignIn() {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            disabled={loading}
+            className={`w-full bg-blue-600 text-white py-3 rounded-lg font-semibold transition-colors
+              ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-blue-700'}`}
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 

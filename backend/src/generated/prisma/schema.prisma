@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Attempt {
+  id          String   @id
+  score       Int
+  focusLoss   Int
+  startedAt   DateTime
+  submittedAt DateTime
+  studentId   String
+  testId      String
+  User        User     @relation(fields: [studentId], references: [id])
+  Test        Test     @relation(fields: [testId], references: [id])
+}
+
+model Test {
+  id        String    @id
+  title     String
+  duration  Int
+  createdBy String
+  createdAt DateTime  @default(now())
+  Attempt   Attempt[]
+}
+
+model User {
+  id           String    @id
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         String    @default("student")
+  createdAt    DateTime  @default(now())
+  Attempt      Attempt[]
+}
