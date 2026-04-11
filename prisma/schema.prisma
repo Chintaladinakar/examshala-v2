@@ -5,36 +5,155 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-model Attempt {
-  id          String   @id
-  score       Int
-  focusLoss   Int
-  startedAt   DateTime
-  submittedAt DateTime
-  studentId   String
-  testId      String
-  User        User     @relation(fields: [studentId], references: [id])
-  Test        Test     @relation(fields: [testId], references: [id])
-}
-
-model Test {
-  id        String    @id
-  title     String
-  duration  Int
-  createdBy String
-  createdAt DateTime  @default(now())
-  Attempt   Attempt[]
 }
 
 model User {
-  id           String    @id
+  id           String    @id @default(uuid())
   name         String
   email        String    @unique
-  passwordHash String
+  passwordHash String?
   role         String    @default("student")
   createdAt    DateTime  @default(now())
-  Attempt      Attempt[]
+
+  // Relations
+  attempts         AssessmentAttempt[]
+  memberships      WorkspaceMembership[]
+  studentLinks     ParentStudentLink[] @relation("StudentRelation")
+  parentLinks      ParentStudentLink[] @relation("ParentRelation")
+  studentProfiles  StudentWorkspaceProfile[]
+}
+
+model Workspace {
+  id          String    @id @default(uuid())
+  name        String
+  createdAt   DateTime  @default(now())
+
+  memberships       WorkspaceMembership[]
+  studentProfiles   StudentWorkspaceProfile[]
+  assignments       AssessmentAssignment[]
+  notifications     Notification[]
+}
+
+model WorkspaceMembership {
+  id          String    @id @default(uuid())
+  userId      String
+  workspaceId String
+  role        String    @default("student") // "student", "tutor", "admin"
+  createdAt   DateTime  @default(now())
+
+  User        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, workspaceId])
+}
+
+model StudentWorkspaceProfile {
+  id          String    @id @default(uuid())
+  userId      String
+  workspaceId String
+  metadata    Json?
+
+  User        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, workspaceId])
+}
+
+model Test {
+  id           String    @id @default(uuid())
+  title        String
+  duration     Int
+  instructions String?
+  createdBy    String
+  createdAt    DateTime  @default(now())
+
+  assignments  AssessmentAssignment[]
+}
+
+model AssessmentAssignment {
+  id                 String    @id @default(uuid())
+  testId             String
+  workspaceId        String
+  assignedByType     String    // "tutor" | "parent" | "system"
+  assignedByUserId   String
+  assignedByName     String
+  assignedAt         DateTime  @default(now())
+  
+  // Instructions specific to this assignment
+  tutorInstructions  String?
+
+  scheduleWindowStart DateTime?
+  scheduleWindowEnd   DateTime?
+  
+  isReady            Boolean   @default(true)
+
+  Test               Test      @relation(fields: [testId], references: [id])
+  Workspace          Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  attempts           AssessmentAttempt[]
+}
+
+model AssessmentAttempt {
+  id           String    @id @default(uuid())
+  studentId    String
+  assignmentId String
+  focusLoss    Int       @default(0)
+  startedAt    DateTime  @default(now())
+  submittedAt  DateTime?
+  status       String    @default("in_progress") // "in_progress" | "submitted" | "evaluated"
+  
+  User         User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  Assignment   AssessmentAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  Result       AssessmentResult?
+}
+
+model AssessmentResult {
+  id           String    @id @default(uuid())
+  attemptId    String    @unique
+  score        Int
+  maxScore     Int
+  evaluatedAt  DateTime  @default(now())
+  feedback     String?
+
+  Attempt      AssessmentAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id          String    @id @default(uuid())
+  userId      String
+  workspaceId String?
+  type        String    // "exam_assigned" | "result_published" | "system_alert" | "parent_request"
+  title       String
+  message     String
+  isRead      Boolean   @default(false)
+  actionUrl   String?
+  createdAt   DateTime  @default(now())
+
+  Workspace   Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+model ParentStudentLink {
+  id                 String    @id @default(uuid())
+  studentId          String
+  parentUserId       String?
+  pendingParentEmail String?
+  relation           String    // "father", "mother", "guardian"
+  status             String    @default("pending") // "pending" | "active" | "removal_requested"
+  requestedBy        String    // "student" | "parent"
+  linkedAt           DateTime?
+  removalRequestedBy String?
+  approvalMetadata   Json?
+
+  Student            User      @relation("StudentRelation", fields: [studentId], references: [id], onDelete: Cascade)
+  Parent             User?     @relation("ParentRelation", fields: [parentUserId], references: [id])
+}
+
+model AuditLog {
+  id          String    @id @default(uuid())
+  userId      String?
+  action      String
+  entityType  String
+  entityId    String
+  details     Json?
+  createdAt   DateTime  @default(now())
 }

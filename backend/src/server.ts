@@ -5,6 +5,7 @@ import express from 'express';
 import cors from 'cors';
 import authRoutes from './routes/auth.routes';
 import adminRoutes from './routes/admin.routes';
+import studentRoutes from './routes/student.routes';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,6 +17,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/student', studentRoutes);
 
 // Health check
 app.get('/api/health', (_req, res) => {

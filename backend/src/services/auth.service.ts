@@ -61,7 +61,7 @@ export const signin = async ({ email, password }: SigninInput) => {
     throw { status: 401, code: 'INVALID_CREDENTIALS', message: 'Invalid email or password' };
   }
 
-  const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+  const isPasswordValid = await bcrypt.compare(password, user.passwordHash || "");
   if (!isPasswordValid) {
     throw { status: 401, code: 'INVALID_CREDENTIALS', message: 'Invalid email or password' };
   }

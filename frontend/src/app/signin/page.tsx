@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import InputField from '@/components/InputField';
+import { decodeJwtPayload, getDashboardPathForRole } from '@/lib/auth';
 
 export default function SignIn() {
   const router = useRouter();
@@ -32,9 +33,14 @@ export default function SignIn() {
         throw new Error(data.message || 'Failed to sign in');
       }
 
-      // Store token on successful signin
-      localStorage.setItem('token', data.token);
-      router.push('/dashboard');
+      // Store token securely as a browser cookie for middleware and server actions
+      document.cookie = `session_token=${data.data.token}; path=/; max-age=86400; SameSite=Lax`;
+      
+      // Determine correct landing pad
+      const decoded = decodeJwtPayload(data.data.token);
+      const destination = decoded?.role ? getDashboardPathForRole(decoded.role) : '/';
+      
+      router.push(destination);
     } catch (err: any) {
       setErrorMSG(err.message);
     } finally {
