@@ -29,6 +29,9 @@ export function getDashboardPathForRole(role: string): string {
       return '/principaldashboard';
     case 'parent':
       return '/parentdashboard';
+    case 'superadmin':
+    case 'admin':
+      return '/superadmin';
     default:
       return '/';
   }

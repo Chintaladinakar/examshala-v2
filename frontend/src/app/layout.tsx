@@ -1,19 +1,21 @@
-import type { Metadata } from 'next';
-import './globals.css';
+import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: 'Examshala - Smart Online Examination Platform',
-  description: 'Create, manage, and conduct online exams with ease',
+  title: "Examshala - Virtual Assessment Platform",
+  description: "Secure, reliable, and scalable online examination system.",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="antialiased">
+        {children}
+      </body>
     </html>
   );
 }

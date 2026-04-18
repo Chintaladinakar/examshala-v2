@@ -7,7 +7,8 @@ const PROTECTED_ROUTES = [
   '/tutordashboard',
   '/principaldashboard',
   '/parentdashboard',
-  '/dashboard'
+  '/dashboard',
+  '/superadmin'
 ];
 
 const AUTH_ROUTES = ['/signin', '/signup'];

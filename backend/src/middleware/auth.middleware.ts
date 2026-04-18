@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../lib/jwt';
+import prisma from '../lib/prisma';
 
 export interface AuthRequest extends Request {
   user?: {
@@ -8,7 +9,7 @@ export interface AuthRequest extends Request {
   };
 }
 
-export const protect = (req: AuthRequest, res: Response, next: NextFunction): void => {
+export const protect = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const authHeader = req.headers.authorization;
 
@@ -22,17 +23,28 @@ export const protect = (req: AuthRequest, res: Response, next: NextFunction): vo
     }
 
     const token = authHeader.split(' ')[1];
+    const decoded = verifyToken(token);
 
-    if (!token) {
-      res.status(401).json({
+    // Dynamic check: Verify user still exists and is active
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.userId },
+      select: { isActive: true }
+    });
+
+    if (!user) {
+      res.status(401).json({ success: false, code: 'USER_NOT_FOUND', message: 'User no longer exists.' });
+      return;
+    }
+
+    if (!user.isActive) {
+      res.status(403).json({
         success: false,
-        code: 'NO_TOKEN',
-        message: 'Access denied. No token provided.',
+        code: 'ACCOUNT_DISABLED',
+        message: 'Your account has been disabled. Please contact support.',
       });
       return;
     }
 
-    const decoded = verifyToken(token);
     req.user = decoded;
     next();
   } catch (error) {

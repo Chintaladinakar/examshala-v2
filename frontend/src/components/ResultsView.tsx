@@ -55,7 +55,8 @@ export default function ResultsView({ role, resultsData }: ResultsViewProps) {
 
   const filteredData = useMemo(() => {
     return data.filter(item => {
-      const matchesSearch = item.testName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      const title = item.testName || item.examTitle || '';
+      const matchesSearch = title.toLowerCase().includes(searchTerm.toLowerCase()) || 
                             (item.studentName?.toLowerCase().includes(searchTerm.toLowerCase()));
       const matchesStatus = statusFilter === 'all' || item.status === statusFilter;
       return matchesSearch && matchesStatus;
@@ -141,7 +142,7 @@ export default function ResultsView({ role, resultsData }: ResultsViewProps) {
                 </div>
                 
                 <h3 className="text-lg font-bold text-slate-800 mb-1 group-hover:text-indigo-600 transition-colors">
-                  {result.testName}
+                  {result.testName || result.examTitle}
                 </h3>
                 <p className="text-sm text-slate-500 mb-4 flex items-center gap-1.5">
                   <Calendar className="w-3.5 h-3.5" />
@@ -217,7 +218,7 @@ export default function ResultsView({ role, resultsData }: ResultsViewProps) {
                         </div>
                       </td>
                       <td className="py-4 px-6 whitespace-nowrap">
-                        <span className="text-slate-600 font-medium">{result.testName}</span>
+                        <span className="text-slate-600 font-medium">{result.testName || result.examTitle}</span>
                       </td>
                       <td className="py-4 px-6 whitespace-nowrap">
                         <div className="flex items-center gap-2">
