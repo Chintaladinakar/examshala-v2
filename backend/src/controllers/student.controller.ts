@@ -3,6 +3,8 @@ import { AuthRequest } from '../middleware/auth.middleware';
 import * as dashboardService from '../services/studentDashboard.service';
 import * as assignmentService from '../services/assignment.service';
 import * as parentLinkService from '../services/parentLink.service';
+import * as resultsService from '../services/results.service';
+import * as notificationsService from '../services/notifications.service';
 
 export const getDashboard = async (req: AuthRequest, res: Response) => {
   try {
@@ -72,5 +74,41 @@ export const removeParentLink = async (req: AuthRequest, res: Response) => {
     res.json({ success: true, data });
   } catch (error: any) {
     res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+export const getResults = async (req: AuthRequest, res: Response) => {
+  try {
+    const studentId = req.user!.userId;
+    const workspaceIdContext = req.headers['x-workspace-id'] as string | undefined;
+    const data = await resultsService.getStudentResults(studentId, workspaceIdContext);
+    res.json({ success: true, data });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const getNotifications = async (req: AuthRequest, res: Response) => {
+  try {
+    const studentId = req.user!.userId;
+    const workspaceIdContext = req.headers['x-workspace-id'] as string | undefined;
+    const data = await notificationsService.getStudentNotifications(studentId, workspaceIdContext);
+    res.json({ success: true, data });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const markNotificationsRead = async (req: AuthRequest, res: Response) => {
+  try {
+    const studentId = req.user!.userId;
+    const { ids } = req.body;
+    if (!ids || !Array.isArray(ids)) {
+      return res.status(400).json({ success: false, message: 'ids array is required' });
+    }
+    await notificationsService.markNotificationsRead(studentId, ids);
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };
