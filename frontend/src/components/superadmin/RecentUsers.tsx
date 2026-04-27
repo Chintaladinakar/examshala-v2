@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { User, Calendar } from 'lucide-react';
+import { Table } from './Table';
+import { TableRow, TableCell } from './TableRow';
 
 interface RecentUser {
   id: string;
@@ -16,44 +18,47 @@ interface RecentUsersProps {
 }
 
 export function RecentUsers({ users }: RecentUsersProps) {
+  const headers = ["User", "Joined"];
+
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden h-full flex flex-col">
-      <div className="p-5 border-b border-slate-100 flex items-center gap-2">
-        <User className="w-5 h-5 text-indigo-600" />
-        <h3 className="font-bold text-slate-800">Recent Users</h3>
+    <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
+      <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/30">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
+            <User className="w-5 h-5" />
+          </div>
+          <h3 className="font-black text-slate-900 tracking-tight">Recent Users</h3>
+        </div>
       </div>
-      <div className="flex-1">
+      
+      <Table headers={headers} className="border-none shadow-none rounded-none">
         {users.length > 0 ? (
-          <div className="divide-y divide-slate-50">
-            {users.map((user) => (
-              <div key={user.id} className="p-4 hover:bg-slate-50 transition-colors flex items-center justify-between group">
+          users.map((user) => (
+            <TableRow key={user.id}>
+              <TableCell>
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-sm">
-                    {user.name.charAt(0)}
+                  <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-[10px]">
+                    {user.name.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-800 group-hover:text-indigo-600 transition-colors">{user.name}</h4>
-                    <p className="text-xs text-slate-500">{user.email}</p>
+                    <div className="font-bold text-slate-800 text-sm">{user.name}</div>
+                    <div className="text-[10px] text-slate-400 font-medium">{user.role}</div>
                   </div>
                 </div>
-                <div className="text-right flex flex-col items-end gap-1">
-                  <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
-                    {user.role}
-                  </span>
-                  <div className="flex items-center gap-1 text-[10px] text-slate-400">
-                    <Calendar className="w-3 h-3" />
-                    {new Date(user.createdAt).toLocaleDateString()}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+              </TableCell>
+              <TableCell align="right" className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+              </TableCell>
+            </TableRow>
+          ))
         ) : (
-          <div className="p-8 text-center text-slate-400 text-sm">
-            No recent users found.
-          </div>
+          <TableRow>
+            <TableCell colSpan={2} className="py-12 text-center text-slate-400 font-medium">
+              No recent users found.
+            </TableCell>
+          </TableRow>
         )}
-      </div>
+      </Table>
     </div>
   );
 }

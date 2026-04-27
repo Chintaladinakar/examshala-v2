@@ -31,8 +31,8 @@ import prisma from './lib/prisma';
 // Start server
 const startServer = async () => {
   try {
-    // Verify DB connection
-    await prisma.$connect();
+    // Verify DB connection by running a real query
+    await prisma.$queryRawUnsafe('SELECT 1');
     console.log('✅ Database connected successfully');
 
     app.listen(PORT, () => {

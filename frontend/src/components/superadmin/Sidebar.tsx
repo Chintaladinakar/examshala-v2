@@ -3,17 +3,22 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Users, Building2, Settings } from 'lucide-react';
+import { LayoutDashboard, Users, Building2, Settings, Activity } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
   { href: '/superadmin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/superadmin/users', label: 'Users', icon: Users },
   { href: '/superadmin/workspaces', label: 'Workspaces', icon: Building2 },
+  { href: '/superadmin/results', label: 'Results', icon: Activity },
   { href: '/superadmin/settings', label: 'Settings', icon: Settings },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  platformName?: string;
+}
+
+export function Sidebar({ platformName = "Examshala" }: SidebarProps) {
   const pathname = usePathname();
 
   return (
@@ -23,9 +28,11 @@ export function Sidebar() {
         <div className="p-6 border-b border-slate-100 mb-4">
           <Link href="/" className="flex items-center gap-2 cursor-pointer">
             <div className="w-8 h-8 bg-indigo-700 rounded-lg flex items-center justify-center shadow-sm">
-              <span className="text-white font-bold text-xl leading-none">E</span>
+              <span className="text-white font-bold text-xl leading-none">
+                {platformName.charAt(0).toUpperCase()}
+              </span>
             </div>
-            <span className="text-xl font-bold tracking-tight text-slate-900">Examshala</span>
+            <span className="text-xl font-bold tracking-tight text-slate-900">{platformName}</span>
           </Link>
           <div className="mt-1 flex items-center gap-2">
             <span className="bg-indigo-100 text-indigo-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Super Admin</span>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import ResultsView from '@/components/ResultsView';
+import { ResultsTable } from '@/components/superadmin/ResultsTable';
 
 export default async function SuperAdminResultsPage() {
   const cookieStore = await cookies();
@@ -33,9 +33,7 @@ export default async function SuperAdminResultsPage() {
         <p className="text-slate-500">Global monitoring of all assessment attempts and student results.</p>
       </div>
 
-      <div className="bg-white/40 backdrop-blur-sm rounded-3xl border border-slate-200/60 p-1">
-        <ResultsView role="manager" resultsData={resultsData} />
-      </div>
+      <ResultsTable initialResults={resultsData} />
     </div>
   );
 }

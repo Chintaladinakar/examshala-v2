@@ -24,4 +24,8 @@ router.delete('/workspaces/:id', superadminController.deleteWorkspace);
 // Results Monitoring
 router.get('/results', superadminController.getAllResults);
 
+// Platform Settings
+router.get('/settings', superadminController.getPlatformSettings);
+router.patch('/settings', superadminController.updatePlatformSettings);
+
 export default router;

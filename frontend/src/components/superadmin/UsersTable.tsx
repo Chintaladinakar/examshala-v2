@@ -1,179 +1,230 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { Search, Filter, UserCog, ShieldAlert, ChevronDown, CheckCircle, XCircle } from 'lucide-react';
+import { ShieldAlert, CheckCircle, UserPlus, Building2, ShieldCheck, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  createdAt: string;
-  isActive: boolean;
-}
+import { SearchBar } from './SearchBar';
+import { FilterDropdown } from './FilterDropdown';
+import { Table } from './Table';
+import { TableRow, TableCell } from './TableRow';
+import { BulkAssignBar } from './BulkAssignBar';
+import { AssignUserModal } from './AssignUserModal';
+import { User, Workspace, WorkspaceRole } from '@/types/superadmin';
 
 interface UsersTableProps {
   initialUsers: User[];
+  workspaces: Workspace[];
   onToggleStatus: (userId: string, currentStatus: boolean) => Promise<void>;
-  onChangeRole: (userId: string, newRole: string) => Promise<void>;
+  onBulkAssign: (userIds: string[], workspaceId: string, role: WorkspaceRole) => Promise<void>;
 }
 
-export function UsersTable({ initialUsers, onToggleStatus, onChangeRole }: UsersTableProps) {
+export function UsersTable({ initialUsers, workspaces, onToggleStatus, onBulkAssign }: UsersTableProps) {
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
-  const [isUpdating, setIsUpdating] = useState<string | null>(null);
+  const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
+  const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
+  const [assigningUserId, setAssigningUserId] = useState<string | null>(null);
 
   const filteredUsers = useMemo(() => {
     return users.filter(user => {
       const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                             user.email.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesRole = roleFilter === 'all' || user.role === roleFilter;
+      const matchesRole = roleFilter === 'all' || user.globalRole === roleFilter;
       return matchesSearch && matchesRole;
     });
   }, [users, searchTerm, roleFilter]);
 
-  const handleStatusToggle = async (userId: string, currentStatus: boolean) => {
-    setIsUpdating(userId);
-    try {
-      await onToggleStatus(userId, currentStatus);
-      setUsers(prev => prev.map(u => u.id === userId ? { ...u, isActive: !currentStatus } : u));
-    } catch (error) {
-      console.error('Failed to update status', error);
-    } finally {
-      setIsUpdating(null);
+  const toggleSelectAll = () => {
+    if (selectedUserIds.length === filteredUsers.length) {
+      setSelectedUserIds([]);
+    } else {
+      setSelectedUserIds(filteredUsers.map(u => u.id));
     }
   };
 
-  const handleRoleChange = async (userId: string, newRole: string) => {
-    setIsUpdating(userId);
-    try {
-      await onChangeRole(userId, newRole);
-      setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u));
-    } catch (error) {
-      console.error('Failed to update role', error);
-    } finally {
-      setIsUpdating(null);
-    }
+  const toggleSelectUser = (id: string) => {
+    setSelectedUserIds(prev => 
+      prev.includes(id) ? prev.filter(uid => uid !== id) : [...prev, id]
+    );
   };
+
+  const handleBulkAssign = async (workspaceId: string, role: WorkspaceRole) => {
+    const idsToAssign = assigningUserId ? [assigningUserId] : selectedUserIds;
+    await onBulkAssign(idsToAssign, workspaceId, role);
+    
+    // Optimistic UI update (optional, but good for "frontend only" feel)
+    const workspace = workspaces.find(w => w.id === workspaceId);
+    if (workspace) {
+      setUsers(prev => prev.map(u => {
+        if (idsToAssign.includes(u.id)) {
+          const existing = u.workspaces.filter(ws => ws.workspaceId !== workspaceId);
+          return {
+            ...u,
+            workspaces: [...existing, { workspaceId, workspaceName: workspace.name, role }]
+          };
+        }
+        return u;
+      }));
+    }
+    
+    setSelectedUserIds([]);
+    setAssigningUserId(null);
+  };
+
+  const roleOptions = [
+    { label: 'All Users', value: 'all' },
+    { label: 'Super Admins', value: 'superadmin' },
+    { label: 'Regular Users', value: 'user' },
+  ];
+
+  const headers = [
+    <input type="checkbox" checked={selectedUserIds.length === filteredUsers.length && filteredUsers.length > 0} onChange={toggleSelectAll} className="rounded border-slate-300" />,
+    "User Details", 
+    "Workspaces & Roles", 
+    "Status", 
+    "Joined", 
+    "Actions"
+  ];
+
+  const selectedUserNames = users
+    .filter(u => (assigningUserId ? u.id === assigningUserId : selectedUserIds.includes(u.id)))
+    .map(u => u.name);
 
   return (
-    <div className="space-y-4">
-      {/* Filters */}
-      <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-sm rounded-2xl p-4 flex flex-col md:flex-row gap-4">
-        <div className="relative flex-1 group">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
-          <input
-            type="text"
-            placeholder="Search by name or email..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="relative">
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <select
-              value={roleFilter}
-              onChange={(e) => setRoleFilter(e.target.value)}
-              className="pl-9 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none appearance-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all cursor-pointer"
-            >
-              <option value="all">All Roles</option>
-              <option value="student">Students</option>
-              <option value="tutor">Tutors</option>
-              <option value="principal">Principals</option>
-              <option value="admin">Admins</option>
-              <option value="superadmin">Super Admins</option>
-            </select>
-          </div>
-        </div>
+    <div className="space-y-6">
+      <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+        <SearchBar 
+          value={searchTerm} 
+          onChange={setSearchTerm} 
+          placeholder="Search by name or email..." 
+        />
+        <FilterDropdown 
+          label="Global Role" 
+          options={roleOptions} 
+          value={roleFilter} 
+          onChange={setRoleFilter} 
+        />
       </div>
 
-      {/* Table */}
-      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-slate-50 border-b border-slate-200">
-                <th className="py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">User details</th>
-                <th className="py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Role</th>
-                <th className="py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                <th className="py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Joined Date</th>
-                <th className="py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {filteredUsers.map((user) => (
-                <tr key={user.id} className="hover:bg-slate-50/60 transition-colors group">
-                  <td className="py-4 px-6">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold">
-                        {user.name.charAt(0)}
-                      </div>
-                      <div>
-                        <div className="font-semibold text-slate-800">{user.name}</div>
-                        <div className="text-xs text-slate-500">{user.email}</div>
+      <Table headers={headers}>
+        {filteredUsers.map((user) => (
+          <TableRow key={user.id} className={cn(selectedUserIds.includes(user.id) && "bg-indigo-50/30")}>
+            <TableCell>
+              <input 
+                type="checkbox" 
+                checked={selectedUserIds.includes(user.id)} 
+                onChange={() => toggleSelectUser(user.id)}
+                className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+              />
+            </TableCell>
+            <TableCell>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-black text-xs border border-slate-200">
+                  {user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-900">{user.name}</span>
+                    {user.globalRole === 'superadmin' && (
+                       <span className="px-1.5 py-0.5 bg-indigo-600 text-white text-[8px] font-black uppercase tracking-tighter rounded-md">Super</span>
+                    )}
+                  </div>
+                  <div className="text-xs text-slate-500 font-medium">{user.email}</div>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="flex flex-wrap gap-1.5 max-w-xs">
+                {user.workspaces.length > 0 ? (
+                  user.workspaces.map((ws, i) => (
+                    <div key={i} className="group relative">
+                      <div className={cn(
+                        "flex items-center gap-1 px-2 py-0.5 rounded-lg border text-[10px] font-bold transition-all",
+                        ws.role === 'admin' ? "bg-slate-900 text-white border-slate-900" :
+                        ws.role === 'coadmin' ? "bg-indigo-50 text-indigo-700 border-indigo-100" :
+                        ws.role === 'principal' ? "bg-amber-50 text-amber-700 border-amber-100" :
+                        "bg-slate-50 text-slate-600 border-slate-100"
+                      )}>
+                        <span>{ws.workspaceName}</span>
+                        <span className="opacity-40 font-black">/</span>
+                        <span className="uppercase tracking-tighter">{ws.role}</span>
                       </div>
                     </div>
-                  </td>
-                  <td className="py-4 px-6">
-                    <select
-                      value={user.role}
-                      onChange={(e) => handleRoleChange(user.id, e.target.value)}
-                      disabled={isUpdating === user.id}
-                      className="px-3 py-1 bg-slate-50 border border-slate-100 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer disabled:opacity-50"
-                    >
-                      <option value="student">Student</option>
-                      <option value="tutor">Tutor</option>
-                      <option value="principal">Principal</option>
-                      <option value="admin">Admin</option>
-                      <option value="superadmin">Super Admin</option>
-                    </select>
-                  </td>
-                  <td className="py-4 px-6">
-                    <span className={cn(
-                      "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider",
-                      user.isActive 
-                        ? "bg-emerald-50 text-emerald-700 border border-emerald-100" 
-                        : "bg-rose-50 text-rose-700 border border-rose-100"
-                    )}>
-                      {user.isActive ? <CheckCircle className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
-                      {user.isActive ? 'Active' : 'Disabled'}
-                    </span>
-                  </td>
-                  <td className="py-4 px-6 text-sm text-slate-500 font-medium">
-                    {new Date(user.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="py-4 px-6 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                       <button
-                         onClick={() => handleStatusToggle(user.id, user.isActive)}
-                         disabled={isUpdating === user.id}
-                         className={cn(
-                           "p-2 rounded-lg transition-colors border",
-                           user.isActive 
-                            ? "text-rose-600 border-rose-100 hover:bg-rose-50" 
-                            : "text-emerald-600 border-emerald-100 hover:bg-emerald-50"
-                         )}
-                         title={user.isActive ? "Deactivate User" : "Activate User"}
-                       >
-                         {user.isActive ? <ShieldAlert className="w-4 h-4" /> : <CheckCircle className="w-4 h-4" />}
-                       </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {filteredUsers.length === 0 && (
-            <div className="p-12 text-center text-slate-400">
-               No users match your filters.
-            </div>
-          )}
+                  ))
+                ) : (
+                  <span className="text-[10px] text-slate-400 font-bold italic tracking-tight">No hubs assigned</span>
+                )}
+              </div>
+            </TableCell>
+            <TableCell>
+              <span className={cn(
+                "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest",
+                user.isActive 
+                  ? "bg-emerald-50 text-emerald-700 border border-emerald-100" 
+                  : "bg-rose-50 text-rose-700 border border-rose-100"
+              )}>
+                <span className={cn("w-1.5 h-1.5 rounded-full animate-pulse", user.isActive ? "bg-emerald-500" : "bg-rose-500")} />
+                {user.isActive ? 'Active' : 'Disabled'}
+              </span>
+            </TableCell>
+            <TableCell className="text-slate-400 font-bold text-[10px] uppercase tracking-widest">
+              {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+            </TableCell>
+            <TableCell align="right">
+              <div className="flex items-center justify-end gap-2">
+                <button
+                  onClick={() => {
+                    setAssigningUserId(user.id);
+                    setIsAssignModalOpen(true);
+                  }}
+                  className="p-2.5 text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all border border-transparent hover:border-indigo-100 active:scale-95"
+                  title="Assign to Workspace"
+                >
+                  <UserPlus className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => onToggleStatus(user.id, user.isActive)}
+                  className={cn(
+                    "p-2.5 rounded-xl transition-all border shadow-sm active:scale-95",
+                    user.isActive 
+                    ? "text-rose-600 border-rose-100 hover:bg-rose-50 hover:shadow-rose-100" 
+                    : "text-emerald-600 border-emerald-100 hover:bg-emerald-50 hover:shadow-emerald-100"
+                  )}
+                >
+                  {user.isActive ? <ShieldAlert className="w-4 h-4" /> : <CheckCircle className="w-4 h-4" />}
+                </button>
+              </div>
+            </TableCell>
+          </TableRow>
+        ))}
+      </Table>
+
+      <BulkAssignBar 
+        selectedCount={selectedUserIds.length} 
+        onClear={() => setSelectedUserIds([])}
+        onAssign={() => setIsAssignModalOpen(true)}
+        onDelete={() => confirm('Delete selected users?')}
+      />
+
+      <AssignUserModal 
+        isOpen={isAssignModalOpen}
+        onClose={() => {
+          setIsAssignModalOpen(false);
+          setAssigningUserId(null);
+        }}
+        onAssign={handleBulkAssign}
+        workspaces={workspaces}
+        userNames={selectedUserNames}
+      />
+
+      {filteredUsers.length === 0 && (
+        <div className="p-20 text-center bg-white border border-dashed border-slate-200 rounded-3xl">
+           <Building2 className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+           <h3 className="text-lg font-bold text-slate-900">No users match your criteria</h3>
+           <p className="text-slate-500 text-sm mt-1">Try adjusting your filters or search term.</p>
         </div>
-      </div>
+      )}
     </div>
   );
 }

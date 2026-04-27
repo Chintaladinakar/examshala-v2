@@ -3,6 +3,30 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { WorkspacesTable } from '@/components/superadmin/WorkspacesTable';
 
+async function getWorkspaces(token: string) {
+  const res = await fetch('http://localhost:5000/api/superadmin/workspaces', {
+    headers: { 'Authorization': `Bearer ${token}` },
+    cache: 'no-store'
+  });
+  if (!res.ok) return [];
+  const payload = await res.json();
+  return payload.data;
+}
+
+async function getMembers(token: string) {
+  const res = await fetch('http://localhost:5000/api/superadmin/users', {
+    headers: { 'Authorization': `Bearer ${token}` },
+    cache: 'no-store'
+  });
+  if (!res.ok) return [];
+  const payload = await res.json();
+  return payload.data.map((u: any) => ({
+    ...u,
+    globalRole: u.role === 'superadmin' ? 'superadmin' : 'user',
+    workspaces: []
+  }));
+}
+
 export default async function SuperAdminWorkspacesPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get('session_token')?.value;
@@ -11,28 +35,17 @@ export default async function SuperAdminWorkspacesPage() {
     redirect('/signin');
   }
 
-  // Fetch workspaces server-side
-  let workspaces = [];
-  try {
-    const res = await fetch('http://localhost:5000/api/superadmin/workspaces', {
-      headers: { 'Authorization': `Bearer ${token}` },
-      cache: 'no-store'
-    });
-    if (res.ok) {
-      const payload = await res.json();
-      workspaces = payload.data;
-    }
-  } catch (error) {
-    console.error('Failed to fetch workspaces', error);
-  }
+  const [workspaces, members] = await Promise.all([
+    getWorkspaces(token),
+    getMembers(token)
+  ]);
 
-  // Server Actions
   async function createWorkspace(name: string) {
     'use server';
     const store = await cookies();
     const serverToken = store.get('session_token')?.value;
     
-    const res = await fetch('http://localhost:5000/api/superadmin/workspaces', {
+    await fetch('http://localhost:5000/api/superadmin/workspaces', {
       method: 'POST',
       headers: { 
         'Authorization': `Bearer ${serverToken}`,
@@ -40,7 +53,6 @@ export default async function SuperAdminWorkspacesPage() {
       },
       body: JSON.stringify({ name })
     });
-    return res.json();
   }
 
   async function deleteWorkspace(id: string) {
@@ -55,16 +67,17 @@ export default async function SuperAdminWorkspacesPage() {
   }
 
   return (
-    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
       <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-black text-slate-900 tracking-tight">Workspaces</h1>
-        <p className="text-slate-500">Monitor all institute hubs and bootcamp environments across the platform.</p>
+        <h1 className="text-3xl font-black text-slate-900 tracking-tight">Workspace Hubs</h1>
+        <p className="text-slate-500">Manage organizational units, their memberships, and role assignments.</p>
       </div>
 
       <WorkspacesTable 
         initialWorkspaces={workspaces} 
-        onCreateWorkspace={createWorkspace} 
-        onDeleteWorkspace={deleteWorkspace} 
+        members={members}
+        onCreate={createWorkspace} 
+        onDelete={deleteWorkspace} 
       />
     </div>
   );

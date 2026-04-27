@@ -1,7 +1,8 @@
 import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { Users, Building2, Activity } from 'lucide-react';
+import { StatCard } from '@/components/superadmin/StatCard';
+import { Users, Building2, Activity, ClipboardCheck } from 'lucide-react';
 import { RecentUsers } from '@/components/superadmin/RecentUsers';
 import { RecentWorkspaces } from '@/components/superadmin/RecentWorkspaces';
 
@@ -42,7 +43,7 @@ export default async function SuperAdminDashboardPage() {
     );
   }
 
-  const { totalUsers, totalWorkspaces, activeSessions, recentUsers, recentWorkspaces } = data;
+  const { totalUsers, totalWorkspaces, totalResults, activeSessions, recentUsers, recentWorkspaces } = data;
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -51,36 +52,33 @@ export default async function SuperAdminDashboardPage() {
         <p className="text-slate-500">Consolidated analytics and recent activity.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex items-center justify-between group">
-          <div>
-            <p className="text-sm font-semibold text-slate-500 mb-1 group-hover:text-indigo-600 transition-colors">Total Users</p>
-            <h3 className="text-3xl font-black text-slate-900">{totalUsers.toLocaleString()}</h3>
-          </div>
-          <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600 group-hover:rotate-6 transition-all duration-300">
-            <Users className="w-7 h-7 text-indigo-600 group-hover:text-white transition-colors" />
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex items-center justify-between group">
-          <div>
-            <p className="text-sm font-semibold text-slate-500 mb-1 group-hover:text-indigo-600 transition-colors">Total Workspaces</p>
-            <h3 className="text-3xl font-black text-slate-900">{totalWorkspaces.toLocaleString()}</h3>
-          </div>
-          <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center group-hover:bg-emerald-600 group-hover:-rotate-6 transition-all duration-300">
-            <Building2 className="w-7 h-7 text-emerald-600 group-hover:text-white transition-colors" />
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex items-center justify-between group">
-          <div>
-            <p className="text-sm font-semibold text-slate-500 mb-1 group-hover:text-indigo-600 transition-colors">Active Sessions</p>
-            <h3 className="text-3xl font-black text-slate-900">{activeSessions.toLocaleString()}</h3>
-          </div>
-          <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center group-hover:bg-amber-600 group-hover:scale-110 transition-all duration-300">
-            <Activity className="w-7 h-7 text-amber-600 group-hover:text-white transition-colors" />
-          </div>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <StatCard 
+          label="Total Users" 
+          value={totalUsers} 
+          icon={Users} 
+          color="indigo"
+          trend={{ value: '12%', isPositive: true }}
+        />
+        <StatCard 
+          label="Total Workspaces" 
+          value={totalWorkspaces} 
+          icon={Building2} 
+          color="emerald"
+        />
+        <StatCard 
+          label="Active Sessions" 
+          value={activeSessions} 
+          icon={Activity} 
+          color="amber"
+          trend={{ value: '5%', isPositive: true }}
+        />
+        <StatCard 
+          label="Total Results" 
+          value={totalResults || 0} 
+          icon={ClipboardCheck} 
+          color="violet"
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
