@@ -169,7 +169,7 @@ export function UsersTable({ initialUsers, workspaces, onToggleStatus, onBulkAss
               </span>
             </TableCell>
             <TableCell className="text-slate-400 font-bold text-[10px] uppercase tracking-widest">
-              {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+              {new Intl.DateTimeFormat('en-GB', { month: 'short', day: '2-digit', year: 'numeric' }).format(new Date(user.createdAt))}
             </TableCell>
             <TableCell align="right">
               <div className="flex items-center justify-end gap-2">

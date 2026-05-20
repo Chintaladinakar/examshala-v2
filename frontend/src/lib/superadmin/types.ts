@@ -1,3 +1,5 @@
+import type { UserWorkspace } from '@/types/superadmin';
+
 export type SuperAdminUser = {
   id: string;
   name: string;
@@ -6,7 +8,7 @@ export type SuperAdminUser = {
   isActive: boolean;
   createdAt: string;
   globalRole: 'superadmin' | 'user';
-  workspaces: unknown[];
+  workspaces: UserWorkspace[];
 };
 
 export type SuperAdminWorkspace = {
