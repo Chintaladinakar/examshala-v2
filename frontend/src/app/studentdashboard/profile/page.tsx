@@ -2,15 +2,12 @@ import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import ProfileTabsController from '@/components/student/ProfileTabsController';
-import { fetchJson } from '@/lib/api';
 import FullPageErrorState from '@/components/ui/FullPageErrorState';
 import { logDeveloperError } from '@/lib/error-handler';
+import { getStudentDashboard, getStudentParents } from '@/lib/student/data';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
-
-type DashboardResponse = { data?: { profile?: unknown } };
-type ParentsResponse = { data?: unknown };
 
 export default async function StudentProfilePage() {
   const cookieStore = await cookies();
@@ -18,28 +15,18 @@ export default async function StudentProfilePage() {
 
   if (!token) redirect('/signin');
 
-  let profile = null;
-  let parents = [];
+  let profile: unknown = null;
+  let parents: unknown[] = [];
 
   let authFailed = false;
 
   try {
-    // We can run these in parallel
-    const [dashPayload, parentsPayload] = await Promise.all([
-      fetchJson<DashboardResponse>('/api/student/dashboard', {
-        headers: { 'Authorization': `Bearer ${token}` },
-        cache: 'no-store',
-        action: 'load',
-      }),
-      fetchJson<ParentsResponse>('/api/student/parents', {
-        headers: { 'Authorization': `Bearer ${token}` },
-        cache: 'no-store',
-        action: 'load',
-      })
+    const [dash, parentLinks] = await Promise.all([
+      getStudentDashboard(token),
+      getStudentParents(token),
     ]);
-
-    profile = dashPayload.data?.profile;
-    parents = Array.isArray(parentsPayload.data) ? (parentsPayload.data as unknown[]) : [];
+    profile = dash.profile ?? null;
+    parents = Array.isArray(parentLinks) ? parentLinks : [];
   } catch (error: unknown) {
     const errRec = (error && typeof error === 'object') ? (error as Record<string, unknown>) : null;
     let status: number | undefined;

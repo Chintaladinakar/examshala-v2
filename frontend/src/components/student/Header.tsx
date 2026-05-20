@@ -1,16 +1,20 @@
-"use client";
+import React from 'react';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { ChevronDown, Building } from 'lucide-react';
+import { getStudentDashboard } from '@/lib/student/data';
+import { studentDashboardMock } from '@/lib/student/mock';
+import { LogoutButton } from '@/components/student/LogoutButton';
+import type { StudentDashboardData } from '@/lib/student/types';
 
-import React, { useState } from 'react';
-import { ChevronDown, Building, LogOut } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useRouter } from 'next/navigation';
+export async function Header() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('session_token')?.value;
+  if (!token) redirect('/signin');
 
-export function Header() {
-  const router = useRouter();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedWorkspace, setSelectedWorkspace] = useState("Lincoln High School");
-
-  const workspaces = ["Lincoln High School", "A-Level Math Bootcamp", "State Board Prep"];
+  // Minimal, production-safe: show a single current workspace label from dashboard data (or fallback).
+  // No hardcoded workspace lists in the header UI.
+  const dashboardPromise: Promise<StudentDashboardData> = getStudentDashboard(token);
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200 h-16 flex items-center px-4 md:px-8 justify-between">
@@ -24,54 +28,27 @@ export function Header() {
       <div className="flex-1 flex justify-center md:justify-start">
         {/* Workspace Switcher */}
         <div className="relative">
-          <button 
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-200"
-          >
-            <Building className="w-4 h-4 text-slate-500" />
-            <span className="text-sm font-medium text-slate-800">{selectedWorkspace}</span>
-            <ChevronDown className="w-4 h-4 text-slate-400" />
-          </button>
-
-          {dropdownOpen && (
-            <div className="absolute top-full mt-2 w-56 bg-white border border-slate-100 rounded-xl shadow-lg py-1 z-50 overflow-hidden text-sm">
-              <div className="px-3 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider bg-slate-50/50">
-                Your Workspaces
-              </div>
-              {workspaces.map(ws => (
-                <button
-                  key={ws}
-                  onClick={() => {
-                    setSelectedWorkspace(ws);
-                    setDropdownOpen(false);
-                  }}
-                  className={cn(
-                    "w-full text-left px-4 py-2 hover:bg-slate-50 text-slate-700 font-medium",
-                    selectedWorkspace === ws && "bg-teal-50 text-teal-800 hover:bg-teal-50"
-                  )}
-                >
-                  {ws}
-                </button>
-              ))}
-            </div>
-          )}
+          <WorkspaceLabel dashboardPromise={dashboardPromise} />
         </div>
       </div>
 
       {/* User Actions */}
       <div className="flex items-center gap-4">
-        <button 
-          onClick={() => {
-            document.cookie = 'session_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-            localStorage.removeItem('token');
-            router.push('/signin');
-          }}
-          className="text-sm font-medium text-rose-600 hover:text-rose-700 flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-rose-50 transition-colors"
-        >
-          <LogOut className="w-4 h-4" />
-          <span className="hidden sm:inline">Logout</span>
-        </button>
+        <LogoutButton />
       </div>
     </header>
+  );
+}
+
+async function WorkspaceLabel({ dashboardPromise }: { dashboardPromise: Promise<StudentDashboardData> }) {
+  const dashboard = (await dashboardPromise) ?? studentDashboardMock;
+  const workspaceName = typeof dashboard.workspaceName === 'string' ? dashboard.workspaceName : studentDashboardMock.workspaceName;
+
+  return (
+    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-transparent hover:border-slate-200 hover:bg-slate-50 transition-colors">
+      <Building className="w-4 h-4 text-slate-500" />
+      <span className="text-sm font-medium text-slate-800">{workspaceName}</span>
+      <ChevronDown className="w-4 h-4 text-slate-300" />
+    </div>
   );
 }

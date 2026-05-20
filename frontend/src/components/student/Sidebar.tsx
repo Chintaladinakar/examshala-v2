@@ -3,14 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, FileText, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-const navItems = [
-  { href: '/studentdashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/studentdashboard/results', label: 'Results', icon: FileText },
-  { href: '/studentdashboard/profile', label: 'Profile', icon: User },
-];
+import { studentPortalRoutes } from '@/lib/student/routes';
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -29,22 +23,32 @@ export function Sidebar() {
         </div>
         
         <nav className="flex-1 px-4 space-y-1">
-          {navItems.map((item) => {
+          {studentPortalRoutes.map((item) => {
             const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-all text-sm",
-                  isActive 
-                    ? "bg-teal-50 text-teal-800" 
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                )}
-              >
-                <item.icon className={cn("w-5 h-5", isActive ? "text-teal-700" : "text-slate-400")} />
-                {item.label}
-              </Link>
+              item.disabled ? (
+                <div
+                  key={item.href}
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm text-slate-400 cursor-not-allowed opacity-70"
+                >
+                  <item.icon className="w-5 h-5 text-slate-300" />
+                  {item.label}
+                </div>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-all text-sm",
+                    isActive 
+                      ? "bg-teal-50 text-teal-800" 
+                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                  )}
+                >
+                  <item.icon className={cn("w-5 h-5", isActive ? "text-teal-700" : "text-slate-400")} />
+                  {item.label}
+                </Link>
+              )
             )
           })}
         </nav>
@@ -52,9 +56,18 @@ export function Sidebar() {
 
       {/* Mobile Bottom Nav */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50 px-6 py-3 flex justify-between items-center safe-area-pb">
-        {navItems.map((item) => {
+        {studentPortalRoutes.slice(0, 4).map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
+            item.disabled ? (
+              <div
+                key={item.href}
+                className="flex flex-col items-center gap-1 text-slate-400 opacity-70"
+              >
+                <item.icon className="w-5 h-5 text-slate-300" />
+                <span className="text-[10px] font-medium">{item.label}</span>
+              </div>
+            ) : (
             <Link
               key={item.href}
               href={item.href}
@@ -66,6 +79,7 @@ export function Sidebar() {
               <item.icon className={cn("w-5 h-5", isActive ? "text-teal-700" : "text-slate-400")} />
               <span className="text-[10px] font-medium">{item.label}</span>
             </Link>
+            )
           )
         })}
       </nav>

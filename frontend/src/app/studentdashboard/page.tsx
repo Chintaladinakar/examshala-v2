@@ -8,9 +8,9 @@ import {
   UpcomingExamsSection, 
   RecentResultsSection 
 } from '@/components/student/DashboardSections';
-import { fetchJson } from '@/lib/api';
 import FullPageErrorState from '@/components/ui/FullPageErrorState';
 import { logDeveloperError } from '@/lib/error-handler';
+import { getStudentDashboard } from '@/lib/student/data';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -28,14 +28,7 @@ export default async function StudentDashboardPage() {
   let authFailed = false;
 
   try {
-    const payload = await fetchJson<DashboardResponse>('/api/student/dashboard', {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      },
-      cache: 'no-store',
-      action: 'load',
-    });
-    dashboardData = payload.data ?? null;
+    dashboardData = await getStudentDashboard(token);
   } catch (error: unknown) {
     const errRec = (error && typeof error === 'object') ? (error as Record<string, unknown>) : null;
     let status: number | undefined;
@@ -65,7 +58,7 @@ export default async function StudentDashboardPage() {
     );
   }
 
-  const { profile, stats, pendingWork, upcomingExams, recentResults } = dashboardData;
+  const { profile, stats, pendingWork, upcomingExams, recentResults, workspaceName } = dashboardData;
 
   // Flatten and map notifications (exam assignments) into actionable pending items
   const rawNotifications =
@@ -92,7 +85,7 @@ export default async function StudentDashboardPage() {
     <div className="flex flex-col">
       <WelcomeBanner 
         studentName={profile.name}
-        workspaceName="Your Dashboard"
+        workspaceName={workspaceName || 'Student Portal'}
         pendingCount={pendingItems.length}
         unreadCount={unreadCount}
       />
@@ -114,12 +107,3 @@ export default async function StudentDashboardPage() {
     </div>
   );
 }
-type DashboardResponse = {
-  data?: {
-    profile?: { name?: string };
-    stats?: Record<string, unknown>;
-    pendingWork?: Record<string, unknown>;
-    upcomingExams?: unknown[];
-    recentResults?: unknown[];
-  };
-};

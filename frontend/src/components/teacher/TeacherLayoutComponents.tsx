@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { 
   LayoutDashboard, 
   Users, 
@@ -41,6 +42,19 @@ const navItems = [
 
 export const TeacherSidebar = () => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    // Clear auth artifacts (cookie used by server components/middleware + any client token fallback)
+    document.cookie = 'session_token=; path=/; max-age=0; SameSite=Lax';
+    try {
+      localStorage.removeItem('token');
+    } catch {
+      // ignore
+    }
+    router.push('/signin');
+    router.refresh();
+  };
 
   return (
     <aside className="w-64 bg-white border-r border-gray-200 h-screen sticky top-0 flex flex-col overflow-y-auto">
@@ -86,7 +100,11 @@ export const TeacherSidebar = () => {
       </nav>
 
       <div className="p-4 border-t border-gray-200">
-        <button className="flex items-center gap-3 px-3 py-2 w-full rounded-lg text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors">
+        <button
+          type="button"
+          onClick={handleSignOut}
+          className="flex items-center gap-3 px-3 py-2 w-full rounded-lg text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors"
+        >
           <LogOut size={18} />
           Sign Out
         </button>
