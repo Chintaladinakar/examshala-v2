@@ -2,14 +2,14 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { Globe } from 'lucide-react';
 import { SettingsForm } from '@/components/superadmin/SettingsForm';
+import { fetchJson } from '@/lib/api';
 
 async function getSettings(token: string) {
-  const res = await fetch('http://localhost:5000/api/superadmin/settings', {
+  const payload = await fetchJson<any>('/api/superadmin/settings', {
     headers: { 'Authorization': `Bearer ${token}` },
-    cache: 'no-store'
+    cache: 'no-store',
+    action: 'load',
   });
-  if (!res.ok) throw new Error('Failed to fetch settings');
-  const payload = await res.json();
   return payload.data;
 }
 
@@ -33,13 +33,11 @@ export default async function SuperAdminSettingsPage() {
     const store = await cookies();
     const serverToken = store.get('session_token')?.value;
     
-    await fetch('http://localhost:5000/api/superadmin/settings', {
+    await fetchJson('/api/superadmin/settings', {
       method: 'PATCH',
-      headers: { 
-        'Authorization': `Bearer ${serverToken}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(settings)
+      headers: { 'Authorization': `Bearer ${serverToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(settings),
+      action: 'update',
     });
   }
 

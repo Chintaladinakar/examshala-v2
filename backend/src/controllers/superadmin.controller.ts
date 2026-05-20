@@ -106,7 +106,8 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
 export const updateUserStatus = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = typeof req.params.id === 'string' ? req.params.id : '';
+    if (!id) return res.status(400).json({ success: false, message: 'User id is required' });
     const { isActive } = req.body;
     const user = await prisma.user.update({
       where: { id },
@@ -121,7 +122,8 @@ export const updateUserStatus = async (req: Request, res: Response) => {
 
 export const updateUserRole = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = typeof req.params.id === 'string' ? req.params.id : '';
+    if (!id) return res.status(400).json({ success: false, message: 'User id is required' });
     const { role } = req.body;
     const user = await prisma.user.update({
       where: { id },
@@ -166,7 +168,8 @@ export const createWorkspace = async (req: Request, res: Response) => {
 
 export const deleteWorkspace = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = typeof req.params.id === 'string' ? req.params.id : '';
+    if (!id) return res.status(400).json({ success: false, message: 'Workspace id is required' });
     await prisma.workspace.delete({ where: { id } });
     res.json({ success: true, message: 'Workspace deleted successfully' });
   } catch (error: any) {

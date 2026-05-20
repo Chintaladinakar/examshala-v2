@@ -4,6 +4,21 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import InputField from '@/components/InputField';
+import { fetchJson } from '@/lib/api';
+import InlineError from '@/components/ui/InlineError';
+import { logDeveloperError } from '@/lib/error-handler';
+
+function getTokenFromSignupResponse(body: unknown): string | null {
+  if (!body || typeof body !== 'object') return null;
+  const rec = body as Record<string, unknown>;
+  if (typeof rec.token === 'string') return rec.token;
+  const data = rec.data;
+  if (data && typeof data === 'object') {
+    const token = (data as Record<string, unknown>).token;
+    if (typeof token === 'string') return token;
+  }
+  return null;
+}
 
 export default function SignUp() {
   const router = useRouter();
@@ -13,32 +28,29 @@ export default function SignUp() {
     password: '',
     role: 'student',
   });
-  const [errorMSG, setErrorMSG] = useState('');
+  const [error, setError] = useState<unknown>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMSG('');
+    setError(null);
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/signup', {
+      const data = await fetchJson('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
+        action: 'signup',
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to sign up');
-      }
-
       // Store token on successful signin/signup
-      localStorage.setItem('token', data.token);
+      const token = getTokenFromSignupResponse(data);
+      if (token) localStorage.setItem('token', token);
       router.push('/dashboard');
-    } catch (err: any) {
-      setErrorMSG(err.message);
+    } catch (err) {
+      logDeveloperError(err, { action: 'signup', feature: 'signup' });
+      setError(err);
     } finally {
       setLoading(false);
     }
@@ -53,11 +65,7 @@ export default function SignUp() {
           <p className="text-gray-600 mt-2">Join us to start creating exams</p>
         </div>
 
-        {errorMSG && (
-          <div className="bg-red-50 text-red-600 p-3 rounded mb-4 text-sm text-center">
-            {errorMSG}
-          </div>
-        )}
+        <InlineError error={error} action="signup" />
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <InputField

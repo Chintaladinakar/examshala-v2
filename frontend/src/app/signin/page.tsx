@@ -5,6 +5,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import InputField from '@/components/InputField';
 import { decodeJwtPayload, getDashboardPathForRole } from '@/lib/auth';
+import { fetchJson } from '@/lib/api';
+import InlineError from '@/components/ui/InlineError';
+import { logDeveloperError } from '@/lib/error-handler';
+
+type SignInResponse = {
+  data: {
+    token: string;
+  };
+};
 
 export default function SignIn() {
   const router = useRouter();
@@ -12,26 +21,21 @@ export default function SignIn() {
     email: '',
     password: '',
   });
-  const [errorMSG, setErrorMSG] = useState('');
+  const [error, setError] = useState<unknown>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMSG('');
+    setError(null);
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/signin', {
+      const data = await fetchJson<SignInResponse>('/api/auth/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
+        action: 'login',
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to sign in');
-      }
 
       // Store token securely as a browser cookie for middleware and server actions
       document.cookie = `session_token=${data.data.token}; path=/; max-age=86400; SameSite=Lax`;
@@ -41,8 +45,9 @@ export default function SignIn() {
       const destination = decoded?.role ? getDashboardPathForRole(decoded.role) : '/';
       
       router.push(destination);
-    } catch (err: any) {
-      setErrorMSG(err.message);
+    } catch (err) {
+      logDeveloperError(err, { action: 'login', feature: 'signin' });
+      setError(err);
     } finally {
       setLoading(false);
     }
@@ -57,11 +62,7 @@ export default function SignIn() {
           <p className="text-gray-600 mt-2">Welcome back! Please sign in to continue</p>
         </div>
 
-        {errorMSG && (
-          <div className="bg-red-50 text-red-600 p-3 rounded mb-4 text-sm text-center">
-            {errorMSG}
-          </div>
-        )}
+        <InlineError error={error} action="login" />
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <InputField

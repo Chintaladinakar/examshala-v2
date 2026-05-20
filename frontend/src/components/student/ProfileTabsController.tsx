@@ -4,6 +4,10 @@ import React, { useState } from 'react';
 import { User, Users, Mail, Link as LinkIcon, Trash2, Clock, CheckCircle2, AlertTriangle, ShieldAlert } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import { fetchJson } from '@/lib/api';
+import InlineError from '@/components/ui/InlineError';
+import { logDeveloperError } from '@/lib/error-handler';
+import { useToast } from '@/components/ui/ToastProvider';
 
 export default function ProfileTabsController({ initialProfile, initialParents }: { initialProfile: any, initialParents: any[] }) {
   const [activeTab, setActiveTab] = useState<'general' | 'parents'>('general');
@@ -60,10 +64,11 @@ export default function ProfileTabsController({ initialProfile, initialParents }
 
 function ParentsTab({ initialParents }: { initialParents: any[] }) {
   const router = useRouter();
+  const { showError, showMessage } = useToast();
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteRelation, setInviteRelation] = useState('guardian');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [error, setError] = useState<unknown>(null);
 
   const maxParents = 3;
   const currentCount = initialParents.filter(p => ['active', 'pending'].includes(p.status)).length;
@@ -74,30 +79,25 @@ function ParentsTab({ initialParents }: { initialParents: any[] }) {
     if (!inviteEmail || !canAddMore) return;
     
     setIsSubmitting(true);
-    setErrorMsg('');
+    setError(null);
 
     try {
       // Safely fetch token from cookie for client-side API call
       const token = document.cookie.split('; ').find(row => row.startsWith('session_token='))?.split('=')[1];
-      
-      const res = await fetch('http://localhost:5000/api/student/parents/link-request', {
+
+      await fetchJson('/api/student/parents/link-request', {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
-        },
-        body: JSON.stringify({ email: inviteEmail, relation: inviteRelation })
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ email: inviteEmail, relation: inviteRelation }),
+        action: 'submit',
       });
 
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.message || 'Failed to send invite');
-      }
-
       setInviteEmail('');
+      showMessage('Invite sent.', 'success');
       router.refresh(); // Triggers the Server Component to re-fetch
-    } catch (err: any) {
-      setErrorMsg(err.message);
+    } catch (err) {
+      logDeveloperError(err, { action: 'submit', feature: 'parents_link_request' });
+      setError(err);
     } finally {
       setIsSubmitting(false);
     }
@@ -106,21 +106,19 @@ function ParentsTab({ initialParents }: { initialParents: any[] }) {
   const handleRequestRemoval = async (linkId: string) => {
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('session_token='))?.split('=')[1];
-      
-      const res = await fetch('http://localhost:5000/api/student/parents/remove-request', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
-        },
-        body: JSON.stringify({ linkId })
-      });
 
-      if (!res.ok) throw new Error('Failed to request removal');
+      await fetchJson('/api/student/parents/remove-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ linkId }),
+        action: 'delete',
+      });
       
+      showMessage('Removal requested.', 'success');
       router.refresh();
     } catch (err) {
-      console.error(err);
+      logDeveloperError(err, { action: 'delete', feature: 'parents_remove_request' });
+      showError(err, { action: 'delete' });
     }
   };
 
@@ -158,12 +156,8 @@ function ParentsTab({ initialParents }: { initialParents: any[] }) {
         <div className="bg-white rounded-2xl p-6 md:p-8 border border-slate-200 shadow-sm">
           <h3 className="text-lg font-semibold text-slate-900 mb-2">Invite a Parent</h3>
           <p className="text-sm text-slate-500 mb-6">They will receive an email to create an account or link existing ones.</p>
-          
-          {errorMsg && (
-            <div className="bg-rose-50 text-rose-600 px-4 py-2 rounded-lg text-sm mb-4">
-              {errorMsg}
-            </div>
-          )}
+
+          <InlineError error={error} action="submit" className="bg-rose-50 text-rose-600 px-4 py-2 rounded-lg text-sm mb-4" />
 
           <form onSubmit={handleLinkRequest} className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">

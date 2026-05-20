@@ -5,21 +5,20 @@ import { StatCard } from '@/components/superadmin/StatCard';
 import { Users, Building2, Activity, ClipboardCheck } from 'lucide-react';
 import { RecentUsers } from '@/components/superadmin/RecentUsers';
 import { RecentWorkspaces } from '@/components/superadmin/RecentWorkspaces';
+import { fetchJson } from '@/lib/api';
+import FullPageErrorState from '@/components/ui/FullPageErrorState';
+import { logDeveloperError } from '@/lib/error-handler';
+
+type SuperAdminDashboardResponse = { data?: unknown };
+type RecentUser = { id: string; name: string; email: string; role: string; createdAt: string };
+type RecentWorkspaceItem = { id: string; name: string; userCount: number; createdAt: string };
 
 async function getDashboardData(token: string) {
-  const res = await fetch('http://localhost:5000/api/superadmin/dashboard', {
+  const payload = await fetchJson<SuperAdminDashboardResponse>('/api/superadmin/dashboard', {
     headers: { 'Authorization': `Bearer ${token}` },
-    cache: 'no-store'
+    cache: 'no-store',
+    action: 'load',
   });
-
-  if (!res.ok) {
-    if (res.status === 401 || res.status === 403) {
-      redirect('/signin');
-    }
-    throw new Error('Failed to fetch dashboard data');
-  }
-
-  const payload = await res.json();
   return payload.data;
 }
 
@@ -34,16 +33,29 @@ export default async function SuperAdminDashboardPage() {
   let data;
   try {
     data = await getDashboardData(token);
-  } catch (error) {
+  } catch (error: unknown) {
+    const errRec = (error && typeof error === 'object') ? (error as Record<string, unknown>) : null;
+    let status: number | undefined;
+    if (typeof errRec?.status === 'number') status = errRec.status;
+    const response = errRec?.response;
+    if (!status && response && typeof response === 'object') {
+      const rs = (response as Record<string, unknown>).status;
+      if (typeof rs === 'number') status = rs;
+    }
+    if (status === 401 || status === 403) redirect('/signin');
+    logDeveloperError(error, { action: 'load', feature: 'superadmin_dashboard' });
     return (
-      <div className="p-8 text-center bg-rose-50 border border-rose-100 rounded-2xl text-rose-800">
-        <h2 className="text-xl font-bold">API Error</h2>
-        <p>Could not load platform overview. Please ensure the backend is healthy.</p>
-      </div>
+      <FullPageErrorState error={error} action="load" title="API Error" onRetryHref="/superadmin" />
     );
   }
 
-  const { totalUsers, totalWorkspaces, totalResults, activeSessions, recentUsers, recentWorkspaces } = data;
+  const d = (data && typeof data === 'object') ? (data as Record<string, unknown>) : {};
+  const totalUsers = d.totalUsers as number;
+  const totalWorkspaces = d.totalWorkspaces as number;
+  const totalResults = d.totalResults as number;
+  const activeSessions = d.activeSessions as number;
+  const recentUsers = (Array.isArray(d.recentUsers) ? (d.recentUsers as unknown[]) : []) as RecentUser[];
+  const recentWorkspaces = (Array.isArray(d.recentWorkspaces) ? (d.recentWorkspaces as unknown[]) : []) as RecentWorkspaceItem[];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">

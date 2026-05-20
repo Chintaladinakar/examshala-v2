@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { Save, Mail, Globe, ShieldCheck, Loader2, CheckCircle2 } from 'lucide-react';
+import { useToast } from '@/components/ui/ToastProvider';
+import { logDeveloperError } from '@/lib/error-handler';
 
 interface Settings {
   platformName: string;
@@ -14,6 +16,7 @@ interface SettingsFormProps {
 }
 
 export function SettingsForm({ initialSettings, onSave }: SettingsFormProps) {
+  const { showError } = useToast();
   const [settings, setSettings] = useState(initialSettings);
   const [isSaving, setIsSaving] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -26,7 +29,8 @@ export function SettingsForm({ initialSettings, onSave }: SettingsFormProps) {
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
     } catch (error) {
-      console.error('Failed to save settings', error);
+      logDeveloperError(error, { action: 'update', feature: 'superadmin_settings' });
+      showError(error, { action: 'update' });
     } finally {
       setIsSaving(false);
     }

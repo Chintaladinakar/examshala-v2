@@ -2,9 +2,15 @@ import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import ProfileTabsController from '@/components/student/ProfileTabsController';
+import { fetchJson } from '@/lib/api';
+import FullPageErrorState from '@/components/ui/FullPageErrorState';
+import { logDeveloperError } from '@/lib/error-handler';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+type DashboardResponse = { data?: { profile?: unknown } };
+type ParentsResponse = { data?: unknown };
 
 export default async function StudentProfilePage() {
   const cookieStore = await cookies();
@@ -19,38 +25,35 @@ export default async function StudentProfilePage() {
 
   try {
     // We can run these in parallel
-    const [dashRes, parentsRes] = await Promise.all([
-      fetch('http://localhost:5000/api/student/dashboard', {
+    const [dashPayload, parentsPayload] = await Promise.all([
+      fetchJson<DashboardResponse>('/api/student/dashboard', {
         headers: { 'Authorization': `Bearer ${token}` },
-        cache: 'no-store'
+        cache: 'no-store',
+        action: 'load',
       }),
-      fetch('http://localhost:5000/api/student/parents', {
+      fetchJson<ParentsResponse>('/api/student/parents', {
         headers: { 'Authorization': `Bearer ${token}` },
-        cache: 'no-store'
+        cache: 'no-store',
+        action: 'load',
       })
     ]);
 
-    if (!dashRes.ok || !parentsRes.ok) {
-      if (dashRes.status === 401 || parentsRes.status === 401) {
-        authFailed = true;
-      } else {
-        throw new Error('Failed to load profile data');
-      }
-    } else {
-      const [dashPayload, parentsPayload] = await Promise.all([
-        dashRes.json(),
-        parentsRes.json()
-      ]);
-
-      profile = dashPayload.data?.profile;
-      parents = parentsPayload.data || [];
+    profile = dashPayload.data?.profile;
+    parents = Array.isArray(parentsPayload.data) ? (parentsPayload.data as unknown[]) : [];
+  } catch (error: unknown) {
+    const errRec = (error && typeof error === 'object') ? (error as Record<string, unknown>) : null;
+    let status: number | undefined;
+    if (typeof errRec?.status === 'number') status = errRec.status;
+    const response = errRec?.response;
+    if (!status && response && typeof response === 'object') {
+      const rs = (response as Record<string, unknown>).status;
+      if (typeof rs === 'number') status = rs;
     }
-  } catch (error: any) {
-    console.error('API Error:', error.message);
+    if (status === 401 || status === 403) authFailed = true;
+    logDeveloperError(error, { action: 'load', feature: 'studentprofile' });
     return (
-      <div className="max-w-5xl mx-auto flex flex-col items-center justify-center p-12 bg-white rounded-2xl border border-slate-200">
-        <h2 className="text-xl font-bold text-slate-700 mb-2">Error</h2>
-        <p className="text-slate-500">Failed to load profile securely: {error.message}</p>
+      <div className="max-w-5xl mx-auto">
+        <FullPageErrorState error={error} action="load" title="Error" onRetryHref="/studentdashboard/profile" />
       </div>
     );
   }
