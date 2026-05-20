@@ -15,42 +15,21 @@ import {
 } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/teacher/ui/Base';
 import Link from 'next/link';
+import {
+  tutorIdentityMock,
+  tutorDashboardStatsMock,
+  tutorQuickActionsMock,
+  tutorScheduleMock,
+  tutorRecentPapersMock,
+} from '@/lib/mock/tutorDashboardMock';
 
 export default function TeacherDashboard() {
-  const teacherName = "Sarah Jenkins";
-
-  const stats = [
-    { label: "Pending Evaluations", value: "14", trend: "+2 today", color: "text-amber-600", bg: "bg-amber-50" },
-    { label: "Active Classes", value: "6", trend: "Normal", color: "text-indigo-600", bg: "bg-indigo-50" },
-    { label: "Upcoming Tests", value: "3", trend: "This week", color: "text-emerald-600", bg: "bg-emerald-50" },
-    { label: "Average Class Perf.", value: "78%", trend: "+5%", color: "text-blue-600", bg: "bg-blue-50" },
-  ];
-
-  const quickActions = [
-    { label: "Create Question", icon: Plus, color: "bg-indigo-600", href: "/tutordashboard/questions" },
-    { label: "Create Paper", icon: FilePlus, color: "bg-emerald-600", href: "/tutordashboard/papers" },
-    { label: "Start Evaluation", icon: PlayCircle, color: "bg-amber-600", href: "/tutordashboard/evaluation" },
-    { label: "Publish Results", icon: CheckCircle2, color: "bg-blue-600", href: "/tutordashboard/results" },
-    { label: "Add Assignment", icon: ClipboardCheck, color: "bg-purple-600", href: "/tutordashboard/assignments" },
-  ];
-
-  const schedule = [
-    { time: "09:00 AM", class: "Grade 10 - Mathematics", room: "Room 102", type: "Class" },
-    { time: "11:30 AM", class: "Grade 9 - Physics Lab", room: "Lab B", type: "Lab" },
-    { time: "02:00 PM", class: "Grade 11 - Advanced Algebra", room: "Room 205", type: "Class" },
-  ];
-
-  const recentPapers = [
-    { title: "Calculus Mid-Term", subject: "Maths", class: "Grade 12", date: "24 Oct 2023", status: "Published" },
-    { title: "Kinematics Quiz", subject: "Physics", class: "Grade 10", date: "26 Oct 2023", status: "Draft" },
-  ];
-
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       {/* Welcome Section */}
       <section className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Welcome back, {teacherName}</h1>
+          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Welcome back, {tutorIdentityMock.name}</h1>
           <p className="text-gray-500 mt-1 font-medium">Here's what's happening in your classes today.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -67,7 +46,7 @@ export default function TeacherDashboard() {
 
       {/* Stats Grid */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, idx) => (
+        {tutorDashboardStatsMock.map((stat, idx) => (
           <Card key={idx} className="p-6">
             <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider">{stat.label}</p>
             <div className="mt-2 flex items-baseline justify-between">
@@ -90,7 +69,7 @@ export default function TeacherDashboard() {
               Quick Actions
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-              {quickActions.map((action, idx) => (
+              {tutorQuickActionsMock.map((action, idx) => (
                 <Link key={idx} href={action.href}>
                   <div className="group flex flex-col items-center gap-3 p-4 bg-white border border-gray-200 rounded-xl hover:border-indigo-300 hover:shadow-md transition-all cursor-pointer">
                     <div className={`${action.color} text-white p-3 rounded-lg shadow-sm group-hover:scale-110 transition-transform`}>
@@ -111,7 +90,7 @@ export default function TeacherDashboard() {
                 <Link href="/tutordashboard/papers" className="text-xs font-bold text-indigo-600 hover:underline">View All</Link>
               </div>
               <div className="p-4 space-y-3">
-                {recentPapers.map((paper, idx) => (
+                {tutorRecentPapersMock.map((paper, idx) => (
                   <div key={idx} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-all">
                     <div className="flex items-center gap-3">
                       <div className="bg-indigo-50 p-2 rounded-lg text-indigo-600">
@@ -174,7 +153,7 @@ export default function TeacherDashboard() {
               <p className="text-indigo-100 text-sm mt-1">Wednesday, 28 Oct</p>
             </div>
             <div className="p-6 space-y-6">
-              {schedule.map((item, idx) => (
+              {tutorScheduleMock.map((item, idx) => (
                 <div key={idx} className="relative pl-6 border-l-2 border-indigo-100 last:border-0 pb-6 last:pb-0">
                   <div className="absolute -left-[9px] top-0 w-4 h-4 bg-white border-2 border-indigo-600 rounded-full"></div>
                   <p className="text-xs font-bold text-indigo-600">{item.time}</p>

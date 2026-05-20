@@ -15,57 +15,7 @@ import {
   Search
 } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/teacher/ui/Base';
-
-const testResults = [
-  {
-    id: 1,
-    title: "Mathematics Mid-Term",
-    class: "Grade 10-A",
-    averageScore: "72%",
-    highestScore: "98%",
-    lowestScore: "45%",
-    evaluated: "45/45",
-    status: "Published",
-    publishingMode: "Manual",
-    lastUpdated: "2 days ago"
-  },
-  {
-    id: 2,
-    title: "Physics Quiz 1",
-    class: "Grade 9-B",
-    averageScore: "85%",
-    highestScore: "100%",
-    lowestScore: "60%",
-    evaluated: "32/32",
-    status: "Ready to Publish",
-    publishingMode: "Auto",
-    lastUpdated: "5 hours ago"
-  },
-  {
-    id: 3,
-    title: "Chemistry Unit Test",
-    class: "Grade 12-C",
-    averageScore: "-",
-    highestScore: "-",
-    lowestScore: "-",
-    evaluated: "12/40",
-    status: "Evaluating",
-    publishingMode: "Manual",
-    lastUpdated: "1 day ago"
-  },
-  {
-    id: 4,
-    title: "English Essay Writing",
-    class: "Grade 11-A",
-    averageScore: "68%",
-    highestScore: "92%",
-    lowestScore: "40%",
-    evaluated: "28/28",
-    status: "Draft",
-    publishingMode: "Manual",
-    lastUpdated: "1 week ago"
-  }
-];
+import { tutorResultsSummaryMock, tutorTestResultsMock } from '@/lib/mock/tutorDashboardMock';
 
 export default function Results() {
   return (
@@ -94,7 +44,7 @@ export default function Results() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-bold text-emerald-800 uppercase tracking-widest">Published Tests</p>
-              <h3 className="text-3xl font-bold text-emerald-600 mt-1">12</h3>
+              <h3 className="text-3xl font-bold text-emerald-600 mt-1">{tutorResultsSummaryMock.publishedTests}</h3>
             </div>
             <div className="bg-emerald-100 p-3 rounded-xl text-emerald-600">
               <CheckCircle2 size={24} />
@@ -106,7 +56,7 @@ export default function Results() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-bold text-indigo-800 uppercase tracking-widest">Ready to Release</p>
-              <h3 className="text-3xl font-bold text-indigo-600 mt-1">3</h3>
+              <h3 className="text-3xl font-bold text-indigo-600 mt-1">{tutorResultsSummaryMock.readyToRelease}</h3>
             </div>
             <div className="bg-indigo-100 p-3 rounded-xl text-indigo-600">
               <Send size={24} />
@@ -118,7 +68,7 @@ export default function Results() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-bold text-amber-800 uppercase tracking-widest">In Progress</p>
-              <h3 className="text-3xl font-bold text-amber-600 mt-1">5</h3>
+              <h3 className="text-3xl font-bold text-amber-600 mt-1">{tutorResultsSummaryMock.inProgress}</h3>
             </div>
             <div className="bg-amber-100 p-3 rounded-xl text-amber-600">
               <Clock size={24} />
@@ -166,7 +116,7 @@ export default function Results() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {testResults.map((test) => (
+              {tutorTestResultsMock.map((test) => (
                 <tr key={test.id} className="hover:bg-gray-50/50 transition-colors group">
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-3">

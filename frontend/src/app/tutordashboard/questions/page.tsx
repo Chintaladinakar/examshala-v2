@@ -14,59 +14,7 @@ import {
   ArrowUpDown
 } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/teacher/ui/Base';
-
-const questions = [
-  {
-    id: 1,
-    title: "What is the derivative of sin(x)?",
-    subject: "Mathematics",
-    topic: "Calculus",
-    marks: 2,
-    difficulty: "Easy",
-    type: "Objective",
-    updatedAt: "2 days ago"
-  },
-  {
-    id: 2,
-    title: "Explain the process of photosynthesis in detail and its importance to the ecosystem.",
-    subject: "Biology",
-    topic: "Plant Physiology",
-    marks: 10,
-    difficulty: "Hard",
-    type: "Subjective",
-    updatedAt: "5 days ago"
-  },
-  {
-    id: 3,
-    title: "Solve for x: 2x + 5 = 15",
-    subject: "Mathematics",
-    topic: "Algebra",
-    marks: 1,
-    difficulty: "Easy",
-    type: "Objective",
-    updatedAt: "1 week ago"
-  },
-  {
-    id: 4,
-    title: "What are the laws of motion defined by Newton?",
-    subject: "Physics",
-    topic: "Mechanics",
-    marks: 5,
-    difficulty: "Medium",
-    type: "Subjective",
-    updatedAt: "3 days ago"
-  },
-  {
-    id: 5,
-    title: "Balance the following chemical equation: H2 + O2 -> H2O",
-    subject: "Chemistry",
-    topic: "Equations",
-    marks: 3,
-    difficulty: "Medium",
-    type: "Objective",
-    updatedAt: "1 day ago"
-  }
-];
+import { tutorQuestionsMock } from '@/lib/mock/tutorDashboardMock';
 
 export default function QuestionBank() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -145,7 +93,7 @@ export default function QuestionBank() {
           </div>
         </div>
 
-        {questions.map((q, idx) => (
+        {tutorQuestionsMock.map((q, idx) => (
           <Card key={q.id} className="group hover:border-indigo-200 hover:shadow-md transition-all">
             <div className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-4 flex-1">

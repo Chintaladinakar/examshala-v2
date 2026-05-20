@@ -22,6 +22,7 @@ import {
   LayoutGrid
 } from 'lucide-react';
 import { clsx } from 'clsx';
+import { tutorIdentityMock, tutorWorkspaceMock } from '@/lib/mock/tutorDashboardMock';
 
 const navItems = [
   { name: 'Dashboard', href: '/tutordashboard', icon: LayoutDashboard },
@@ -29,7 +30,7 @@ const navItems = [
   { name: 'Students', href: '/tutordashboard/students', icon: Users },
   { name: 'Attendance', href: '/tutordashboard/attendance', icon: CalendarCheck },
   { name: 'Assignments', href: '/tutordashboard/assignments', icon: ClipboardList },
-  { name: 'Assessment', href: '/tutordashboard/assessment', icon: LayoutGrid, isHeader: true },
+  { name: 'Assessment', icon: LayoutGrid, isHeader: true },
   { name: 'Question Bank', href: '/tutordashboard/questions', icon: Database, indent: true },
   { name: 'Question Papers', href: '/tutordashboard/papers', icon: FileText, indent: true },
   { name: 'Evaluation', href: '/tutordashboard/evaluation', icon: GraduationCap },
@@ -54,9 +55,6 @@ export const TeacherSidebar = () => {
 
       <nav className="flex-1 px-4 space-y-1 pb-8">
         {navItems.map((item) => {
-          const isActive = pathname === item.href;
-          const Icon = item.icon;
-          
           if (item.isHeader) {
             return (
               <div key={item.name} className="pt-4 pb-2 px-2">
@@ -65,10 +63,13 @@ export const TeacherSidebar = () => {
             );
           }
 
+          const isActive = pathname === item.href;
+          const Icon = item.icon;
+
           return (
             <Link
               key={item.name}
-              href={item.href}
+              href={item.href!}
               className={clsx(
                 'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium',
                 isActive 
@@ -101,11 +102,11 @@ export const TeacherHeader = () => {
         {/* Workspace Switcher */}
         <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 cursor-pointer hover:bg-gray-100 transition-colors">
           <div className="w-6 h-6 bg-indigo-100 rounded flex items-center justify-center">
-            <span className="text-indigo-600 font-bold text-xs">S1</span>
+            <span className="text-indigo-600 font-bold text-xs">{tutorWorkspaceMock.code}</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-xs font-semibold text-gray-900 leading-none">Springfield High</span>
-            <span className="text-[10px] text-gray-500 leading-none mt-0.5">Academic Year 2023-24</span>
+            <span className="text-xs font-semibold text-gray-900 leading-none">{tutorWorkspaceMock.name}</span>
+            <span className="text-[10px] text-gray-500 leading-none mt-0.5">{tutorWorkspaceMock.academicYearLabel}</span>
           </div>
           <ChevronDown size={14} className="text-gray-400 ml-2" />
         </div>
@@ -131,11 +132,11 @@ export const TeacherHeader = () => {
 
         <button className="flex items-center gap-2 pl-2 hover:bg-gray-100 rounded-lg transition-colors py-1 px-2">
           <div className="text-right hidden sm:block">
-            <p className="text-sm font-semibold text-gray-900 leading-none">Sarah Jenkins</p>
-            <p className="text-[10px] text-gray-500 mt-1">Senior Teacher</p>
+            <p className="text-sm font-semibold text-gray-900 leading-none">{tutorIdentityMock.name}</p>
+            <p className="text-[10px] text-gray-500 mt-1">{tutorIdentityMock.title}</p>
           </div>
           <img
-            src="https://ui-avatars.com/api/?name=Sarah+Jenkins&background=indigo&color=fff"
+            src={tutorIdentityMock.avatarUrl}
             alt="Teacher"
             className="w-8 h-8 rounded-full border border-gray-200 shadow-sm"
           />

@@ -15,53 +15,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/teacher/ui/Base';
-
-const papers = [
-  {
-    id: 1,
-    title: "Mathematics Mid-Term Assessment",
-    subject: "Mathematics",
-    class: "Grade 10",
-    marks: 100,
-    questions: 25,
-    status: "Published",
-    createdAt: "12 Oct 2023",
-    duration: "3 Hours"
-  },
-  {
-    id: 2,
-    title: "Introductory Physics Quiz",
-    subject: "Physics",
-    class: "Grade 9",
-    marks: 20,
-    questions: 10,
-    status: "Draft",
-    createdAt: "25 Oct 2023",
-    duration: "45 Mins"
-  },
-  {
-    id: 3,
-    title: "Organic Chemistry Revision Paper",
-    subject: "Chemistry",
-    class: "Grade 12",
-    marks: 50,
-    questions: 15,
-    status: "Archived",
-    createdAt: "05 Sep 2023",
-    duration: "1.5 Hours"
-  },
-  {
-    id: 4,
-    title: "Biology Final Practice",
-    subject: "Biology",
-    class: "Grade 11",
-    marks: 80,
-    questions: 20,
-    status: "Published",
-    createdAt: "20 Oct 2023",
-    duration: "2.5 Hours"
-  }
-];
+import { tutorPapersMock } from '@/lib/mock/tutorDashboardMock';
 
 export default function QuestionPapers() {
   return (
@@ -116,7 +70,7 @@ export default function QuestionPapers() {
 
       {/* Papers Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {papers.map((paper) => (
+        {tutorPapersMock.map((paper) => (
           <Card key={paper.id} className="group flex flex-col border-2 border-transparent hover:border-indigo-100 transition-all hover:shadow-xl">
             <div className="p-6 flex-1">
               <div className="flex justify-between items-start mb-4">

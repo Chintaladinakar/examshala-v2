@@ -14,59 +14,7 @@ import {
   User
 } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/teacher/ui/Base';
-
-const submissions = [
-  {
-    id: 1,
-    student: "John Doe",
-    test: "Mathematics Mid-Term",
-    class: "Grade 10-A",
-    status: "Pending",
-    autoScore: "35/50",
-    submittedAt: "2 hours ago",
-    avatar: "https://ui-avatars.com/api/?name=John+Doe&background=random"
-  },
-  {
-    id: 2,
-    student: "Jane Smith",
-    test: "Mathematics Mid-Term",
-    class: "Grade 10-A",
-    status: "Completed",
-    totalScore: "88/100",
-    submittedAt: "5 hours ago",
-    avatar: "https://ui-avatars.com/api/?name=Jane+Smith&background=random"
-  },
-  {
-    id: 3,
-    student: "Robert Brown",
-    test: "Physics Quiz 1",
-    class: "Grade 9-B",
-    status: "Pending",
-    autoScore: "12/15",
-    submittedAt: "1 day ago",
-    avatar: "https://ui-avatars.com/api/?name=Robert+Brown&background=random"
-  },
-  {
-    id: 4,
-    student: "Emily White",
-    test: "Physics Quiz 1",
-    class: "Grade 9-B",
-    status: "Completed",
-    totalScore: "18/20",
-    submittedAt: "1 day ago",
-    avatar: "https://ui-avatars.com/api/?name=Emily+White&background=random"
-  },
-  {
-    id: 5,
-    student: "Michael Ross",
-    test: "Chemistry Lab Report",
-    class: "Grade 12-C",
-    status: "Needs Review",
-    autoScore: "0/0",
-    submittedAt: "3 days ago",
-    avatar: "https://ui-avatars.com/api/?name=Michael+Ross&background=random"
-  }
-];
+import { tutorEvaluationSubmissionsMock } from '@/lib/mock/tutorDashboardMock';
 
 export default function Evaluation() {
   return (
@@ -167,7 +115,7 @@ export default function Evaluation() {
 
           {/* Submission Cards */}
           <div className="space-y-3">
-            {submissions.map((sub) => (
+            {tutorEvaluationSubmissionsMock.map((sub) => (
               <Card key={sub.id} className="group hover:border-indigo-300 hover:shadow-md transition-all cursor-pointer overflow-visible">
                 <div className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
