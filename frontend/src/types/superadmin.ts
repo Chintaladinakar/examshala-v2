@@ -25,3 +25,14 @@ export interface Workspace {
   createdAt: string;
   userCount: number;
 }
+
+export interface Result {
+  id: string;
+  studentName: string;
+  examTitle: string;
+  workspaceName: string;
+  score: number;
+  maxScore: number;
+  status: string;
+  evaluatedAt: string;
+}

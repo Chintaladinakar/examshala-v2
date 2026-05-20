@@ -3,22 +3,7 @@ import { Sidebar } from '@/components/superadmin/Sidebar';
 import { Header } from '@/components/superadmin/Header';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-
-async function getSettings(token: string) {
-  try {
-    const res = await fetch('http://localhost:5000/api/superadmin/settings', {
-      headers: { 'Authorization': `Bearer ${token}` },
-      cache: 'no-store'
-    });
-    if (res.ok) {
-      const payload = await res.json();
-      return payload.data;
-    }
-  } catch (error) {
-    console.error('Failed to fetch settings in layout', error);
-  }
-  return { platformName: 'Examshala' };
-}
+import { getPlatformSettings } from '@/lib/superadmin/data';
 
 export default async function SuperAdminLayout({
   children,
@@ -32,7 +17,7 @@ export default async function SuperAdminLayout({
     redirect('/signin');
   }
 
-  const settings = await getSettings(token);
+  const settings = await getPlatformSettings(token);
 
   // Server action to handle logout logic from the layout/page level
   async function handleLogout() {

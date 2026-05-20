@@ -2,30 +2,8 @@ import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { WorkspacesTable } from '@/components/superadmin/WorkspacesTable';
-
-async function getWorkspaces(token: string) {
-  const res = await fetch('http://localhost:5000/api/superadmin/workspaces', {
-    headers: { 'Authorization': `Bearer ${token}` },
-    cache: 'no-store'
-  });
-  if (!res.ok) return [];
-  const payload = await res.json();
-  return payload.data;
-}
-
-async function getMembers(token: string) {
-  const res = await fetch('http://localhost:5000/api/superadmin/users', {
-    headers: { 'Authorization': `Bearer ${token}` },
-    cache: 'no-store'
-  });
-  if (!res.ok) return [];
-  const payload = await res.json();
-  return payload.data.map((u: any) => ({
-    ...u,
-    globalRole: u.role === 'superadmin' ? 'superadmin' : 'user',
-    workspaces: []
-  }));
-}
+import { fetchJson } from '@/lib/api';
+import { getSuperAdminWorkspaces, getSuperAdminUsers } from '@/lib/superadmin/data';
 
 export default async function SuperAdminWorkspacesPage() {
   const cookieStore = await cookies();
@@ -36,8 +14,8 @@ export default async function SuperAdminWorkspacesPage() {
   }
 
   const [workspaces, members] = await Promise.all([
-    getWorkspaces(token),
-    getMembers(token)
+    getSuperAdminWorkspaces(token),
+    getSuperAdminUsers(token),
   ]);
 
   async function createWorkspace(name: string) {
@@ -45,13 +23,11 @@ export default async function SuperAdminWorkspacesPage() {
     const store = await cookies();
     const serverToken = store.get('session_token')?.value;
     
-    await fetch('http://localhost:5000/api/superadmin/workspaces', {
+    await fetchJson('/api/superadmin/workspaces', {
       method: 'POST',
-      headers: { 
-        'Authorization': `Bearer ${serverToken}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name })
+      headers: { 'Authorization': `Bearer ${serverToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name }),
+      action: 'create',
     });
   }
 
@@ -60,9 +36,10 @@ export default async function SuperAdminWorkspacesPage() {
     const store = await cookies();
     const serverToken = store.get('session_token')?.value;
     
-    await fetch(`http://localhost:5000/api/superadmin/workspaces/${id}`, {
+    await fetchJson(`/api/superadmin/workspaces/${id}`, {
       method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${serverToken}` }
+      headers: { 'Authorization': `Bearer ${serverToken}` },
+      action: 'delete',
     });
   }
 

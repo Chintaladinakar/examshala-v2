@@ -2,30 +2,8 @@ import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { UsersTable } from '@/components/superadmin/UsersTable';
-
-async function getUsers(token: string) {
-  const res = await fetch('http://localhost:5000/api/superadmin/users', {
-    headers: { 'Authorization': `Bearer ${token}` },
-    cache: 'no-store'
-  });
-  if (!res.ok) return [];
-  const payload = await res.json();
-  return payload.data.map((u: any) => ({
-    ...u,
-    globalRole: u.role === 'superadmin' ? 'superadmin' : 'user',
-    workspaces: []
-  }));
-}
-
-async function getWorkspaces(token: string) {
-  const res = await fetch('http://localhost:5000/api/superadmin/workspaces', {
-    headers: { 'Authorization': `Bearer ${token}` },
-    cache: 'no-store'
-  });
-  if (!res.ok) return [];
-  const payload = await res.json();
-  return payload.data;
-}
+import { fetchJson } from '@/lib/api';
+import { getSuperAdminUsers, getSuperAdminWorkspaces } from '@/lib/superadmin/data';
 
 export default async function SuperAdminUsersPage() {
   const cookieStore = await cookies();
@@ -34,8 +12,8 @@ export default async function SuperAdminUsersPage() {
   if (!token) redirect('/signin');
 
   const [users, workspaces] = await Promise.all([
-    getUsers(token),
-    getWorkspaces(token)
+    getSuperAdminUsers(token),
+    getSuperAdminWorkspaces(token)
   ]);
 
   async function toggleUserStatus(userId: string, currentStatus: boolean) {
@@ -43,13 +21,11 @@ export default async function SuperAdminUsersPage() {
     const store = await cookies();
     const serverToken = store.get('session_token')?.value;
     
-    await fetch(`http://localhost:5000/api/superadmin/users/${userId}/status`, {
+    await fetchJson(`/api/superadmin/users/${userId}/status`, {
       method: 'PATCH',
-      headers: { 
-        'Authorization': `Bearer ${serverToken}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ isActive: !currentStatus })
+      headers: { 'Authorization': `Bearer ${serverToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ isActive: !currentStatus }),
+      action: 'update',
     });
   }
 

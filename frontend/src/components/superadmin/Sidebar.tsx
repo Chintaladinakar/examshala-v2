@@ -3,16 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Users, Building2, Settings, Activity } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-const navItems = [
-  { href: '/superadmin', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/superadmin/users', label: 'Users', icon: Users },
-  { href: '/superadmin/workspaces', label: 'Workspaces', icon: Building2 },
-  { href: '/superadmin/results', label: 'Results', icon: Activity },
-  { href: '/superadmin/settings', label: 'Settings', icon: Settings },
-];
+import { superAdminRoutes } from '@/lib/superadmin/routes';
 
 interface SidebarProps {
   platformName?: string;
@@ -40,9 +32,17 @@ export function Sidebar({ platformName = "Examshala" }: SidebarProps) {
         </div>
         
         <nav className="flex-1 px-4 space-y-1">
-          {navItems.map((item) => {
+          {superAdminRoutes.map((item) => {
             const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
-            return (
+            return item.disabled ? (
+              <div
+                key={item.href}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm text-slate-400 cursor-not-allowed opacity-70"
+              >
+                <item.icon className="w-5 h-5 text-slate-300" />
+                {item.label}
+              </div>
+            ) : (
               <Link
                 key={item.href}
                 href={item.href}
@@ -56,16 +56,25 @@ export function Sidebar({ platformName = "Examshala" }: SidebarProps) {
                 <item.icon className={cn("w-5 h-5", isActive ? "text-indigo-700" : "text-slate-400")} />
                 {item.label}
               </Link>
-            )
+            );
           })}
         </nav>
       </aside>
 
       {/* Mobile Bottom Nav */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50 px-6 py-3 flex justify-between items-center safe-area-pb">
-        {navItems.map((item) => {
+        {superAdminRoutes.slice(0, 5).map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
+            item.disabled ? (
+              <div
+                key={item.href}
+                className="flex flex-col items-center gap-1 text-slate-400 opacity-70"
+              >
+                <item.icon className="w-5 h-5 text-slate-300" />
+                <span className="text-[10px] font-medium">{item.label}</span>
+              </div>
+            ) : (
             <Link
               key={item.href}
               href={item.href}
@@ -77,6 +86,7 @@ export function Sidebar({ platformName = "Examshala" }: SidebarProps) {
               <item.icon className={cn("w-5 h-5", isActive ? "text-indigo-700" : "text-slate-400")} />
               <span className="text-[10px] font-medium">{item.label}</span>
             </Link>
+            )
           )
         })}
       </nav>

@@ -7,17 +7,7 @@ import { Table } from './Table';
 import { TableRow, TableCell } from './TableRow';
 import { CheckCircle, TrendingUp, Award, Calendar, Building2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-interface Result {
-  id: string;
-  studentName: string;
-  examTitle: string;
-  workspaceName: string;
-  score: number;
-  maxScore: number;
-  status: string;
-  evaluatedAt: string;
-}
+import type { Result } from '@/types/superadmin';
 
 interface ResultsTableProps {
   initialResults: Result[];

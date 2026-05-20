@@ -2,6 +2,7 @@ import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { ResultsTable } from '@/components/superadmin/ResultsTable';
+import { getSuperAdminResults } from '@/lib/superadmin/data';
 
 export default async function SuperAdminResultsPage() {
   const cookieStore = await cookies();
@@ -11,20 +12,7 @@ export default async function SuperAdminResultsPage() {
     redirect('/signin');
   }
 
-  // Fetch all results server-side
-  let resultsData = [];
-  try {
-    const res = await fetch('http://localhost:5000/api/superadmin/results', {
-      headers: { 'Authorization': `Bearer ${token}` },
-      cache: 'no-store'
-    });
-    if (res.ok) {
-      const payload = await res.json();
-      resultsData = payload.data;
-    }
-  } catch (error) {
-    console.error('Failed to fetch results', error);
-  }
+  const resultsData = await getSuperAdminResults(token);
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
