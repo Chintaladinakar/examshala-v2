@@ -38,9 +38,25 @@ export default function UsersManagementPage() {
   const [submittingInvite, setSubmittingInvite] = useState(false);
   const [inviteSuccessMsg, setInviteSuccessMsg] = useState<string | null>(null);
   const [inviteErrorMsg, setInviteErrorMsg] = useState<string | null>(null);
+  const [generatedPassword, setGeneratedPassword] = useState<string | null>(null);
 
   // Status changing state (tracks ID of user currently being toggled)
   const [togglingId, setTogglingId] = useState<string | null>(null);
+
+  // Edit Modal State
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editName, setEditName] = useState('');
+  const [editEmail, setEditEmail] = useState('');
+  const [editRole, setEditRole] = useState<'ORG_ADMIN' | 'PRINCIPAL' | 'TEACHER' | 'STUDENT'>('TEACHER');
+  const [editWorkspaceId, setEditWorkspaceId] = useState('');
+  const [editStatus, setEditStatus] = useState<'ACTIVE' | 'INACTIVE' | 'INVITED'>('ACTIVE');
+  const [submittingEdit, setSubmittingEdit] = useState(false);
+  const [editSuccessMsg, setEditSuccessMsg] = useState<string | null>(null);
+  const [editErrorMsg, setEditErrorMsg] = useState<string | null>(null);
+
+  // Deleting State
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const getCookie = (name: string) => {
     if (typeof document === 'undefined') return '';
@@ -139,7 +155,7 @@ export default function UsersManagementPage() {
         body.workspaceId = inviteWorkspaceId;
       }
 
-      await fetchJson('/api/admin/invites', {
+      const res = await fetchJson<{ success: boolean; data: { password?: string } }>('/api/admin/invites', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -148,6 +164,8 @@ export default function UsersManagementPage() {
         body: JSON.stringify(body),
       });
 
+      const tempPassword = res.data?.password || 'ExamshalaInvited@123';
+      setGeneratedPassword(tempPassword);
       setInviteSuccessMsg(`Successfully sent invite to ${inviteEmail}!`);
       setInviteEmail('');
       setInviteWorkspaceId('');
@@ -155,16 +173,86 @@ export default function UsersManagementPage() {
       
       // Reload users list to show the new INVITED entry
       loadData();
-
-      // Close modal after a short delay
-      setTimeout(() => {
-        setInviteModalOpen(false);
-        setInviteSuccessMsg(null);
-      }, 1500);
     } catch (err: any) {
       setInviteErrorMsg(err.message || 'Failed to dispatch workspace invitation.');
     } finally {
       setSubmittingInvite(false);
+    }
+  };
+
+  const handleOpenEditModal = (user: User) => {
+    setEditingUser(user);
+    setEditName(user.name || '');
+    setEditEmail(user.email || '');
+    setEditRole(user.role);
+    setEditWorkspaceId(user.workspaceId || '');
+    setEditStatus(user.status);
+    setEditSuccessMsg(null);
+    setEditErrorMsg(null);
+    setEditModalOpen(true);
+  };
+
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingUser) return;
+
+    try {
+      setSubmittingEdit(true);
+      setEditSuccessMsg(null);
+      setEditErrorMsg(null);
+      const token = getCookie('session_token');
+
+      await fetchJson(`/api/admin/users/${editingUser.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: editName,
+          email: editEmail,
+          role: editRole,
+          workspaceId: editWorkspaceId || null,
+          status: editStatus,
+        }),
+      });
+
+      setEditSuccessMsg('User updated successfully!');
+      
+      loadData();
+
+      setTimeout(() => {
+        setEditModalOpen(false);
+        setEditingUser(null);
+        setEditSuccessMsg(null);
+      }, 1200);
+    } catch (err: any) {
+      setEditErrorMsg(err.message || 'Failed to update user details.');
+    } finally {
+      setSubmittingEdit(false);
+    }
+  };
+
+  const handleDeleteUser = async (user: User) => {
+    const confirmDelete = window.confirm(`Are you sure you want to permanently delete user "${user.name || user.email}"? This will remove all their system access and clean up associated records. This cannot be undone.`);
+    if (!confirmDelete) return;
+
+    try {
+      setDeletingId(user.id);
+      const token = getCookie('session_token');
+
+      await fetchJson(`/api/admin/users/${user.id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setUsers(prev => prev.filter(u => u.id !== user.id));
+    } catch (err: any) {
+      alert(`Failed to delete user: ${err.message || 'Request failed'}`);
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -331,21 +419,45 @@ export default function UsersManagementPage() {
                         <span className="text-xs text-slate-400 font-medium">{joinedDate}</span>
                       </td>
                       <td className="px-6 py-4.5 text-right">
-                        {user.status !== 'INVITED' ? (
+                        <div className="flex items-center justify-end gap-2">
                           <button
-                            onClick={() => handleToggleStatus(user)}
-                            disabled={togglingId === user.id}
-                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-                              user.status === 'ACTIVE'
-                                ? 'bg-rose-50 text-rose-700 border-rose-100 hover:bg-rose-100'
-                                : 'bg-emerald-50 text-emerald-700 border-emerald-100 hover:bg-emerald-100'
-                            } disabled:opacity-50`}
+                            onClick={() => handleOpenEditModal(user)}
+                            className="inline-flex items-center justify-center p-1.5 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-all cursor-pointer"
+                            title="Edit User"
                           >
-                            {togglingId === user.id ? 'Updating...' : user.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
                           </button>
-                        ) : (
-                          <span className="text-xs text-slate-350 italic">Awaiting Acceptance</span>
-                        )}
+                          
+                          {user.status !== 'INVITED' ? (
+                            <button
+                              onClick={() => handleToggleStatus(user)}
+                              disabled={togglingId === user.id}
+                              className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+                                user.status === 'ACTIVE'
+                                  ? 'bg-rose-50 text-rose-700 border-rose-100 hover:bg-rose-100'
+                                  : 'bg-emerald-50 text-emerald-700 border-emerald-100 hover:bg-emerald-100'
+                              } disabled:opacity-50 cursor-pointer`}
+                              title={user.status === 'ACTIVE' ? 'Deactivate User' : 'Activate User'}
+                            >
+                              {togglingId === user.id ? 'Updating...' : user.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
+                            </button>
+                          ) : (
+                            <span className="text-xs text-slate-350 italic pr-1">Invited</span>
+                          )}
+
+                          <button
+                            onClick={() => handleDeleteUser(user)}
+                            disabled={deletingId === user.id}
+                            className="inline-flex items-center justify-center p-1.5 rounded-lg border border-rose-200 text-rose-600 hover:bg-rose-50 hover:text-rose-750 transition-all disabled:opacity-50 cursor-pointer"
+                            title="Delete User"
+                          >
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -370,26 +482,182 @@ export default function UsersManagementPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l18 18" />
               </svg>
             </button>
+            <div className="space-y-4">
+              {inviteSuccessMsg ? (
+                <div className="space-y-5 animate-in fade-in duration-200">
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900">User Invited Successfully!</h3>
+                    <p className="text-xs text-slate-500 mt-1">Copy and share these credentials with the user so they can log in.</p>
+                  </div>
+
+                  <div className="bg-emerald-50 border border-emerald-100 text-emerald-850 text-xs font-semibold px-4 py-3 rounded-xl">
+                    🎉 {inviteSuccessMsg}
+                  </div>
+
+                  {generatedPassword && (
+                    <div className="bg-slate-50 border border-slate-200/60 p-4 rounded-xl space-y-2">
+                      <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Generated Password</span>
+                      <div className="flex items-center justify-between gap-2 bg-white px-3 py-2 rounded-lg border border-slate-200">
+                        <code className="text-xs font-mono select-all text-slate-800 font-bold">{generatedPassword}</code>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard.writeText(generatedPassword);
+                            alert('Password copied to clipboard!');
+                          }}
+                          className="text-xs font-bold text-teal-800 hover:text-teal-950 px-2.5 py-1 rounded-lg bg-teal-50 border border-teal-100/60 transition-all cursor-pointer"
+                        >
+                          Copy
+                        </button>
+                      </div>
+                      <span className="text-[10px] text-slate-400 block">This is a temporary password. The user can change it once logged in.</span>
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setInviteModalOpen(false);
+                      setInviteSuccessMsg(null);
+                      setGeneratedPassword(null);
+                    }}
+                    className="w-full px-4 py-2.5 bg-teal-950 hover:bg-teal-900 text-white font-semibold rounded-xl text-sm transition-colors cursor-pointer"
+                  >
+                    Done & Close
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900">Invite Platform Member</h3>
+                    <p className="text-xs text-slate-500 mt-1">Dispatches invitation email and seeds an inactive user mapping record.</p>
+                  </div>
+
+                  {inviteErrorMsg && (
+                    <div className="bg-rose-50 border border-rose-100 text-rose-800 text-xs font-semibold px-4 py-3 rounded-xl">
+                      ⚠️ {inviteErrorMsg}
+                    </div>
+                  )}
+
+                  <form onSubmit={handleSendInvite} className="space-y-4 pt-2">
+                    {/* Email Address */}
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Email Address</label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="name@organization.com"
+                        value={inviteEmail}
+                        onChange={e => setInviteEmail(e.target.value)}
+                        className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-800 placeholder-slate-400 px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
+                      />
+                    </div>
+
+                    {/* Role dropdown */}
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Security Role</label>
+                      <select
+                        value={inviteRole}
+                        onChange={e => setInviteRole(e.target.value as any)}
+                        className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-700 py-2.5 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
+                      >
+                        <option value="ORG_ADMIN">Organization Admin</option>
+                        <option value="PRINCIPAL">Principal</option>
+                        <option value="TEACHER">Teacher</option>
+                        <option value="STUDENT">Student</option>
+                      </select>
+                    </div>
+
+                    {/* Optional Workspace dropdown */}
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                        Workspace Mapping <span className="text-slate-400 lowercase italic">(optional)</span>
+                      </label>
+                      <select
+                        value={inviteWorkspaceId}
+                        onChange={e => setInviteWorkspaceId(e.target.value)}
+                        className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-700 py-2.5 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
+                      >
+                        <option value="">None (Link later)</option>
+                        {workspaces.map(ws => (
+                          <option key={ws.id} value={ws.id}>
+                            {ws.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Submission buttons */}
+                    <div className="flex gap-3 pt-4 border-t border-slate-100">
+                      <button
+                        type="button"
+                        onClick={() => setInviteModalOpen(false)}
+                        className="flex-1 px-4 py-2.5 border border-slate-200 text-slate-600 font-semibold rounded-xl text-sm hover:bg-slate-50 transition-colors"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={submittingInvite}
+                        className="flex-1 px-4 py-2.5 bg-teal-950 hover:bg-teal-900 text-white font-semibold rounded-xl text-sm transition-colors disabled:opacity-50"
+                      >
+                        {submittingInvite ? 'Inviting...' : 'Send Invitation'}
+                      </button>
+                    </div>
+                  </form>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Edit User Modal Dialog */}
+      {editModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-teal-950/40 backdrop-blur-sm" onClick={() => { setEditModalOpen(false); setEditingUser(null); }} />
+          
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-md w-full p-6 md:p-8 relative z-10 animate-in fade-in zoom-in-95 duration-200">
+            <button
+              onClick={() => { setEditModalOpen(false); setEditingUser(null); }}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l18 18" />
+              </svg>
+            </button>
 
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-bold text-slate-900">Invite Platform Member</h3>
-                <p className="text-xs text-slate-500 mt-1">Dispatches invitation email and seeds an inactive user mapping record.</p>
+                <h3 className="text-lg font-bold text-slate-900">Edit User Details</h3>
+                <p className="text-xs text-slate-500 mt-1">Update profile information, security role, system status, and workspace linkage.</p>
               </div>
 
-              {inviteSuccessMsg && (
+              {editSuccessMsg && (
                 <div className="bg-emerald-50 border border-emerald-100 text-emerald-800 text-xs font-semibold px-4 py-3 rounded-xl">
-                  🎉 {inviteSuccessMsg}
+                  🎉 {editSuccessMsg}
                 </div>
               )}
 
-              {inviteErrorMsg && (
+              {editErrorMsg && (
                 <div className="bg-rose-50 border border-rose-100 text-rose-800 text-xs font-semibold px-4 py-3 rounded-xl">
-                  ⚠️ {inviteErrorMsg}
+                  ⚠️ {editErrorMsg}
                 </div>
               )}
 
-              <form onSubmit={handleSendInvite} className="space-y-4 pt-2">
+              <form onSubmit={handleSaveEdit} className="space-y-4 pt-2">
+                {/* Full Name */}
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Full Name</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="User's Full Name"
+                    value={editName}
+                    onChange={e => setEditName(e.target.value)}
+                    className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-800 placeholder-slate-400 px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
+                  />
+                </div>
+
                 {/* Email Address */}
                 <div className="space-y-1">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Email Address</label>
@@ -397,8 +665,8 @@ export default function UsersManagementPage() {
                     type="email"
                     required
                     placeholder="name@organization.com"
-                    value={inviteEmail}
-                    onChange={e => setInviteEmail(e.target.value)}
+                    value={editEmail}
+                    onChange={e => setEditEmail(e.target.value)}
                     className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-800 placeholder-slate-400 px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
                   />
                 </div>
@@ -407,8 +675,8 @@ export default function UsersManagementPage() {
                 <div className="space-y-1">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Security Role</label>
                   <select
-                    value={inviteRole}
-                    onChange={e => setInviteRole(e.target.value as any)}
+                    value={editRole}
+                    onChange={e => setEditRole(e.target.value as any)}
                     className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-700 py-2.5 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
                   >
                     <option value="ORG_ADMIN">Organization Admin</option>
@@ -424,11 +692,11 @@ export default function UsersManagementPage() {
                     Workspace Mapping <span className="text-slate-400 lowercase italic">(optional)</span>
                   </label>
                   <select
-                    value={inviteWorkspaceId}
-                    onChange={e => setInviteWorkspaceId(e.target.value)}
+                    value={editWorkspaceId}
+                    onChange={e => setEditWorkspaceId(e.target.value)}
                     className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-700 py-2.5 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
                   >
-                    <option value="">None (Link later)</option>
+                    <option value="">None (Unlinked)</option>
                     {workspaces.map(ws => (
                       <option key={ws.id} value={ws.id}>
                         {ws.name}
@@ -437,21 +705,35 @@ export default function UsersManagementPage() {
                   </select>
                 </div>
 
+                {/* Status Selection */}
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">System Status</label>
+                  <select
+                    value={editStatus}
+                    onChange={e => setEditStatus(e.target.value as any)}
+                    className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-700 py-2.5 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
+                  >
+                    <option value="ACTIVE">Active</option>
+                    <option value="INACTIVE">Inactive</option>
+                    <option value="INVITED">Invited (Awaiting Signup)</option>
+                  </select>
+                </div>
+
                 {/* Submission buttons */}
                 <div className="flex gap-3 pt-4 border-t border-slate-100">
                   <button
                     type="button"
-                    onClick={() => setInviteModalOpen(false)}
+                    onClick={() => { setEditModalOpen(false); setEditingUser(null); }}
                     className="flex-1 px-4 py-2.5 border border-slate-200 text-slate-600 font-semibold rounded-xl text-sm hover:bg-slate-50 transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    disabled={submittingInvite}
+                    disabled={submittingEdit}
                     className="flex-1 px-4 py-2.5 bg-teal-950 hover:bg-teal-900 text-white font-semibold rounded-xl text-sm transition-colors disabled:opacity-50"
                   >
-                    {submittingInvite ? 'Inviting...' : 'Send Invitation'}
+                    {submittingEdit ? 'Saving...' : 'Save Changes'}
                   </button>
                 </div>
               </form>

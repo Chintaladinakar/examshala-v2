@@ -2,7 +2,7 @@ import prisma from '../lib/prisma';
 
 interface LogParams {
   userId: string;
-  action: 'USER_CREATED' | 'WORKSPACE_CREATED' | 'INVITE_SENT' | 'ROLE_ASSIGNED';
+  action: 'USER_CREATED' | 'WORKSPACE_CREATED' | 'INVITE_SENT' | 'ROLE_ASSIGNED' | 'WORKSPACE_UPDATED' | 'WORKSPACE_DELETED' | 'USER_DELETED' | 'USER_UPDATED';
   entity: 'USER' | 'WORKSPACE' | 'INVITE' | 'SYSTEM';
   entityId: string;
   metadata?: any;

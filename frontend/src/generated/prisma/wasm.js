@@ -93,31 +93,205 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.AttemptScalarFieldEnum = {
-  id: 'id',
-  score: 'score',
-  focusLoss: 'focusLoss',
-  startedAt: 'startedAt',
-  submittedAt: 'submittedAt',
-  studentId: 'studentId',
-  testId: 'testId'
-};
-
-exports.Prisma.TestScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  duration: 'duration',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
   passwordHash: 'passwordHash',
   role: 'role',
+  isActive: 'isActive',
+  status: 'status',
+  workspaceId: 'workspaceId',
+  mode: 'mode',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.WorkspaceScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  principalId: 'principalId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.WorkspaceMembershipScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  workspaceId: 'workspaceId',
+  role: 'role',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.StudentWorkspaceProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  workspaceId: 'workspaceId',
+  metadata: 'metadata'
+};
+
+exports.Prisma.TestScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  duration: 'duration',
+  instructions: 'instructions',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AssessmentAssignmentScalarFieldEnum = {
+  id: 'id',
+  testId: 'testId',
+  workspaceId: 'workspaceId',
+  assignedByType: 'assignedByType',
+  assignedByUserId: 'assignedByUserId',
+  assignedByName: 'assignedByName',
+  assignedAt: 'assignedAt',
+  tutorInstructions: 'tutorInstructions',
+  scheduleWindowStart: 'scheduleWindowStart',
+  scheduleWindowEnd: 'scheduleWindowEnd',
+  isReady: 'isReady'
+};
+
+exports.Prisma.AssessmentAttemptScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  assignmentId: 'assignmentId',
+  focusLoss: 'focusLoss',
+  startedAt: 'startedAt',
+  submittedAt: 'submittedAt',
+  status: 'status'
+};
+
+exports.Prisma.AssessmentResultScalarFieldEnum = {
+  id: 'id',
+  attemptId: 'attemptId',
+  score: 'score',
+  maxScore: 'maxScore',
+  evaluatedAt: 'evaluatedAt',
+  feedback: 'feedback'
+};
+
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  workspaceId: 'workspaceId',
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  isRead: 'isRead',
+  actionUrl: 'actionUrl',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ParentStudentLinkScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  parentUserId: 'parentUserId',
+  pendingParentEmail: 'pendingParentEmail',
+  relation: 'relation',
+  status: 'status',
+  requestedBy: 'requestedBy',
+  linkedAt: 'linkedAt',
+  removalRequestedBy: 'removalRequestedBy',
+  approvalMetadata: 'approvalMetadata'
+};
+
+exports.Prisma.AuditLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  action: 'action',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  details: 'details',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.InviteScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  role: 'role',
+  workspaceId: 'workspaceId',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.LogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  action: 'action',
+  entity: 'entity',
+  entityId: 'entityId',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ClassScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  workspaceId: 'workspaceId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ClassTeacherScalarFieldEnum = {
+  id: 'id',
+  classId: 'classId',
+  teacherId: 'teacherId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ClassStudentScalarFieldEnum = {
+  id: 'id',
+  classId: 'classId',
+  studentId: 'studentId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AttendanceScalarFieldEnum = {
+  id: 'id',
+  classId: 'classId',
+  studentId: 'studentId',
+  date: 'date',
+  status: 'status',
+  markedByUserId: 'markedByUserId',
+  lastUpdatedBy: 'lastUpdatedBy',
+  isLocked: 'isLocked',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AssignmentScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  dueDate: 'dueDate',
+  classId: 'classId',
+  createdByUserId: 'createdByUserId',
+  createdRole: 'createdRole',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AssignmentFeedbackScalarFieldEnum = {
+  id: 'id',
+  assignmentId: 'assignmentId',
+  comment: 'comment',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AssignmentSubmissionScalarFieldEnum = {
+  id: 'id',
+  assignmentId: 'assignmentId',
+  studentId: 'studentId',
+  fileUrl: 'fileUrl',
+  submittedAt: 'submittedAt'
+};
+
+exports.Prisma.SchoolLogScalarFieldEnum = {
+  id: 'id',
+  actionType: 'actionType',
+  userId: 'userId',
+  role: 'role',
+  entityId: 'entityId',
+  timestamp: 'timestamp'
 };
 
 exports.Prisma.SortOrder = {
@@ -125,16 +299,50 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
 
 exports.Prisma.ModelName = {
-  Attempt: 'Attempt',
+  User: 'User',
+  Workspace: 'Workspace',
+  WorkspaceMembership: 'WorkspaceMembership',
+  StudentWorkspaceProfile: 'StudentWorkspaceProfile',
   Test: 'Test',
-  User: 'User'
+  AssessmentAssignment: 'AssessmentAssignment',
+  AssessmentAttempt: 'AssessmentAttempt',
+  AssessmentResult: 'AssessmentResult',
+  Notification: 'Notification',
+  ParentStudentLink: 'ParentStudentLink',
+  AuditLog: 'AuditLog',
+  Invite: 'Invite',
+  Log: 'Log',
+  Class: 'Class',
+  ClassTeacher: 'ClassTeacher',
+  ClassStudent: 'ClassStudent',
+  Attendance: 'Attendance',
+  Assignment: 'Assignment',
+  AssignmentFeedback: 'AssignmentFeedback',
+  AssignmentSubmission: 'AssignmentSubmission',
+  SchoolLog: 'SchoolLog'
 };
 /**
  * Create the Client
@@ -147,7 +355,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\chint\\Downloads\\examshala\\src\\generated\\prisma",
+      "value": "C:\\Users\\chint\\Downloads\\examshala\\frontend\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -161,7 +369,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\chint\\Downloads\\examshala\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\chint\\Downloads\\examshala\\frontend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -179,18 +387,18 @@ const config = {
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "DATABASE_URL",
+        "fromEnvVar": "DBPOST_uri",
         "value": null
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Attempt {\n  id          String   @id\n  score       Int\n  focusLoss   Int\n  startedAt   DateTime\n  submittedAt DateTime\n  studentId   String\n  testId      String\n  User        User     @relation(fields: [studentId], references: [id])\n  Test        Test     @relation(fields: [testId], references: [id])\n}\n\nmodel Test {\n  id        String    @id\n  title     String\n  duration  Int\n  createdBy String\n  createdAt DateTime  @default(now())\n  Attempt   Attempt[]\n}\n\nmodel User {\n  id           String    @id\n  name         String\n  email        String    @unique\n  passwordHash String\n  role         String    @default(\"student\")\n  createdAt    DateTime  @default(now())\n  Attempt      Attempt[]\n}\n",
-  "inlineSchemaHash": "56ba46cc7143751e7af560874aef9545c84654ac13ac506ad8e9804d40d9c412",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DBPOST_uri\")\n}\n\nmodel User {\n  id           String   @id @default(uuid())\n  name         String\n  email        String   @unique\n  passwordHash String?\n  role         String   @default(\"student\")\n  isActive     Boolean  @default(true)\n  status       String   @default(\"ACTIVE\") // ACTIVE, INACTIVE, INVITED\n  workspaceId  String?\n  mode         String?  @default(\"principal\") // principal | teacher\n  createdAt    DateTime @default(now())\n\n  // Relations\n  attempts        AssessmentAttempt[]\n  memberships     WorkspaceMembership[]\n  studentLinks    ParentStudentLink[]       @relation(\"StudentRelation\")\n  parentLinks     ParentStudentLink[]       @relation(\"ParentRelation\")\n  studentProfiles StudentWorkspaceProfile[]\n\n  // School SaaS SaaS Relations\n  classTeachers      ClassTeacher[]\n  classStudents      ClassStudent[]\n  attendances        Attendance[]\n  markedAttendances  Attendance[]           @relation(\"MarkedBy\")\n  updatedAttendances Attendance[]           @relation(\"UpdatedBy\")\n  schoolAssignments  Assignment[]\n  feedbacks          AssignmentFeedback[]\n  submissions        AssignmentSubmission[]\n  schoolLogs         SchoolLog[]\n}\n\nmodel Workspace {\n  id          String   @id @default(uuid())\n  name        String\n  createdBy   String? // Org Admin ID\n  principalId String? // Principal ID\n  createdAt   DateTime @default(now())\n\n  memberships     WorkspaceMembership[]\n  studentProfiles StudentWorkspaceProfile[]\n  assignments     AssessmentAssignment[]\n  notifications   Notification[]\n  classes         Class[]\n}\n\nmodel WorkspaceMembership {\n  id          String   @id @default(uuid())\n  userId      String\n  workspaceId String\n  role        String   @default(\"student\") // \"student\", \"tutor\", \"admin\"\n  createdAt   DateTime @default(now())\n\n  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  Workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)\n\n  @@unique([userId, workspaceId])\n}\n\nmodel StudentWorkspaceProfile {\n  id          String @id @default(uuid())\n  userId      String\n  workspaceId String\n  metadata    Json?\n\n  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  Workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)\n\n  @@unique([userId, workspaceId])\n}\n\nmodel Test {\n  id           String   @id @default(uuid())\n  title        String\n  duration     Int\n  instructions String?\n  createdBy    String\n  createdAt    DateTime @default(now())\n\n  assignments AssessmentAssignment[]\n}\n\nmodel AssessmentAssignment {\n  id               String   @id @default(uuid())\n  testId           String\n  workspaceId      String\n  assignedByType   String // \"tutor\" | \"parent\" | \"system\"\n  assignedByUserId String\n  assignedByName   String\n  assignedAt       DateTime @default(now())\n\n  // Instructions specific to this assignment\n  tutorInstructions String?\n\n  scheduleWindowStart DateTime?\n  scheduleWindowEnd   DateTime?\n\n  isReady Boolean @default(true)\n\n  Test      Test      @relation(fields: [testId], references: [id])\n  Workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)\n\n  attempts AssessmentAttempt[]\n}\n\nmodel AssessmentAttempt {\n  id           String    @id @default(uuid())\n  studentId    String\n  assignmentId String\n  focusLoss    Int       @default(0)\n  startedAt    DateTime  @default(now())\n  submittedAt  DateTime?\n  status       String    @default(\"in_progress\") // \"in_progress\" | \"submitted\" | \"evaluated\"\n\n  User       User                 @relation(fields: [studentId], references: [id], onDelete: Cascade)\n  Assignment AssessmentAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)\n  Result     AssessmentResult?\n}\n\nmodel AssessmentResult {\n  id          String   @id @default(uuid())\n  attemptId   String   @unique\n  score       Int\n  maxScore    Int\n  evaluatedAt DateTime @default(now())\n  feedback    String?\n\n  Attempt AssessmentAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)\n}\n\nmodel Notification {\n  id          String   @id @default(uuid())\n  userId      String\n  workspaceId String?\n  type        String // \"exam_assigned\" | \"result_published\" | \"system_alert\" | \"parent_request\"\n  title       String\n  message     String\n  isRead      Boolean  @default(false)\n  actionUrl   String?\n  createdAt   DateTime @default(now())\n\n  Workspace Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)\n}\n\nmodel ParentStudentLink {\n  id                 String    @id @default(uuid())\n  studentId          String\n  parentUserId       String?\n  pendingParentEmail String?\n  relation           String // \"father\", \"mother\", \"guardian\"\n  status             String    @default(\"pending\") // \"pending\" | \"active\" | \"removal_requested\"\n  requestedBy        String // \"student\" | \"parent\"\n  linkedAt           DateTime?\n  removalRequestedBy String?\n  approvalMetadata   Json?\n\n  Student User  @relation(\"StudentRelation\", fields: [studentId], references: [id], onDelete: Cascade)\n  Parent  User? @relation(\"ParentRelation\", fields: [parentUserId], references: [id])\n}\n\nmodel AuditLog {\n  id         String   @id @default(uuid())\n  userId     String?\n  action     String\n  entityType String\n  entityId   String\n  details    Json?\n  createdAt  DateTime @default(now())\n}\n\nmodel Invite {\n  id          String   @id @default(uuid())\n  email       String\n  role        String\n  workspaceId String?\n  status      String   @default(\"PENDING\") // PENDING, ACCEPTED\n  createdAt   DateTime @default(now())\n}\n\nmodel Log {\n  id        String   @id @default(uuid())\n  userId    String\n  action    String\n  entity    String // USER, WORKSPACE, INVITE, SYSTEM\n  entityId  String\n  metadata  Json?\n  createdAt DateTime @default(now())\n}\n\nmodel Class {\n  id          String   @id @default(uuid())\n  name        String\n  workspaceId String\n  createdAt   DateTime @default(now())\n\n  Workspace   Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)\n  teachers    ClassTeacher[]\n  students    ClassStudent[]\n  attendances Attendance[]\n  assignments Assignment[]\n}\n\nmodel ClassTeacher {\n  id        String   @id @default(uuid())\n  classId   String\n  teacherId String\n  createdAt DateTime @default(now())\n\n  Class   Class @relation(fields: [classId], references: [id], onDelete: Cascade)\n  Teacher User  @relation(fields: [teacherId], references: [id], onDelete: Cascade)\n\n  @@unique([classId, teacherId])\n}\n\nmodel ClassStudent {\n  id        String   @id @default(uuid())\n  classId   String\n  studentId String\n  createdAt DateTime @default(now())\n\n  Class   Class @relation(fields: [classId], references: [id], onDelete: Cascade)\n  Student User  @relation(fields: [studentId], references: [id], onDelete: Cascade)\n\n  @@unique([classId, studentId])\n}\n\nmodel Attendance {\n  id             String   @id @default(uuid())\n  classId        String\n  studentId      String\n  date           DateTime\n  status         String // \"present\" | \"absent\"\n  markedByUserId String\n  lastUpdatedBy  String\n  isLocked       Boolean  @default(false)\n  createdAt      DateTime @default(now())\n\n  Class     Class @relation(fields: [classId], references: [id], onDelete: Cascade)\n  Student   User  @relation(fields: [studentId], references: [id], onDelete: Cascade)\n  MarkedBy  User  @relation(\"MarkedBy\", fields: [markedByUserId], references: [id])\n  UpdatedBy User  @relation(\"UpdatedBy\", fields: [lastUpdatedBy], references: [id])\n\n  @@unique([classId, studentId, date])\n}\n\nmodel Assignment {\n  id              String   @id @default(uuid())\n  title           String\n  description     String\n  dueDate         DateTime\n  classId         String\n  createdByUserId String\n  createdRole     String // \"teacher\" | \"principal-teacher-mode\"\n  createdAt       DateTime @default(now())\n\n  Class       Class                  @relation(fields: [classId], references: [id], onDelete: Cascade)\n  Creator     User                   @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)\n  feedbacks   AssignmentFeedback[]\n  submissions AssignmentSubmission[]\n}\n\nmodel AssignmentFeedback {\n  id              String   @id @default(uuid())\n  assignmentId    String\n  comment         String\n  createdByUserId String\n  createdAt       DateTime @default(now())\n\n  Assignment Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)\n  Creator    User       @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)\n}\n\nmodel AssignmentSubmission {\n  id           String   @id @default(uuid())\n  assignmentId String\n  studentId    String\n  fileUrl      String\n  submittedAt  DateTime @default(now())\n\n  Assignment Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)\n  Student    User       @relation(fields: [studentId], references: [id], onDelete: Cascade)\n}\n\nmodel SchoolLog {\n  id         String   @id @default(uuid())\n  actionType String // \"attendance_marked\" | \"attendance_updated\" | \"assignment_created\" | \"feedback_added\"\n  userId     String\n  role       String\n  entityId   String\n  timestamp  DateTime @default(now())\n\n  User User @relation(fields: [userId], references: [id], onDelete: Cascade)\n}\n",
+  "inlineSchemaHash": "1701ffc6e68deb11150f28a5a0433d03f04c0bce49ac975a12e559c4c677ba91",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Attempt\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"score\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"focusLoss\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"startedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"submittedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"studentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"testId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"User\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AttemptToUser\"},{\"name\":\"Test\",\"kind\":\"object\",\"type\":\"Test\",\"relationName\":\"AttemptToTest\"}],\"dbName\":null},\"Test\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"duration\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Attempt\",\"kind\":\"object\",\"type\":\"Attempt\",\"relationName\":\"AttemptToTest\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Attempt\",\"kind\":\"object\",\"type\":\"Attempt\",\"relationName\":\"AttemptToUser\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workspaceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"mode\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"attempts\",\"kind\":\"object\",\"type\":\"AssessmentAttempt\",\"relationName\":\"AssessmentAttemptToUser\"},{\"name\":\"memberships\",\"kind\":\"object\",\"type\":\"WorkspaceMembership\",\"relationName\":\"UserToWorkspaceMembership\"},{\"name\":\"studentLinks\",\"kind\":\"object\",\"type\":\"ParentStudentLink\",\"relationName\":\"StudentRelation\"},{\"name\":\"parentLinks\",\"kind\":\"object\",\"type\":\"ParentStudentLink\",\"relationName\":\"ParentRelation\"},{\"name\":\"studentProfiles\",\"kind\":\"object\",\"type\":\"StudentWorkspaceProfile\",\"relationName\":\"StudentWorkspaceProfileToUser\"},{\"name\":\"classTeachers\",\"kind\":\"object\",\"type\":\"ClassTeacher\",\"relationName\":\"ClassTeacherToUser\"},{\"name\":\"classStudents\",\"kind\":\"object\",\"type\":\"ClassStudent\",\"relationName\":\"ClassStudentToUser\"},{\"name\":\"attendances\",\"kind\":\"object\",\"type\":\"Attendance\",\"relationName\":\"AttendanceToUser\"},{\"name\":\"markedAttendances\",\"kind\":\"object\",\"type\":\"Attendance\",\"relationName\":\"MarkedBy\"},{\"name\":\"updatedAttendances\",\"kind\":\"object\",\"type\":\"Attendance\",\"relationName\":\"UpdatedBy\"},{\"name\":\"schoolAssignments\",\"kind\":\"object\",\"type\":\"Assignment\",\"relationName\":\"AssignmentToUser\"},{\"name\":\"feedbacks\",\"kind\":\"object\",\"type\":\"AssignmentFeedback\",\"relationName\":\"AssignmentFeedbackToUser\"},{\"name\":\"submissions\",\"kind\":\"object\",\"type\":\"AssignmentSubmission\",\"relationName\":\"AssignmentSubmissionToUser\"},{\"name\":\"schoolLogs\",\"kind\":\"object\",\"type\":\"SchoolLog\",\"relationName\":\"SchoolLogToUser\"}],\"dbName\":null},\"Workspace\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"principalId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"memberships\",\"kind\":\"object\",\"type\":\"WorkspaceMembership\",\"relationName\":\"WorkspaceToWorkspaceMembership\"},{\"name\":\"studentProfiles\",\"kind\":\"object\",\"type\":\"StudentWorkspaceProfile\",\"relationName\":\"StudentWorkspaceProfileToWorkspace\"},{\"name\":\"assignments\",\"kind\":\"object\",\"type\":\"AssessmentAssignment\",\"relationName\":\"AssessmentAssignmentToWorkspace\"},{\"name\":\"notifications\",\"kind\":\"object\",\"type\":\"Notification\",\"relationName\":\"NotificationToWorkspace\"},{\"name\":\"classes\",\"kind\":\"object\",\"type\":\"Class\",\"relationName\":\"ClassToWorkspace\"}],\"dbName\":null},\"WorkspaceMembership\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workspaceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"User\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToWorkspaceMembership\"},{\"name\":\"Workspace\",\"kind\":\"object\",\"type\":\"Workspace\",\"relationName\":\"WorkspaceToWorkspaceMembership\"}],\"dbName\":null},\"StudentWorkspaceProfile\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workspaceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"User\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"StudentWorkspaceProfileToUser\"},{\"name\":\"Workspace\",\"kind\":\"object\",\"type\":\"Workspace\",\"relationName\":\"StudentWorkspaceProfileToWorkspace\"}],\"dbName\":null},\"Test\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"duration\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"instructions\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"assignments\",\"kind\":\"object\",\"type\":\"AssessmentAssignment\",\"relationName\":\"AssessmentAssignmentToTest\"}],\"dbName\":null},\"AssessmentAssignment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"testId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workspaceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"assignedByType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"assignedByUserId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"assignedByName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"assignedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"tutorInstructions\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"scheduleWindowStart\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"scheduleWindowEnd\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"isReady\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"Test\",\"kind\":\"object\",\"type\":\"Test\",\"relationName\":\"AssessmentAssignmentToTest\"},{\"name\":\"Workspace\",\"kind\":\"object\",\"type\":\"Workspace\",\"relationName\":\"AssessmentAssignmentToWorkspace\"},{\"name\":\"attempts\",\"kind\":\"object\",\"type\":\"AssessmentAttempt\",\"relationName\":\"AssessmentAssignmentToAssessmentAttempt\"}],\"dbName\":null},\"AssessmentAttempt\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"studentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"assignmentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"focusLoss\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"startedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"submittedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"User\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AssessmentAttemptToUser\"},{\"name\":\"Assignment\",\"kind\":\"object\",\"type\":\"AssessmentAssignment\",\"relationName\":\"AssessmentAssignmentToAssessmentAttempt\"},{\"name\":\"Result\",\"kind\":\"object\",\"type\":\"AssessmentResult\",\"relationName\":\"AssessmentAttemptToAssessmentResult\"}],\"dbName\":null},\"AssessmentResult\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"attemptId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"score\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"maxScore\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"evaluatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"feedback\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"Attempt\",\"kind\":\"object\",\"type\":\"AssessmentAttempt\",\"relationName\":\"AssessmentAttemptToAssessmentResult\"}],\"dbName\":null},\"Notification\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workspaceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"message\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isRead\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"actionUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Workspace\",\"kind\":\"object\",\"type\":\"Workspace\",\"relationName\":\"NotificationToWorkspace\"}],\"dbName\":null},\"ParentStudentLink\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"studentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentUserId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"pendingParentEmail\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"relation\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"requestedBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"linkedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"removalRequestedBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"approvalMetadata\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"Student\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"StudentRelation\"},{\"name\":\"Parent\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ParentRelation\"}],\"dbName\":null},\"AuditLog\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"action\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"entityType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"entityId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"details\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Invite\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workspaceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Log\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"action\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"entity\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"entityId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Class\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workspaceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Workspace\",\"kind\":\"object\",\"type\":\"Workspace\",\"relationName\":\"ClassToWorkspace\"},{\"name\":\"teachers\",\"kind\":\"object\",\"type\":\"ClassTeacher\",\"relationName\":\"ClassToClassTeacher\"},{\"name\":\"students\",\"kind\":\"object\",\"type\":\"ClassStudent\",\"relationName\":\"ClassToClassStudent\"},{\"name\":\"attendances\",\"kind\":\"object\",\"type\":\"Attendance\",\"relationName\":\"AttendanceToClass\"},{\"name\":\"assignments\",\"kind\":\"object\",\"type\":\"Assignment\",\"relationName\":\"AssignmentToClass\"}],\"dbName\":null},\"ClassTeacher\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"classId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"teacherId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Class\",\"kind\":\"object\",\"type\":\"Class\",\"relationName\":\"ClassToClassTeacher\"},{\"name\":\"Teacher\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ClassTeacherToUser\"}],\"dbName\":null},\"ClassStudent\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"classId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"studentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Class\",\"kind\":\"object\",\"type\":\"Class\",\"relationName\":\"ClassToClassStudent\"},{\"name\":\"Student\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ClassStudentToUser\"}],\"dbName\":null},\"Attendance\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"classId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"studentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"markedByUserId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastUpdatedBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isLocked\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Class\",\"kind\":\"object\",\"type\":\"Class\",\"relationName\":\"AttendanceToClass\"},{\"name\":\"Student\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AttendanceToUser\"},{\"name\":\"MarkedBy\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MarkedBy\"},{\"name\":\"UpdatedBy\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UpdatedBy\"}],\"dbName\":null},\"Assignment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"dueDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"classId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdByUserId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdRole\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Class\",\"kind\":\"object\",\"type\":\"Class\",\"relationName\":\"AssignmentToClass\"},{\"name\":\"Creator\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AssignmentToUser\"},{\"name\":\"feedbacks\",\"kind\":\"object\",\"type\":\"AssignmentFeedback\",\"relationName\":\"AssignmentToAssignmentFeedback\"},{\"name\":\"submissions\",\"kind\":\"object\",\"type\":\"AssignmentSubmission\",\"relationName\":\"AssignmentToAssignmentSubmission\"}],\"dbName\":null},\"AssignmentFeedback\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"assignmentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"comment\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdByUserId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Assignment\",\"kind\":\"object\",\"type\":\"Assignment\",\"relationName\":\"AssignmentToAssignmentFeedback\"},{\"name\":\"Creator\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AssignmentFeedbackToUser\"}],\"dbName\":null},\"AssignmentSubmission\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"assignmentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"studentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fileUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"submittedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Assignment\",\"kind\":\"object\",\"type\":\"Assignment\",\"relationName\":\"AssignmentToAssignmentSubmission\"},{\"name\":\"Student\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AssignmentSubmissionToUser\"}],\"dbName\":null},\"SchoolLog\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"actionType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"entityId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"timestamp\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"User\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SchoolLogToUser\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
@@ -204,7 +412,7 @@ config.compilerWasm = undefined
 
 config.injectableEdgeEnv = () => ({
   parsed: {
-    DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_URL || undefined
+    DBPOST_uri: typeof globalThis !== 'undefined' && globalThis['DBPOST_uri'] || typeof process !== 'undefined' && process.env && process.env.DBPOST_uri || undefined
   }
 })
 

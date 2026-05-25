@@ -38,6 +38,7 @@ export type TestMinAggregateOutputType = {
   id: string | null
   title: string | null
   duration: number | null
+  instructions: string | null
   createdBy: string | null
   createdAt: Date | null
 }
@@ -46,6 +47,7 @@ export type TestMaxAggregateOutputType = {
   id: string | null
   title: string | null
   duration: number | null
+  instructions: string | null
   createdBy: string | null
   createdAt: Date | null
 }
@@ -54,6 +56,7 @@ export type TestCountAggregateOutputType = {
   id: number
   title: number
   duration: number
+  instructions: number
   createdBy: number
   createdAt: number
   _all: number
@@ -72,6 +75,7 @@ export type TestMinAggregateInputType = {
   id?: true
   title?: true
   duration?: true
+  instructions?: true
   createdBy?: true
   createdAt?: true
 }
@@ -80,6 +84,7 @@ export type TestMaxAggregateInputType = {
   id?: true
   title?: true
   duration?: true
+  instructions?: true
   createdBy?: true
   createdAt?: true
 }
@@ -88,6 +93,7 @@ export type TestCountAggregateInputType = {
   id?: true
   title?: true
   duration?: true
+  instructions?: true
   createdBy?: true
   createdAt?: true
   _all?: true
@@ -183,6 +189,7 @@ export type TestGroupByOutputType = {
   id: string
   title: string
   duration: number
+  instructions: string | null
   createdBy: string
   createdAt: Date
   _count: TestCountAggregateOutputType | null
@@ -214,18 +221,20 @@ export type TestWhereInput = {
   id?: Prisma.StringFilter<"Test"> | string
   title?: Prisma.StringFilter<"Test"> | string
   duration?: Prisma.IntFilter<"Test"> | number
+  instructions?: Prisma.StringNullableFilter<"Test"> | string | null
   createdBy?: Prisma.StringFilter<"Test"> | string
   createdAt?: Prisma.DateTimeFilter<"Test"> | Date | string
-  Attempt?: Prisma.AttemptListRelationFilter
+  assignments?: Prisma.AssessmentAssignmentListRelationFilter
 }
 
 export type TestOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  instructions?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  Attempt?: Prisma.AttemptOrderByRelationAggregateInput
+  assignments?: Prisma.AssessmentAssignmentOrderByRelationAggregateInput
 }
 
 export type TestWhereUniqueInput = Prisma.AtLeast<{
@@ -235,15 +244,17 @@ export type TestWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TestWhereInput | Prisma.TestWhereInput[]
   title?: Prisma.StringFilter<"Test"> | string
   duration?: Prisma.IntFilter<"Test"> | number
+  instructions?: Prisma.StringNullableFilter<"Test"> | string | null
   createdBy?: Prisma.StringFilter<"Test"> | string
   createdAt?: Prisma.DateTimeFilter<"Test"> | Date | string
-  Attempt?: Prisma.AttemptListRelationFilter
+  assignments?: Prisma.AssessmentAssignmentListRelationFilter
 }, "id">
 
 export type TestOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  instructions?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.TestCountOrderByAggregateInput
@@ -260,50 +271,56 @@ export type TestScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Test"> | string
   title?: Prisma.StringWithAggregatesFilter<"Test"> | string
   duration?: Prisma.IntWithAggregatesFilter<"Test"> | number
+  instructions?: Prisma.StringNullableWithAggregatesFilter<"Test"> | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"Test"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Test"> | Date | string
 }
 
 export type TestCreateInput = {
-  id: string
+  id?: string
   title: string
   duration: number
+  instructions?: string | null
   createdBy: string
   createdAt?: Date | string
-  Attempt?: Prisma.AttemptCreateNestedManyWithoutTestInput
+  assignments?: Prisma.AssessmentAssignmentCreateNestedManyWithoutTestInput
 }
 
 export type TestUncheckedCreateInput = {
-  id: string
+  id?: string
   title: string
   duration: number
+  instructions?: string | null
   createdBy: string
   createdAt?: Date | string
-  Attempt?: Prisma.AttemptUncheckedCreateNestedManyWithoutTestInput
+  assignments?: Prisma.AssessmentAssignmentUncheckedCreateNestedManyWithoutTestInput
 }
 
 export type TestUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Attempt?: Prisma.AttemptUpdateManyWithoutTestNestedInput
+  assignments?: Prisma.AssessmentAssignmentUpdateManyWithoutTestNestedInput
 }
 
 export type TestUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Attempt?: Prisma.AttemptUncheckedUpdateManyWithoutTestNestedInput
+  assignments?: Prisma.AssessmentAssignmentUncheckedUpdateManyWithoutTestNestedInput
 }
 
 export type TestCreateManyInput = {
-  id: string
+  id?: string
   title: string
   duration: number
+  instructions?: string | null
   createdBy: string
   createdAt?: Date | string
 }
@@ -312,6 +329,7 @@ export type TestUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -320,19 +338,16 @@ export type TestUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type TestScalarRelationFilter = {
-  is?: Prisma.TestWhereInput
-  isNot?: Prisma.TestWhereInput
 }
 
 export type TestCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  instructions?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -345,6 +360,7 @@ export type TestMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  instructions?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -353,6 +369,7 @@ export type TestMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  instructions?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -361,64 +378,81 @@ export type TestSumOrderByAggregateInput = {
   duration?: Prisma.SortOrder
 }
 
-export type TestCreateNestedOneWithoutAttemptInput = {
-  create?: Prisma.XOR<Prisma.TestCreateWithoutAttemptInput, Prisma.TestUncheckedCreateWithoutAttemptInput>
-  connectOrCreate?: Prisma.TestCreateOrConnectWithoutAttemptInput
+export type TestScalarRelationFilter = {
+  is?: Prisma.TestWhereInput
+  isNot?: Prisma.TestWhereInput
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type TestCreateNestedOneWithoutAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.TestCreateWithoutAssignmentsInput, Prisma.TestUncheckedCreateWithoutAssignmentsInput>
+  connectOrCreate?: Prisma.TestCreateOrConnectWithoutAssignmentsInput
   connect?: Prisma.TestWhereUniqueInput
 }
 
-export type TestUpdateOneRequiredWithoutAttemptNestedInput = {
-  create?: Prisma.XOR<Prisma.TestCreateWithoutAttemptInput, Prisma.TestUncheckedCreateWithoutAttemptInput>
-  connectOrCreate?: Prisma.TestCreateOrConnectWithoutAttemptInput
-  upsert?: Prisma.TestUpsertWithoutAttemptInput
+export type TestUpdateOneRequiredWithoutAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.TestCreateWithoutAssignmentsInput, Prisma.TestUncheckedCreateWithoutAssignmentsInput>
+  connectOrCreate?: Prisma.TestCreateOrConnectWithoutAssignmentsInput
+  upsert?: Prisma.TestUpsertWithoutAssignmentsInput
   connect?: Prisma.TestWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TestUpdateToOneWithWhereWithoutAttemptInput, Prisma.TestUpdateWithoutAttemptInput>, Prisma.TestUncheckedUpdateWithoutAttemptInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TestUpdateToOneWithWhereWithoutAssignmentsInput, Prisma.TestUpdateWithoutAssignmentsInput>, Prisma.TestUncheckedUpdateWithoutAssignmentsInput>
 }
 
-export type TestCreateWithoutAttemptInput = {
-  id: string
+export type TestCreateWithoutAssignmentsInput = {
+  id?: string
   title: string
   duration: number
+  instructions?: string | null
   createdBy: string
   createdAt?: Date | string
 }
 
-export type TestUncheckedCreateWithoutAttemptInput = {
-  id: string
+export type TestUncheckedCreateWithoutAssignmentsInput = {
+  id?: string
   title: string
   duration: number
+  instructions?: string | null
   createdBy: string
   createdAt?: Date | string
 }
 
-export type TestCreateOrConnectWithoutAttemptInput = {
+export type TestCreateOrConnectWithoutAssignmentsInput = {
   where: Prisma.TestWhereUniqueInput
-  create: Prisma.XOR<Prisma.TestCreateWithoutAttemptInput, Prisma.TestUncheckedCreateWithoutAttemptInput>
+  create: Prisma.XOR<Prisma.TestCreateWithoutAssignmentsInput, Prisma.TestUncheckedCreateWithoutAssignmentsInput>
 }
 
-export type TestUpsertWithoutAttemptInput = {
-  update: Prisma.XOR<Prisma.TestUpdateWithoutAttemptInput, Prisma.TestUncheckedUpdateWithoutAttemptInput>
-  create: Prisma.XOR<Prisma.TestCreateWithoutAttemptInput, Prisma.TestUncheckedCreateWithoutAttemptInput>
+export type TestUpsertWithoutAssignmentsInput = {
+  update: Prisma.XOR<Prisma.TestUpdateWithoutAssignmentsInput, Prisma.TestUncheckedUpdateWithoutAssignmentsInput>
+  create: Prisma.XOR<Prisma.TestCreateWithoutAssignmentsInput, Prisma.TestUncheckedCreateWithoutAssignmentsInput>
   where?: Prisma.TestWhereInput
 }
 
-export type TestUpdateToOneWithWhereWithoutAttemptInput = {
+export type TestUpdateToOneWithWhereWithoutAssignmentsInput = {
   where?: Prisma.TestWhereInput
-  data: Prisma.XOR<Prisma.TestUpdateWithoutAttemptInput, Prisma.TestUncheckedUpdateWithoutAttemptInput>
+  data: Prisma.XOR<Prisma.TestUpdateWithoutAssignmentsInput, Prisma.TestUncheckedUpdateWithoutAssignmentsInput>
 }
 
-export type TestUpdateWithoutAttemptInput = {
+export type TestUpdateWithoutAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type TestUncheckedUpdateWithoutAttemptInput = {
+export type TestUncheckedUpdateWithoutAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -429,11 +463,11 @@ export type TestUncheckedUpdateWithoutAttemptInput = {
  */
 
 export type TestCountOutputType = {
-  Attempt: number
+  assignments: number
 }
 
 export type TestCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Attempt?: boolean | TestCountOutputTypeCountAttemptArgs
+  assignments?: boolean | TestCountOutputTypeCountAssignmentsArgs
 }
 
 /**
@@ -449,8 +483,8 @@ export type TestCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * TestCountOutputType without action
  */
-export type TestCountOutputTypeCountAttemptArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AttemptWhereInput
+export type TestCountOutputTypeCountAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssessmentAssignmentWhereInput
 }
 
 
@@ -458,9 +492,10 @@ export type TestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   title?: boolean
   duration?: boolean
+  instructions?: boolean
   createdBy?: boolean
   createdAt?: boolean
-  Attempt?: boolean | Prisma.Test$AttemptArgs<ExtArgs>
+  assignments?: boolean | Prisma.Test$assignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.TestCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["test"]>
 
@@ -468,6 +503,7 @@ export type TestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   title?: boolean
   duration?: boolean
+  instructions?: boolean
   createdBy?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["test"]>
@@ -476,6 +512,7 @@ export type TestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   title?: boolean
   duration?: boolean
+  instructions?: boolean
   createdBy?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["test"]>
@@ -484,13 +521,14 @@ export type TestSelectScalar = {
   id?: boolean
   title?: boolean
   duration?: boolean
+  instructions?: boolean
   createdBy?: boolean
   createdAt?: boolean
 }
 
-export type TestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "duration" | "createdBy" | "createdAt", ExtArgs["result"]["test"]>
+export type TestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "duration" | "instructions" | "createdBy" | "createdAt", ExtArgs["result"]["test"]>
 export type TestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Attempt?: boolean | Prisma.Test$AttemptArgs<ExtArgs>
+  assignments?: boolean | Prisma.Test$assignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.TestCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -499,12 +537,13 @@ export type TestIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $TestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Test"
   objects: {
-    Attempt: Prisma.$AttemptPayload<ExtArgs>[]
+    assignments: Prisma.$AssessmentAssignmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     title: string
     duration: number
+    instructions: string | null
     createdBy: string
     createdAt: Date
   }, ExtArgs["result"]["test"]>
@@ -901,7 +940,7 @@ readonly fields: TestFieldRefs;
  */
 export interface Prisma__TestClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  Attempt<T extends Prisma.Test$AttemptArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Test$AttemptArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignments<T extends Prisma.Test$assignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Test$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssessmentAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -934,6 +973,7 @@ export interface TestFieldRefs {
   readonly id: Prisma.FieldRef<"Test", 'String'>
   readonly title: Prisma.FieldRef<"Test", 'String'>
   readonly duration: Prisma.FieldRef<"Test", 'Int'>
+  readonly instructions: Prisma.FieldRef<"Test", 'String'>
   readonly createdBy: Prisma.FieldRef<"Test", 'String'>
   readonly createdAt: Prisma.FieldRef<"Test", 'DateTime'>
 }
@@ -1324,27 +1364,27 @@ export type TestDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Test.Attempt
+ * Test.assignments
  */
-export type Test$AttemptArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Test$assignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Attempt
+   * Select specific fields to fetch from the AssessmentAssignment
    */
-  select?: Prisma.AttemptSelect<ExtArgs> | null
+  select?: Prisma.AssessmentAssignmentSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Attempt
+   * Omit specific fields from the AssessmentAssignment
    */
-  omit?: Prisma.AttemptOmit<ExtArgs> | null
+  omit?: Prisma.AssessmentAssignmentOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.AttemptInclude<ExtArgs> | null
-  where?: Prisma.AttemptWhereInput
-  orderBy?: Prisma.AttemptOrderByWithRelationInput | Prisma.AttemptOrderByWithRelationInput[]
-  cursor?: Prisma.AttemptWhereUniqueInput
+  include?: Prisma.AssessmentAssignmentInclude<ExtArgs> | null
+  where?: Prisma.AssessmentAssignmentWhereInput
+  orderBy?: Prisma.AssessmentAssignmentOrderByWithRelationInput | Prisma.AssessmentAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.AssessmentAssignmentWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.AttemptScalarFieldEnum | Prisma.AttemptScalarFieldEnum[]
+  distinct?: Prisma.AssessmentAssignmentScalarFieldEnum | Prisma.AssessmentAssignmentScalarFieldEnum[]
 }
 
 /**

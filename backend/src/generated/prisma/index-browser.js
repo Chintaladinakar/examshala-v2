@@ -120,30 +120,212 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.AttemptScalarFieldEnum = {
-  id: 'id',
-  score: 'score',
-  focusLoss: 'focusLoss',
-  startedAt: 'startedAt',
-  submittedAt: 'submittedAt',
-  studentId: 'studentId',
-  testId: 'testId'
-};
-
-exports.Prisma.TestScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  duration: 'duration',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
   passwordHash: 'passwordHash',
   role: 'role',
+  isActive: 'isActive',
+  status: 'status',
+  workspaceId: 'workspaceId',
+  mode: 'mode',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.WorkspaceScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  principalId: 'principalId',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.WorkspaceMembershipScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  workspaceId: 'workspaceId',
+  role: 'role',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.StudentWorkspaceProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  workspaceId: 'workspaceId',
+  metadata: 'metadata'
+};
+
+exports.Prisma.TestScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  duration: 'duration',
+  instructions: 'instructions',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AssessmentAssignmentScalarFieldEnum = {
+  id: 'id',
+  testId: 'testId',
+  workspaceId: 'workspaceId',
+  assignedByType: 'assignedByType',
+  assignedByUserId: 'assignedByUserId',
+  assignedByName: 'assignedByName',
+  assignedAt: 'assignedAt',
+  tutorInstructions: 'tutorInstructions',
+  scheduleWindowStart: 'scheduleWindowStart',
+  scheduleWindowEnd: 'scheduleWindowEnd',
+  isReady: 'isReady'
+};
+
+exports.Prisma.AssessmentAttemptScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  assignmentId: 'assignmentId',
+  focusLoss: 'focusLoss',
+  startedAt: 'startedAt',
+  submittedAt: 'submittedAt',
+  status: 'status'
+};
+
+exports.Prisma.AssessmentResultScalarFieldEnum = {
+  id: 'id',
+  attemptId: 'attemptId',
+  score: 'score',
+  maxScore: 'maxScore',
+  evaluatedAt: 'evaluatedAt',
+  feedback: 'feedback'
+};
+
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  workspaceId: 'workspaceId',
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  isRead: 'isRead',
+  actionUrl: 'actionUrl',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ParentStudentLinkScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  parentUserId: 'parentUserId',
+  pendingParentEmail: 'pendingParentEmail',
+  relation: 'relation',
+  status: 'status',
+  requestedBy: 'requestedBy',
+  linkedAt: 'linkedAt',
+  removalRequestedBy: 'removalRequestedBy',
+  approvalMetadata: 'approvalMetadata'
+};
+
+exports.Prisma.AuditLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  action: 'action',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  details: 'details',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.InviteScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  role: 'role',
+  workspaceId: 'workspaceId',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.LogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  action: 'action',
+  entity: 'entity',
+  entityId: 'entityId',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ClassScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  workspaceId: 'workspaceId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ClassTeacherScalarFieldEnum = {
+  id: 'id',
+  classId: 'classId',
+  teacherId: 'teacherId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ClassStudentScalarFieldEnum = {
+  id: 'id',
+  classId: 'classId',
+  studentId: 'studentId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AttendanceScalarFieldEnum = {
+  id: 'id',
+  classId: 'classId',
+  studentId: 'studentId',
+  date: 'date',
+  status: 'status',
+  markedByUserId: 'markedByUserId',
+  lastUpdatedBy: 'lastUpdatedBy',
+  isLocked: 'isLocked',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AssignmentScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  dueDate: 'dueDate',
+  classId: 'classId',
+  createdByUserId: 'createdByUserId',
+  createdRole: 'createdRole',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AssignmentFeedbackScalarFieldEnum = {
+  id: 'id',
+  assignmentId: 'assignmentId',
+  comment: 'comment',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AssignmentSubmissionScalarFieldEnum = {
+  id: 'id',
+  assignmentId: 'assignmentId',
+  studentId: 'studentId',
+  fileUrl: 'fileUrl',
+  submittedAt: 'submittedAt'
+};
+
+exports.Prisma.SchoolLogScalarFieldEnum = {
+  id: 'id',
+  actionType: 'actionType',
+  userId: 'userId',
+  role: 'role',
+  entityId: 'entityId',
+  timestamp: 'timestamp'
+};
+
+exports.Prisma.PlatformSettingsScalarFieldEnum = {
+  id: 'id',
+  platformName: 'platformName',
+  supportEmail: 'supportEmail',
   createdAt: 'createdAt'
 };
 
@@ -152,16 +334,51 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
 
 exports.Prisma.ModelName = {
-  Attempt: 'Attempt',
+  User: 'User',
+  Workspace: 'Workspace',
+  WorkspaceMembership: 'WorkspaceMembership',
+  StudentWorkspaceProfile: 'StudentWorkspaceProfile',
   Test: 'Test',
-  User: 'User'
+  AssessmentAssignment: 'AssessmentAssignment',
+  AssessmentAttempt: 'AssessmentAttempt',
+  AssessmentResult: 'AssessmentResult',
+  Notification: 'Notification',
+  ParentStudentLink: 'ParentStudentLink',
+  AuditLog: 'AuditLog',
+  Invite: 'Invite',
+  Log: 'Log',
+  Class: 'Class',
+  ClassTeacher: 'ClassTeacher',
+  ClassStudent: 'ClassStudent',
+  Attendance: 'Attendance',
+  Assignment: 'Assignment',
+  AssignmentFeedback: 'AssignmentFeedback',
+  AssignmentSubmission: 'AssignmentSubmission',
+  SchoolLog: 'SchoolLog',
+  PlatformSettings: 'PlatformSettings'
 };
 
 /**
