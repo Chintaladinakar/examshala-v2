@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
-    "build": "tsc",
+    "build": "tsc && powershell -Command \"Remove-Item -Recurse -Force dist/generated/prisma; Copy-Item -Recurse -Force src/generated/prisma dist/generated\"",
     "start": "node dist/server.js",
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev",

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { fetchJson } from '@/lib/api';
+import { useUser } from '@/context/UserContext';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -37,15 +38,20 @@ function buildLinks(role: string, mode: string): NavLink[] {
   const isPrincipal = role === 'principal';
   const inPrincipalMode = isPrincipal && mode === 'principal';
 
+  // Dashboard href depends on current mode for principals
+  const dashboardHref = isPrincipal
+    ? (inPrincipalMode ? '/principledashboard' : '/tutordashboard')
+    : '/tutordashboard';
+
   if (isPrincipal && inPrincipalMode) {
     return [
-      { href: '/dashboard',   label: 'Dashboard',   icon: '📊' },
+      { href: dashboardHref,  label: 'Dashboard', icon: '📊' },
       { href: '/students',    label: 'Students',     icon: '🎓' },
       { href: '/teachers',    label: 'Teachers',     icon: '👨‍🏫' },
       { href: '/classes',     label: 'Classes',      icon: '🏫' },
       { href: '/attendance',  label: 'Attendance',   icon: '📅' },
       { href: '/assignments', label: 'Assignments',  icon: '📝' },
-      { href: '/admin/logs',  label: 'Logs',         icon: '🗂️' },
+      { href: '/logs',        label: 'Logs',         icon: '🗂️' },
       { href: '/profile',     label: 'Profile',      icon: '👤' },
     ];
   }
@@ -53,7 +59,7 @@ function buildLinks(role: string, mode: string): NavLink[] {
   if (isPrincipal && !inPrincipalMode) {
     // Principal in Teacher Mode
     return [
-      { href: '/dashboard',   label: 'Dashboard',   icon: '📊' },
+      { href: dashboardHref,  label: 'Dashboard',   icon: '📊' },
       { href: '/students',    label: 'Students',     icon: '🎓' },
       { href: '/classes',     label: 'Classes',      icon: '🏫' },
       { href: '/attendance',  label: 'Attendance',   icon: '📅' },
@@ -64,7 +70,7 @@ function buildLinks(role: string, mode: string): NavLink[] {
 
   // Regular teacher / tutor
   return [
-    { href: '/dashboard',   label: 'Dashboard',   icon: '📊' },
+    { href: '/tutordashboard',   label: 'Dashboard',   icon: '📊' },
     { href: '/students',    label: 'Students',     icon: '🎓' },
     { href: '/classes',     label: 'Classes',      icon: '🏫' },
     { href: '/attendance',  label: 'Attendance',   icon: '📅' },
@@ -103,41 +109,11 @@ function SidebarSkeleton() {
 export default function DashboardSidebar() {
   const pathname = usePathname();
   const router = useRouter();
-
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { user: profile, loading, switchMode } = useUser();
   const [switching, setSwitching] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // ── Profile ──────────────────────────────────────────────────────────────
-
-  const loadProfile = async () => {
-    try {
-      setLoading(true);
-      const token = getCookie('session_token');
-      if (!token) {
-        router.push('/signin');
-        return;
-      }
-      const response = await fetchJson<{ success: boolean; data: UserProfile }>(
-        '/api/school/profile',
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      if (response.success && response.data) {
-        setProfile(response.data);
-      }
-    } catch (err) {
-      console.error('Failed to load school user profile:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadProfile();
-  }, []);
 
   // ── Close dropdown on outside click ──────────────────────────────────────
 
@@ -153,21 +129,18 @@ export default function DashboardSidebar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [dropdownOpen]);
 
-  // ── Mode switch ───────────────────────────────────────────────────────────
+  // ── Mode switch with redirect ─────────────────────────────────────────────
 
   const handleModeSwitch = async () => {
     if (!profile || profile.role.toLowerCase() !== 'principal') return;
     setDropdownOpen(false);
     try {
       setSwitching(true);
-      const token = getCookie('session_token');
-      const response = await fetchJson<{ success: boolean; data: unknown }>(
-        '/api/school/switch-mode',
-        { method: 'POST', headers: { Authorization: `Bearer ${token}` } }
-      );
-      if (response.success) {
-        await loadProfile();
-        router.refresh();
+      const newMode = await switchMode();
+      if (newMode) {
+        // Redirect to the correct dashboard for the new mode
+        const targetPath = newMode === 'teacher' ? '/tutordashboard' : '/principledashboard';
+        router.push(targetPath);
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Request failed';
@@ -210,7 +183,7 @@ export default function DashboardSidebar() {
       {/* ── Header ── */}
       <div className="px-5 pt-6 pb-5 border-b border-teal-900/60 space-y-3">
         {/* Logo + brand */}
-        <Link href="/dashboard" className="flex items-center gap-2.5 group">
+        <Link href="/principledashboard" className="flex items-center gap-2.5 group">
           <div className="w-8 h-8 bg-white text-teal-950 font-black rounded-lg flex items-center justify-center text-base shadow-md group-hover:scale-105 transition-transform duration-200">
             E
           </div>
@@ -253,7 +226,7 @@ export default function DashboardSidebar() {
       <nav className="flex-1 px-3 py-5 space-y-0.5 overflow-y-auto">
         {links.map((link) => {
           const isActive =
-            link.href === '/dashboard'
+            link.href === '/principledashboard'
               ? pathname === link.href
               : pathname.startsWith(link.href);
           return (

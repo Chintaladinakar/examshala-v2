@@ -47,7 +47,7 @@ export default function SignUp() {
       // Store token on successful signin/signup
       const token = getTokenFromSignupResponse(data);
       if (token) localStorage.setItem('token', token);
-      router.push('/dashboard');
+      router.push('/principledashboard');
     } catch (err) {
       logDeveloperError(err, { action: 'signup', feature: 'signup' });
       setError(err);

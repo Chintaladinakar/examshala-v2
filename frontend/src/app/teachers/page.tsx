@@ -1,193 +1,305 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
-import { fetchJson } from '@/lib/api';
+import { useToast } from '@/components/ui/ToastProvider';
+import { useUser } from '@/context/UserContext';
 
-interface Teacher {
-  id: string;
-  name: string;
-  email: string;
-  isActive: boolean;
-  createdAt: string;
-  classTeachers: {
-    Class: {
-      id: string;
-      name: string;
-    };
-  }[];
-}
+type ClassLite = { id: string; name: string };
+type TeacherRow = { id: string; name: string; email: string; isActive: boolean; status: string; classes: ClassLite[] };
 
-interface UserProfile {
-  role: string;
-  mode: string | null;
+async function apiJson<T>(input: RequestInfo | URL, init?: RequestInit): Promise<T> {
+  const res = await fetch(input, { ...init, headers: { 'Content-Type': 'application/json', ...(init?.headers || {}) } });
+  const body = (await res.json().catch(() => null)) as any;
+  if (!res.ok || !body?.success) throw new Error(body?.error?.message || 'Request failed');
+  return body.data as T;
 }
 
 export default function TeachersPage() {
-  const [teachers, setTeachers] = useState<Teacher[]>([]);
-  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const { user } = useUser();
+  const { showError, showMessage } = useToast();
+
+  const isPrincipalMode = (user?.role || '').toLowerCase() === 'principal' && (user?.mode || 'principal') === 'principal';
+
+  const [teachers, setTeachers] = useState<TeacherRow[]>([]);
+  const [classes, setClasses] = useState<ClassLite[]>([]);
   const [loading, setLoading] = useState(true);
+
   const [search, setSearch] = useState('');
 
-  const getCookie = (name: string) => {
-    if (typeof document === 'undefined') return '';
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift() || '';
-    return '';
-  };
+  const [addOpen, setAddOpen] = useState(false);
+  const [formName, setFormName] = useState('');
+  const [formEmail, setFormEmail] = useState('');
+  const [formPassword, setFormPassword] = useState('');
+  const [formClassIds, setFormClassIds] = useState<string[]>([]);
+  const [submitting, setSubmitting] = useState(false);
 
-  const loadData = async () => {
+  const filtered = useMemo(() => {
+    return teachers.filter(t => `${t.name} ${t.email}`.toLowerCase().includes(search.toLowerCase()));
+  }, [teachers, search]);
+
+  async function load() {
     try {
       setLoading(true);
-      const token = getCookie('session_token');
-      const headers = { Authorization: `Bearer ${token}` };
-
-      const [profileRes, teachersRes] = await Promise.all([
-        fetchJson<{ success: boolean; data: UserProfile }>('/api/school/profile', { headers }),
-        fetchJson<{ success: boolean; data: Teacher[] }>('/api/school/teachers', { headers }).catch(() => ({ success: false, data: [] })),
+      const [teacherData, classData] = await Promise.all([
+        apiJson<TeacherRow[]>('/api/teachers', { method: 'GET' }),
+        apiJson<any[]>('/api/classes', { method: 'GET' }),
       ]);
-
-      if (profileRes.success) setProfile(profileRes.data);
-      if (teachersRes.success && teachersRes.data) setTeachers(teachersRes.data);
-    } catch (err) {
-      console.error('Failed to load teachers page data:', err);
+      setTeachers(teacherData);
+      setClasses(classData.map(c => ({ id: c.id, name: c.name })));
+    } catch (e) {
+      showError(e);
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   useEffect(() => {
-    loadData();
-  }, []);
+    if (isPrincipalMode) load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPrincipalMode]);
 
-  const isPrincipalMode = profile?.role.toLowerCase() === 'principal' && profile?.mode === 'principal';
+  async function onAdd(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      setSubmitting(true);
+      const created = await apiJson<TeacherRow>('/api/teachers', {
+        method: 'POST',
+        body: JSON.stringify({ name: formName, email: formEmail, password: formPassword || undefined, classIds: formClassIds }),
+      });
+      showMessage('Teacher added', 'success');
+      setTeachers(prev => [created, ...prev]);
+      setAddOpen(false);
+      setFormName('');
+      setFormEmail('');
+      setFormPassword('');
+      setFormClassIds([]);
+      await load();
+    } catch (e2) {
+      showError(e2);
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
-  // Filter teachers
-  const filteredTeachers = teachers.filter(t =>
-    t.name.toLowerCase().includes(search.toLowerCase()) || t.email.toLowerCase().includes(search.toLowerCase())
-  );
+  async function toggleActive(t: TeacherRow) {
+    try {
+      const updated = await apiJson<{ id: string; isActive: boolean }>('/api/teachers/status', {
+        method: 'PATCH',
+        body: JSON.stringify({ teacherId: t.id, isActive: !t.isActive }),
+      });
+      setTeachers(prev => prev.map(x => (x.id === t.id ? { ...x, isActive: updated.isActive } : x)));
+      showMessage('Status updated', 'success');
+    } catch (e) {
+      showError(e);
+    }
+  }
+
+  async function saveClasses(t: TeacherRow, classIds: string[]) {
+    try {
+      await apiJson('/api/teachers/classes', { method: 'PATCH', body: JSON.stringify({ teacherId: t.id, classIds }) });
+      showMessage('Classes updated', 'success');
+      await load();
+    } catch (e) {
+      showError(e);
+    }
+  }
+
+  if (!isPrincipalMode) {
+    return (
+      <div className="flex min-h-screen bg-slate-50">
+        <DashboardSidebar />
+        <main className="flex-1 p-6">
+          <div className="max-w-3xl mx-auto bg-white border rounded-2xl p-6">
+            <h1 className="text-xl font-bold text-slate-900">Teachers</h1>
+            <p className="text-slate-600 mt-2">Only principals (principal mode) can access this page.</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex min-h-screen bg-[#FDFBF7]">
+    <div className="flex min-h-screen bg-slate-50">
       <DashboardSidebar />
-
-      <main className="flex-1 p-8 md:p-12 overflow-y-auto">
-        <div className="max-w-6xl mx-auto space-y-8">
-          
-          {/* Header */}
-          <div>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Staff Management</h1>
-            <p className="text-slate-500 mt-1">Review active educators, teacher roles, and workspace mappings.</p>
+      <main className="flex-1 p-6">
+        <div className="max-w-6xl mx-auto space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-slate-900">Teachers</h1>
+              <p className="text-sm text-slate-600">Principal-only management</p>
+            </div>
+            <button onClick={() => setAddOpen(true)} className="px-4 py-2 rounded-xl bg-teal-950 text-white font-semibold text-sm hover:bg-teal-900">
+              Add Teacher
+            </button>
           </div>
 
-          {!isPrincipalMode ? (
-            <div className="bg-rose-50 border border-rose-150 p-6 md:p-8 rounded-2xl max-w-xl mx-auto text-center space-y-4 shadow-sm mt-12">
-              <span className="text-4xl block">🔒</span>
-              <h2 className="text-lg font-bold text-rose-900">Access Restricted</h2>
-              <p className="text-sm text-rose-700">
-                Staff directories and teacher mapping panels are restricted strictly to **Principal oversight mode**. If you are a Principal, please switch back to Principal Mode in the sidebar to review this screen.
-              </p>
-            </div>
-          ) : (
-            <>
-              {/* Search Bar */}
-              <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.01)] relative max-w-md">
-                <span className="absolute inset-y-0 left-0 pl-8 flex items-center pointer-events-none text-slate-400 text-sm">
-                  🔍
-                </span>
-                <input
-                  type="text"
-                  placeholder="Search teachers by name or email..."
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                  className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-800 placeholder-slate-400 pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
-                />
-              </div>
+          <div className="flex gap-3 flex-wrap">
+            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search name/email" className="px-3 py-2 border rounded-xl bg-white w-72" />
+            <button onClick={load} className="px-3 py-2 border rounded-xl bg-white text-sm font-semibold">
+              Refresh
+            </button>
+          </div>
 
-              {/* Roster Table */}
-              <div className="bg-white rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.01)] overflow-hidden">
+          <div className="bg-white border rounded-2xl overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-600">
+                <tr>
+                  <th className="text-left px-4 py-3 font-semibold">Name</th>
+                  <th className="text-left px-4 py-3 font-semibold">Email</th>
+                  <th className="text-left px-4 py-3 font-semibold">Classes</th>
+                  <th className="text-right px-4 py-3 font-semibold">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
                 {loading ? (
-                  <div className="p-16 text-center text-slate-400 animate-pulse">
-                    <span className="text-2xl block mb-2">⏳</span>
-                    <p className="text-sm font-semibold">Loading teacher registry...</p>
-                  </div>
-                ) : filteredTeachers.length === 0 ? (
-                  <div className="p-16 text-center text-slate-400 space-y-2">
-                    <span className="text-3xl block">👥</span>
-                    <h3 className="font-bold text-slate-700">No teachers found</h3>
-                    <p className="text-xs max-w-xs mx-auto">Verify that you have registered teacher members in your workspace.</p>
-                  </div>
+                  <tr>
+                    <td colSpan={4} className="px-4 py-8 text-center text-slate-500">
+                      Loading...
+                    </td>
+                  </tr>
+                ) : filtered.length ? (
+                  filtered.map(t => (
+                    <tr key={t.id} className="border-t align-top">
+                      <td className="px-4 py-3 font-medium text-slate-900">{t.name}</td>
+                      <td className="px-4 py-3 text-slate-700">{t.email}</td>
+                      <td className="px-4 py-3 text-slate-700">
+                        <TeacherClassesEditor teacher={t} classes={classes} onSave={saveClasses} />
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <button onClick={() => toggleActive(t)} className="px-3 py-1.5 rounded-lg border text-xs font-semibold">
+                          {t.isActive ? 'Deactivate' : 'Activate'}
+                        </button>
+                      </td>
+                    </tr>
+                  ))
                 ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
-                      <thead>
-                        <tr className="bg-slate-50/50 border-b border-slate-100 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                          <th className="px-6 py-4">Teacher Details</th>
-                          <th className="px-6 py-4">Assigned Classrooms</th>
-                          <th className="px-6 py-4">System Status</th>
-                          <th className="px-6 py-4">Joined Date</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-100">
-                        {filteredTeachers.map(teacher => {
-                          const joinedDate = new Date(teacher.createdAt).toLocaleDateString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric',
-                          });
-
-                          return (
-                            <tr key={teacher.id} className="hover:bg-slate-50/40 transition-colors">
-                              <td className="px-6 py-4.5">
-                                <div className="flex items-center gap-3">
-                                  <div className="w-8.5 h-8.5 rounded-full bg-slate-50 border border-slate-100 text-xs font-bold text-slate-650 flex items-center justify-center shrink-0">
-                                    {teacher.name ? teacher.name.substring(0, 2).toUpperCase() : 'TC'}
-                                  </div>
-                                  <div>
-                                    <div className="font-bold text-slate-800 text-sm">{teacher.name}</div>
-                                    <div className="text-slate-400 text-xs">{teacher.email}</div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td className="px-6 py-4.5 max-w-md">
-                                <div className="flex flex-wrap gap-1.5">
-                                  {teacher.classTeachers && teacher.classTeachers.length > 0 ? (
-                                    teacher.classTeachers.map(ct => (
-                                      <span key={ct.Class.id} className="text-[10px] font-bold text-teal-800 bg-teal-50 border border-teal-100/80 px-2.5 py-0.5 rounded-full">
-                                        {ct.Class.name}
-                                      </span>
-                                    ))
-                                  ) : (
-                                    <span className="text-xs text-slate-400 italic">No assigned classes</span>
-                                  )}
-                                </div>
-                              </td>
-                              <td className="px-6 py-4.5">
-                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                                  teacher.isActive
-                                    ? 'bg-emerald-50 text-emerald-850 border-emerald-100/80'
-                                    : 'bg-rose-50 text-rose-850 border-rose-100/80'
-                                }`}>
-                                  {teacher.isActive ? 'ACTIVE' : 'SUSPENDED'}
-                                </span>
-                              </td>
-                              <td className="px-6 py-4.5">
-                                <span className="text-xs text-slate-400 font-medium">{joinedDate}</span>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
+                  <tr>
+                    <td colSpan={4} className="px-4 py-8 text-center text-slate-500">
+                      No teachers found
+                    </td>
+                  </tr>
                 )}
-              </div>
-            </>
-          )}
-
+              </tbody>
+            </table>
+          </div>
         </div>
+
+        {addOpen && (
+          <div className="fixed inset-0 bg-black/30 flex items-center justify-center p-4 z-50">
+            <div className="bg-white w-full max-w-md rounded-2xl border shadow-xl p-5 space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-bold text-slate-900">Add teacher</h2>
+                <button onClick={() => setAddOpen(false)} className="text-slate-500 hover:text-slate-800">
+                  ✕
+                </button>
+              </div>
+              <form onSubmit={onAdd} className="space-y-3">
+                <input required value={formName} onChange={e => setFormName(e.target.value)} placeholder="Full name" className="w-full px-3 py-2 border rounded-xl" />
+                <input required type="email" value={formEmail} onChange={e => setFormEmail(e.target.value)} placeholder="Email" className="w-full px-3 py-2 border rounded-xl" />
+                <input type="password" value={formPassword} onChange={e => setFormPassword(e.target.value)} placeholder="Password (optional)" className="w-full px-3 py-2 border rounded-xl" />
+                <div className="border rounded-xl p-3">
+                  <div className="text-xs font-bold text-slate-600 mb-2">Assign classes</div>
+                  <div className="grid grid-cols-2 gap-2 max-h-40 overflow-auto">
+                    {classes.map(c => (
+                      <label key={c.id} className="flex items-center gap-2 text-sm text-slate-700">
+                        <input
+                          type="checkbox"
+                          checked={formClassIds.includes(c.id)}
+                          onChange={e =>
+                            setFormClassIds(prev => (e.target.checked ? [...prev, c.id] : prev.filter(x => x !== c.id)))
+                          }
+                        />
+                        {c.name}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex gap-2 pt-2">
+                  <button type="button" onClick={() => setAddOpen(false)} className="flex-1 px-3 py-2 rounded-xl border font-semibold">
+                    Cancel
+                  </button>
+                  <button disabled={submitting} className="flex-1 px-3 py-2 rounded-xl bg-teal-950 text-white font-semibold disabled:opacity-50">
+                    {submitting ? 'Adding...' : 'Add'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
 }
+
+function TeacherClassesEditor({
+  teacher,
+  classes,
+  onSave,
+}: {
+  teacher: TeacherRow;
+  classes: ClassLite[];
+  onSave: (teacher: TeacherRow, classIds: string[]) => Promise<void>;
+}) {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<string[]>(teacher.classes.map(c => c.id));
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setSelected(teacher.classes.map(c => c.id));
+  }, [teacher.id, teacher.classes]);
+
+  async function save() {
+    try {
+      setSaving(true);
+      await onSave(teacher, selected);
+      setOpen(false);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="space-y-2">
+      <div className="flex flex-wrap gap-2">
+        {(teacher.classes || []).length ? (
+          teacher.classes.map(c => (
+            <span key={c.id} className="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-semibold">
+              {c.name}
+            </span>
+          ))
+        ) : (
+          <span className="text-slate-500">—</span>
+        )}
+      </div>
+      <button onClick={() => setOpen(v => !v)} className="text-xs font-semibold underline text-slate-700">
+        {open ? 'Close' : 'Edit classes'}
+      </button>
+      {open && (
+        <div className="border rounded-xl p-3 bg-slate-50">
+          <div className="grid grid-cols-2 gap-2 max-h-44 overflow-auto">
+            {classes.map(c => (
+              <label key={c.id} className="flex items-center gap-2 text-sm text-slate-700">
+                <input
+                  type="checkbox"
+                  checked={selected.includes(c.id)}
+                  onChange={e => setSelected(prev => (e.target.checked ? [...prev, c.id] : prev.filter(x => x !== c.id)))}
+                />
+                {c.name}
+              </label>
+            ))}
+          </div>
+          <div className="flex gap-2 pt-3">
+            <button onClick={() => setOpen(false)} className="flex-1 px-3 py-2 rounded-xl border font-semibold text-sm">
+              Cancel
+            </button>
+            <button disabled={saving} onClick={save} className="flex-1 px-3 py-2 rounded-xl bg-teal-950 text-white font-semibold text-sm disabled:opacity-50">
+              {saving ? 'Saving...' : 'Save'}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
