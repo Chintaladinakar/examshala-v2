@@ -24,7 +24,7 @@ export async function GET() {
     for (const link of classLinks) classByStudent.set(link.studentId, link.Class);
 
     return jsonOk(
-      students.map(s => ({
+      students.map((s: any) => ({
         ...s,
         class: classByStudent.get(s.id) ?? null,
       }))

@@ -7,10 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 
 const {
   Decimal,
-  DbNull,
-  JsonNull,
-  AnyNull,
-  NullTypes,
+  objectEnumValues,
   makeStrictEnum,
   Public,
   getRuntime,
@@ -24,12 +21,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.7.0
- * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
+ * Prisma Client JS version: 6.19.3
+ * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
  */
 Prisma.prismaVersion = {
-  client: "7.7.0",
-  engine: "75cbdc1eb7150937890ad5465d861175c6624711"
+  client: "6.19.3",
+  engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -101,11 +98,15 @@ In case this error is unexpected for you, please report it in https://pris.ly/pr
 /**
  * Shorthand utilities for JSON filtering
  */
-Prisma.DbNull = DbNull
-Prisma.JsonNull = JsonNull
-Prisma.AnyNull = AnyNull
+Prisma.DbNull = objectEnumValues.instances.DbNull
+Prisma.JsonNull = objectEnumValues.instances.JsonNull
+Prisma.AnyNull = objectEnumValues.instances.AnyNull
 
-Prisma.NullTypes = NullTypes
+Prisma.NullTypes = {
+  DbNull: objectEnumValues.classes.DbNull,
+  JsonNull: objectEnumValues.classes.JsonNull,
+  AnyNull: objectEnumValues.classes.AnyNull
+}
 
 
 
@@ -294,7 +295,13 @@ exports.Prisma.AssignmentScalarFieldEnum = {
   classId: 'classId',
   createdByUserId: 'createdByUserId',
   createdRole: 'createdRole',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  subject: 'subject',
+  attachments: 'attachments',
+  status: 'status',
+  marks: 'marks',
+  teacherId: 'teacherId',
+  studentId: 'studentId'
 };
 
 exports.Prisma.AssignmentFeedbackScalarFieldEnum = {
@@ -310,7 +317,20 @@ exports.Prisma.AssignmentSubmissionScalarFieldEnum = {
   assignmentId: 'assignmentId',
   studentId: 'studentId',
   fileUrl: 'fileUrl',
-  submittedAt: 'submittedAt'
+  submittedAt: 'submittedAt',
+  updatedAt: 'updatedAt',
+  textSubmission: 'textSubmission',
+  uploadedFiles: 'uploadedFiles'
+};
+
+exports.Prisma.MaterialScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  type: 'type',
+  fileUrl: 'fileUrl',
+  subject: 'subject',
+  uploadedBy: 'uploadedBy',
+  uploadDate: 'uploadDate'
 };
 
 exports.Prisma.SchoolLogScalarFieldEnum = {
@@ -377,6 +397,7 @@ exports.Prisma.ModelName = {
   Assignment: 'Assignment',
   AssignmentFeedback: 'AssignmentFeedback',
   AssignmentSubmission: 'AssignmentSubmission',
+  Material: 'Material',
   SchoolLog: 'SchoolLog',
   PlatformSettings: 'PlatformSettings'
 };

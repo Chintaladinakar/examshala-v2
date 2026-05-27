@@ -8,6 +8,8 @@ import adminRoutes from './routes/admin.routes';
 import superadminRoutes from './routes/superadmin.routes';
 import studentRoutes from './routes/student.routes';
 import schoolRoutes from './routes/school.routes';
+import assignmentRoutes from './routes/assignments.routes';
+import materialRoutes from './routes/materials.routes';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +24,8 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/superadmin', superadminRoutes);
 app.use('/api/student', studentRoutes);
 app.use('/api/school', schoolRoutes);
+app.use('/api/assignments', assignmentRoutes);
+app.use('/api/materials', materialRoutes);
 
 // Health check
 app.get('/api/health', (_req, res) => {

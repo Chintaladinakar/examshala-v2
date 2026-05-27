@@ -22,7 +22,7 @@ export async function PATCH(req: NextRequest) {
     const classes = await prisma.class.findMany({ where: { id: { in: body.classIds }, workspaceId: ctx.workspaceId } });
     await prisma.classTeacher.deleteMany({ where: { teacherId: teacher.id, Class: { workspaceId: ctx.workspaceId } } });
     await prisma.classTeacher.createMany({
-      data: classes.map(c => ({ classId: c.id, teacherId: teacher.id })),
+      data: classes.map((c: any) => ({ classId: c.id, teacherId: teacher.id })),
       skipDuplicates: true,
     });
 
@@ -30,7 +30,7 @@ export async function PATCH(req: NextRequest) {
       data: { actionType: 'teacher_classes_updated', entityId: teacher.id, role: ctx.role, userId: ctx.userId },
     });
 
-    return jsonOk({ teacherId: teacher.id, classIds: classes.map(c => c.id) });
+    return jsonOk({ teacherId: teacher.id, classIds: classes.map((c: any) => c.id) });
   } catch (err) {
     return mapAuthzError(err);
   }

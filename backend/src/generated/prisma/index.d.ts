@@ -114,6 +114,11 @@ export type AssignmentFeedback = $Result.DefaultSelection<Prisma.$AssignmentFeed
  */
 export type AssignmentSubmission = $Result.DefaultSelection<Prisma.$AssignmentSubmissionPayload>
 /**
+ * Model Material
+ * 
+ */
+export type Material = $Result.DefaultSelection<Prisma.$MaterialPayload>
+/**
  * Model SchoolLog
  * 
  */
@@ -444,6 +449,16 @@ export class PrismaClient<
     * ```
     */
   get assignmentSubmission(): Prisma.AssignmentSubmissionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.material`: Exposes CRUD operations for the **Material** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Materials
+    * const materials = await prisma.material.findMany()
+    * ```
+    */
+  get material(): Prisma.MaterialDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.schoolLog`: Exposes CRUD operations for the **SchoolLog** model.
@@ -918,6 +933,7 @@ export namespace Prisma {
     Assignment: 'Assignment',
     AssignmentFeedback: 'AssignmentFeedback',
     AssignmentSubmission: 'AssignmentSubmission',
+    Material: 'Material',
     SchoolLog: 'SchoolLog',
     PlatformSettings: 'PlatformSettings'
   };
@@ -935,7 +951,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "workspace" | "workspaceMembership" | "studentWorkspaceProfile" | "test" | "assessmentAssignment" | "assessmentAttempt" | "assessmentResult" | "notification" | "parentStudentLink" | "auditLog" | "invite" | "log" | "class" | "classTeacher" | "classStudent" | "attendance" | "assignment" | "assignmentFeedback" | "assignmentSubmission" | "schoolLog" | "platformSettings"
+      modelProps: "user" | "workspace" | "workspaceMembership" | "studentWorkspaceProfile" | "test" | "assessmentAssignment" | "assessmentAttempt" | "assessmentResult" | "notification" | "parentStudentLink" | "auditLog" | "invite" | "log" | "class" | "classTeacher" | "classStudent" | "attendance" | "assignment" | "assignmentFeedback" | "assignmentSubmission" | "material" | "schoolLog" | "platformSettings"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2419,6 +2435,80 @@ export namespace Prisma {
           }
         }
       }
+      Material: {
+        payload: Prisma.$MaterialPayload<ExtArgs>
+        fields: Prisma.MaterialFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MaterialFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MaterialPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MaterialFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MaterialPayload>
+          }
+          findFirst: {
+            args: Prisma.MaterialFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MaterialPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MaterialFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MaterialPayload>
+          }
+          findMany: {
+            args: Prisma.MaterialFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MaterialPayload>[]
+          }
+          create: {
+            args: Prisma.MaterialCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MaterialPayload>
+          }
+          createMany: {
+            args: Prisma.MaterialCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MaterialCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MaterialPayload>[]
+          }
+          delete: {
+            args: Prisma.MaterialDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MaterialPayload>
+          }
+          update: {
+            args: Prisma.MaterialUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MaterialPayload>
+          }
+          deleteMany: {
+            args: Prisma.MaterialDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MaterialUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MaterialUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MaterialPayload>[]
+          }
+          upsert: {
+            args: Prisma.MaterialUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MaterialPayload>
+          }
+          aggregate: {
+            args: Prisma.MaterialAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMaterial>
+          }
+          groupBy: {
+            args: Prisma.MaterialGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MaterialGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MaterialCountArgs<ExtArgs>
+            result: $Utils.Optional<MaterialCountAggregateOutputType> | number
+          }
+        }
+      }
       SchoolLog: {
         payload: Prisma.$SchoolLogPayload<ExtArgs>
         fields: Prisma.SchoolLogFieldRefs
@@ -2695,6 +2785,7 @@ export namespace Prisma {
     assignment?: AssignmentOmit
     assignmentFeedback?: AssignmentFeedbackOmit
     assignmentSubmission?: AssignmentSubmissionOmit
+    material?: MaterialOmit
     schoolLog?: SchoolLogOmit
     platformSettings?: PlatformSettingsOmit
   }
@@ -22316,8 +22407,18 @@ export namespace Prisma {
 
   export type AggregateAssignment = {
     _count: AssignmentCountAggregateOutputType | null
+    _avg: AssignmentAvgAggregateOutputType | null
+    _sum: AssignmentSumAggregateOutputType | null
     _min: AssignmentMinAggregateOutputType | null
     _max: AssignmentMaxAggregateOutputType | null
+  }
+
+  export type AssignmentAvgAggregateOutputType = {
+    marks: number | null
+  }
+
+  export type AssignmentSumAggregateOutputType = {
+    marks: number | null
   }
 
   export type AssignmentMinAggregateOutputType = {
@@ -22329,6 +22430,11 @@ export namespace Prisma {
     createdByUserId: string | null
     createdRole: string | null
     createdAt: Date | null
+    subject: string | null
+    status: string | null
+    marks: number | null
+    teacherId: string | null
+    studentId: string | null
   }
 
   export type AssignmentMaxAggregateOutputType = {
@@ -22340,6 +22446,11 @@ export namespace Prisma {
     createdByUserId: string | null
     createdRole: string | null
     createdAt: Date | null
+    subject: string | null
+    status: string | null
+    marks: number | null
+    teacherId: string | null
+    studentId: string | null
   }
 
   export type AssignmentCountAggregateOutputType = {
@@ -22351,9 +22462,23 @@ export namespace Prisma {
     createdByUserId: number
     createdRole: number
     createdAt: number
+    subject: number
+    attachments: number
+    status: number
+    marks: number
+    teacherId: number
+    studentId: number
     _all: number
   }
 
+
+  export type AssignmentAvgAggregateInputType = {
+    marks?: true
+  }
+
+  export type AssignmentSumAggregateInputType = {
+    marks?: true
+  }
 
   export type AssignmentMinAggregateInputType = {
     id?: true
@@ -22364,6 +22489,11 @@ export namespace Prisma {
     createdByUserId?: true
     createdRole?: true
     createdAt?: true
+    subject?: true
+    status?: true
+    marks?: true
+    teacherId?: true
+    studentId?: true
   }
 
   export type AssignmentMaxAggregateInputType = {
@@ -22375,6 +22505,11 @@ export namespace Prisma {
     createdByUserId?: true
     createdRole?: true
     createdAt?: true
+    subject?: true
+    status?: true
+    marks?: true
+    teacherId?: true
+    studentId?: true
   }
 
   export type AssignmentCountAggregateInputType = {
@@ -22386,6 +22521,12 @@ export namespace Prisma {
     createdByUserId?: true
     createdRole?: true
     createdAt?: true
+    subject?: true
+    attachments?: true
+    status?: true
+    marks?: true
+    teacherId?: true
+    studentId?: true
     _all?: true
   }
 
@@ -22427,6 +22568,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: AssignmentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AssignmentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: AssignmentMinAggregateInputType
@@ -22457,6 +22610,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: AssignmentCountAggregateInputType | true
+    _avg?: AssignmentAvgAggregateInputType
+    _sum?: AssignmentSumAggregateInputType
     _min?: AssignmentMinAggregateInputType
     _max?: AssignmentMaxAggregateInputType
   }
@@ -22470,7 +22625,15 @@ export namespace Prisma {
     createdByUserId: string
     createdRole: string
     createdAt: Date
+    subject: string | null
+    attachments: string[]
+    status: string | null
+    marks: number | null
+    teacherId: string | null
+    studentId: string | null
     _count: AssignmentCountAggregateOutputType | null
+    _avg: AssignmentAvgAggregateOutputType | null
+    _sum: AssignmentSumAggregateOutputType | null
     _min: AssignmentMinAggregateOutputType | null
     _max: AssignmentMaxAggregateOutputType | null
   }
@@ -22498,6 +22661,12 @@ export namespace Prisma {
     createdByUserId?: boolean
     createdRole?: boolean
     createdAt?: boolean
+    subject?: boolean
+    attachments?: boolean
+    status?: boolean
+    marks?: boolean
+    teacherId?: boolean
+    studentId?: boolean
     Class?: boolean | ClassDefaultArgs<ExtArgs>
     Creator?: boolean | UserDefaultArgs<ExtArgs>
     feedbacks?: boolean | Assignment$feedbacksArgs<ExtArgs>
@@ -22514,6 +22683,12 @@ export namespace Prisma {
     createdByUserId?: boolean
     createdRole?: boolean
     createdAt?: boolean
+    subject?: boolean
+    attachments?: boolean
+    status?: boolean
+    marks?: boolean
+    teacherId?: boolean
+    studentId?: boolean
     Class?: boolean | ClassDefaultArgs<ExtArgs>
     Creator?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["assignment"]>
@@ -22527,6 +22702,12 @@ export namespace Prisma {
     createdByUserId?: boolean
     createdRole?: boolean
     createdAt?: boolean
+    subject?: boolean
+    attachments?: boolean
+    status?: boolean
+    marks?: boolean
+    teacherId?: boolean
+    studentId?: boolean
     Class?: boolean | ClassDefaultArgs<ExtArgs>
     Creator?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["assignment"]>
@@ -22540,9 +22721,15 @@ export namespace Prisma {
     createdByUserId?: boolean
     createdRole?: boolean
     createdAt?: boolean
+    subject?: boolean
+    attachments?: boolean
+    status?: boolean
+    marks?: boolean
+    teacherId?: boolean
+    studentId?: boolean
   }
 
-  export type AssignmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "dueDate" | "classId" | "createdByUserId" | "createdRole" | "createdAt", ExtArgs["result"]["assignment"]>
+  export type AssignmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "dueDate" | "classId" | "createdByUserId" | "createdRole" | "createdAt" | "subject" | "attachments" | "status" | "marks" | "teacherId" | "studentId", ExtArgs["result"]["assignment"]>
   export type AssignmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Class?: boolean | ClassDefaultArgs<ExtArgs>
     Creator?: boolean | UserDefaultArgs<ExtArgs>
@@ -22576,6 +22763,12 @@ export namespace Prisma {
       createdByUserId: string
       createdRole: string
       createdAt: Date
+      subject: string | null
+      attachments: string[]
+      status: string | null
+      marks: number | null
+      teacherId: string | null
+      studentId: string | null
     }, ExtArgs["result"]["assignment"]>
     composites: {}
   }
@@ -23011,6 +23204,12 @@ export namespace Prisma {
     readonly createdByUserId: FieldRef<"Assignment", 'String'>
     readonly createdRole: FieldRef<"Assignment", 'String'>
     readonly createdAt: FieldRef<"Assignment", 'DateTime'>
+    readonly subject: FieldRef<"Assignment", 'String'>
+    readonly attachments: FieldRef<"Assignment", 'String[]'>
+    readonly status: FieldRef<"Assignment", 'String'>
+    readonly marks: FieldRef<"Assignment", 'Int'>
+    readonly teacherId: FieldRef<"Assignment", 'String'>
+    readonly studentId: FieldRef<"Assignment", 'String'>
   }
     
 
@@ -24565,6 +24764,8 @@ export namespace Prisma {
     studentId: string | null
     fileUrl: string | null
     submittedAt: Date | null
+    updatedAt: Date | null
+    textSubmission: string | null
   }
 
   export type AssignmentSubmissionMaxAggregateOutputType = {
@@ -24573,6 +24774,8 @@ export namespace Prisma {
     studentId: string | null
     fileUrl: string | null
     submittedAt: Date | null
+    updatedAt: Date | null
+    textSubmission: string | null
   }
 
   export type AssignmentSubmissionCountAggregateOutputType = {
@@ -24581,6 +24784,9 @@ export namespace Prisma {
     studentId: number
     fileUrl: number
     submittedAt: number
+    updatedAt: number
+    textSubmission: number
+    uploadedFiles: number
     _all: number
   }
 
@@ -24591,6 +24797,8 @@ export namespace Prisma {
     studentId?: true
     fileUrl?: true
     submittedAt?: true
+    updatedAt?: true
+    textSubmission?: true
   }
 
   export type AssignmentSubmissionMaxAggregateInputType = {
@@ -24599,6 +24807,8 @@ export namespace Prisma {
     studentId?: true
     fileUrl?: true
     submittedAt?: true
+    updatedAt?: true
+    textSubmission?: true
   }
 
   export type AssignmentSubmissionCountAggregateInputType = {
@@ -24607,6 +24817,9 @@ export namespace Prisma {
     studentId?: true
     fileUrl?: true
     submittedAt?: true
+    updatedAt?: true
+    textSubmission?: true
+    uploadedFiles?: true
     _all?: true
   }
 
@@ -24688,6 +24901,9 @@ export namespace Prisma {
     studentId: string
     fileUrl: string
     submittedAt: Date
+    updatedAt: Date
+    textSubmission: string | null
+    uploadedFiles: string[]
     _count: AssignmentSubmissionCountAggregateOutputType | null
     _min: AssignmentSubmissionMinAggregateOutputType | null
     _max: AssignmentSubmissionMaxAggregateOutputType | null
@@ -24713,6 +24929,9 @@ export namespace Prisma {
     studentId?: boolean
     fileUrl?: boolean
     submittedAt?: boolean
+    updatedAt?: boolean
+    textSubmission?: boolean
+    uploadedFiles?: boolean
     Assignment?: boolean | AssignmentDefaultArgs<ExtArgs>
     Student?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["assignmentSubmission"]>
@@ -24723,6 +24942,9 @@ export namespace Prisma {
     studentId?: boolean
     fileUrl?: boolean
     submittedAt?: boolean
+    updatedAt?: boolean
+    textSubmission?: boolean
+    uploadedFiles?: boolean
     Assignment?: boolean | AssignmentDefaultArgs<ExtArgs>
     Student?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["assignmentSubmission"]>
@@ -24733,6 +24955,9 @@ export namespace Prisma {
     studentId?: boolean
     fileUrl?: boolean
     submittedAt?: boolean
+    updatedAt?: boolean
+    textSubmission?: boolean
+    uploadedFiles?: boolean
     Assignment?: boolean | AssignmentDefaultArgs<ExtArgs>
     Student?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["assignmentSubmission"]>
@@ -24743,9 +24968,12 @@ export namespace Prisma {
     studentId?: boolean
     fileUrl?: boolean
     submittedAt?: boolean
+    updatedAt?: boolean
+    textSubmission?: boolean
+    uploadedFiles?: boolean
   }
 
-  export type AssignmentSubmissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assignmentId" | "studentId" | "fileUrl" | "submittedAt", ExtArgs["result"]["assignmentSubmission"]>
+  export type AssignmentSubmissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assignmentId" | "studentId" | "fileUrl" | "submittedAt" | "updatedAt" | "textSubmission" | "uploadedFiles", ExtArgs["result"]["assignmentSubmission"]>
   export type AssignmentSubmissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Assignment?: boolean | AssignmentDefaultArgs<ExtArgs>
     Student?: boolean | UserDefaultArgs<ExtArgs>
@@ -24771,6 +24999,9 @@ export namespace Prisma {
       studentId: string
       fileUrl: string
       submittedAt: Date
+      updatedAt: Date
+      textSubmission: string | null
+      uploadedFiles: string[]
     }, ExtArgs["result"]["assignmentSubmission"]>
     composites: {}
   }
@@ -25201,6 +25432,9 @@ export namespace Prisma {
     readonly studentId: FieldRef<"AssignmentSubmission", 'String'>
     readonly fileUrl: FieldRef<"AssignmentSubmission", 'String'>
     readonly submittedAt: FieldRef<"AssignmentSubmission", 'DateTime'>
+    readonly updatedAt: FieldRef<"AssignmentSubmission", 'DateTime'>
+    readonly textSubmission: FieldRef<"AssignmentSubmission", 'String'>
+    readonly uploadedFiles: FieldRef<"AssignmentSubmission", 'String[]'>
   }
     
 
@@ -25617,6 +25851,1032 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: AssignmentSubmissionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Material
+   */
+
+  export type AggregateMaterial = {
+    _count: MaterialCountAggregateOutputType | null
+    _min: MaterialMinAggregateOutputType | null
+    _max: MaterialMaxAggregateOutputType | null
+  }
+
+  export type MaterialMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    type: string | null
+    fileUrl: string | null
+    subject: string | null
+    uploadedBy: string | null
+    uploadDate: Date | null
+  }
+
+  export type MaterialMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    type: string | null
+    fileUrl: string | null
+    subject: string | null
+    uploadedBy: string | null
+    uploadDate: Date | null
+  }
+
+  export type MaterialCountAggregateOutputType = {
+    id: number
+    title: number
+    type: number
+    fileUrl: number
+    subject: number
+    uploadedBy: number
+    uploadDate: number
+    _all: number
+  }
+
+
+  export type MaterialMinAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    fileUrl?: true
+    subject?: true
+    uploadedBy?: true
+    uploadDate?: true
+  }
+
+  export type MaterialMaxAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    fileUrl?: true
+    subject?: true
+    uploadedBy?: true
+    uploadDate?: true
+  }
+
+  export type MaterialCountAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    fileUrl?: true
+    subject?: true
+    uploadedBy?: true
+    uploadDate?: true
+    _all?: true
+  }
+
+  export type MaterialAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Material to aggregate.
+     */
+    where?: MaterialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Materials to fetch.
+     */
+    orderBy?: MaterialOrderByWithRelationInput | MaterialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MaterialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Materials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Materials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Materials
+    **/
+    _count?: true | MaterialCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MaterialMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MaterialMaxAggregateInputType
+  }
+
+  export type GetMaterialAggregateType<T extends MaterialAggregateArgs> = {
+        [P in keyof T & keyof AggregateMaterial]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMaterial[P]>
+      : GetScalarType<T[P], AggregateMaterial[P]>
+  }
+
+
+
+
+  export type MaterialGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MaterialWhereInput
+    orderBy?: MaterialOrderByWithAggregationInput | MaterialOrderByWithAggregationInput[]
+    by: MaterialScalarFieldEnum[] | MaterialScalarFieldEnum
+    having?: MaterialScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MaterialCountAggregateInputType | true
+    _min?: MaterialMinAggregateInputType
+    _max?: MaterialMaxAggregateInputType
+  }
+
+  export type MaterialGroupByOutputType = {
+    id: string
+    title: string
+    type: string
+    fileUrl: string
+    subject: string
+    uploadedBy: string
+    uploadDate: Date
+    _count: MaterialCountAggregateOutputType | null
+    _min: MaterialMinAggregateOutputType | null
+    _max: MaterialMaxAggregateOutputType | null
+  }
+
+  type GetMaterialGroupByPayload<T extends MaterialGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MaterialGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MaterialGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MaterialGroupByOutputType[P]>
+            : GetScalarType<T[P], MaterialGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MaterialSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    fileUrl?: boolean
+    subject?: boolean
+    uploadedBy?: boolean
+    uploadDate?: boolean
+  }, ExtArgs["result"]["material"]>
+
+  export type MaterialSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    fileUrl?: boolean
+    subject?: boolean
+    uploadedBy?: boolean
+    uploadDate?: boolean
+  }, ExtArgs["result"]["material"]>
+
+  export type MaterialSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    fileUrl?: boolean
+    subject?: boolean
+    uploadedBy?: boolean
+    uploadDate?: boolean
+  }, ExtArgs["result"]["material"]>
+
+  export type MaterialSelectScalar = {
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    fileUrl?: boolean
+    subject?: boolean
+    uploadedBy?: boolean
+    uploadDate?: boolean
+  }
+
+  export type MaterialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "fileUrl" | "subject" | "uploadedBy" | "uploadDate", ExtArgs["result"]["material"]>
+
+  export type $MaterialPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Material"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      type: string
+      fileUrl: string
+      subject: string
+      uploadedBy: string
+      uploadDate: Date
+    }, ExtArgs["result"]["material"]>
+    composites: {}
+  }
+
+  type MaterialGetPayload<S extends boolean | null | undefined | MaterialDefaultArgs> = $Result.GetResult<Prisma.$MaterialPayload, S>
+
+  type MaterialCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MaterialFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MaterialCountAggregateInputType | true
+    }
+
+  export interface MaterialDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Material'], meta: { name: 'Material' } }
+    /**
+     * Find zero or one Material that matches the filter.
+     * @param {MaterialFindUniqueArgs} args - Arguments to find a Material
+     * @example
+     * // Get one Material
+     * const material = await prisma.material.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MaterialFindUniqueArgs>(args: SelectSubset<T, MaterialFindUniqueArgs<ExtArgs>>): Prisma__MaterialClient<$Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Material that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MaterialFindUniqueOrThrowArgs} args - Arguments to find a Material
+     * @example
+     * // Get one Material
+     * const material = await prisma.material.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MaterialFindUniqueOrThrowArgs>(args: SelectSubset<T, MaterialFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MaterialClient<$Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Material that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MaterialFindFirstArgs} args - Arguments to find a Material
+     * @example
+     * // Get one Material
+     * const material = await prisma.material.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MaterialFindFirstArgs>(args?: SelectSubset<T, MaterialFindFirstArgs<ExtArgs>>): Prisma__MaterialClient<$Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Material that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MaterialFindFirstOrThrowArgs} args - Arguments to find a Material
+     * @example
+     * // Get one Material
+     * const material = await prisma.material.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MaterialFindFirstOrThrowArgs>(args?: SelectSubset<T, MaterialFindFirstOrThrowArgs<ExtArgs>>): Prisma__MaterialClient<$Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Materials that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MaterialFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Materials
+     * const materials = await prisma.material.findMany()
+     * 
+     * // Get first 10 Materials
+     * const materials = await prisma.material.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const materialWithIdOnly = await prisma.material.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MaterialFindManyArgs>(args?: SelectSubset<T, MaterialFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Material.
+     * @param {MaterialCreateArgs} args - Arguments to create a Material.
+     * @example
+     * // Create one Material
+     * const Material = await prisma.material.create({
+     *   data: {
+     *     // ... data to create a Material
+     *   }
+     * })
+     * 
+     */
+    create<T extends MaterialCreateArgs>(args: SelectSubset<T, MaterialCreateArgs<ExtArgs>>): Prisma__MaterialClient<$Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Materials.
+     * @param {MaterialCreateManyArgs} args - Arguments to create many Materials.
+     * @example
+     * // Create many Materials
+     * const material = await prisma.material.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MaterialCreateManyArgs>(args?: SelectSubset<T, MaterialCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Materials and returns the data saved in the database.
+     * @param {MaterialCreateManyAndReturnArgs} args - Arguments to create many Materials.
+     * @example
+     * // Create many Materials
+     * const material = await prisma.material.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Materials and only return the `id`
+     * const materialWithIdOnly = await prisma.material.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MaterialCreateManyAndReturnArgs>(args?: SelectSubset<T, MaterialCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Material.
+     * @param {MaterialDeleteArgs} args - Arguments to delete one Material.
+     * @example
+     * // Delete one Material
+     * const Material = await prisma.material.delete({
+     *   where: {
+     *     // ... filter to delete one Material
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MaterialDeleteArgs>(args: SelectSubset<T, MaterialDeleteArgs<ExtArgs>>): Prisma__MaterialClient<$Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Material.
+     * @param {MaterialUpdateArgs} args - Arguments to update one Material.
+     * @example
+     * // Update one Material
+     * const material = await prisma.material.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MaterialUpdateArgs>(args: SelectSubset<T, MaterialUpdateArgs<ExtArgs>>): Prisma__MaterialClient<$Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Materials.
+     * @param {MaterialDeleteManyArgs} args - Arguments to filter Materials to delete.
+     * @example
+     * // Delete a few Materials
+     * const { count } = await prisma.material.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MaterialDeleteManyArgs>(args?: SelectSubset<T, MaterialDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Materials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MaterialUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Materials
+     * const material = await prisma.material.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MaterialUpdateManyArgs>(args: SelectSubset<T, MaterialUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Materials and returns the data updated in the database.
+     * @param {MaterialUpdateManyAndReturnArgs} args - Arguments to update many Materials.
+     * @example
+     * // Update many Materials
+     * const material = await prisma.material.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Materials and only return the `id`
+     * const materialWithIdOnly = await prisma.material.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MaterialUpdateManyAndReturnArgs>(args: SelectSubset<T, MaterialUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Material.
+     * @param {MaterialUpsertArgs} args - Arguments to update or create a Material.
+     * @example
+     * // Update or create a Material
+     * const material = await prisma.material.upsert({
+     *   create: {
+     *     // ... data to create a Material
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Material we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MaterialUpsertArgs>(args: SelectSubset<T, MaterialUpsertArgs<ExtArgs>>): Prisma__MaterialClient<$Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Materials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MaterialCountArgs} args - Arguments to filter Materials to count.
+     * @example
+     * // Count the number of Materials
+     * const count = await prisma.material.count({
+     *   where: {
+     *     // ... the filter for the Materials we want to count
+     *   }
+     * })
+    **/
+    count<T extends MaterialCountArgs>(
+      args?: Subset<T, MaterialCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MaterialCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Material.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MaterialAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MaterialAggregateArgs>(args: Subset<T, MaterialAggregateArgs>): Prisma.PrismaPromise<GetMaterialAggregateType<T>>
+
+    /**
+     * Group by Material.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MaterialGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MaterialGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MaterialGroupByArgs['orderBy'] }
+        : { orderBy?: MaterialGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MaterialGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMaterialGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Material model
+   */
+  readonly fields: MaterialFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Material.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MaterialClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Material model
+   */
+  interface MaterialFieldRefs {
+    readonly id: FieldRef<"Material", 'String'>
+    readonly title: FieldRef<"Material", 'String'>
+    readonly type: FieldRef<"Material", 'String'>
+    readonly fileUrl: FieldRef<"Material", 'String'>
+    readonly subject: FieldRef<"Material", 'String'>
+    readonly uploadedBy: FieldRef<"Material", 'String'>
+    readonly uploadDate: FieldRef<"Material", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Material findUnique
+   */
+  export type MaterialFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
+    /**
+     * Filter, which Material to fetch.
+     */
+    where: MaterialWhereUniqueInput
+  }
+
+  /**
+   * Material findUniqueOrThrow
+   */
+  export type MaterialFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
+    /**
+     * Filter, which Material to fetch.
+     */
+    where: MaterialWhereUniqueInput
+  }
+
+  /**
+   * Material findFirst
+   */
+  export type MaterialFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
+    /**
+     * Filter, which Material to fetch.
+     */
+    where?: MaterialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Materials to fetch.
+     */
+    orderBy?: MaterialOrderByWithRelationInput | MaterialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Materials.
+     */
+    cursor?: MaterialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Materials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Materials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Materials.
+     */
+    distinct?: MaterialScalarFieldEnum | MaterialScalarFieldEnum[]
+  }
+
+  /**
+   * Material findFirstOrThrow
+   */
+  export type MaterialFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
+    /**
+     * Filter, which Material to fetch.
+     */
+    where?: MaterialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Materials to fetch.
+     */
+    orderBy?: MaterialOrderByWithRelationInput | MaterialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Materials.
+     */
+    cursor?: MaterialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Materials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Materials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Materials.
+     */
+    distinct?: MaterialScalarFieldEnum | MaterialScalarFieldEnum[]
+  }
+
+  /**
+   * Material findMany
+   */
+  export type MaterialFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
+    /**
+     * Filter, which Materials to fetch.
+     */
+    where?: MaterialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Materials to fetch.
+     */
+    orderBy?: MaterialOrderByWithRelationInput | MaterialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Materials.
+     */
+    cursor?: MaterialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Materials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Materials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Materials.
+     */
+    distinct?: MaterialScalarFieldEnum | MaterialScalarFieldEnum[]
+  }
+
+  /**
+   * Material create
+   */
+  export type MaterialCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Material.
+     */
+    data: XOR<MaterialCreateInput, MaterialUncheckedCreateInput>
+  }
+
+  /**
+   * Material createMany
+   */
+  export type MaterialCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Materials.
+     */
+    data: MaterialCreateManyInput | MaterialCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Material createManyAndReturn
+   */
+  export type MaterialCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
+    /**
+     * The data used to create many Materials.
+     */
+    data: MaterialCreateManyInput | MaterialCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Material update
+   */
+  export type MaterialUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Material.
+     */
+    data: XOR<MaterialUpdateInput, MaterialUncheckedUpdateInput>
+    /**
+     * Choose, which Material to update.
+     */
+    where: MaterialWhereUniqueInput
+  }
+
+  /**
+   * Material updateMany
+   */
+  export type MaterialUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Materials.
+     */
+    data: XOR<MaterialUpdateManyMutationInput, MaterialUncheckedUpdateManyInput>
+    /**
+     * Filter which Materials to update
+     */
+    where?: MaterialWhereInput
+    /**
+     * Limit how many Materials to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Material updateManyAndReturn
+   */
+  export type MaterialUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
+    /**
+     * The data used to update Materials.
+     */
+    data: XOR<MaterialUpdateManyMutationInput, MaterialUncheckedUpdateManyInput>
+    /**
+     * Filter which Materials to update
+     */
+    where?: MaterialWhereInput
+    /**
+     * Limit how many Materials to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Material upsert
+   */
+  export type MaterialUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Material to update in case it exists.
+     */
+    where: MaterialWhereUniqueInput
+    /**
+     * In case the Material found by the `where` argument doesn't exist, create a new Material with this data.
+     */
+    create: XOR<MaterialCreateInput, MaterialUncheckedCreateInput>
+    /**
+     * In case the Material was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MaterialUpdateInput, MaterialUncheckedUpdateInput>
+  }
+
+  /**
+   * Material delete
+   */
+  export type MaterialDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
+    /**
+     * Filter which Material to delete.
+     */
+    where: MaterialWhereUniqueInput
+  }
+
+  /**
+   * Material deleteMany
+   */
+  export type MaterialDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Materials to delete
+     */
+    where?: MaterialWhereInput
+    /**
+     * Limit how many Materials to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Material without action
+   */
+  export type MaterialDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
   }
 
 
@@ -27922,7 +29182,13 @@ export namespace Prisma {
     classId: 'classId',
     createdByUserId: 'createdByUserId',
     createdRole: 'createdRole',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    subject: 'subject',
+    attachments: 'attachments',
+    status: 'status',
+    marks: 'marks',
+    teacherId: 'teacherId',
+    studentId: 'studentId'
   };
 
   export type AssignmentScalarFieldEnum = (typeof AssignmentScalarFieldEnum)[keyof typeof AssignmentScalarFieldEnum]
@@ -27944,10 +29210,26 @@ export namespace Prisma {
     assignmentId: 'assignmentId',
     studentId: 'studentId',
     fileUrl: 'fileUrl',
-    submittedAt: 'submittedAt'
+    submittedAt: 'submittedAt',
+    updatedAt: 'updatedAt',
+    textSubmission: 'textSubmission',
+    uploadedFiles: 'uploadedFiles'
   };
 
   export type AssignmentSubmissionScalarFieldEnum = (typeof AssignmentSubmissionScalarFieldEnum)[keyof typeof AssignmentSubmissionScalarFieldEnum]
+
+
+  export const MaterialScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    type: 'type',
+    fileUrl: 'fileUrl',
+    subject: 'subject',
+    uploadedBy: 'uploadedBy',
+    uploadDate: 'uploadDate'
+  };
+
+  export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
 
 
   export const SchoolLogScalarFieldEnum: {
@@ -29296,6 +30578,12 @@ export namespace Prisma {
     createdByUserId?: StringFilter<"Assignment"> | string
     createdRole?: StringFilter<"Assignment"> | string
     createdAt?: DateTimeFilter<"Assignment"> | Date | string
+    subject?: StringNullableFilter<"Assignment"> | string | null
+    attachments?: StringNullableListFilter<"Assignment">
+    status?: StringNullableFilter<"Assignment"> | string | null
+    marks?: IntNullableFilter<"Assignment"> | number | null
+    teacherId?: StringNullableFilter<"Assignment"> | string | null
+    studentId?: StringNullableFilter<"Assignment"> | string | null
     Class?: XOR<ClassScalarRelationFilter, ClassWhereInput>
     Creator?: XOR<UserScalarRelationFilter, UserWhereInput>
     feedbacks?: AssignmentFeedbackListRelationFilter
@@ -29311,6 +30599,12 @@ export namespace Prisma {
     createdByUserId?: SortOrder
     createdRole?: SortOrder
     createdAt?: SortOrder
+    subject?: SortOrderInput | SortOrder
+    attachments?: SortOrder
+    status?: SortOrderInput | SortOrder
+    marks?: SortOrderInput | SortOrder
+    teacherId?: SortOrderInput | SortOrder
+    studentId?: SortOrderInput | SortOrder
     Class?: ClassOrderByWithRelationInput
     Creator?: UserOrderByWithRelationInput
     feedbacks?: AssignmentFeedbackOrderByRelationAggregateInput
@@ -29329,6 +30623,12 @@ export namespace Prisma {
     createdByUserId?: StringFilter<"Assignment"> | string
     createdRole?: StringFilter<"Assignment"> | string
     createdAt?: DateTimeFilter<"Assignment"> | Date | string
+    subject?: StringNullableFilter<"Assignment"> | string | null
+    attachments?: StringNullableListFilter<"Assignment">
+    status?: StringNullableFilter<"Assignment"> | string | null
+    marks?: IntNullableFilter<"Assignment"> | number | null
+    teacherId?: StringNullableFilter<"Assignment"> | string | null
+    studentId?: StringNullableFilter<"Assignment"> | string | null
     Class?: XOR<ClassScalarRelationFilter, ClassWhereInput>
     Creator?: XOR<UserScalarRelationFilter, UserWhereInput>
     feedbacks?: AssignmentFeedbackListRelationFilter
@@ -29344,9 +30644,17 @@ export namespace Prisma {
     createdByUserId?: SortOrder
     createdRole?: SortOrder
     createdAt?: SortOrder
+    subject?: SortOrderInput | SortOrder
+    attachments?: SortOrder
+    status?: SortOrderInput | SortOrder
+    marks?: SortOrderInput | SortOrder
+    teacherId?: SortOrderInput | SortOrder
+    studentId?: SortOrderInput | SortOrder
     _count?: AssignmentCountOrderByAggregateInput
+    _avg?: AssignmentAvgOrderByAggregateInput
     _max?: AssignmentMaxOrderByAggregateInput
     _min?: AssignmentMinOrderByAggregateInput
+    _sum?: AssignmentSumOrderByAggregateInput
   }
 
   export type AssignmentScalarWhereWithAggregatesInput = {
@@ -29361,6 +30669,12 @@ export namespace Prisma {
     createdByUserId?: StringWithAggregatesFilter<"Assignment"> | string
     createdRole?: StringWithAggregatesFilter<"Assignment"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Assignment"> | Date | string
+    subject?: StringNullableWithAggregatesFilter<"Assignment"> | string | null
+    attachments?: StringNullableListFilter<"Assignment">
+    status?: StringNullableWithAggregatesFilter<"Assignment"> | string | null
+    marks?: IntNullableWithAggregatesFilter<"Assignment"> | number | null
+    teacherId?: StringNullableWithAggregatesFilter<"Assignment"> | string | null
+    studentId?: StringNullableWithAggregatesFilter<"Assignment"> | string | null
   }
 
   export type AssignmentFeedbackWhereInput = {
@@ -29430,6 +30744,9 @@ export namespace Prisma {
     studentId?: StringFilter<"AssignmentSubmission"> | string
     fileUrl?: StringFilter<"AssignmentSubmission"> | string
     submittedAt?: DateTimeFilter<"AssignmentSubmission"> | Date | string
+    updatedAt?: DateTimeFilter<"AssignmentSubmission"> | Date | string
+    textSubmission?: StringNullableFilter<"AssignmentSubmission"> | string | null
+    uploadedFiles?: StringNullableListFilter<"AssignmentSubmission">
     Assignment?: XOR<AssignmentScalarRelationFilter, AssignmentWhereInput>
     Student?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -29440,6 +30757,9 @@ export namespace Prisma {
     studentId?: SortOrder
     fileUrl?: SortOrder
     submittedAt?: SortOrder
+    updatedAt?: SortOrder
+    textSubmission?: SortOrderInput | SortOrder
+    uploadedFiles?: SortOrder
     Assignment?: AssignmentOrderByWithRelationInput
     Student?: UserOrderByWithRelationInput
   }
@@ -29453,6 +30773,9 @@ export namespace Prisma {
     studentId?: StringFilter<"AssignmentSubmission"> | string
     fileUrl?: StringFilter<"AssignmentSubmission"> | string
     submittedAt?: DateTimeFilter<"AssignmentSubmission"> | Date | string
+    updatedAt?: DateTimeFilter<"AssignmentSubmission"> | Date | string
+    textSubmission?: StringNullableFilter<"AssignmentSubmission"> | string | null
+    uploadedFiles?: StringNullableListFilter<"AssignmentSubmission">
     Assignment?: XOR<AssignmentScalarRelationFilter, AssignmentWhereInput>
     Student?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
@@ -29463,6 +30786,9 @@ export namespace Prisma {
     studentId?: SortOrder
     fileUrl?: SortOrder
     submittedAt?: SortOrder
+    updatedAt?: SortOrder
+    textSubmission?: SortOrderInput | SortOrder
+    uploadedFiles?: SortOrder
     _count?: AssignmentSubmissionCountOrderByAggregateInput
     _max?: AssignmentSubmissionMaxOrderByAggregateInput
     _min?: AssignmentSubmissionMinOrderByAggregateInput
@@ -29477,6 +30803,71 @@ export namespace Prisma {
     studentId?: StringWithAggregatesFilter<"AssignmentSubmission"> | string
     fileUrl?: StringWithAggregatesFilter<"AssignmentSubmission"> | string
     submittedAt?: DateTimeWithAggregatesFilter<"AssignmentSubmission"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AssignmentSubmission"> | Date | string
+    textSubmission?: StringNullableWithAggregatesFilter<"AssignmentSubmission"> | string | null
+    uploadedFiles?: StringNullableListFilter<"AssignmentSubmission">
+  }
+
+  export type MaterialWhereInput = {
+    AND?: MaterialWhereInput | MaterialWhereInput[]
+    OR?: MaterialWhereInput[]
+    NOT?: MaterialWhereInput | MaterialWhereInput[]
+    id?: StringFilter<"Material"> | string
+    title?: StringFilter<"Material"> | string
+    type?: StringFilter<"Material"> | string
+    fileUrl?: StringFilter<"Material"> | string
+    subject?: StringFilter<"Material"> | string
+    uploadedBy?: StringFilter<"Material"> | string
+    uploadDate?: DateTimeFilter<"Material"> | Date | string
+  }
+
+  export type MaterialOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    fileUrl?: SortOrder
+    subject?: SortOrder
+    uploadedBy?: SortOrder
+    uploadDate?: SortOrder
+  }
+
+  export type MaterialWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MaterialWhereInput | MaterialWhereInput[]
+    OR?: MaterialWhereInput[]
+    NOT?: MaterialWhereInput | MaterialWhereInput[]
+    title?: StringFilter<"Material"> | string
+    type?: StringFilter<"Material"> | string
+    fileUrl?: StringFilter<"Material"> | string
+    subject?: StringFilter<"Material"> | string
+    uploadedBy?: StringFilter<"Material"> | string
+    uploadDate?: DateTimeFilter<"Material"> | Date | string
+  }, "id">
+
+  export type MaterialOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    fileUrl?: SortOrder
+    subject?: SortOrder
+    uploadedBy?: SortOrder
+    uploadDate?: SortOrder
+    _count?: MaterialCountOrderByAggregateInput
+    _max?: MaterialMaxOrderByAggregateInput
+    _min?: MaterialMinOrderByAggregateInput
+  }
+
+  export type MaterialScalarWhereWithAggregatesInput = {
+    AND?: MaterialScalarWhereWithAggregatesInput | MaterialScalarWhereWithAggregatesInput[]
+    OR?: MaterialScalarWhereWithAggregatesInput[]
+    NOT?: MaterialScalarWhereWithAggregatesInput | MaterialScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Material"> | string
+    title?: StringWithAggregatesFilter<"Material"> | string
+    type?: StringWithAggregatesFilter<"Material"> | string
+    fileUrl?: StringWithAggregatesFilter<"Material"> | string
+    subject?: StringWithAggregatesFilter<"Material"> | string
+    uploadedBy?: StringWithAggregatesFilter<"Material"> | string
+    uploadDate?: DateTimeWithAggregatesFilter<"Material"> | Date | string
   }
 
   export type SchoolLogWhereInput = {
@@ -30838,6 +32229,12 @@ export namespace Prisma {
     dueDate: Date | string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
     Class: ClassCreateNestedOneWithoutAssignmentsInput
     Creator: UserCreateNestedOneWithoutSchoolAssignmentsInput
     feedbacks?: AssignmentFeedbackCreateNestedManyWithoutAssignmentInput
@@ -30853,6 +32250,12 @@ export namespace Prisma {
     createdByUserId: string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
     feedbacks?: AssignmentFeedbackUncheckedCreateNestedManyWithoutAssignmentInput
     submissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutAssignmentInput
   }
@@ -30864,6 +32267,12 @@ export namespace Prisma {
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     Class?: ClassUpdateOneRequiredWithoutAssignmentsNestedInput
     Creator?: UserUpdateOneRequiredWithoutSchoolAssignmentsNestedInput
     feedbacks?: AssignmentFeedbackUpdateManyWithoutAssignmentNestedInput
@@ -30879,6 +32288,12 @@ export namespace Prisma {
     createdByUserId?: StringFieldUpdateOperationsInput | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     feedbacks?: AssignmentFeedbackUncheckedUpdateManyWithoutAssignmentNestedInput
     submissions?: AssignmentSubmissionUncheckedUpdateManyWithoutAssignmentNestedInput
   }
@@ -30892,6 +32307,12 @@ export namespace Prisma {
     createdByUserId: string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
   }
 
   export type AssignmentUpdateManyMutationInput = {
@@ -30901,6 +32322,12 @@ export namespace Prisma {
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AssignmentUncheckedUpdateManyInput = {
@@ -30912,6 +32339,12 @@ export namespace Prisma {
     createdByUserId?: StringFieldUpdateOperationsInput | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AssignmentFeedbackCreateInput = {
@@ -30972,6 +32405,9 @@ export namespace Prisma {
     id?: string
     fileUrl: string
     submittedAt?: Date | string
+    updatedAt?: Date | string
+    textSubmission?: string | null
+    uploadedFiles?: AssignmentSubmissionCreateuploadedFilesInput | string[]
     Assignment: AssignmentCreateNestedOneWithoutSubmissionsInput
     Student: UserCreateNestedOneWithoutSubmissionsInput
   }
@@ -30982,12 +32418,18 @@ export namespace Prisma {
     studentId: string
     fileUrl: string
     submittedAt?: Date | string
+    updatedAt?: Date | string
+    textSubmission?: string | null
+    uploadedFiles?: AssignmentSubmissionCreateuploadedFilesInput | string[]
   }
 
   export type AssignmentSubmissionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textSubmission?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedFiles?: AssignmentSubmissionUpdateuploadedFilesInput | string[]
     Assignment?: AssignmentUpdateOneRequiredWithoutSubmissionsNestedInput
     Student?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
   }
@@ -30998,6 +32440,9 @@ export namespace Prisma {
     studentId?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textSubmission?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedFiles?: AssignmentSubmissionUpdateuploadedFilesInput | string[]
   }
 
   export type AssignmentSubmissionCreateManyInput = {
@@ -31006,12 +32451,18 @@ export namespace Prisma {
     studentId: string
     fileUrl: string
     submittedAt?: Date | string
+    updatedAt?: Date | string
+    textSubmission?: string | null
+    uploadedFiles?: AssignmentSubmissionCreateuploadedFilesInput | string[]
   }
 
   export type AssignmentSubmissionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textSubmission?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedFiles?: AssignmentSubmissionUpdateuploadedFilesInput | string[]
   }
 
   export type AssignmentSubmissionUncheckedUpdateManyInput = {
@@ -31020,6 +32471,79 @@ export namespace Prisma {
     studentId?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textSubmission?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedFiles?: AssignmentSubmissionUpdateuploadedFilesInput | string[]
+  }
+
+  export type MaterialCreateInput = {
+    id?: string
+    title: string
+    type: string
+    fileUrl: string
+    subject: string
+    uploadedBy: string
+    uploadDate?: Date | string
+  }
+
+  export type MaterialUncheckedCreateInput = {
+    id?: string
+    title: string
+    type: string
+    fileUrl: string
+    subject: string
+    uploadedBy: string
+    uploadDate?: Date | string
+  }
+
+  export type MaterialUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    uploadedBy?: StringFieldUpdateOperationsInput | string
+    uploadDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MaterialUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    uploadedBy?: StringFieldUpdateOperationsInput | string
+    uploadDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MaterialCreateManyInput = {
+    id?: string
+    title: string
+    type: string
+    fileUrl: string
+    subject: string
+    uploadedBy: string
+    uploadDate?: Date | string
+  }
+
+  export type MaterialUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    uploadedBy?: StringFieldUpdateOperationsInput | string
+    uploadDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MaterialUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    uploadedBy?: StringFieldUpdateOperationsInput | string
+    uploadDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SchoolLogCreateInput = {
@@ -32070,6 +33594,25 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type AssignmentCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -32079,6 +33622,16 @@ export namespace Prisma {
     createdByUserId?: SortOrder
     createdRole?: SortOrder
     createdAt?: SortOrder
+    subject?: SortOrder
+    attachments?: SortOrder
+    status?: SortOrder
+    marks?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+  }
+
+  export type AssignmentAvgOrderByAggregateInput = {
+    marks?: SortOrder
   }
 
   export type AssignmentMaxOrderByAggregateInput = {
@@ -32090,6 +33643,11 @@ export namespace Prisma {
     createdByUserId?: SortOrder
     createdRole?: SortOrder
     createdAt?: SortOrder
+    subject?: SortOrder
+    status?: SortOrder
+    marks?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
   }
 
   export type AssignmentMinOrderByAggregateInput = {
@@ -32101,6 +33659,31 @@ export namespace Prisma {
     createdByUserId?: SortOrder
     createdRole?: SortOrder
     createdAt?: SortOrder
+    subject?: SortOrder
+    status?: SortOrder
+    marks?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+  }
+
+  export type AssignmentSumOrderByAggregateInput = {
+    marks?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type AssignmentScalarRelationFilter = {
@@ -32138,6 +33721,9 @@ export namespace Prisma {
     studentId?: SortOrder
     fileUrl?: SortOrder
     submittedAt?: SortOrder
+    updatedAt?: SortOrder
+    textSubmission?: SortOrder
+    uploadedFiles?: SortOrder
   }
 
   export type AssignmentSubmissionMaxOrderByAggregateInput = {
@@ -32146,6 +33732,8 @@ export namespace Prisma {
     studentId?: SortOrder
     fileUrl?: SortOrder
     submittedAt?: SortOrder
+    updatedAt?: SortOrder
+    textSubmission?: SortOrder
   }
 
   export type AssignmentSubmissionMinOrderByAggregateInput = {
@@ -32154,6 +33742,38 @@ export namespace Prisma {
     studentId?: SortOrder
     fileUrl?: SortOrder
     submittedAt?: SortOrder
+    updatedAt?: SortOrder
+    textSubmission?: SortOrder
+  }
+
+  export type MaterialCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    fileUrl?: SortOrder
+    subject?: SortOrder
+    uploadedBy?: SortOrder
+    uploadDate?: SortOrder
+  }
+
+  export type MaterialMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    fileUrl?: SortOrder
+    subject?: SortOrder
+    uploadedBy?: SortOrder
+    uploadDate?: SortOrder
+  }
+
+  export type MaterialMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    fileUrl?: SortOrder
+    subject?: SortOrder
+    uploadedBy?: SortOrder
+    uploadDate?: SortOrder
   }
 
   export type SchoolLogCountOrderByAggregateInput = {
@@ -33612,6 +35232,10 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUpdatedAttendancesInput, UserUpdateWithoutUpdatedAttendancesInput>, UserUncheckedUpdateWithoutUpdatedAttendancesInput>
   }
 
+  export type AssignmentCreateattachmentsInput = {
+    set: string[]
+  }
+
   export type ClassCreateNestedOneWithoutAssignmentsInput = {
     create?: XOR<ClassCreateWithoutAssignmentsInput, ClassUncheckedCreateWithoutAssignmentsInput>
     connectOrCreate?: ClassCreateOrConnectWithoutAssignmentsInput
@@ -33650,6 +35274,19 @@ export namespace Prisma {
     connectOrCreate?: AssignmentSubmissionCreateOrConnectWithoutAssignmentInput | AssignmentSubmissionCreateOrConnectWithoutAssignmentInput[]
     createMany?: AssignmentSubmissionCreateManyAssignmentInputEnvelope
     connect?: AssignmentSubmissionWhereUniqueInput | AssignmentSubmissionWhereUniqueInput[]
+  }
+
+  export type AssignmentUpdateattachmentsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type ClassUpdateOneRequiredWithoutAssignmentsNestedInput = {
@@ -33752,6 +35389,10 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFeedbacksInput, UserUpdateWithoutFeedbacksInput>, UserUncheckedUpdateWithoutFeedbacksInput>
   }
 
+  export type AssignmentSubmissionCreateuploadedFilesInput = {
+    set: string[]
+  }
+
   export type AssignmentCreateNestedOneWithoutSubmissionsInput = {
     create?: XOR<AssignmentCreateWithoutSubmissionsInput, AssignmentUncheckedCreateWithoutSubmissionsInput>
     connectOrCreate?: AssignmentCreateOrConnectWithoutSubmissionsInput
@@ -33762,6 +35403,11 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutSubmissionsInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type AssignmentSubmissionUpdateuploadedFilesInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type AssignmentUpdateOneRequiredWithoutSubmissionsNestedInput = {
@@ -33989,6 +35635,33 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type AssessmentAttemptCreateWithoutUserInput = {
@@ -34282,6 +35955,12 @@ export namespace Prisma {
     dueDate: Date | string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
     Class: ClassCreateNestedOneWithoutAssignmentsInput
     feedbacks?: AssignmentFeedbackCreateNestedManyWithoutAssignmentInput
     submissions?: AssignmentSubmissionCreateNestedManyWithoutAssignmentInput
@@ -34295,6 +35974,12 @@ export namespace Prisma {
     classId: string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
     feedbacks?: AssignmentFeedbackUncheckedCreateNestedManyWithoutAssignmentInput
     submissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutAssignmentInput
   }
@@ -34337,6 +36022,9 @@ export namespace Prisma {
     id?: string
     fileUrl: string
     submittedAt?: Date | string
+    updatedAt?: Date | string
+    textSubmission?: string | null
+    uploadedFiles?: AssignmentSubmissionCreateuploadedFilesInput | string[]
     Assignment: AssignmentCreateNestedOneWithoutSubmissionsInput
   }
 
@@ -34345,6 +36033,9 @@ export namespace Prisma {
     assignmentId: string
     fileUrl: string
     submittedAt?: Date | string
+    updatedAt?: Date | string
+    textSubmission?: string | null
+    uploadedFiles?: AssignmentSubmissionCreateuploadedFilesInput | string[]
   }
 
   export type AssignmentSubmissionCreateOrConnectWithoutStudentInput = {
@@ -34656,6 +36347,12 @@ export namespace Prisma {
     createdByUserId?: StringFilter<"Assignment"> | string
     createdRole?: StringFilter<"Assignment"> | string
     createdAt?: DateTimeFilter<"Assignment"> | Date | string
+    subject?: StringNullableFilter<"Assignment"> | string | null
+    attachments?: StringNullableListFilter<"Assignment">
+    status?: StringNullableFilter<"Assignment"> | string | null
+    marks?: IntNullableFilter<"Assignment"> | number | null
+    teacherId?: StringNullableFilter<"Assignment"> | string | null
+    studentId?: StringNullableFilter<"Assignment"> | string | null
   }
 
   export type AssignmentFeedbackUpsertWithWhereUniqueWithoutCreatorInput = {
@@ -34710,6 +36407,9 @@ export namespace Prisma {
     studentId?: StringFilter<"AssignmentSubmission"> | string
     fileUrl?: StringFilter<"AssignmentSubmission"> | string
     submittedAt?: DateTimeFilter<"AssignmentSubmission"> | Date | string
+    updatedAt?: DateTimeFilter<"AssignmentSubmission"> | Date | string
+    textSubmission?: StringNullableFilter<"AssignmentSubmission"> | string | null
+    uploadedFiles?: StringNullableListFilter<"AssignmentSubmission">
   }
 
   export type SchoolLogUpsertWithWhereUniqueWithoutUserInput = {
@@ -36322,6 +38022,12 @@ export namespace Prisma {
     dueDate: Date | string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
     Creator: UserCreateNestedOneWithoutSchoolAssignmentsInput
     feedbacks?: AssignmentFeedbackCreateNestedManyWithoutAssignmentInput
     submissions?: AssignmentSubmissionCreateNestedManyWithoutAssignmentInput
@@ -36335,6 +38041,12 @@ export namespace Prisma {
     createdByUserId: string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
     feedbacks?: AssignmentFeedbackUncheckedCreateNestedManyWithoutAssignmentInput
     submissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutAssignmentInput
   }
@@ -37328,6 +39040,9 @@ export namespace Prisma {
     id?: string
     fileUrl: string
     submittedAt?: Date | string
+    updatedAt?: Date | string
+    textSubmission?: string | null
+    uploadedFiles?: AssignmentSubmissionCreateuploadedFilesInput | string[]
     Student: UserCreateNestedOneWithoutSubmissionsInput
   }
 
@@ -37336,6 +39051,9 @@ export namespace Prisma {
     studentId: string
     fileUrl: string
     submittedAt?: Date | string
+    updatedAt?: Date | string
+    textSubmission?: string | null
+    uploadedFiles?: AssignmentSubmissionCreateuploadedFilesInput | string[]
   }
 
   export type AssignmentSubmissionCreateOrConnectWithoutAssignmentInput = {
@@ -37481,6 +39199,12 @@ export namespace Prisma {
     dueDate: Date | string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
     Class: ClassCreateNestedOneWithoutAssignmentsInput
     Creator: UserCreateNestedOneWithoutSchoolAssignmentsInput
     submissions?: AssignmentSubmissionCreateNestedManyWithoutAssignmentInput
@@ -37495,6 +39219,12 @@ export namespace Prisma {
     createdByUserId: string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
     submissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutAssignmentInput
   }
 
@@ -37578,6 +39308,12 @@ export namespace Prisma {
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     Class?: ClassUpdateOneRequiredWithoutAssignmentsNestedInput
     Creator?: UserUpdateOneRequiredWithoutSchoolAssignmentsNestedInput
     submissions?: AssignmentSubmissionUpdateManyWithoutAssignmentNestedInput
@@ -37592,6 +39328,12 @@ export namespace Prisma {
     createdByUserId?: StringFieldUpdateOperationsInput | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     submissions?: AssignmentSubmissionUncheckedUpdateManyWithoutAssignmentNestedInput
   }
 
@@ -37665,6 +39407,12 @@ export namespace Prisma {
     dueDate: Date | string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
     Class: ClassCreateNestedOneWithoutAssignmentsInput
     Creator: UserCreateNestedOneWithoutSchoolAssignmentsInput
     feedbacks?: AssignmentFeedbackCreateNestedManyWithoutAssignmentInput
@@ -37679,6 +39427,12 @@ export namespace Prisma {
     createdByUserId: string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
     feedbacks?: AssignmentFeedbackUncheckedCreateNestedManyWithoutAssignmentInput
   }
 
@@ -37762,6 +39516,12 @@ export namespace Prisma {
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     Class?: ClassUpdateOneRequiredWithoutAssignmentsNestedInput
     Creator?: UserUpdateOneRequiredWithoutSchoolAssignmentsNestedInput
     feedbacks?: AssignmentFeedbackUpdateManyWithoutAssignmentNestedInput
@@ -37776,6 +39536,12 @@ export namespace Prisma {
     createdByUserId?: StringFieldUpdateOperationsInput | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     feedbacks?: AssignmentFeedbackUncheckedUpdateManyWithoutAssignmentNestedInput
   }
 
@@ -38061,6 +39827,12 @@ export namespace Prisma {
     classId: string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
   }
 
   export type AssignmentFeedbackCreateManyCreatorInput = {
@@ -38075,6 +39847,9 @@ export namespace Prisma {
     assignmentId: string
     fileUrl: string
     submittedAt?: Date | string
+    updatedAt?: Date | string
+    textSubmission?: string | null
+    uploadedFiles?: AssignmentSubmissionCreateuploadedFilesInput | string[]
   }
 
   export type SchoolLogCreateManyUserInput = {
@@ -38367,6 +40142,12 @@ export namespace Prisma {
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     Class?: ClassUpdateOneRequiredWithoutAssignmentsNestedInput
     feedbacks?: AssignmentFeedbackUpdateManyWithoutAssignmentNestedInput
     submissions?: AssignmentSubmissionUpdateManyWithoutAssignmentNestedInput
@@ -38380,6 +40161,12 @@ export namespace Prisma {
     classId?: StringFieldUpdateOperationsInput | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     feedbacks?: AssignmentFeedbackUncheckedUpdateManyWithoutAssignmentNestedInput
     submissions?: AssignmentSubmissionUncheckedUpdateManyWithoutAssignmentNestedInput
   }
@@ -38392,6 +40179,12 @@ export namespace Prisma {
     classId?: StringFieldUpdateOperationsInput | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AssignmentFeedbackUpdateWithoutCreatorInput = {
@@ -38419,6 +40212,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textSubmission?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedFiles?: AssignmentSubmissionUpdateuploadedFilesInput | string[]
     Assignment?: AssignmentUpdateOneRequiredWithoutSubmissionsNestedInput
   }
 
@@ -38427,6 +40223,9 @@ export namespace Prisma {
     assignmentId?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textSubmission?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedFiles?: AssignmentSubmissionUpdateuploadedFilesInput | string[]
   }
 
   export type AssignmentSubmissionUncheckedUpdateManyWithoutStudentInput = {
@@ -38434,6 +40233,9 @@ export namespace Prisma {
     assignmentId?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textSubmission?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedFiles?: AssignmentSubmissionUpdateuploadedFilesInput | string[]
   }
 
   export type SchoolLogUpdateWithoutUserInput = {
@@ -38765,6 +40567,12 @@ export namespace Prisma {
     createdByUserId: string
     createdRole: string
     createdAt?: Date | string
+    subject?: string | null
+    attachments?: AssignmentCreateattachmentsInput | string[]
+    status?: string | null
+    marks?: number | null
+    teacherId?: string | null
+    studentId?: string | null
   }
 
   export type ClassTeacherUpdateWithoutClassInput = {
@@ -38843,6 +40651,12 @@ export namespace Prisma {
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     Creator?: UserUpdateOneRequiredWithoutSchoolAssignmentsNestedInput
     feedbacks?: AssignmentFeedbackUpdateManyWithoutAssignmentNestedInput
     submissions?: AssignmentSubmissionUpdateManyWithoutAssignmentNestedInput
@@ -38856,6 +40670,12 @@ export namespace Prisma {
     createdByUserId?: StringFieldUpdateOperationsInput | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     feedbacks?: AssignmentFeedbackUncheckedUpdateManyWithoutAssignmentNestedInput
     submissions?: AssignmentSubmissionUncheckedUpdateManyWithoutAssignmentNestedInput
   }
@@ -38868,6 +40688,12 @@ export namespace Prisma {
     createdByUserId?: StringFieldUpdateOperationsInput | string
     createdRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: AssignmentUpdateattachmentsInput | string[]
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    marks?: NullableIntFieldUpdateOperationsInput | number | null
+    teacherId?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AssignmentFeedbackCreateManyAssignmentInput = {
@@ -38882,6 +40708,9 @@ export namespace Prisma {
     studentId: string
     fileUrl: string
     submittedAt?: Date | string
+    updatedAt?: Date | string
+    textSubmission?: string | null
+    uploadedFiles?: AssignmentSubmissionCreateuploadedFilesInput | string[]
   }
 
   export type AssignmentFeedbackUpdateWithoutAssignmentInput = {
@@ -38909,6 +40738,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textSubmission?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedFiles?: AssignmentSubmissionUpdateuploadedFilesInput | string[]
     Student?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
   }
 
@@ -38917,6 +40749,9 @@ export namespace Prisma {
     studentId?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textSubmission?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedFiles?: AssignmentSubmissionUpdateuploadedFilesInput | string[]
   }
 
   export type AssignmentSubmissionUncheckedUpdateManyWithoutAssignmentInput = {
@@ -38924,6 +40759,9 @@ export namespace Prisma {
     studentId?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textSubmission?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedFiles?: AssignmentSubmissionUpdateuploadedFilesInput | string[]
   }
 
 

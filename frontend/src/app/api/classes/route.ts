@@ -15,7 +15,7 @@ export async function GET() {
         where: { teacherId: ctx.userId, Class: { workspaceId: ctx.workspaceId } },
         select: { classId: true },
       });
-      classWhere = { workspaceId: ctx.workspaceId, id: { in: teacherLinks.map(t => t.classId) } };
+      classWhere = { workspaceId: ctx.workspaceId, id: { in: teacherLinks.map((t: any) => t.classId) } };
     }
 
     const classes = await prisma.class.findMany({
@@ -24,7 +24,7 @@ export async function GET() {
       orderBy: { createdAt: 'desc' },
     });
 
-    const classIds = classes.map(c => c.id);
+    const classIds = classes.map((c: any) => c.id);
 
     const students = await prisma.classStudent.findMany({
       where: { classId: { in: classIds } },
@@ -41,7 +41,7 @@ export async function GET() {
     for (const t of teachers) teachersByClass.set(t.classId, [...(teachersByClass.get(t.classId) ?? []), t]);
 
     return jsonOk(
-      classes.map(c => ({
+      classes.map((c: any) => ({
         ...c,
         students: studentsByClass.get(c.id) ?? [],
         teachers: teachersByClass.get(c.id) ?? [],

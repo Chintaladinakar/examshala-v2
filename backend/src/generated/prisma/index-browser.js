@@ -294,7 +294,13 @@ exports.Prisma.AssignmentScalarFieldEnum = {
   classId: 'classId',
   createdByUserId: 'createdByUserId',
   createdRole: 'createdRole',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  subject: 'subject',
+  attachments: 'attachments',
+  status: 'status',
+  marks: 'marks',
+  teacherId: 'teacherId',
+  studentId: 'studentId'
 };
 
 exports.Prisma.AssignmentFeedbackScalarFieldEnum = {
@@ -310,7 +316,20 @@ exports.Prisma.AssignmentSubmissionScalarFieldEnum = {
   assignmentId: 'assignmentId',
   studentId: 'studentId',
   fileUrl: 'fileUrl',
-  submittedAt: 'submittedAt'
+  submittedAt: 'submittedAt',
+  updatedAt: 'updatedAt',
+  textSubmission: 'textSubmission',
+  uploadedFiles: 'uploadedFiles'
+};
+
+exports.Prisma.MaterialScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  type: 'type',
+  fileUrl: 'fileUrl',
+  subject: 'subject',
+  uploadedBy: 'uploadedBy',
+  uploadDate: 'uploadDate'
 };
 
 exports.Prisma.SchoolLogScalarFieldEnum = {
@@ -377,6 +396,7 @@ exports.Prisma.ModelName = {
   Assignment: 'Assignment',
   AssignmentFeedback: 'AssignmentFeedback',
   AssignmentSubmission: 'AssignmentSubmission',
+  Material: 'Material',
   SchoolLog: 'SchoolLog',
   PlatformSettings: 'PlatformSettings'
 };

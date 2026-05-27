@@ -1,10 +1,10 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DBPOST_uri")
 }
 
 model User {
@@ -262,10 +262,22 @@ model Assignment {
   createdRole       String   // "teacher" | "principal-teacher-mode"
   createdAt         DateTime @default(now())
 
+  // New fields
+  subject           String?
+  attachments       String[] @default([])
+  status            String?  @default("PENDING")
+  marks             Int?
+  teacherId         String?
+  studentId         String?
+
   Class             Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
   Creator           User     @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
   feedbacks         AssignmentFeedback[]
   submissions       AssignmentSubmission[]
+
+  @@index([dueDate])
+  @@index([subject])
+  @@index([studentId])
 }
 
 model AssignmentFeedback {
@@ -285,9 +297,29 @@ model AssignmentSubmission {
   studentId       String
   fileUrl         String
   submittedAt     DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // New fields
+  textSubmission  String?
+  uploadedFiles   String[] @default([])
 
   Assignment      Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
   Student         User       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+  @@index([assignmentId])
+}
+
+model Material {
+  id          String   @id @default(uuid())
+  title       String
+  type        String   // PDF, DOC, PPT, LINK, NOTES
+  fileUrl     String
+  subject     String
+  uploadedBy  String
+  uploadDate  DateTime @default(now())
+
+  @@index([subject])
 }
 
 model SchoolLog {

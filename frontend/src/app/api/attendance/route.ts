@@ -48,12 +48,12 @@ export async function GET(req: NextRequest) {
       where: { classId: klass.id, date },
       select: { id: true, studentId: true, status: true, isLocked: true, createdAt: true, lastUpdatedBy: true },
     });
-    const byStudent = new Map(attendance.map(a => [a.studentId, a]));
+    const byStudent = new Map(attendance.map((a: any) => [a.studentId, a]));
 
     return jsonOk({
       class: { id: klass.id, name: klass.name },
       date: date.toISOString(),
-      students: roster.map(r => ({
+      students: roster.map((r: any) => ({
         ...r.Student,
         attendance: byStudent.get(r.Student.id) ?? null,
       })),
@@ -83,11 +83,11 @@ export async function POST(req: NextRequest) {
       where: { classId: klass.id },
       select: { studentId: true },
     });
-    const allowed = new Set(allowedStudents.map(s => s.studentId));
+    const allowed = new Set(allowedStudents.map((s: any) => s.studentId));
 
     const createData = body.entries
-      .filter(e => allowed.has(e.studentId))
-      .map(e => ({
+      .filter((e: any) => allowed.has(e.studentId))
+      .map((e: any) => ({
         classId: klass.id,
         studentId: e.studentId,
         date,

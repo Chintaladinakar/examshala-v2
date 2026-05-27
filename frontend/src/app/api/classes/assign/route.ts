@@ -28,7 +28,7 @@ export async function PATCH(req: NextRequest) {
       });
       await prisma.classStudent.deleteMany({ where: { classId: klass.id } });
       await prisma.classStudent.createMany({
-        data: validStudents.map(s => ({ classId: klass.id, studentId: s.id })),
+        data: validStudents.map((s: any) => ({ classId: klass.id, studentId: s.id })),
         skipDuplicates: true,
       });
     }
@@ -40,7 +40,7 @@ export async function PATCH(req: NextRequest) {
       });
       await prisma.classTeacher.deleteMany({ where: { classId: klass.id } });
       await prisma.classTeacher.createMany({
-        data: validTeachers.map(t => ({ classId: klass.id, teacherId: t.id })),
+        data: validTeachers.map((t: any) => ({ classId: klass.id, teacherId: t.id })),
         skipDuplicates: true,
       });
     }

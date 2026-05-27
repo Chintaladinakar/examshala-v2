@@ -27,7 +27,7 @@ export async function GET() {
     }
 
     return jsonOk(
-      teachers.map(t => ({
+      teachers.map((t: any) => ({
         ...t,
         classes: classesByTeacher.get(t.id) ?? [],
       }))
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
     if (classIds.length) {
       const classes = await prisma.class.findMany({ where: { id: { in: classIds }, workspaceId: ctx.workspaceId } });
       await prisma.classTeacher.createMany({
-        data: classes.map(c => ({ classId: c.id, teacherId: teacher.id })),
+        data: classes.map((c: any) => ({ classId: c.id, teacherId: teacher.id })),
         skipDuplicates: true,
       });
     }

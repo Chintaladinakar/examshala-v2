@@ -14,7 +14,7 @@ export async function GET() {
         where: { teacherId: ctx.userId, Class: { workspaceId: ctx.workspaceId } },
         select: { classId: true },
       });
-      classIds = teacherLinks.map(t => t.classId);
+      classIds = teacherLinks.map((t: any) => t.classId);
     }
 
     const assignments = await prisma.assignment.findMany({
