@@ -23,7 +23,6 @@ export type StudentRouteItem = {
 // Keep all hrefs here (do not duplicate in components).
 export const studentPortalRoutes: StudentRouteItem[] = [
   { href: '/studentdashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/studentdashboard/courses', label: 'Courses', icon: BookOpen },
   { href: '/studentdashboard/exams', label: 'Exams', icon: ClipboardList },
   { href: '/studentdashboard/results', label: 'Results', icon: FileText },
   { href: '/studentdashboard/schedule', label: 'Schedule', icon: Calendar },

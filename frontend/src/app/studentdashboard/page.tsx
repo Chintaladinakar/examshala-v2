@@ -1,16 +1,43 @@
 import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import nextDynamic from 'next/dynamic';
 import { 
   WelcomeBanner, 
   PendingWorkSection, 
   OverallProgressSection, 
-  UpcomingExamsSection, 
-  RecentResultsSection 
+  UpcomingExamsSection 
 } from '@/components/student/DashboardSections';
 import FullPageErrorState from '@/components/ui/FullPageErrorState';
 import { logDeveloperError } from '@/lib/error-handler';
 import { getStudentDashboard } from '@/lib/student/data';
+
+// Dynamically import the non-critical results section to optimize TTI (Time to Interactive)
+const RecentResultsSection = nextDynamic(
+  () => import('@/components/student/DashboardSections').then((mod) => mod.RecentResultsSection),
+  {
+    loading: () => <RecentResultsSkeleton />,
+  }
+);
+
+function RecentResultsSkeleton() {
+  return (
+    <div className="mb-8 animate-pulse select-none">
+      <div className="h-5 w-36 bg-slate-200 rounded-md mb-4"></div>
+      <div className="bg-white rounded-3xl border border-slate-100/80 p-5 space-y-4">
+        {[1, 2].map((i) => (
+          <div key={i} className="flex justify-between items-center py-1.5 first:pb-4 first:border-b first:border-slate-50">
+            <div className="space-y-2 flex-1">
+              <div className="h-4 w-2/3 bg-slate-200 rounded-sm"></div>
+              <div className="h-3 w-1/3 bg-slate-100 rounded-sm"></div>
+            </div>
+            <div className="h-6 w-16 bg-slate-100 rounded-xl shrink-0"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -88,6 +115,7 @@ export default async function StudentDashboardPage() {
         workspaceName={workspaceName || 'Student Portal'}
         pendingCount={pendingItems.length}
         unreadCount={unreadCount}
+        upcomingCount={upcomingExams?.length || 0}
       />
 
       <PendingWorkSection pendingItems={pendingItems} />

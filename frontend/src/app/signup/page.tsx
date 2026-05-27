@@ -7,6 +7,7 @@ import InputField from '@/components/InputField';
 import { fetchJson } from '@/lib/api';
 import InlineError from '@/components/ui/InlineError';
 import { logDeveloperError } from '@/lib/error-handler';
+import { decodeJwtPayload, getDashboardPathForRole } from '@/lib/auth';
 
 function getTokenFromSignupResponse(body: unknown): string | null {
   if (!body || typeof body !== 'object') return null;
@@ -46,8 +47,18 @@ export default function SignUp() {
 
       // Store token on successful signin/signup
       const token = getTokenFromSignupResponse(data);
-      if (token) localStorage.setItem('token', token);
-      router.push('/dashboard');
+      if (token) {
+        localStorage.setItem('token', token);
+        // Set the session cookie for Next.js middleware protection
+        document.cookie = `session_token=${token}; path=/; max-age=86400; SameSite=Lax`;
+        
+        // Determine correct landing pad and route directly
+        const decoded = decodeJwtPayload(token);
+        const destination = decoded?.role ? getDashboardPathForRole(decoded.role) : '/';
+        router.push(destination);
+      } else {
+        router.push('/signin');
+      }
     } catch (err) {
       logDeveloperError(err, { action: 'signup', feature: 'signup' });
       setError(err);

@@ -20,7 +20,7 @@ export function LogoutButton() {
         router.push('/signin');
         router.refresh();
       }}
-      className="text-sm font-medium text-rose-600 hover:text-rose-700 flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-rose-50 transition-colors"
+      className="text-xs font-bold uppercase tracking-wider text-rose-500 hover:text-rose-600 flex items-center gap-1.5 px-3 py-2 rounded-xl hover:bg-rose-50 border border-transparent hover:border-rose-100/50 transition-all duration-200"
     >
       <LogOut className="w-4 h-4" />
       <span className="hidden sm:inline">Logout</span>
