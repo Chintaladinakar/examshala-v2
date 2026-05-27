@@ -36,6 +36,7 @@ model User {
   feedbacks          AssignmentFeedback[]
   submissions        AssignmentSubmission[]
   schoolLogs         SchoolLog[]
+  results            Result[]
 }
 
 model Workspace {
@@ -338,4 +339,22 @@ model PlatformSettings {
   platformName String?
   supportEmail String?
   createdAt    DateTime @default(now())
+}
+
+model Result {
+  id         String   @id @default(cuid())
+  studentId  String
+  examId     String
+  subject    String
+  score      Int
+  totalMarks Int
+  percentage Float
+  grade      String
+  rank       Int?
+  status     String
+  feedback   String?
+  timeTaken  Int?
+  createdAt  DateTime @default(now())
+
+  student User @relation(fields: [studentId], references: [id], onDelete: Cascade)
 }

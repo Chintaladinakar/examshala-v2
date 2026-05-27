@@ -88,6 +88,17 @@ export const getResults = async (req: AuthRequest, res: Response) => {
   }
 };
 
+export const getResultById = async (req: AuthRequest, res: Response) => {
+  try {
+    const studentId = req.user!.userId;
+    const { id } = req.params;
+    const data = await resultsService.getStudentResultById(studentId, id);
+    res.json({ success: true, data });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export const getNotifications = async (req: AuthRequest, res: Response) => {
   try {
     const studentId = req.user!.userId;

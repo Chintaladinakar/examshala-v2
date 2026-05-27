@@ -22,8 +22,9 @@ router.post('/parents/remove-request', controller.removeParentLink);
 
 // Mock placeholders for standard entity endpoints (results, notifs, profile) 
 // that can be expanded later
-router.get('/results', (req, res) => res.json({ success: true, data: [] }));
-router.get('/notifications', (req, res) => res.json({ success: true, data: [] }));
+router.get('/results', controller.getResults);
+router.get('/results/:id', controller.getResultById);
+router.get('/notifications', controller.getNotifications);
 router.get('/profile', (req, res) => res.json({ success: true, data: {} }));
 
 export default router;

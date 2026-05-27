@@ -49,3 +49,17 @@ export async function getStudentResults(token: string): Promise<StudentResultsDa
     return [];
   }
 }
+
+export async function getStudentResultById(token: string, id: string): Promise<any> {
+  try {
+    const payload = await fetchJson<{ success?: boolean; data?: unknown }>(`/api/student/results/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store',
+      action: 'load',
+    });
+    return (payload && typeof payload === 'object') ? (payload as Record<string, unknown>).data : null;
+  } catch (err) {
+    logDeveloperError(err, { action: 'load', feature: 'student_result_detail_adapter' });
+    return null;
+  }
+}

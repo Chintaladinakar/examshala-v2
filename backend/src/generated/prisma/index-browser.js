@@ -348,6 +348,22 @@ exports.Prisma.PlatformSettingsScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ResultScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  examId: 'examId',
+  subject: 'subject',
+  score: 'score',
+  totalMarks: 'totalMarks',
+  percentage: 'percentage',
+  grade: 'grade',
+  rank: 'rank',
+  status: 'status',
+  feedback: 'feedback',
+  timeTaken: 'timeTaken',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -398,7 +414,8 @@ exports.Prisma.ModelName = {
   AssignmentSubmission: 'AssignmentSubmission',
   Material: 'Material',
   SchoolLog: 'SchoolLog',
-  PlatformSettings: 'PlatformSettings'
+  PlatformSettings: 'PlatformSettings',
+  Result: 'Result'
 };
 
 /**
