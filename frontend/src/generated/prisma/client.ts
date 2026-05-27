@@ -29,8 +29,8 @@ export * from "./enums"
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Attempts
- * const attempts = await prisma.attempt.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  * 
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
@@ -45,17 +45,107 @@ path.join(__dirname, "query_engine-windows.dll.node")
 path.join(process.cwd(), "src/generated/prisma/query_engine-windows.dll.node")
 
 /**
- * Model Attempt
+ * Model User
  * 
  */
-export type Attempt = Prisma.AttemptModel
+export type User = Prisma.UserModel
+/**
+ * Model Workspace
+ * 
+ */
+export type Workspace = Prisma.WorkspaceModel
+/**
+ * Model WorkspaceMembership
+ * 
+ */
+export type WorkspaceMembership = Prisma.WorkspaceMembershipModel
+/**
+ * Model StudentWorkspaceProfile
+ * 
+ */
+export type StudentWorkspaceProfile = Prisma.StudentWorkspaceProfileModel
 /**
  * Model Test
  * 
  */
 export type Test = Prisma.TestModel
 /**
- * Model User
+ * Model AssessmentAssignment
  * 
  */
-export type User = Prisma.UserModel
+export type AssessmentAssignment = Prisma.AssessmentAssignmentModel
+/**
+ * Model AssessmentAttempt
+ * 
+ */
+export type AssessmentAttempt = Prisma.AssessmentAttemptModel
+/**
+ * Model AssessmentResult
+ * 
+ */
+export type AssessmentResult = Prisma.AssessmentResultModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model ParentStudentLink
+ * 
+ */
+export type ParentStudentLink = Prisma.ParentStudentLinkModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model Invite
+ * 
+ */
+export type Invite = Prisma.InviteModel
+/**
+ * Model Log
+ * 
+ */
+export type Log = Prisma.LogModel
+/**
+ * Model Class
+ * 
+ */
+export type Class = Prisma.ClassModel
+/**
+ * Model ClassTeacher
+ * 
+ */
+export type ClassTeacher = Prisma.ClassTeacherModel
+/**
+ * Model ClassStudent
+ * 
+ */
+export type ClassStudent = Prisma.ClassStudentModel
+/**
+ * Model Attendance
+ * 
+ */
+export type Attendance = Prisma.AttendanceModel
+/**
+ * Model Assignment
+ * 
+ */
+export type Assignment = Prisma.AssignmentModel
+/**
+ * Model AssignmentFeedback
+ * 
+ */
+export type AssignmentFeedback = Prisma.AssignmentFeedbackModel
+/**
+ * Model AssignmentSubmission
+ * 
+ */
+export type AssignmentSubmission = Prisma.AssignmentSubmissionModel
+/**
+ * Model SchoolLog
+ * 
+ */
+export type SchoolLog = Prisma.SchoolLogModel

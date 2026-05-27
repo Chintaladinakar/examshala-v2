@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui/ToastProvider";
+import { UserProvider } from "@/context/UserContext";
 
 export const metadata: Metadata = {
   title: "Examshala - Virtual Assessment Platform",
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <ToastProvider>{children}</ToastProvider>
+        <UserProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </UserProvider>
       </body>
     </html>
   );

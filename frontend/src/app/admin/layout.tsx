@@ -170,16 +170,28 @@ export default function AdminLayout({
           </div>
           
           {/* User profile dropdown indicator */}
-          <div className="flex items-center gap-3">
-            <div className="text-right hidden md:block">
-              <div className="text-sm font-semibold text-slate-800">{profile?.name || 'Administrator'}</div>
-              <div className="text-xs text-teal-650 font-bold uppercase tracking-wider">
-                {profile?.role === 'ORG_ADMIN' ? 'Org Admin' : profile?.role || 'Admin'}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="text-right hidden md:block">
+                <div className="text-sm font-semibold text-slate-800">{profile?.name || 'Administrator'}</div>
+                <div className="text-xs text-teal-600 font-bold uppercase tracking-wider">
+                  {profile?.role === 'ORG_ADMIN' ? 'Org Admin' : profile?.role || 'Admin'}
+                </div>
+              </div>
+              <div className="w-9 h-9 bg-teal-50 border border-teal-100 rounded-full flex items-center justify-center font-black text-teal-800 shadow-sm text-xs select-none">
+                {profile?.name ? profile.name.substring(0, 2).toUpperCase() : 'OA'}
               </div>
             </div>
-            <div className="w-9 h-9 bg-teal-50 border border-teal-100 rounded-full flex items-center justify-center font-black text-teal-800 shadow-sm text-xs select-none">
-              {profile?.name ? profile.name.substring(0, 2).toUpperCase() : 'OA'}
-            </div>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-rose-600 hover:bg-rose-50 hover:border-rose-200 transition-colors cursor-pointer"
+              title="Sign Out"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              <span>Logout</span>
+            </button>
           </div>
         </header>
 

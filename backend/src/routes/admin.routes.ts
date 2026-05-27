@@ -13,6 +13,8 @@ router.use(authorizeRoles('ORG_ADMIN', 'admin'));
 // -------------------------------------------------------------
 router.get('/users', adminController.getAllUsers);
 router.patch('/users/:id', adminController.updateUserStatus);
+router.put('/users/:id', adminController.editUser);
+router.delete('/users/:id', adminController.deleteUser);
 router.post('/assign-role', adminController.assignRoleController); // backwards compatibility
 
 // -------------------------------------------------------------
@@ -21,6 +23,8 @@ router.post('/assign-role', adminController.assignRoleController); // backwards 
 router.get('/workspaces', adminController.getAllWorkspaces);
 router.post('/workspaces', adminController.createWorkspace);
 router.patch('/workspaces/:id', adminController.assignPrincipal);
+router.put('/workspaces/:id', adminController.editWorkspace);
+router.delete('/workspaces/:id', adminController.deleteWorkspace);
 
 // -------------------------------------------------------------
 // Invites REST API

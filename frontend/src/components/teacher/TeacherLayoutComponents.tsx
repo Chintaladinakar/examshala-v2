@@ -1,13 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { 
   LayoutDashboard, 
   Users, 
-  UserSquare2, 
   CalendarCheck, 
   ClipboardList, 
   Database, 
@@ -20,10 +19,11 @@ import {
   Bell,
   ChevronDown,
   LogOut,
-  LayoutGrid
+  LayoutGrid,
+  ArrowLeftRight
 } from 'lucide-react';
 import { clsx } from 'clsx';
-import { tutorIdentityMock, tutorWorkspaceMock } from '@/lib/mock/tutorDashboardMock';
+import { useUser } from '@/context/UserContext';
 
 const navItems = [
   { name: 'Dashboard', href: '/tutordashboard', icon: LayoutDashboard },
@@ -43,9 +43,12 @@ const navItems = [
 export const TeacherSidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const { user: profile, switchMode } = useUser();
+  const [switching, setSwitching] = useState(false);
+
+  const isPrincipal = profile?.role?.toLowerCase() === 'principal';
 
   const handleSignOut = () => {
-    // Clear auth artifacts (cookie used by server components/middleware + any client token fallback)
     document.cookie = 'session_token=; path=/; max-age=0; SameSite=Lax';
     try {
       localStorage.removeItem('token');
@@ -54,6 +57,22 @@ export const TeacherSidebar = () => {
     }
     router.push('/signin');
     router.refresh();
+  };
+
+  const handleSwitchToPrincipal = async () => {
+    if (!isPrincipal) return;
+    try {
+      setSwitching(true);
+      const newMode = await switchMode();
+      if (newMode === 'principal') {
+        router.push('/principledashboard');
+      }
+    } catch (err) {
+      console.error('Failed to switch mode:', err);
+      alert('Failed to switch mode');
+    } finally {
+      setSwitching(false);
+    }
   };
 
   return (
@@ -66,6 +85,14 @@ export const TeacherSidebar = () => {
           <span className="text-xl font-bold text-gray-900 tracking-tight">Examshala</span>
         </Link>
       </div>
+
+      {/* Mode Badge - show if principal is in teacher mode */}
+      {isPrincipal && (
+        <div className="mx-4 mb-3 px-3 py-2 bg-emerald-50 border border-emerald-200 rounded-lg">
+          <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">🟢 Teacher Mode</p>
+          <p className="text-[9px] text-emerald-600 mt-0.5">Viewing as teacher</p>
+        </div>
+      )}
 
       <nav className="flex-1 px-4 space-y-1 pb-8">
         {navItems.map((item) => {
@@ -99,11 +126,24 @@ export const TeacherSidebar = () => {
         })}
       </nav>
 
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-gray-200 space-y-1">
+        {/* Switch to Principal Mode — only for principals */}
+        {isPrincipal && (
+          <button
+            type="button"
+            onClick={handleSwitchToPrincipal}
+            disabled={switching}
+            className="flex items-center gap-3 px-3 py-2 w-full rounded-lg text-sm font-medium text-purple-600 hover:bg-purple-50 hover:text-purple-700 transition-colors disabled:opacity-50 cursor-pointer"
+          >
+            <ArrowLeftRight size={18} />
+            {switching ? 'Switching…' : 'Switch to Principal Mode'}
+          </button>
+        )}
+
         <button
           type="button"
           onClick={handleSignOut}
-          className="flex items-center gap-3 px-3 py-2 w-full rounded-lg text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors"
+          className="flex items-center gap-3 px-3 py-2 w-full rounded-lg text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer"
         >
           <LogOut size={18} />
           Sign Out
@@ -114,17 +154,29 @@ export const TeacherSidebar = () => {
 };
 
 export const TeacherHeader = () => {
+  const { user: profile } = useUser();
+
+  const displayName = profile?.name || 'Teacher';
+  const displayRole = profile?.role?.toLowerCase() === 'principal' ? 'Principal (Teacher Mode)' : 'Teacher';
+  const initials = displayName
+    .trim()
+    .split(/\s+/)
+    .map((w: string) => w[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+
   return (
     <header className="h-16 bg-white border-b border-gray-200 sticky top-0 z-30 px-8 flex items-center justify-between">
       <div className="flex items-center gap-6">
         {/* Workspace Switcher */}
         <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 cursor-pointer hover:bg-gray-100 transition-colors">
           <div className="w-6 h-6 bg-indigo-100 rounded flex items-center justify-center">
-            <span className="text-indigo-600 font-bold text-xs">{tutorWorkspaceMock.code}</span>
+            <span className="text-indigo-600 font-bold text-xs">🏫</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-xs font-semibold text-gray-900 leading-none">{tutorWorkspaceMock.name}</span>
-            <span className="text-[10px] text-gray-500 leading-none mt-0.5">{tutorWorkspaceMock.academicYearLabel}</span>
+            <span className="text-xs font-semibold text-gray-900 leading-none">{profile?.workspaceName || 'School'}</span>
+            <span className="text-[10px] text-gray-500 leading-none mt-0.5">2024–25</span>
           </div>
           <ChevronDown size={14} className="text-gray-400 ml-2" />
         </div>
@@ -150,14 +202,12 @@ export const TeacherHeader = () => {
 
         <button className="flex items-center gap-2 pl-2 hover:bg-gray-100 rounded-lg transition-colors py-1 px-2">
           <div className="text-right hidden sm:block">
-            <p className="text-sm font-semibold text-gray-900 leading-none">{tutorIdentityMock.name}</p>
-            <p className="text-[10px] text-gray-500 mt-1">{tutorIdentityMock.title}</p>
+            <p className="text-sm font-semibold text-gray-900 leading-none">{displayName}</p>
+            <p className="text-[10px] text-gray-500 mt-1">{displayRole}</p>
           </div>
-          <img
-            src={tutorIdentityMock.avatarUrl}
-            alt="Teacher"
-            className="w-8 h-8 rounded-full border border-gray-200 shadow-sm"
-          />
+          <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-xs border border-indigo-500 shadow-sm">
+            {initials}
+          </div>
         </button>
       </div>
     </header>

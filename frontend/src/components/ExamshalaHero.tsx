@@ -91,7 +91,7 @@ const ExamshalaHero = () => {
               </div>
               <div className="flex-1 flex justify-center">
                 <div className="w-1/2 h-5 bg-white border border-slate-200 rounded flex items-center px-3 justify-center shadow-sm">
-                  <span className="text-[10px] font-mono text-slate-400">examshala.com/dashboard</span>
+                  <span className="text-[10px] font-mono text-slate-400">examshala.com/principledashboard</span>
                 </div>
               </div>
               <div className="w-10"></div> {/* Spacer for symmetry */}

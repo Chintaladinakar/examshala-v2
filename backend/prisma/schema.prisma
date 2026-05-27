@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -15,6 +16,7 @@ model User {
   isActive     Boolean   @default(true)
   status       String    @default("ACTIVE") // ACTIVE, INACTIVE, INVITED
   workspaceId  String?
+  mode         String?   @default("principal") // principal | teacher
   createdAt    DateTime  @default(now())
 
   // Relations
@@ -23,20 +25,32 @@ model User {
   studentLinks     ParentStudentLink[] @relation("StudentRelation")
   parentLinks      ParentStudentLink[] @relation("ParentRelation")
   studentProfiles  StudentWorkspaceProfile[]
+  
+  // School SaaS SaaS Relations
+  classTeachers     ClassTeacher[]
+  classStudents     ClassStudent[]
+  attendances        Attendance[]
+  markedAttendances  Attendance[]          @relation("MarkedBy")
+  updatedAttendances Attendance[]          @relation("UpdatedBy")
+  schoolAssignments  Assignment[]
+  feedbacks          AssignmentFeedback[]
+  submissions        AssignmentSubmission[]
+  schoolLogs         SchoolLog[]
 }
 
 model Workspace {
   id          String    @id @default(uuid())
   name        String
-  status      String    @default("active") // "active", "inactive", "archived"
   createdBy   String?   // Org Admin ID
   principalId String?   // Principal ID
+  status      String?   @default("ACTIVE")
   createdAt   DateTime  @default(now())
 
   memberships       WorkspaceMembership[]
   studentProfiles   StudentWorkspaceProfile[]
   assignments       AssessmentAssignment[]
   notifications     Notification[]
+  classes           Class[]
 }
 
 model WorkspaceMembership {
@@ -163,13 +177,6 @@ model AuditLog {
   createdAt   DateTime  @default(now())
 }
 
-model PlatformSettings {
-  id             String   @id @default("global-settings")
-  platformName   String   @default("Examshala")
-  supportEmail   String   @default("support@examshala.com")
-  updatedAt      DateTime @updatedAt
-}
-
 model Invite {
   id          String   @id @default(uuid())
   email       String
@@ -187,4 +194,116 @@ model Log {
   entityId  String
   metadata  Json?
   createdAt DateTime @default(now())
+}
+
+model Class {
+  id          String    @id @default(uuid())
+  name        String
+  workspaceId String
+  createdAt   DateTime  @default(now())
+
+  Workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  teachers    ClassTeacher[]
+  students    ClassStudent[]
+  attendances Attendance[]
+  assignments Assignment[]
+}
+
+model ClassTeacher {
+  id        String   @id @default(uuid())
+  classId   String
+  teacherId String
+  createdAt DateTime @default(now())
+
+  Class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  Teacher   User     @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([classId, teacherId])
+}
+
+model ClassStudent {
+  id        String   @id @default(uuid())
+  classId   String
+  studentId String
+  createdAt DateTime @default(now())
+
+  Class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  Student   User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([classId, studentId])
+}
+
+model Attendance {
+  id                String   @id @default(uuid())
+  classId           String
+  studentId         String
+  date              DateTime
+  status            String   // "present" | "absent"
+  markedByUserId    String
+  lastUpdatedBy     String
+  isLocked          Boolean  @default(false)
+  createdAt         DateTime @default(now())
+
+  Class             Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  Student           User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  MarkedBy          User     @relation("MarkedBy", fields: [markedByUserId], references: [id])
+  UpdatedBy         User     @relation("UpdatedBy", fields: [lastUpdatedBy], references: [id])
+
+  @@unique([classId, studentId, date])
+}
+
+model Assignment {
+  id                String   @id @default(uuid())
+  title             String
+  description       String
+  dueDate           DateTime
+  classId           String
+  createdByUserId   String
+  createdRole       String   // "teacher" | "principal-teacher-mode"
+  createdAt         DateTime @default(now())
+
+  Class             Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  Creator           User     @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+  feedbacks         AssignmentFeedback[]
+  submissions       AssignmentSubmission[]
+}
+
+model AssignmentFeedback {
+  id              String   @id @default(uuid())
+  assignmentId    String
+  comment         String
+  createdByUserId String
+  createdAt       DateTime @default(now())
+
+  Assignment      Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  Creator         User       @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+}
+
+model AssignmentSubmission {
+  id              String   @id @default(uuid())
+  assignmentId    String
+  studentId       String
+  fileUrl         String
+  submittedAt     DateTime @default(now())
+
+  Assignment      Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  Student         User       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+}
+
+model SchoolLog {
+  id          String   @id @default(uuid())
+  actionType  String   // "attendance_marked" | "attendance_updated" | "assignment_created" | "feedback_added"
+  userId      String
+  role        String
+  entityId    String
+  timestamp   DateTime @default(now())
+
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PlatformSettings {
+  id           String   @id @default("global-settings")
+  platformName String?
+  supportEmail String?
+  createdAt    DateTime @default(now())
 }

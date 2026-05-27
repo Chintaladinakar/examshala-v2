@@ -116,6 +116,150 @@ export const updateUserStatus = async (req: AuthRequest, res: Response): Promise
   }
 };
 
+export const editUser = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const id = req.params.id as string;
+    const { name, email, role, workspaceId, status } = req.body;
+
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        code: 'USER_NOT_FOUND',
+        message: 'User not found',
+      });
+      return;
+    }
+
+    const updateData: any = {};
+    if (name !== undefined) updateData.name = name;
+    if (email !== undefined) {
+      if (email !== user.email) {
+        const emailExists = await prisma.user.findUnique({ where: { email } });
+        if (emailExists) {
+          res.status(400).json({
+            success: false,
+            code: 'EMAIL_IN_USE',
+            message: 'Email address already in use by another user',
+          });
+          return;
+        }
+      }
+      updateData.email = email;
+    }
+    if (role !== undefined) updateData.role = role;
+    if (status !== undefined) {
+      updateData.status = status;
+      updateData.isActive = status === 'ACTIVE';
+    }
+    if (workspaceId !== undefined) {
+      updateData.workspaceId = workspaceId || null;
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id },
+      data: updateData,
+    });
+
+    if (workspaceId !== undefined) {
+      if (workspaceId) {
+        await prisma.workspaceMembership.upsert({
+          where: {
+            userId_workspaceId: { userId: id, workspaceId },
+          },
+          update: { role: (role || user.role).toLowerCase() },
+          create: {
+            userId: id,
+            workspaceId,
+            role: (role || user.role).toLowerCase(),
+          },
+        });
+      } else if (user.workspaceId) {
+        await prisma.workspaceMembership.deleteMany({
+          where: { userId: id, workspaceId: user.workspaceId },
+        });
+      }
+    }
+
+    if (role !== undefined && role !== 'PRINCIPAL') {
+      await prisma.workspace.updateMany({
+        where: { principalId: id },
+        data: { principalId: null },
+      });
+    }
+
+    const actorId = req.user?.userId || 'system';
+    await createSystemLog({
+      userId: actorId,
+      action: 'ROLE_ASSIGNED',
+      entity: 'USER',
+      entityId: id,
+      metadata: { email: updatedUser.email, name, role, workspaceId, status, action: 'USER_EDITED' },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'User details updated successfully',
+      data: updatedUser,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      code: 'SERVER_ERROR',
+      message: error.message || 'Internal server error',
+    });
+  }
+};
+
+export const deleteUser = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const id = req.params.id as string;
+
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        code: 'USER_NOT_FOUND',
+        message: 'User not found',
+      });
+      return;
+    }
+
+    await prisma.workspace.updateMany({
+      where: { principalId: id },
+      data: { principalId: null },
+    });
+
+    await prisma.parentStudentLink.deleteMany({
+      where: { parentUserId: id },
+    });
+
+    await prisma.user.delete({
+      where: { id },
+    });
+
+    const actorId = req.user?.userId || 'system';
+    await createSystemLog({
+      userId: actorId,
+      action: 'ROLE_ASSIGNED',
+      entity: 'USER',
+      entityId: id,
+      metadata: { email: user.email, name: user.name, action: 'USER_DELETED' },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'User deleted and removed from the system successfully',
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      code: 'SERVER_ERROR',
+      message: error.message || 'Internal server error',
+    });
+  }
+};
+
 // -------------------------------------------------------------
 // 2. WORKSPACE CONTROLLERS
 // -------------------------------------------------------------
@@ -418,7 +562,10 @@ export const sendInvite = async (req: AuthRequest, res: Response): Promise<void>
     res.status(201).json({
       success: true,
       message: 'Invitation sent successfully',
-      data: invite,
+      data: {
+        ...invite,
+        password: defaultPassword,
+      },
     });
   } catch (error: any) {
     res.status(500).json({
@@ -519,6 +666,89 @@ export const assignRoleController = async (req: AuthRequest, res: Response): Pro
     });
 
     res.status(200).json({ success: true, message: `Successfully assigned role '${role}' to ${email}`, data: updatedUser });
+  } catch (error: any) {
+    res.status(500).json({ success: false, code: 'SERVER_ERROR', message: error.message || 'Internal server error' });
+  }
+};
+
+export const editWorkspace = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const id = req.params.id as string;
+    const { name, principalId } = req.body;
+
+    const workspace = await prisma.workspace.findUnique({ where: { id } });
+    if (!workspace) {
+      res.status(404).json({ success: false, code: 'WORKSPACE_NOT_FOUND', message: 'Workspace not found' });
+      return;
+    }
+
+    const updated = await prisma.workspace.update({
+      where: { id },
+      data: {
+        name: name !== undefined ? name.trim() : undefined,
+        principalId: principalId !== undefined ? (principalId || null) : undefined,
+      },
+    });
+
+    // Update workspaceMembership if principalId changed
+    if (principalId !== undefined) {
+      await prisma.workspaceMembership.deleteMany({
+        where: {
+          workspaceId: id,
+          role: 'principal',
+        },
+      });
+
+      if (principalId) {
+        await prisma.workspaceMembership.create({
+          data: {
+            userId: principalId,
+            workspaceId: id,
+            role: 'principal',
+          },
+        });
+      }
+    }
+
+    // Audit Logging
+    const actorId = req.user?.userId || 'system';
+    await createSystemLog({
+      userId: actorId,
+      action: 'WORKSPACE_UPDATED',
+      entity: 'WORKSPACE',
+      entityId: id,
+      metadata: { name: updated.name, principalId },
+    });
+
+    res.status(200).json({ success: true, message: 'Workspace updated successfully', data: updated });
+  } catch (error: any) {
+    res.status(500).json({ success: false, code: 'SERVER_ERROR', message: error.message || 'Internal server error' });
+  }
+};
+
+export const deleteWorkspace = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const id = req.params.id as string;
+
+    const workspace = await prisma.workspace.findUnique({ where: { id } });
+    if (!workspace) {
+      res.status(404).json({ success: false, code: 'WORKSPACE_NOT_FOUND', message: 'Workspace not found' });
+      return;
+    }
+
+    await prisma.workspace.delete({ where: { id } });
+
+    // Audit Logging
+    const actorId = req.user?.userId || 'system';
+    await createSystemLog({
+      userId: actorId,
+      action: 'WORKSPACE_DELETED',
+      entity: 'WORKSPACE',
+      entityId: id,
+      metadata: { name: workspace.name },
+    });
+
+    res.status(200).json({ success: true, message: 'Workspace deleted successfully' });
   } catch (error: any) {
     res.status(500).json({ success: false, code: 'SERVER_ERROR', message: error.message || 'Internal server error' });
   }

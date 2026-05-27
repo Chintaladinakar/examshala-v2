@@ -20,21 +20,68 @@ export function decodeJwtPayload(token: string) {
  * Normalizes roles to string dashboard paths.
  */
 export function getDashboardPathForRole(role: string): string {
-  switch (role) {
+  if (!role) return '/';
+  switch (role.toLowerCase()) {
     case 'student':
       return '/studentdashboard';
     case 'tutor':
       return '/tutordashboard';
     case 'principal':
-      return '/principaldashboard';
+      return '/principledashboard';
+    case 'teacher':
+      return '/tutordashboard';
     case 'parent':
       return '/parentdashboard';
-    case 'ORG_ADMIN':
+    case 'org_admin':
       return '/admin';
     case 'superadmin':
     case 'admin':
       return '/superadmin';
     default:
       return '/';
+  }
+}
+
+/**
+ * Returns all dashboard paths a given role is allowed to access.
+ * Principals can access both /principledashboard (principal mode) and
+ * /tutordashboard (teacher mode) for mode switching.
+ * This also grants access to shared sub-routes like /students, /classes, etc.
+ */
+export function getAllowedDashboardPaths(role: string): string[] {
+  if (!role) return ['/'];
+
+  // Shared school routes accessible to principals and teachers
+  const sharedSchoolRoutes = [
+    '/students',
+    '/teachers',
+    '/classes',
+    '/attendance',
+    '/assignments',
+    '/logs',
+    '/tests',
+    '/profile',
+    '/coming-soon',
+  ];
+
+  switch (role.toLowerCase()) {
+    case 'student':
+      return ['/studentdashboard'];
+    case 'tutor':
+      return ['/tutordashboard'];
+    case 'principal':
+      // Principals can access both dashboards + shared routes + admin routes
+      return ['/principledashboard', '/tutordashboard', '/admin', ...sharedSchoolRoutes];
+    case 'teacher':
+      return ['/tutordashboard', ...sharedSchoolRoutes];
+    case 'parent':
+      return ['/parentdashboard'];
+    case 'org_admin':
+      return ['/admin'];
+    case 'superadmin':
+    case 'admin':
+      return ['/superadmin'];
+    default:
+      return ['/'];
   }
 }

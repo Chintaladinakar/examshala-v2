@@ -139,6 +139,79 @@ export default function WorkspacesManagementPage() {
     }
   };
 
+  // Edit Modal State
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editingWorkspace, setEditingWorkspace] = useState<Workspace | null>(null);
+  const [editWorkspaceName, setEditWorkspaceName] = useState('');
+  const [editPrincipalId, setEditPrincipalId] = useState('');
+  const [submittingEdit, setSubmittingEdit] = useState(false);
+  const [editErrorMsg, setEditErrorMsg] = useState<string | null>(null);
+
+  // Deleting State
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  const handleOpenEditModal = (ws: Workspace) => {
+    setEditingWorkspace(ws);
+    setEditWorkspaceName(ws.name || '');
+    setEditPrincipalId(ws.principalId || '');
+    setEditErrorMsg(null);
+    setEditModalOpen(true);
+  };
+
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingWorkspace) return;
+
+    try {
+      setSubmittingEdit(true);
+      setEditErrorMsg(null);
+      const token = getCookie('session_token');
+
+      await fetchJson(`/api/admin/workspaces/${editingWorkspace.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: editWorkspaceName.trim(),
+          principalId: editPrincipalId || null,
+        }),
+      });
+
+      setEditModalOpen(false);
+      setEditingWorkspace(null);
+      loadData();
+    } catch (err: any) {
+      setEditErrorMsg(err.message || 'Failed to update workspace details.');
+    } finally {
+      setSubmittingEdit(false);
+    }
+  };
+
+  const handleDeleteWorkspace = async (ws: Workspace) => {
+    const confirmDelete = window.confirm(`Are you sure you want to permanently delete workspace "${ws.name}"? This will delete all classrooms, student enrollment profiles, teachers, classes, grades, and associated logs in this workspace. This action is extremely destructive and cannot be undone.`);
+    if (!confirmDelete) return;
+
+    try {
+      setDeletingId(ws.id);
+      const token = getCookie('session_token');
+
+      await fetchJson(`/api/admin/workspaces/${ws.id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setWorkspaces(prev => prev.filter(w => w.id !== ws.id));
+    } catch (err: any) {
+      alert(`Failed to delete workspace: ${err.message || 'Request failed'}`);
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   return (
     <div className="space-y-8">
       {/* Title Header */}
@@ -243,7 +316,7 @@ export default function WorkspacesManagementPage() {
                 </div>
 
                 {/* Bottom Actions */}
-                <div className="mt-6 pt-4 border-t border-slate-100 flex gap-2">
+                <div className="mt-6 pt-4 border-t border-slate-100 flex gap-1.5 justify-between">
                   <button
                     onClick={() => {
                       setTargetWorkspace(ws);
@@ -251,11 +324,37 @@ export default function WorkspacesManagementPage() {
                       setAssignModalOpen(true);
                     }}
                     className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 border border-slate-200 hover:border-slate-350 hover:bg-slate-50 text-slate-650 hover:text-slate-800 font-semibold rounded-xl text-xs transition-all"
+                    title={ws.principalId ? 'Reassign Principal' : 'Assign Principal'}
                   >
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
-                    {ws.principalId ? 'Reassign Principal' : 'Assign Principal'}
+                    Principal
+                  </button>
+
+                  <button
+                    onClick={() => handleOpenEditModal(ws)}
+                    className="inline-flex items-center justify-center p-2 border border-slate-200 hover:border-teal-500 hover:bg-teal-50 text-slate-500 hover:text-teal-700 font-semibold rounded-xl text-xs transition-all"
+                    title="Edit Workspace"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                  </button>
+
+                  <button
+                    onClick={() => handleDeleteWorkspace(ws)}
+                    disabled={deletingId === ws.id}
+                    className="inline-flex items-center justify-center p-2 border border-slate-200 hover:border-rose-500 hover:bg-rose-50 text-slate-500 hover:text-rose-700 font-semibold rounded-xl text-xs transition-all disabled:opacity-50"
+                    title="Delete Workspace"
+                  >
+                    {deletingId === ws.id ? (
+                      <div className="w-3.5 h-3.5 border-2 border-slate-300 border-t-rose-600 rounded-full animate-spin"></div>
+                    ) : (
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    )}
                   </button>
                 </div>
               </div>
@@ -422,6 +521,97 @@ export default function WorkspacesManagementPage() {
                     className="flex-1 px-4 py-2.5 bg-teal-950 hover:bg-teal-900 text-white font-semibold rounded-xl text-sm transition-colors disabled:opacity-50"
                   >
                     {submittingAssign ? 'Assigning...' : 'Assign Principal'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Edit Workspace Modal */}
+      {editModalOpen && editingWorkspace && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-teal-950/40 backdrop-blur-sm" onClick={() => {
+            setEditModalOpen(false);
+            setEditingWorkspace(null);
+          }} />
+
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-md w-full p-6 md:p-8 relative z-10 animate-in fade-in zoom-in-95 duration-200">
+            <button
+              onClick={() => {
+                setEditModalOpen(false);
+                setEditingWorkspace(null);
+              }}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l18 18" />
+              </svg>
+            </button>
+
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-lg font-bold text-slate-900">Modify Tenant Workspace</h3>
+                <p className="text-xs text-slate-500 mt-1">
+                  Updates name and administrative parameters for <strong className="text-slate-700">{editingWorkspace.name}</strong>.
+                </p>
+              </div>
+
+              {editErrorMsg && (
+                <div className="bg-rose-50 border border-rose-100 text-rose-800 text-xs font-semibold px-4 py-3 rounded-xl">
+                  ⚠️ {editErrorMsg}
+                </div>
+              )}
+
+              <form onSubmit={handleSaveEdit} className="space-y-4 pt-2">
+                {/* Workspace Name */}
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Workspace Name</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Greenwood International High School"
+                    value={editWorkspaceName}
+                    onChange={e => setEditWorkspaceName(e.target.value)}
+                    className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-800 placeholder-slate-400 px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
+                  />
+                </div>
+
+                {/* Assigned Principal */}
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Assigned Principal</label>
+                  <select
+                    value={editPrincipalId}
+                    onChange={e => setEditPrincipalId(e.target.value)}
+                    className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-700 py-2.5 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
+                  >
+                    <option value="">No principal assigned</option>
+                    {principals.map(p => (
+                      <option key={p.id} value={p.id}>
+                        {p.name} ({p.email})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Submission buttons */}
+                <div className="flex gap-3 pt-4 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditModalOpen(false);
+                      setEditingWorkspace(null);
+                    }}
+                    className="flex-1 px-4 py-2.5 border border-slate-200 text-slate-600 font-semibold rounded-xl text-sm hover:bg-slate-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={submittingEdit || !editWorkspaceName.trim()}
+                    className="flex-1 px-4 py-2.5 bg-teal-950 hover:bg-teal-900 text-white font-semibold rounded-xl text-sm transition-colors disabled:opacity-50"
+                  >
+                    {submittingEdit ? 'Saving...' : 'Save Changes'}
                   </button>
                 </div>
               </form>
