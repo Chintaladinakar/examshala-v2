@@ -11,6 +11,7 @@ router.use(studentAccessGuard);
 
 // BFF payload
 router.get('/dashboard', controller.getDashboard);
+router.get('/schedule', controller.getSchedule);
 
 // Assignments
 router.get('/assignments/:assignmentId', controller.getAssignment);

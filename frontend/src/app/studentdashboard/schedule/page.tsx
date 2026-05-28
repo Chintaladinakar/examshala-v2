@@ -1,12 +1,49 @@
-export default function StudentSchedulePage() {
+import React, { Suspense } from 'react';
+import nextDynamic from 'next/dynamic';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { getStudentSchedule } from '@/lib/student/data';
+import { ScheduleSkeleton } from '@/components/student/ScheduleSkeleton';
+
+// Dynamically import interactive client components to optimize load performance and TTI
+const ScheduleInteractive = nextDynamic(
+  () => import('@/components/student/ScheduleInteractive').then((mod) => mod.ScheduleInteractive),
+  {
+    loading: () => <ScheduleSkeleton />,
+  }
+);
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+export default async function StudentSchedulePage() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('session_token')?.value;
+
+  if (!token) {
+    redirect('/signin');
+  }
+
+  let scheduleData = {
+    events: [],
+    stats: {
+      upcomingExamsCount: 0,
+      pendingAssignmentsCount: 0,
+      nextLiveSession: null
+    }
+  };
+
+  try {
+    scheduleData = await getStudentSchedule(token);
+  } catch (error) {
+    console.error('Failed to load schedule data:', error);
+  }
+
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">Schedule</h1>
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-8 text-center text-slate-600">
-        <p className="font-medium">No schedule items yet.</p>
-        <p className="text-sm text-slate-500 mt-1">Exam dates, class timings, and deadlines will appear here.</p>
-      </div>
-    </div>
+    <Suspense fallback={<ScheduleSkeleton />}>
+      <ScheduleInteractive initialData={scheduleData} />
+    </Suspense>
   );
 }
+
 

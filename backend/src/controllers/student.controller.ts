@@ -123,3 +123,16 @@ export const markNotificationsRead = async (req: AuthRequest, res: Response) => 
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+export const getSchedule = async (req: AuthRequest, res: Response) => {
+  try {
+    const studentId = req.user!.userId;
+    const workspaceIdContext = req.headers['x-workspace-id'] as string | undefined;
+
+    const data = await dashboardService.getScheduleAggregatedData(studentId, workspaceIdContext);
+    res.json({ success: true, data });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+

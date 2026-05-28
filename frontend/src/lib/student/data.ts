@@ -60,3 +60,18 @@ export async function getStudentResultById(token: string, id: string): Promise<a
     return null;
   }
 }
+
+export async function getStudentSchedule(token: string): Promise<any> {
+  try {
+    const payload = await fetchJson<{ success?: boolean; data?: any }>('/api/student/schedule', {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store',
+      action: 'load',
+    });
+    return payload.data ?? { events: [], stats: { upcomingExamsCount: 0, pendingAssignmentsCount: 0, nextLiveSession: null } };
+  } catch (err) {
+    logDeveloperError(err, { action: 'load', feature: 'student_schedule_adapter' });
+    return { events: [], stats: { upcomingExamsCount: 0, pendingAssignmentsCount: 0, nextLiveSession: null } };
+  }
+}
+
