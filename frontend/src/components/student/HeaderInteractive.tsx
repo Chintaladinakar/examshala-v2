@@ -124,7 +124,7 @@ export function HeaderInteractive({ studentName, unreadCount }: HeaderInteractiv
                 <button 
                   onClick={() => {
                     setNotificationsOpen(false);
-                    router.push('/studentdashboard/messages');
+                    router.push('/studentdashboard');
                   }}
                   className="w-full text-[10px] text-teal-700 hover:text-teal-900 font-bold hover:underline transition-colors py-1"
                 >
