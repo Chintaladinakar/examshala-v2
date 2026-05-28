@@ -286,7 +286,7 @@ export function ExamEngineInteractive({ assignment }: ExamEngineInteractiveProps
   };
 
   // Evaluate Score on Submit
-  const evaluateScoreAndSubmit = (cheated = false) => {
+  const evaluateScoreAndSubmit = async (cheated = false) => {
     let score = 0;
     let correctCount = 0;
     
@@ -298,11 +298,47 @@ export function ExamEngineInteractive({ assignment }: ExamEngineInteractiveProps
       }
     });
 
+    const evaluatedScore = cheated ? 0 : score;
+    const evaluatedCorrectCount = cheated ? 0 : correctCount;
+    const totalMarks = 50;
+    const percentage = (evaluatedScore / totalMarks) * 100;
+    const grade = percentage >= 90 ? 'A+' : percentage >= 80 ? 'A' : percentage >= 60 ? 'B' : percentage >= 50 ? 'C' : 'F';
+    const status = percentage >= 50 ? 'Passed' : 'Failed';
+    const subject = assignment.testTitle.includes('Math') ? 'Mathematics' : 
+                    assignment.testTitle.includes('Science') ? 'Science' : 
+                    assignment.testTitle.includes('Physics') ? 'Physics' : 
+                    assignment.testTitle.includes('Chemistry') ? 'Chemistry' : 'General';
+
     setScoreData({
-      score: cheated ? 0 : score, // Cheating yields 0 marks
-      maxScore: 50,
-      correctCount: cheated ? 0 : correctCount,
+      score: evaluatedScore,
+      maxScore: totalMarks,
+      correctCount: evaluatedCorrectCount,
     });
+
+    // POST the new result directly to the database via Next.js API results endpoint
+    try {
+      await fetch('/api/results', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          examId: assignment.id,
+          subject,
+          score: evaluatedScore,
+          totalMarks,
+          percentage,
+          grade,
+          status,
+          feedback: cheated 
+            ? 'Assessment flagged and invalidated due to focus loss security violations.'
+            : `Strong performance on ${assignment.testTitle}. Correct answers: ${evaluatedCorrectCount}/${MOCK_QUESTIONS.length}.`,
+          timeTaken: Math.floor((assignment.duration * 60 - timeLeft) / 60) || 1,
+        }),
+      });
+    } catch (err) {
+      console.error('Error submitting exam result to API:', err);
+    }
 
     setIsSubmitted(true);
     setIsConfirmSubmitOpen(false);

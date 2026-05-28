@@ -10,30 +10,47 @@ export default function TestAttempt({ params }: { params: { id: string } }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(5).fill(null));
 
+  const tests = [
+    { id: '1', title: 'Mathematics Quiz', duration: 30, subject: 'Mathematics' },
+    { id: '2', title: 'Science Test', duration: 45, subject: 'Science' },
+    { id: '3', title: 'History Exam', duration: 60, subject: 'History' },
+    { id: '4', title: 'English Grammar', duration: 25, subject: 'English' },
+    { id: '5', title: 'Physics Challenge', duration: 50, subject: 'Physics' },
+    { id: '6', title: 'Chemistry Basics', duration: 40, subject: 'Chemistry' },
+  ];
+
+  const activeTest = tests.find(t => t.id === params.id) || tests[0];
+
   const mockTest = {
     id: params.id,
-    title: 'Mathematics Quiz',
-    duration: 30,
+    title: activeTest.title,
+    subject: activeTest.subject,
+    duration: activeTest.duration,
     questions: [
       {
         text: 'What is 2 + 2?',
         options: ['3', '4', '5', '6'],
+        correctIndex: 1, // '4'
       },
       {
         text: 'What is the square root of 16?',
         options: ['2', '3', '4', '5'],
+        correctIndex: 2, // '4'
       },
       {
         text: 'What is 10 × 5?',
         options: ['40', '45', '50', '55'],
+        correctIndex: 2, // '50'
       },
       {
         text: 'What is 100 ÷ 4?',
         options: ['20', '25', '30', '35'],
+        correctIndex: 1, // '25'
       },
       {
         text: 'What is 15 - 7?',
         options: ['6', '7', '8', '9'],
+        correctIndex: 2, // '8'
       },
     ],
   };
@@ -56,10 +73,51 @@ export default function TestAttempt({ params }: { params: { id: string } }) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('Test submitted:', answers);
+
+    // Calculate score
+    let correctCount = 0;
+    mockTest.questions.forEach((q, idx) => {
+      if (answers[idx] === q.correctIndex) {
+        correctCount++;
+      }
+    });
+
+    const score = correctCount * 20; // 5 questions, 20 marks each = 100 max marks
+    const totalMarks = 100;
+    const percentage = (score / totalMarks) * 100;
+    const grade = percentage >= 90 ? 'A+' : percentage >= 80 ? 'A' : percentage >= 60 ? 'B' : percentage >= 50 ? 'C' : 'F';
+    const status = percentage >= 50 ? 'Passed' : 'Failed';
+
+    try {
+      const res = await fetch('/api/results', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          examId: mockTest.id,
+          subject: mockTest.subject,
+          score,
+          totalMarks,
+          percentage,
+          grade,
+          status,
+          feedback: `Great attempt on the legacy ${mockTest.title}. You answered ${correctCount} questions correctly out of ${mockTest.questions.length}.`,
+          timeTaken: 5,
+        }),
+      });
+
+      if (!res.ok) {
+        console.error('Failed to submit results to API');
+      }
+    } catch (err) {
+      console.error('Error submitting results:', err);
+    }
+
     alert('Test submitted successfully!');
-    router.push('/results');
+    router.push('/studentdashboard/results');
   };
 
   const handleTimeUp = () => {

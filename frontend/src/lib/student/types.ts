@@ -55,5 +55,18 @@ export type StudentDashboardData = {
 
 export type StudentParentsData = unknown[];
 
-export type StudentResultsData = unknown[];
+export interface Result {
+  id: string;
+  subject: string;
+  score: number;
+  totalMarks: number;
+  percentage: number;
+  grade: string;
+  status: string;
+  feedback?: string | null;
+  timeTaken?: number | null;
+  createdAt: string;
+  rank?: number | null;
+}
 
+export type StudentResultsData = Result[];

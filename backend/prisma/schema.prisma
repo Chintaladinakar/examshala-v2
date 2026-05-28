@@ -17,7 +17,7 @@ model User {
   isActive     Boolean   @default(true)
   status       String    @default("ACTIVE") // ACTIVE, INACTIVE, INVITED
   workspaceId  String?
-  mode         String?   @default("principal") // principal | teacher
+  mode         String?   // principal | teacher
   createdAt    DateTime  @default(now())
 
   // Relations

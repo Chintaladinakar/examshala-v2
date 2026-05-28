@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -16,11 +17,12 @@ model User {
   isActive     Boolean   @default(true)
   status       String    @default("ACTIVE") // ACTIVE, INACTIVE, INVITED
   workspaceId  String?
-  mode         String?   @default("principal") // principal | teacher
+  mode         String?   // principal | teacher
   createdAt    DateTime  @default(now())
 
   // Relations
   attempts         AssessmentAttempt[]
+  student          Student?
   memberships      WorkspaceMembership[]
   studentLinks     ParentStudentLink[] @relation("StudentRelation")
   parentLinks      ParentStudentLink[] @relation("ParentRelation")
@@ -36,6 +38,7 @@ model User {
   feedbacks          AssignmentFeedback[]
   submissions        AssignmentSubmission[]
   schoolLogs         SchoolLog[]
+  results            Result[]
 }
 
 model Workspace {
@@ -112,18 +115,57 @@ model AssessmentAssignment {
   attempts           AssessmentAttempt[]
 }
 
+model Student {
+  id          String @id @default(cuid())
+  userId      String @unique
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  attempts    AssessmentAttempt[]
+
+  createdAt   DateTime @default(now())
+}
+
+model Assessment {
+  id            String @id @default(cuid())
+  title         String
+  subject       String
+  totalMarks    Int
+
+  attempts       AssessmentAttempt[]
+
+  createdAt      DateTime @default(now())
+}
+
 model AssessmentAttempt {
-  id           String    @id @default(uuid())
-  studentId    String
-  assignmentId String
-  focusLoss    Int       @default(0)
-  startedAt    DateTime  @default(now())
-  submittedAt  DateTime?
-  status       String    @default("in_progress") // "in_progress" | "submitted" | "evaluated"
+  id              String    @id @default(uuid())
+  studentId       String
+  assignmentId    String?
+  focusLoss       Int       @default(0)
+  startedAt       DateTime  @default(now())
+  submittedAt     DateTime?
+  status          String    @default("in_progress") // "in_progress" | "submitted" | "evaluated"
   
-  User         User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  Assignment   AssessmentAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
-  Result       AssessmentResult?
+  User            User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  Assignment      AssessmentAssignment? @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  Result          AssessmentResult?
+
+  // New Academic Results fields
+  profileStudentId String?
+  assessmentId     String?
+  obtainedMarks    Int?
+  totalMarks       Int?
+  percentage       Float?
+  rank             Int?
+
+  student          Student?    @relation(fields: [profileStudentId], references: [id], onDelete: Cascade)
+  assessment       Assessment? @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  createdAt        DateTime  @default(now())
+
+  @@index([profileStudentId])
+  @@index([assessmentId])
+  @@index([submittedAt])
+  @@index([status])
 }
 
 model AssessmentResult {
@@ -338,4 +380,22 @@ model PlatformSettings {
   platformName String?
   supportEmail String?
   createdAt    DateTime @default(now())
+}
+
+model Result {
+  id            String   @id @default(cuid())
+  studentId     String
+  examId        String
+  subject       String
+  score         Int
+  totalMarks    Int
+  percentage    Float
+  grade         String
+  rank          Int?
+  status        String
+  feedback      String?
+  timeTaken     Int?
+  createdAt     DateTime @default(now())
+
+  student       User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
 }

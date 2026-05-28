@@ -30,29 +30,32 @@ function extractBackendErrorPayload(body: unknown): BackendErrorPayload | undefi
   return undefined;
 }
 
-export async function fetchJson<T = unknown>(pathOrUrl: string, options?: FetchJsonOptions): Promise<T> {
-  const url = pathOrUrl.startsWith('http') ? pathOrUrl : `${API_BASE_URL}${pathOrUrl}`;
-  const action = options?.action;
+export async function fetchJson<T = any>(
+  pathOrUrl: string,
+  options?: RequestInit & { action?: string }
+): Promise<T> {
+  const url = pathOrUrl.startsWith('http')
+    ? pathOrUrl
+    : (pathOrUrl.startsWith('/api/results') || pathOrUrl === '/api/results')
+      ? pathOrUrl
+      : `${API_BASE_URL}${pathOrUrl}`;
 
-  let res: Response;
+  const response = await fetch(url, {
+    ...options,
+    cache: "no-store",
+  });
+
+  let data;
+
   try {
-    res = await fetch(url, options);
-  } catch (err) {
-    throw new AppError('Network error', { kind: 'network', action, details: err });
+    data = await response.json();
+  } catch {
+    throw new Error("Invalid JSON response");
   }
 
-  const body = await safeReadJson(res);
-
-  if (!res.ok) {
-    const payload = extractBackendErrorPayload(body);
-    throw new AppError('Request failed', {
-      kind: 'http',
-      status: res.status,
-      code: payload?.code,
-      action,
-      details: { url, status: res.status, payload },
-    });
+  if (!response.ok) {
+    throw new Error(data?.error || data?.message || "Request failed");
   }
 
-  return body as T;
+  return data;
 }

@@ -181,6 +181,20 @@ exports.Prisma.AssessmentAssignmentScalarFieldEnum = {
   isReady: 'isReady'
 };
 
+exports.Prisma.StudentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AssessmentScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  subject: 'subject',
+  totalMarks: 'totalMarks',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.AssessmentAttemptScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
@@ -188,7 +202,14 @@ exports.Prisma.AssessmentAttemptScalarFieldEnum = {
   focusLoss: 'focusLoss',
   startedAt: 'startedAt',
   submittedAt: 'submittedAt',
-  status: 'status'
+  status: 'status',
+  profileStudentId: 'profileStudentId',
+  assessmentId: 'assessmentId',
+  obtainedMarks: 'obtainedMarks',
+  totalMarks: 'totalMarks',
+  percentage: 'percentage',
+  rank: 'rank',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.AssessmentResultScalarFieldEnum = {
@@ -349,6 +370,22 @@ exports.Prisma.PlatformSettingsScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ResultScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  examId: 'examId',
+  subject: 'subject',
+  score: 'score',
+  totalMarks: 'totalMarks',
+  percentage: 'percentage',
+  grade: 'grade',
+  rank: 'rank',
+  status: 'status',
+  feedback: 'feedback',
+  timeTaken: 'timeTaken',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -383,6 +420,8 @@ exports.Prisma.ModelName = {
   StudentWorkspaceProfile: 'StudentWorkspaceProfile',
   Test: 'Test',
   AssessmentAssignment: 'AssessmentAssignment',
+  Student: 'Student',
+  Assessment: 'Assessment',
   AssessmentAttempt: 'AssessmentAttempt',
   AssessmentResult: 'AssessmentResult',
   Notification: 'Notification',
@@ -399,7 +438,8 @@ exports.Prisma.ModelName = {
   AssignmentSubmission: 'AssignmentSubmission',
   Material: 'Material',
   SchoolLog: 'SchoolLog',
-  PlatformSettings: 'PlatformSettings'
+  PlatformSettings: 'PlatformSettings',
+  Result: 'Result'
 };
 
 /**

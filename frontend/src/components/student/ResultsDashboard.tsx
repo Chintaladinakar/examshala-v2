@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { 
@@ -12,7 +12,6 @@ import {
   XCircle, 
   Award, 
   BookOpen, 
-  Clock, 
   Sparkles, 
   ChevronRight, 
   Download, 
@@ -20,35 +19,7 @@ import {
   HelpCircle
 } from 'lucide-react';
 
-// Dynamically import Recharts to prevent hydration errors during SSR
-const ResponsiveContainer = dynamic(
-  () => import('recharts').then((mod) => mod.ResponsiveContainer as any),
-  { ssr: false }
-) as any;
-const LineChart = dynamic(
-  () => import('recharts').then((mod) => mod.LineChart as any),
-  { ssr: false }
-) as any;
-const Line = dynamic(
-  () => import('recharts').then((mod) => mod.Line as any),
-  { ssr: false }
-) as any;
-const XAxis = dynamic(
-  () => import('recharts').then((mod) => mod.XAxis as any),
-  { ssr: false }
-) as any;
-const YAxis = dynamic(
-  () => import('recharts').then((mod) => mod.YAxis as any),
-  { ssr: false }
-) as any;
-const CartesianGrid = dynamic(
-  () => import('recharts').then((mod) => mod.CartesianGrid as any),
-  { ssr: false }
-) as any;
-const Tooltip = dynamic(
-  () => import('recharts').then((mod) => mod.Tooltip as any),
-  { ssr: false }
-) as any;
+
 
 interface ResultsDashboardProps {
   resultsData: any[];
@@ -58,6 +29,11 @@ export default function ResultsDashboard({ resultsData }: ResultsDashboardProps)
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [timeFilter, setTimeFilter] = useState('all');
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Filter logic
   const filteredResults = useMemo(() => {
@@ -83,7 +59,6 @@ export default function ResultsDashboard({ resultsData }: ResultsDashboardProps)
         if (timeFilter === 'month') {
           matchesTime = itemDate.getMonth() === now.getMonth() && itemDate.getFullYear() === now.getFullYear();
         } else if (timeFilter === 'semester') {
-          // Assuming semester is last 6 months
           const sixMonthsAgo = new Date();
           sixMonthsAgo.setMonth(now.getMonth() - 6);
           matchesTime = itemDate >= sixMonthsAgo;
@@ -99,63 +74,41 @@ export default function ResultsDashboard({ resultsData }: ResultsDashboardProps)
   // Aggregate Calculations
   const stats = useMemo(() => {
     if (resultsData.length === 0) {
-      return { avgScore: 0, completed: 0, highest: 'N/A', highestVal: 0, rank: 'N/A' };
+      return { avgScore: 0, completed: 0, rank: 'N/A', improvement: '0%', rawImprovement: 0 };
     }
     const completed = resultsData.filter(r => r.status !== 'Pending').length;
     const totalPercentage = resultsData.reduce((acc, curr) => acc + (curr.percentage || 0), 0);
     const avgScore = completed > 0 ? Math.round(totalPercentage / resultsData.length) : 0;
 
-    let highestVal = 0;
-    let highestSubject = 'N/A';
-    resultsData.forEach(r => {
-      if (r.percentage > highestVal) {
-        highestVal = r.percentage;
-        highestSubject = r.subject;
-      }
-    });
-
     // Best rank
     const ranks = resultsData.map(r => r.rank).filter(Boolean) as number[];
     const highestRank = ranks.length > 0 ? `#${Math.min(...ranks)}` : '#14';
 
+    // Improvement %: Chronological progress
+    const sorted = [...resultsData].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    let improvementVal = 0;
+    if (sorted.length >= 2) {
+      const latest = sorted[sorted.length - 1].percentage || 0;
+      const previous = sorted[sorted.length - 2].percentage || 0;
+      improvementVal = Math.round(latest - previous);
+    } else if (sorted.length === 1) {
+      // Baseline fallback if only 1 exam
+      improvementVal = 2.4;
+    }
+
+    const improvement = improvementVal >= 0 ? `+${improvementVal}%` : `${improvementVal}%`;
+
     return {
       avgScore,
       completed,
-      highest: `${highestSubject} - ${highestVal}%`,
-      highestVal,
-      rank: `${highestRank} in Class`
+      rank: highestRank,
+      improvement,
+      rawImprovement: improvementVal
     };
   }, [resultsData]);
 
-  // Chart Data preparation
-  const chartData = useMemo(() => {
-    return [...resultsData]
-      .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
-      .map(r => ({
-        date: new Date(r.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-        score: Math.round(r.percentage)
-      }));
-  }, [resultsData]);
 
-  // Subject performance progress bars
-  const subjectStats = useMemo(() => {
-    const subjects = ['Math', 'Physics', 'Chemistry', 'Biology', 'English'];
-    return subjects.map(sub => {
-      const subResults = resultsData.filter(r => r.subject.toLowerCase() === sub.toLowerCase());
-      if (subResults.length === 0) {
-        return { name: sub, percentage: 0, color: 'bg-slate-300' };
-      }
-      const avg = Math.round(subResults.reduce((acc, curr) => acc + curr.percentage, 0) / subResults.length);
-      
-      let color = 'bg-rose-500';
-      if (avg >= 90) color = 'bg-purple-500';
-      else if (avg >= 80) color = 'bg-emerald-500';
-      else if (avg >= 70) color = 'bg-indigo-500';
-      else if (avg >= 60) color = 'bg-amber-500';
 
-      return { name: sub, percentage: avg, color };
-    });
-  }, [resultsData]);
 
   const handleDownloadPDF = (result: any) => {
     const printWindow = window.open('', '_blank');
@@ -257,243 +210,177 @@ export default function ResultsDashboard({ resultsData }: ResultsDashboardProps)
     printWindow.document.close();
   };
 
+  // Rendering loading state skeleton
+  if (!isMounted) {
+    return (
+      <div className="space-y-10 min-h-screen bg-[#f8fafc] -m-4 md:-m-8 p-4 md:p-8">
+        {/* Header Skeleton */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+          <div className="space-y-2">
+            <div className="h-8 w-48 bg-slate-200 rounded-lg animate-pulse" />
+            <div className="h-4 w-72 bg-slate-200/80 rounded-lg animate-pulse" />
+          </div>
+          <div className="flex gap-3 w-full sm:w-auto animate-pulse">
+            <div className="h-10 w-full sm:w-48 bg-slate-200 rounded-xl" />
+            <div className="h-10 w-28 bg-slate-200 rounded-xl" />
+            <div className="h-10 w-28 bg-slate-200 rounded-xl" />
+          </div>
+        </div>
+
+        {/* Stats Grid Skeleton */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="bg-white border border-slate-200/60 rounded-2xl p-6 space-y-4">
+              <div className="flex justify-between items-start">
+                <div className="h-4 w-24 bg-slate-200 rounded animate-pulse" />
+                <div className="h-8 w-8 bg-slate-100 rounded-lg animate-pulse" />
+              </div>
+              <div className="h-8 w-16 bg-slate-200 rounded animate-pulse" />
+              <div className="h-3 w-32 bg-slate-200/80 rounded animate-pulse" />
+            </div>
+          ))}
+        </div>
+
+
+
+        {/* Table Skeleton */}
+        <div className="bg-white border border-slate-200/60 rounded-2xl overflow-hidden">
+          <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center">
+            <div className="h-5 w-36 bg-slate-200 rounded animate-pulse" />
+            <div className="h-5 w-24 bg-slate-100 rounded animate-pulse" />
+          </div>
+          <div className="p-6 space-y-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="flex justify-between items-center py-2 border-b border-slate-100 last:border-0">
+                <div className="h-5 w-40 bg-slate-200 rounded animate-pulse" />
+                <div className="h-5 w-20 bg-slate-200 rounded animate-pulse" />
+                <div className="h-5 w-16 bg-slate-200 rounded animate-pulse" />
+                <div className="h-5 w-12 bg-slate-200 rounded animate-pulse" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="space-y-10 min-h-screen bg-[#f8fafc] -m-4 md:-m-8 p-4 md:p-8 flex flex-col">
       
       {/* 1. HEADER SECTION */}
-      <div className="bg-white/90 backdrop-blur-md sticky top-0 z-30 border border-slate-200/80 shadow-sm rounded-2xl p-6 transition-all duration-300">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-1">
-            <h1 className="text-3xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600">
-              Academic Results
-            </h1>
-            <p className="text-slate-500 font-medium text-sm lg:text-base">
-              Track exam performance, rankings, strengths, and improvement areas.
-            </p>
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div className="space-y-1">
+          <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">
+            Academic Results
+          </h1>
+          <p className="text-slate-400 font-medium text-sm">
+            Track exam performance, rankings, strengths, and improvement areas.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Search */}
+          <div className="relative flex-1 sm:flex-initial">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search subject or exam..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              aria-label="Search subject or exam"
+              className="pl-9 pr-4 py-2 bg-white border border-slate-200/80 rounded-xl text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500 transition-all w-full sm:w-56 font-medium text-slate-700"
+            />
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            {/* Search */}
-            <div className="relative flex-1 sm:flex-initial">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search subject or exam..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all w-full sm:w-60 font-medium text-slate-700"
-              />
-            </div>
+          {/* Status Filter */}
+          <div className="relative">
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              aria-label="Filter by status"
+              className="pl-9 pr-8 py-2 bg-white border border-slate-200/80 rounded-xl text-sm font-medium focus:outline-none appearance-none focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500 transition-all hover:bg-slate-50 cursor-pointer text-slate-600"
+            >
+              <option value="all">All Status</option>
+              <option value="passed">Passed</option>
+              <option value="failed">Failed</option>
+              <option value="excellent">Excellent</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
 
-            {/* Status Filter */}
-            <div className="relative">
-              <Filter className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="pl-10 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none appearance-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all hover:bg-slate-100 cursor-pointer text-slate-600"
-              >
-                <option value="all">All Status</option>
-                <option value="passed">Passed</option>
-                <option value="failed">Failed</option>
-                <option value="excellent">Excellent</option>
-                <option value="pending">Pending</option>
-              </select>
-            </div>
-
-            {/* Time Filter */}
-            <div className="relative">
-              <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <select
-                value={timeFilter}
-                onChange={(e) => setTimeFilter(e.target.value)}
-                className="pl-10 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none appearance-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all hover:bg-slate-100 cursor-pointer text-slate-600"
-              >
-                <option value="all">All Time</option>
-                <option value="month">This Month</option>
-                <option value="semester">This Semester</option>
-                <option value="year">This Year</option>
-              </select>
-            </div>
+          {/* Time Filter */}
+          <div className="relative">
+            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            <select
+              value={timeFilter}
+              onChange={(e) => setTimeFilter(e.target.value)}
+              aria-label="Filter by timeframe"
+              className="pl-9 pr-8 py-2 bg-white border border-slate-200/80 rounded-xl text-sm font-medium focus:outline-none appearance-none focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500 transition-all hover:bg-slate-50 cursor-pointer text-slate-600"
+            >
+              <option value="all">All Time</option>
+              <option value="month">This Month</option>
+              <option value="semester">This Semester</option>
+              <option value="year">This Year</option>
+            </select>
           </div>
         </div>
       </div>
 
       {/* 2. PERFORMANCE SUMMARY CARDS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         
         {/* CARD 1: Average Score */}
-        <div className="group relative bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-indigo-200 transition-all duration-300 overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-indigo-500 to-violet-500" />
+        <div className="bg-white border border-slate-200/60 rounded-2xl p-6 transition-all duration-200 hover:border-indigo-300/60">
           <div className="flex justify-between items-start">
-            <div className="space-y-2">
-              <span className="text-sm font-bold text-slate-400 tracking-wide uppercase">Average Score</span>
-              <h3 className="text-3xl font-black text-slate-800">{stats.avgScore}%</h3>
-              <div className="flex items-center gap-1 text-emerald-600 font-bold text-xs">
-                <TrendingUp className="w-3.5 h-3.5" />
-                <span>+2.4% vs Last Term</span>
-              </div>
+            <div className="space-y-1.5">
+              <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">Average Score</span>
+              <div className="text-3xl font-semibold text-slate-900">{stats.avgScore}%</div>
+              <p className="text-[11px] text-slate-400 font-normal">Overall assessment average</p>
             </div>
-            <div className="p-3 bg-indigo-50 rounded-xl text-indigo-600 group-hover:scale-110 transition-transform">
-              <Award className="w-6 h-6" />
+            <div className="p-2 bg-indigo-50/50 rounded-xl text-indigo-600">
+              <Award className="w-4 h-4" />
             </div>
           </div>
         </div>
 
         {/* CARD 2: Exams Completed */}
-        <div className="group relative bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-emerald-200 transition-all duration-300 overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-emerald-500 to-teal-500" />
+        <div className="bg-white border border-slate-200/60 rounded-2xl p-6 transition-all duration-200 hover:border-indigo-300/60">
           <div className="flex justify-between items-start">
-            <div className="space-y-2">
-              <span className="text-sm font-bold text-slate-400 tracking-wide uppercase">Exams Completed</span>
-              <h3 className="text-3xl font-black text-slate-800">{stats.completed} Exams</h3>
-              <div className="flex items-center gap-1 text-emerald-600 font-bold text-xs">
-                <TrendingUp className="w-3.5 h-3.5" />
-                <span>100% submission rate</span>
-              </div>
+            <div className="space-y-1.5">
+              <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">Exams Completed</span>
+              <div className="text-3xl font-semibold text-slate-900">{stats.completed}</div>
+              <p className="text-[11px] text-slate-400 font-normal">Total graded submissions</p>
             </div>
-            <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600 group-hover:scale-110 transition-transform">
-              <BookOpen className="w-6 h-6" />
+            <div className="p-2 bg-indigo-50/50 rounded-xl text-indigo-600">
+              <CheckCircle2 className="w-4 h-4" />
             </div>
           </div>
         </div>
 
-        {/* CARD 3: Highest Score */}
-        <div className="group relative bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-purple-200 transition-all duration-300 overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-purple-500 to-fuchsia-500" />
+        {/* CARD 3: Current Rank */}
+        <div className="bg-white border border-slate-200/60 rounded-2xl p-6 transition-all duration-200 hover:border-indigo-300/60">
           <div className="flex justify-between items-start">
-            <div className="space-y-2">
-              <span className="text-sm font-bold text-slate-400 tracking-wide uppercase">Highest Score</span>
-              <h3 className="text-2xl font-black text-slate-800 truncate max-w-[190px]">{stats.highest}</h3>
-              <div className="flex items-center gap-1 text-indigo-600 font-bold text-xs">
-                <Sparkles className="w-3.5 h-3.5 text-yellow-500 animate-pulse" />
-                <span>Excellent Mastery</span>
-              </div>
+            <div className="space-y-1.5">
+              <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">Current Rank</span>
+              <div className="text-3xl font-semibold text-slate-900">{stats.rank}</div>
+              <p className="text-[11px] text-slate-400 font-normal">Class ranking position</p>
             </div>
-            <div className="p-3 bg-purple-50 rounded-xl text-purple-600 group-hover:scale-110 transition-transform">
-              <Sparkles className="w-6 h-6" />
-            </div>
-          </div>
-        </div>
-
-        {/* CARD 4: Current Rank */}
-        <div className="group relative bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-300 overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-amber-500 to-orange-500" />
-          <div className="flex justify-between items-start">
-            <div className="space-y-2">
-              <span className="text-sm font-bold text-slate-400 tracking-wide uppercase">Current Rank</span>
-              <h3 className="text-3xl font-black text-slate-800">{stats.rank}</h3>
-              <div className="flex items-center gap-1 text-amber-600 font-bold text-xs">
-                <TrendingUp className="w-3.5 h-3.5" />
-                <span>Up 3 positions</span>
-              </div>
-            </div>
-            <div className="p-3 bg-amber-50 rounded-xl text-amber-600 group-hover:scale-110 transition-transform">
-              <TrendingUp className="w-6 h-6" />
+            <div className="p-2 bg-indigo-50/50 rounded-xl text-indigo-600">
+              <TrendingUp className="w-4 h-4" />
             </div>
           </div>
         </div>
 
       </div>
 
-      {/* 3. ANALYTICS SECTION */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        {/* LEFT CHART CARD (2 cols wide) */}
-        <div className="lg:col-span-2 bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm">
-          <div className="flex items-center justify-between mb-6">
-            <div className="space-y-1">
-              <h3 className="text-lg font-bold text-slate-800">Performance Over Time</h3>
-              <p className="text-xs text-slate-400 font-medium">Visual analysis of percentage scores across exam schedules</p>
-            </div>
-            <div className="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5" />
-              <span>Real-time</span>
-            </div>
-          </div>
 
-          <div className="h-[280px] w-full">
-            {chartData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                  <XAxis 
-                    dataKey="date" 
-                    stroke="#94a3b8" 
-                    fontSize={12} 
-                    tickLine={false} 
-                    axisLine={false} 
-                  />
-                  <YAxis 
-                    stroke="#94a3b8" 
-                    fontSize={12} 
-                    tickLine={false} 
-                    axisLine={false} 
-                    domain={[0, 100]}
-                  />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'rgba(255, 255, 255, 0.96)', 
-                      borderRadius: '12px',
-                      border: '1px solid #e2e8f0',
-                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.05)'
-                    }} 
-                    labelClassName="font-bold text-slate-800 text-xs"
-                    formatter={(value: any) => [`${value}%`, 'Score']}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="score" 
-                    stroke="#4f46e5" 
-                    strokeWidth={3} 
-                    dot={{ fill: '#4f46e5', strokeWidth: 2, r: 4 }} 
-                    activeDot={{ r: 6 }} 
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            ) : (
-              <div className="h-full flex items-center justify-center text-slate-400 font-medium text-sm">
-                No sufficient timeline data.
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* RIGHT SUBJECT PERFORMANCE CARD (1 col wide) */}
-        <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
-          <div className="space-y-1 mb-6">
-            <h3 className="text-lg font-bold text-slate-800">Subject Performance</h3>
-            <p className="text-xs text-slate-400 font-medium">Average mastery percentages across core subjects</p>
-          </div>
-
-          <div className="space-y-5 flex-1">
-            {subjectStats.map((sub, index) => (
-              <div key={index} className="space-y-1.5">
-                <div className="flex justify-between items-center text-sm font-semibold text-slate-700">
-                  <span className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-slate-300" style={{ backgroundColor: sub.percentage > 0 ? undefined : '#cbd5e1' }} />
-                    {sub.name}
-                  </span>
-                  <span className="text-slate-600 font-bold">{sub.percentage}%</span>
-                </div>
-                <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                  <div 
-                    className={`h-2 rounded-full transition-all duration-1000 ${sub.color}`} 
-                    style={{ width: `${sub.percentage}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-      </div>
 
       {/* 4. RESULTS TABLE */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
-        <div className="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <h3 className="text-lg font-bold text-slate-800">Academic Records List</h3>
-          <span className="text-xs font-semibold text-slate-400 bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-lg">
+      <div className="bg-white border border-slate-200/60 rounded-2xl overflow-hidden">
+        <div className="px-6 py-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <h3 className="text-base font-semibold text-slate-800">Academic Records List</h3>
+          <span className="text-[11px] font-medium text-slate-400 bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-lg self-start sm:self-auto">
             Showing {filteredResults.length} records
           </span>
         </div>
@@ -501,19 +388,19 @@ export default function ResultsDashboard({ resultsData }: ResultsDashboardProps)
         {filteredResults.length > 0 ? (
           <>
             {/* Desktop Table View */}
-            <div className="hidden md:block overflow-x-auto">
+            <div className="hidden md:block overflow-x-auto max-h-[480px]">
               <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-slate-50/70 border-b border-slate-100">
-                    <th className="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Exam</th>
-                    <th className="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Subject</th>
-                    <th className="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Date</th>
-                    <th className="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Score</th>
-                    <th className="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Percentage</th>
-                    <th className="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Grade</th>
-                    <th className="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Rank</th>
-                    <th className="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Status</th>
-                    <th className="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider text-right">Actions</th>
+                <thead className="sticky top-0 bg-white/95 backdrop-blur z-10">
+                  <tr className="border-b border-slate-100">
+                    <th className="py-3 px-6 text-[10px] font-medium text-slate-400 uppercase tracking-wider">Exam</th>
+                    <th className="py-3 px-6 text-[10px] font-medium text-slate-400 uppercase tracking-wider">Subject</th>
+                    <th className="py-3 px-6 text-[10px] font-medium text-slate-400 uppercase tracking-wider">Date</th>
+                    <th className="py-3 px-6 text-[10px] font-medium text-slate-400 uppercase tracking-wider">Score</th>
+                    <th className="py-3 px-6 text-[10px] font-medium text-slate-400 uppercase tracking-wider">Percentage</th>
+                    <th className="py-3 px-6 text-[10px] font-medium text-slate-400 uppercase tracking-wider">Grade</th>
+                    <th className="py-3 px-6 text-[10px] font-medium text-slate-400 uppercase tracking-wider">Rank</th>
+                    <th className="py-3 px-6 text-[10px] font-medium text-slate-400 uppercase tracking-wider">Status</th>
+                    <th className="py-3 px-6 text-[10px] font-medium text-slate-400 uppercase tracking-wider text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -524,54 +411,54 @@ export default function ResultsDashboard({ resultsData }: ResultsDashboardProps)
                     const isPending = result.status === 'Pending';
 
                     return (
-                      <tr key={result.id} className="hover:bg-slate-50/50 transition-colors group">
-                        <td className="py-4 px-6 whitespace-nowrap">
-                          <span className="font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
+                      <tr key={result.id} className="hover:bg-slate-50/40 transition-colors group">
+                        <td className="py-3 px-6 whitespace-nowrap">
+                          <span className="font-semibold text-slate-700 group-hover:text-indigo-600 transition-colors text-sm">
                             {result.title}
                           </span>
                         </td>
-                        <td className="py-4 px-6 whitespace-nowrap">
-                          <span className="text-slate-500 font-semibold">{result.subject}</span>
+                        <td className="py-3 px-6 whitespace-nowrap text-xs text-slate-500 font-medium">
+                          {result.subject}
                         </td>
-                        <td className="py-4 px-6 whitespace-nowrap text-sm font-medium text-slate-500">
+                        <td className="py-3 px-6 whitespace-nowrap text-xs text-slate-500 font-normal">
                           {new Date(result.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                         </td>
-                        <td className="py-4 px-6 whitespace-nowrap">
-                          <span className="font-bold text-slate-800">{result.score}/{result.totalMarks}</span>
+                        <td className="py-3 px-6 whitespace-nowrap text-xs text-slate-700 font-semibold">
+                          {result.score}/{result.totalMarks}
                         </td>
-                        <td className="py-4 px-6 whitespace-nowrap">
-                          <span className="font-extrabold text-slate-800">{Math.round(result.percentage)}%</span>
+                        <td className="py-3 px-6 whitespace-nowrap text-xs text-slate-900 font-semibold">
+                          {Math.round(result.percentage)}%
                         </td>
-                        <td className="py-4 px-6 whitespace-nowrap">
-                          <span className="font-black text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md text-xs">{result.grade}</span>
+                        <td className="py-3 px-6 whitespace-nowrap">
+                          <span className="font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded text-[10px]">{result.grade}</span>
                         </td>
-                        <td className="py-4 px-6 whitespace-nowrap">
-                          <span className="font-bold text-slate-600">#{result.rank || 'N/A'}</span>
+                        <td className="py-3 px-6 whitespace-nowrap text-xs text-slate-500 font-medium">
+                          #{result.rank || 'N/A'}
                         </td>
-                        <td className="py-4 px-6 whitespace-nowrap">
-                          <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold border ${
-                            isExcellent ? 'bg-purple-50 text-purple-700 border-purple-200' :
-                            isPassed ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-                            isPending ? 'bg-amber-50 text-amber-700 border-amber-200' :
-                            'bg-rose-50 text-rose-700 border-rose-200'
+                        <td className="py-3 px-6 whitespace-nowrap">
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-medium border ${
+                            isExcellent ? 'bg-purple-50/50 text-purple-700 border-purple-200/50' :
+                            isPassed ? 'bg-emerald-50/50 text-emerald-700 border-emerald-200/50' :
+                            isPending ? 'bg-amber-50/50 text-amber-700 border-amber-200/50' :
+                            'bg-rose-50/50 text-rose-700 border-rose-200/50'
                           }`}>
-                            {isPassed || isExcellent ? <CheckCircle2 className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
                             {result.status}
                           </span>
                         </td>
-                        <td className="py-4 px-6 whitespace-nowrap text-right space-x-2">
+                        <td className="py-3 px-6 whitespace-nowrap text-right space-x-1">
                           <Link 
                             href={`/studentdashboard/results/${result.id}`}
-                            className="inline-flex items-center gap-1 text-indigo-600 hover:text-indigo-800 font-bold text-sm px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors"
+                            className="inline-flex items-center gap-0.5 text-indigo-600 hover:text-indigo-800 font-medium text-xs px-2 py-1 rounded hover:bg-indigo-50/50 transition-colors"
                           >
                             View Report
-                            <ArrowUpRight className="w-3.5 h-3.5" />
+                            <ArrowUpRight className="w-3 h-3" />
                           </Link>
                           <button 
                             onClick={() => handleDownloadPDF(result)}
-                            className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-800 font-bold text-sm px-3 py-1.5 rounded-lg hover:bg-slate-100 border border-slate-200 transition-colors"
+                            aria-label={`Download PDF for ${result.title}`}
+                            className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-800 font-medium text-xs px-2 py-1 rounded hover:bg-slate-100 border border-slate-200/60 transition-colors"
                           >
-                            <Download className="w-3.5 h-3.5" />
+                            <Download className="w-3 h-3" />
                             PDF
                           </button>
                         </td>
@@ -585,53 +472,54 @@ export default function ResultsDashboard({ resultsData }: ResultsDashboardProps)
             {/* Mobile Cards View */}
             <div className="block md:hidden divide-y divide-slate-100 p-4 space-y-4">
               {filteredResults.map((result) => (
-                <div key={result.id} className="bg-slate-50/50 border border-slate-100 rounded-xl p-4 space-y-3">
+                <div key={result.id} className="bg-slate-50/30 border border-slate-200/50 rounded-xl p-4 space-y-3">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h4 className="font-bold text-slate-800">{result.title}</h4>
-                      <p className="text-xs text-slate-400 font-semibold">{result.subject} &bull; {new Date(result.createdAt).toLocaleDateString()}</p>
+                      <h4 className="font-semibold text-slate-800 text-sm">{result.title}</h4>
+                      <p className="text-[11px] text-slate-400 font-medium">{result.subject} &bull; {new Date(result.createdAt).toLocaleDateString()}</p>
                     </div>
-                    <span className="font-black text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md text-xs">{result.grade}</span>
+                    <span className="font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded text-[10px]">{result.grade}</span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 py-2 text-center bg-white rounded-lg border border-slate-100">
+                  <div className="grid grid-cols-3 gap-2 py-1.5 text-center bg-white rounded-lg border border-slate-100">
                     <div>
-                      <span className="block text-[10px] text-slate-400 uppercase font-bold">Score</span>
-                      <span className="font-bold text-xs text-slate-800">{result.score}/{result.totalMarks}</span>
+                      <span className="block text-[9px] text-slate-400 uppercase font-medium">Score</span>
+                      <span className="font-semibold text-xs text-slate-700">{result.score}/{result.totalMarks}</span>
                     </div>
                     <div>
-                      <span className="block text-[10px] text-slate-400 uppercase font-bold">Percent</span>
-                      <span className="font-extrabold text-xs text-slate-800">{Math.round(result.percentage)}%</span>
+                      <span className="block text-[9px] text-slate-400 uppercase font-medium">Percent</span>
+                      <span className="font-semibold text-xs text-slate-900">{Math.round(result.percentage)}%</span>
                     </div>
                     <div>
-                      <span className="block text-[10px] text-slate-400 uppercase font-bold">Rank</span>
-                      <span className="font-bold text-xs text-slate-600">#{result.rank || 'N/A'}</span>
+                      <span className="block text-[9px] text-slate-400 uppercase font-medium">Rank</span>
+                      <span className="font-semibold text-xs text-slate-500">#{result.rank || 'N/A'}</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2">
-                    <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${
-                      result.status === 'Excellent' ? 'bg-purple-50 text-purple-700 border-purple-200' :
-                      result.status === 'Passed' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-                      result.status === 'Pending' ? 'bg-amber-50 text-amber-700 border-amber-200' :
-                      'bg-rose-50 text-rose-700 border-rose-200'
+                  <div className="flex items-center justify-between pt-1">
+                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border ${
+                      result.status === 'Excellent' ? 'bg-purple-50/50 text-purple-700 border-purple-200/50' :
+                      result.status === 'Passed' ? 'bg-emerald-50/50 text-emerald-700 border-emerald-200/50' :
+                      result.status === 'Pending' ? 'bg-amber-50/50 text-amber-700 border-amber-200/50' :
+                      'bg-rose-50/50 text-rose-700 border-rose-200/50'
                     }`}>
                       {result.status}
                     </span>
                     <div className="flex gap-2">
                       <button 
                         onClick={() => handleDownloadPDF(result)}
-                        className="p-2 text-slate-600 hover:text-slate-800 rounded-lg hover:bg-slate-100 border border-slate-200 transition-colors"
+                        aria-label={`Download PDF for ${result.title}`}
+                        className="p-1.5 text-slate-500 hover:text-slate-800 rounded hover:bg-slate-100 border border-slate-200/60 transition-colors"
                         title="Download Report"
                       >
-                        <Download className="w-4 h-4" />
+                        <Download className="w-3.5 h-3.5" />
                       </button>
                       <Link 
                         href={`/studentdashboard/results/${result.id}`}
-                        className="inline-flex items-center gap-1 text-white bg-indigo-600 hover:bg-indigo-700 font-bold text-xs px-3 py-2 rounded-lg transition-colors"
+                        className="inline-flex items-center gap-0.5 text-white bg-indigo-600 hover:bg-indigo-700 font-medium text-xs px-3 py-1.5 rounded transition-colors"
                       >
                         Report
-                        <ChevronRight className="w-3.5 h-3.5" />
+                        <ChevronRight className="w-3 h-3" />
                       </Link>
                     </div>
                   </div>
@@ -640,20 +528,20 @@ export default function ResultsDashboard({ resultsData }: ResultsDashboardProps)
             </div>
           </>
         ) : (
-          /* 10. EMPTY STATE */
+          /* Empty State */
           <div className="py-16 flex flex-col items-center justify-center text-center space-y-4">
-            <div className="p-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-400">
-              <HelpCircle className="w-12 h-12" />
+            <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl text-slate-400">
+              <HelpCircle className="w-8 h-8" />
             </div>
             <div className="space-y-1">
-              <h4 className="text-base font-bold text-slate-800">No exam results available yet</h4>
-              <p className="text-sm text-slate-400 font-semibold max-w-sm">
+              <h4 className="text-sm font-semibold text-slate-800">No exam records available yet</h4>
+              <p className="text-xs text-slate-400 font-normal max-w-xs">
                 You haven't completed any exams matching the search terms or selected filters.
               </p>
             </div>
             <Link 
               href="/studentdashboard/exams"
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/10"
+              className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-indigo-600 text-white font-medium text-xs hover:bg-indigo-700 transition-all"
             >
               Go to Exams
             </Link>
