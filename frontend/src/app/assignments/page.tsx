@@ -32,7 +32,7 @@ export default function AssignmentsPage() {
 
   const role = (user?.role || '').toLowerCase();
   const mode = (user?.mode || 'principal').toLowerCase();
-  const isTeacherMode = role === 'teacher' || (role === 'principal' && mode === 'teacher');
+  const isTeacherMode = role === 'teacher' || role === 'tutor' || (role === 'principal' && mode === 'teacher');
   const isPrincipalMode = role === 'principal' && mode === 'principal';
 
   const [assignments, setAssignments] = useState<AssignmentRow[]>([]);

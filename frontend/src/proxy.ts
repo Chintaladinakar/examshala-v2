@@ -54,7 +54,9 @@ export function proxy(request: NextRequest) {
 
   // 2. Check if logged-in user is hitting signin/signup
   if (AUTH_ROUTES.some((route) => pathname.startsWith(route))) {
-    if (token) {
+    const errorParam = request.nextUrl.searchParams.get('error');
+    const logoutParam = request.nextUrl.searchParams.get('logout');
+    if (token && !errorParam && !logoutParam) {
       const decoded = decodeJwtPayload(token);
       if (decoded && decoded.role) {
         const expectedDashboard = getDashboardPathForRole(decoded.role);

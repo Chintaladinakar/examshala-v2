@@ -27,7 +27,7 @@ export default function StudentsPage() {
   const { showError, showMessage } = useToast();
 
   const canManage = (user?.role || '').toLowerCase() === 'principal' && (user?.mode || 'principal') === 'principal';
-  const canAdd = (user?.role || '').toLowerCase() === 'principal' || (user?.role || '').toLowerCase() === 'teacher' || (user?.mode || '') === 'teacher';
+  const canAdd = (user?.role || '').toLowerCase() === 'principal' || (user?.role || '').toLowerCase() === 'teacher' || (user?.role || '').toLowerCase() === 'tutor' || (user?.mode || '') === 'teacher';
 
   const [students, setStudents] = useState<StudentRow[]>([]);
   const [classes, setClasses] = useState<ClassLite[]>([]);

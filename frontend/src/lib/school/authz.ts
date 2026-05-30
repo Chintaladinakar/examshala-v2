@@ -41,13 +41,26 @@ export async function requireSchoolAuth(): Promise<AuthContext> {
   });
 
   if (!user || !user.isActive) throw new Error('UNAUTHORIZED');
-  if (!user.workspaceId) throw new Error('NO_WORKSPACE');
+
+  let workspaceId = user.workspaceId;
+  if (!workspaceId) {
+    const firstWorkspace = await prisma.workspace.findFirst({ select: { id: true } });
+    if (firstWorkspace) {
+      workspaceId = firstWorkspace.id;
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { workspaceId: firstWorkspace.id },
+      });
+    } else {
+      throw new Error('NO_WORKSPACE');
+    }
+  }
 
   const role = (user.role || decoded?.role || '').toLowerCase();
   const rawMode = (user.mode || 'principal').toLowerCase();
-  const mode: SchoolMode = rawMode === 'teacher' ? 'teacher' : 'principal';
+  const mode: SchoolMode = (role === 'teacher' || role === 'tutor') ? 'teacher' : (rawMode === 'teacher' ? 'teacher' : 'principal');
 
-  return { userId: user.id, role, mode, workspaceId: user.workspaceId };
+  return { userId: user.id, role, mode, workspaceId };
 }
 
 export function requirePrincipal(ctx: AuthContext) {
@@ -56,7 +69,7 @@ export function requirePrincipal(ctx: AuthContext) {
 }
 
 export function requireTeacherOrPrincipal(ctx: AuthContext) {
-  const isTeacher = ctx.role === 'teacher' || (ctx.role === 'principal' && ctx.mode === 'teacher');
+  const isTeacher = ctx.role === 'teacher' || ctx.role === 'tutor' || (ctx.role === 'principal' && ctx.mode === 'teacher');
   const isPrincipal = ctx.role === 'principal' && ctx.mode === 'principal';
   if (!isTeacher && !isPrincipal) throw new Error('FORBIDDEN');
   return { isTeacher, isPrincipal };

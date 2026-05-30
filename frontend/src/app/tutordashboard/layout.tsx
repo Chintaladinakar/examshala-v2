@@ -4,7 +4,7 @@ import { Navbar } from '@/components/school/Navbar';
 
 export default async function TutorDashboardLayout({ children }: { children: React.ReactNode }) {
   const ctx = await requireSchoolAuth().catch(() => null);
-  if (!ctx) redirect('/signin');
+  if (!ctx) redirect('/signin?error=unauthorized');
 
   if (ctx.mode !== 'teacher') redirect('/principledashboard');
 

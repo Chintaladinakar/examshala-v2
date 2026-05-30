@@ -15,7 +15,7 @@ export async function GET() {
       name: user?.name,
       email: user?.email,
       role: user?.role,
-      mode: user?.mode ?? null,
+      mode: ctx.mode,
       workspaceId: user?.workspaceId ?? null,
       workspaceName: workspace?.name ?? '',
     });
