@@ -9,11 +9,16 @@ import { ChevronLeft, ChevronRight, Menu, X, LogOut, GraduationCap, LayoutDashbo
 
 export function Sidebar() {
   const pathname = usePathname();
-  const isCollapsed = false;
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   // Sync collapsible state with localStorage on mount
   useEffect(() => {
+    const savedState = localStorage.getItem('sidebar_collapsed');
+    if (savedState) {
+      setIsCollapsed(savedState === 'true');
+    }
+
     // Event listener for opening/toggling the mobile drawer from the Header
     const handleToggleMobileDrawer = () => {
       setIsMobileOpen((prev) => !prev);
@@ -24,6 +29,12 @@ export function Sidebar() {
       window.removeEventListener('toggle-student-drawer', handleToggleMobileDrawer);
     };
   }, []);
+
+  const toggleCollapse = () => {
+    const newState = !isCollapsed;
+    setIsCollapsed(newState);
+    localStorage.setItem('sidebar_collapsed', String(newState));
+  };
 
   // Group routes into logical sections
   const academicRoutes = studentPortalRoutes.filter(route => 
@@ -96,19 +107,45 @@ export function Sidebar() {
       {/* 1. Desktop Sidebar */}
       <aside 
         className={cn(
-          "hidden md:flex flex-col border-r border-slate-200/80 bg-white min-h-screen transition-all duration-300 relative shrink-0 z-30",
+          "hidden md:flex flex-col border-r border-slate-200/80 bg-white h-screen sticky top-0 transition-all duration-300 shrink-0 z-30 overflow-y-auto overflow-x-hidden scrollbar-none",
           isCollapsed ? "w-20" : "w-64"
         )}
       >
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between mb-4">
+        <div className={cn(
+          "p-5 border-b border-slate-100 flex mb-4 justify-between items-center",
+          isCollapsed && "flex-col gap-3.5 justify-center"
+        )}>
           <Link href="/studentdashboard" className="flex items-center gap-2.5 cursor-pointer group">
-            <div className="w-9 h-9 bg-gradient-to-br from-teal-800 to-emerald-600 rounded-xl flex items-center justify-center shadow-md shadow-teal-800/10 group-hover:scale-105 transition-transform duration-300">
+            <div className="w-9 h-9 bg-gradient-to-br from-teal-800 to-emerald-600 rounded-xl flex items-center justify-center shadow-md shadow-teal-800/15 group-hover:scale-105 transition-transform duration-300">
               <GraduationCap className="text-white w-5 h-5" />
             </div>
-            <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-teal-950 to-slate-800 bg-clip-text text-transparent group-hover:opacity-90 transition-opacity">
-              Examshala
-            </span>
+            {!isCollapsed && (
+              <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-teal-950 to-slate-800 bg-clip-text text-transparent group-hover:opacity-90 transition-opacity">
+                Examshala
+              </span>
+            )}
           </Link>
+          
+          {/* Desktop Toggle Pin (ChevronLeft when expanded, ChevronRight when collapsed) */}
+          {isCollapsed ? (
+            <button 
+              type="button"
+              onClick={toggleCollapse}
+              className="w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors text-slate-400 hover:text-slate-700 shadow-3xs cursor-pointer select-none shrink-0"
+              title="Expand Sidebar"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          ) : (
+            <button 
+              type="button"
+              onClick={toggleCollapse}
+              className="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors text-slate-400 hover:text-slate-700 shadow-2xs cursor-pointer select-none shrink-0"
+              title="Collapse Sidebar"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
         {/* Navigation Routes */}
