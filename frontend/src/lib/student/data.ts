@@ -6,10 +6,17 @@ import { studentDashboardMock } from '@/lib/student/mock';
 type DashboardResponse = { data?: StudentDashboardData };
 type ParentsResponse = { data?: StudentParentsData };
 
-export async function getStudentDashboard(token: string): Promise<StudentDashboardData> {
+const isFallbackId = (id?: string) => 
+  id === 'examshala-academy' || id === 'greenwood-high' || id === 'vanguard-science';
+
+export async function getStudentDashboard(token: string, workspaceId?: string): Promise<StudentDashboardData> {
   try {
+    const headers: Record<string, string> = { Authorization: `Bearer ${token}` };
+    if (workspaceId && !isFallbackId(workspaceId)) {
+      headers['x-workspace-id'] = workspaceId;
+    }
     const payload = await fetchJson<DashboardResponse>('/api/student/dashboard', {
-      headers: { Authorization: `Bearer ${token}` },
+      headers,
       cache: 'no-store',
       action: 'load',
     });
@@ -61,10 +68,14 @@ export async function getStudentResultById(token: string, id: string): Promise<a
   }
 }
 
-export async function getStudentSchedule(token: string): Promise<any> {
+export async function getStudentSchedule(token: string, workspaceId?: string): Promise<any> {
   try {
+    const headers: Record<string, string> = { Authorization: `Bearer ${token}` };
+    if (workspaceId && !isFallbackId(workspaceId)) {
+      headers['x-workspace-id'] = workspaceId;
+    }
     const payload = await fetchJson<{ success?: boolean; data?: any }>('/api/student/schedule', {
-      headers: { Authorization: `Bearer ${token}` },
+      headers,
       cache: 'no-store',
       action: 'load',
     });
@@ -72,6 +83,42 @@ export async function getStudentSchedule(token: string): Promise<any> {
   } catch (err) {
     logDeveloperError(err, { action: 'load', feature: 'student_schedule_adapter' });
     return { events: [], stats: { upcomingExamsCount: 0, pendingAssignmentsCount: 0, nextLiveSession: null } };
+  }
+}
+
+export async function getStudentProfile(token: string, workspaceId?: string): Promise<any> {
+  try {
+    const headers: Record<string, string> = { Authorization: `Bearer ${token}` };
+    if (workspaceId && !isFallbackId(workspaceId)) {
+      headers['x-workspace-id'] = workspaceId;
+    }
+    const payload = await fetchJson<{ success?: boolean; data?: any }>('/api/student/profile', {
+      headers,
+      cache: 'no-store',
+      action: 'load',
+    });
+    return payload.data;
+  } catch (err) {
+    logDeveloperError(err, { action: 'load', feature: 'student_profile_adapter' });
+    return null;
+  }
+}
+
+export async function getStudentSettings(token: string, workspaceId?: string): Promise<any> {
+  try {
+    const headers: Record<string, string> = { Authorization: `Bearer ${token}` };
+    if (workspaceId && !isFallbackId(workspaceId)) {
+      headers['x-workspace-id'] = workspaceId;
+    }
+    const payload = await fetchJson<{ success?: boolean; data?: any }>('/api/student/settings', {
+      headers,
+      cache: 'no-store',
+      action: 'load',
+    });
+    return payload.data;
+  } catch (err) {
+    logDeveloperError(err, { action: 'load', feature: 'student_settings_adapter' });
+    return null;
   }
 }
 

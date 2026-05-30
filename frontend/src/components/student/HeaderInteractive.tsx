@@ -1,22 +1,33 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Bell, Search, Menu, User, Settings, LogOut, ChevronDown, Sparkles } from 'lucide-react';
+import { Bell, Search, Menu, User, Settings, LogOut, ChevronDown, Sparkles, Building2, Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 interface HeaderInteractiveProps {
   studentName: string;
   unreadCount: number;
+  activeWorkspaceId?: string;
+  workspaceName?: string;
+  workspaces?: Array<{ id: string; name: string }>;
 }
 
-export function HeaderInteractive({ studentName, unreadCount }: HeaderInteractiveProps) {
+export function HeaderInteractive({ 
+  studentName, 
+  unreadCount,
+  activeWorkspaceId,
+  workspaceName,
+  workspaces = []
+}: HeaderInteractiveProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [workspaceOpen, setWorkspaceOpen] = useState(false);
 
   const notificationsRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
+  const workspaceRef = useRef<HTMLDivElement>(null);
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -26,6 +37,9 @@ export function HeaderInteractive({ studentName, unreadCount }: HeaderInteractiv
       }
       if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
         setProfileOpen(false);
+      }
+      if (workspaceRef.current && !workspaceRef.current.contains(event.target as Node)) {
+        setWorkspaceOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -58,17 +72,77 @@ export function HeaderInteractive({ studentName, unreadCount }: HeaderInteractiv
     { id: 3, title: "Result Declared", desc: "You scored 92% in English Quiz", time: "1d ago", read: true },
   ].slice(0, Math.max(1, unreadCount || 2));
 
+  const handleWorkspaceChange = (id: string) => {
+    document.cookie = `workspace_id=${id}; path=/; max-age=31536000; SameSite=Lax`;
+    setWorkspaceOpen(false);
+    router.refresh();
+  };
+
   return (
-    <div className="flex items-center justify-between w-full md:w-auto gap-4">
-      {/* 1. Hamburger button on mobile / tablet */}
-      <button 
-        type="button"
-        onClick={triggerMobileDrawer}
-        className="md:hidden flex items-center justify-center p-2 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-800 transition-colors"
-        aria-label="Toggle Navigation Menu"
-      >
-        <Menu className="w-5 h-5" />
-      </button>
+    <div className="flex items-center justify-between w-full gap-4">
+      <div className="flex items-center gap-3">
+        {/* 1. Hamburger button on mobile / tablet */}
+        <button 
+          type="button"
+          onClick={triggerMobileDrawer}
+          className="md:hidden flex items-center justify-center p-2 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-800 transition-colors animate-in fade-in"
+          aria-label="Toggle Navigation Menu"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+
+        {/* Workspace switching dropdown */}
+        {workspaces.length > 0 && (
+          <div className="relative" ref={workspaceRef}>
+            <button
+              type="button"
+              onClick={() => setWorkspaceOpen(!workspaceOpen)}
+              className="flex items-center gap-2 px-3.5 py-1.5 h-10 rounded-full border border-slate-200/80 bg-white hover:bg-slate-50 active:bg-slate-100 transition-all cursor-pointer shadow-3xs hover:shadow-2xs text-left"
+              aria-haspopup="true"
+              aria-expanded={workspaceOpen}
+            >
+              <div className="w-6.5 h-6.5 rounded-full bg-teal-50 flex items-center justify-center text-teal-600 shrink-0">
+                <Building2 className="w-3.5 h-3.5 stroke-[2.2px]" />
+              </div>
+              <span className="text-xs font-extrabold tracking-wider text-slate-800 uppercase max-w-[120px] sm:max-w-[200px] truncate">
+                {workspaceName || 'STUDENT PORTAL'}
+              </span>
+              <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${workspaceOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {workspaceOpen && (
+              <div className="absolute left-0 mt-2 w-64 bg-white border border-slate-200/85 rounded-2xl shadow-xl z-50 p-1.5 animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="px-3 py-2 flex flex-col border-b border-slate-100 mb-1">
+                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Select Workspace</span>
+                </div>
+                <div className="max-h-60 overflow-y-auto space-y-0.5">
+                  {workspaces.map((w) => {
+                    const isActive = w.id === activeWorkspaceId;
+                    return (
+                      <button
+                        key={w.id}
+                        type="button"
+                        onClick={() => handleWorkspaceChange(w.id)}
+                        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold text-left transition-colors ${
+                          isActive
+                            ? 'bg-teal-50 text-teal-900 font-extrabold'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 truncate">
+                          <Building2 className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-teal-600' : 'text-slate-400'}`} />
+                          <span className="truncate">{w.name}</span>
+                        </div>
+                        {isActive && <Check className="w-4 h-4 text-teal-600 shrink-0" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       {/* 2. Lightweight Search Input */}
       <div className="relative hidden sm:block w-48 md:w-64">

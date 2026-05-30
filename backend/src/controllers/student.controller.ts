@@ -5,6 +5,7 @@ import * as assignmentService from '../services/assignment.service';
 import * as parentLinkService from '../services/parentLink.service';
 import * as resultsService from '../services/results.service';
 import * as notificationsService from '../services/notifications.service';
+import * as profileService from '../services/studentProfile.service';
 
 export const getDashboard = async (req: AuthRequest, res: Response) => {
   try {
@@ -130,6 +131,73 @@ export const getSchedule = async (req: AuthRequest, res: Response) => {
     const workspaceIdContext = req.headers['x-workspace-id'] as string | undefined;
 
     const data = await dashboardService.getScheduleAggregatedData(studentId, workspaceIdContext);
+    res.json({ success: true, data });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const getProfile = async (req: AuthRequest, res: Response) => {
+  try {
+    const studentId = req.user!.userId;
+    const workspaceIdContext = req.headers['x-workspace-id'] as string | undefined;
+    const data = await profileService.getStudentProfile(studentId, workspaceIdContext);
+    res.json({ success: true, data });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const getSettings = async (req: AuthRequest, res: Response) => {
+  try {
+    const studentId = req.user!.userId;
+    const workspaceIdContext = req.headers['x-workspace-id'] as string | undefined;
+    const data = await profileService.getStudentSettings(studentId, workspaceIdContext);
+    res.json({ success: true, data });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const updateNotificationSettings = async (req: AuthRequest, res: Response) => {
+  try {
+    const studentId = req.user!.userId;
+    const workspaceIdContext = req.headers['x-workspace-id'] as string | undefined;
+    const data = await profileService.updateNotificationSettings(studentId, workspaceIdContext, req.body);
+    res.json({ success: true, data });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const updateProfilePhoto = async (req: AuthRequest, res: Response) => {
+  try {
+    const studentId = req.user!.userId;
+    const workspaceIdContext = req.headers['x-workspace-id'] as string | undefined;
+    const { profilePhoto } = req.body;
+    const data = await profileService.updateProfilePhoto(studentId, workspaceIdContext, profilePhoto);
+    res.json({ success: true, data });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const changePassword = async (req: AuthRequest, res: Response) => {
+  try {
+    const studentId = req.user!.userId;
+    const { currentPassword, newPassword } = req.body;
+    const data = await profileService.changePassword(studentId, currentPassword, newPassword);
+    res.json({ success: true, data });
+  } catch (error: any) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+export const updateProfileInfo = async (req: AuthRequest, res: Response) => {
+  try {
+    const studentId = req.user!.userId;
+    const workspaceIdContext = req.headers['x-workspace-id'] as string | undefined;
+    const data = await profileService.updateProfileInfo(studentId, workspaceIdContext, req.body);
     res.json({ success: true, data });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });

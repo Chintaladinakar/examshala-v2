@@ -9,16 +9,11 @@ import { ChevronLeft, ChevronRight, Menu, X, LogOut, GraduationCap, LayoutDashbo
 
 export function Sidebar() {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const isCollapsed = false;
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   // Sync collapsible state with localStorage on mount
   useEffect(() => {
-    const savedState = localStorage.getItem('sidebar_collapsed');
-    if (savedState) {
-      setIsCollapsed(savedState === 'true');
-    }
-
     // Event listener for opening/toggling the mobile drawer from the Header
     const handleToggleMobileDrawer = () => {
       setIsMobileOpen((prev) => !prev);
@@ -30,12 +25,6 @@ export function Sidebar() {
     };
   }, []);
 
-  const toggleCollapse = () => {
-    const newState = !isCollapsed;
-    setIsCollapsed(newState);
-    localStorage.setItem('sidebar_collapsed', String(newState));
-  };
-
   // Group routes into logical sections
   const academicRoutes = studentPortalRoutes.filter(route => 
     ['Dashboard', 'Exams', 'Assignments', 'Materials'].includes(route.label)
@@ -46,18 +35,20 @@ export function Sidebar() {
   );
 
   const personalRoutes = studentPortalRoutes.filter(route => 
-    ['Messages', 'Profile', 'Settings'].includes(route.label)
+    ['Messages'].includes(route.label)
   );
 
   const routeGroups = [
     { title: "Academics", routes: academicRoutes },
     { title: "Analytics & Schedule", routes: analysisRoutes },
     { title: "Personal Portal", routes: personalRoutes },
-  ];
+  ].filter(group => group.routes.length > 0);
 
   const renderNavItems = (items: typeof studentPortalRoutes, isMobileView = false) => {
     return items.map((item) => {
-      const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+      const isActive = item.href === '/studentdashboard'
+        ? pathname === '/studentdashboard'
+        : (pathname === item.href || pathname.startsWith(`${item.href}/`));
       const showLabel = isMobileView || !isCollapsed;
       
       return item.disabled ? (
@@ -109,42 +100,15 @@ export function Sidebar() {
           isCollapsed ? "w-20" : "w-64"
         )}
       >
-        {/* Logo and branding */}
-        <div className={cn(
-          "p-5 border-b border-slate-100 flex mb-4",
-          isCollapsed 
-            ? "flex-col items-center justify-center gap-3.5" 
-            : "items-center justify-between"
-        )}>
+        <div className="p-5 border-b border-slate-100 flex items-center justify-between mb-4">
           <Link href="/studentdashboard" className="flex items-center gap-2.5 cursor-pointer group">
             <div className="w-9 h-9 bg-gradient-to-br from-teal-800 to-emerald-600 rounded-xl flex items-center justify-center shadow-md shadow-teal-800/10 group-hover:scale-105 transition-transform duration-300">
               <GraduationCap className="text-white w-5 h-5" />
             </div>
-            {!isCollapsed && (
-              <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-teal-950 to-slate-800 bg-clip-text text-transparent group-hover:opacity-90 transition-opacity">
-                Examshala
-              </span>
-            )}
+            <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-teal-950 to-slate-800 bg-clip-text text-transparent group-hover:opacity-90 transition-opacity">
+              Examshala
+            </span>
           </Link>
-          
-          {/* Desktop Toggle Pin (ChevronLeft when expanded, ChevronRight when collapsed) */}
-          {isCollapsed ? (
-            <button 
-              onClick={toggleCollapse}
-              className="w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors text-slate-400 hover:text-slate-700 shadow-3xs cursor-pointer select-none"
-              title="Expand Sidebar"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          ) : (
-            <button 
-              onClick={toggleCollapse}
-              className="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors text-slate-400 hover:text-slate-700 shadow-2xs cursor-pointer select-none"
-              title="Collapse Sidebar"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-          )}
         </div>
 
         {/* Navigation Routes */}

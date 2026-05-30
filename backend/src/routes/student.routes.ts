@@ -26,6 +26,11 @@ router.post('/parents/remove-request', controller.removeParentLink);
 router.get('/results', controller.getResults);
 router.get('/results/:id', controller.getResultById);
 router.get('/notifications', controller.getNotifications);
-router.get('/profile', (req, res) => res.json({ success: true, data: {} }));
+router.get('/profile', controller.getProfile);
+router.patch('/profile', controller.updateProfileInfo);
+router.patch('/profile/photo', controller.updateProfilePhoto);
+router.get('/settings', controller.getSettings);
+router.patch('/settings/notifications', controller.updateNotificationSettings);
+router.patch('/change-password', controller.changePassword);
 
 export default router;

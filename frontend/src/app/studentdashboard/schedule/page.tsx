@@ -19,6 +19,7 @@ export const revalidate = 0;
 export default async function StudentSchedulePage() {
   const cookieStore = await cookies();
   const token = cookieStore.get('session_token')?.value;
+  const workspaceId = cookieStore.get('workspace_id')?.value;
 
   if (!token) {
     redirect('/signin');
@@ -34,7 +35,7 @@ export default async function StudentSchedulePage() {
   };
 
   try {
-    scheduleData = await getStudentSchedule(token);
+    scheduleData = await getStudentSchedule(token, workspaceId);
   } catch (error) {
     console.error('Failed to load schedule data:', error);
   }

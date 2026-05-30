@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import ProfileTabsController from '@/components/student/ProfileTabsController';
 import FullPageErrorState from '@/components/ui/FullPageErrorState';
 import { logDeveloperError } from '@/lib/error-handler';
-import { getStudentDashboard, getStudentParents } from '@/lib/student/data';
+import { getStudentProfile, getStudentParents } from '@/lib/student/data';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -12,6 +12,7 @@ export const revalidate = 0;
 export default async function StudentProfilePage() {
   const cookieStore = await cookies();
   const token = cookieStore.get('session_token')?.value;
+  const workspaceId = cookieStore.get('workspace_id')?.value;
 
   if (!token) redirect('/signin');
 
@@ -21,11 +22,11 @@ export default async function StudentProfilePage() {
   let authFailed = false;
 
   try {
-    const [dash, parentLinks] = await Promise.all([
-      getStudentDashboard(token),
+    const [prof, parentLinks] = await Promise.all([
+      getStudentProfile(token, workspaceId),
       getStudentParents(token),
     ]);
-    profile = dash.profile ?? null;
+    profile = prof ?? null;
     parents = Array.isArray(parentLinks) ? parentLinks : [];
   } catch (error: unknown) {
     const errRec = (error && typeof error === 'object') ? (error as Record<string, unknown>) : null;

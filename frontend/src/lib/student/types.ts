@@ -51,6 +51,8 @@ export type StudentDashboardData = {
   upcomingExams?: StudentUpcomingExam[];
   recentResults?: StudentRecentResult[];
   workspaceName?: string;
+  activeWorkspaceId?: string | null;
+  workspaces?: Array<{ id: string; name: string }>;
 };
 
 export type StudentParentsData = unknown[];

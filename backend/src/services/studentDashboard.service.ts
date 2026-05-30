@@ -80,8 +80,31 @@ export const getDashboardAggregatedData = async (studentId: string, workspaceIdC
     where: { studentId: studentId, status: 'active' }
   });
 
+  // Fetch workspaces student is member of
+  const memberships = await prisma.workspaceMembership.findMany({
+    where: { userId: studentId },
+    include: { Workspace: { select: { id: true, name: true } } }
+  });
+  const workspaces = memberships.map(m => m.Workspace);
+
+  let activeWorkspaceName = 'Student Portal';
+  if (workspaceIdContext) {
+    const ws = await prisma.workspace.findUnique({
+      where: { id: workspaceIdContext },
+      select: { name: true }
+    });
+    if (ws) {
+      activeWorkspaceName = ws.name;
+    }
+  } else if (workspaces.length > 0) {
+    activeWorkspaceName = workspaces[0].name;
+  }
+
   return {
     profile: user,
+    workspaceName: activeWorkspaceName,
+    activeWorkspaceId: workspaceIdContext || (workspaces[0]?.id || null),
+    workspaces,
     stats: {
       totalExamsTaken,
       averageScore: Number(averageScore.toFixed(2)),
@@ -265,12 +288,9 @@ export const getScheduleAggregatedData = async (studentId: string, workspaceIdCo
 
   const classList = enrolledClasses.map(ec => ec.Class);
   
-  // Fallback to mock classes if student is not in any classes, to guarantee visual richness
-  const classesToUse = classList.length > 0 ? classList : [
-    { id: 'mock-math', name: 'Mathematics 101', teachers: [{ Teacher: { name: 'Dr. John Smith' } }] },
-    { id: 'mock-physics', name: 'Physics Mechanics 202', teachers: [{ Teacher: { name: 'Prof. Amit Roy' } }] },
-    { id: 'mock-chemistry', name: 'Organic Chemistry 303', teachers: [{ Teacher: { name: 'Sarah Connor' } }] }
-  ];
+  // Under this plan, we do NOT use hardcoded mock classes fallback.
+  // We strictly use the actual class list the student is enrolled in.
+  const classesToUse = classList;
 
   classesToUse.forEach((cls, idx) => {
     const daysAndHours: { day: string; hour: number; minute: number }[] = [];

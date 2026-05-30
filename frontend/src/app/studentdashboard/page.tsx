@@ -45,6 +45,7 @@ export const revalidate = 0;
 export default async function StudentDashboardPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get('session_token')?.value;
+  const workspaceId = cookieStore.get('workspace_id')?.value;
 
   if (!token) {
     redirect('/signin');
@@ -55,7 +56,7 @@ export default async function StudentDashboardPage() {
   let authFailed = false;
 
   try {
-    dashboardData = await getStudentDashboard(token);
+    dashboardData = await getStudentDashboard(token, workspaceId);
   } catch (error: unknown) {
     const errRec = (error && typeof error === 'object') ? (error as Record<string, unknown>) : null;
     let status: number | undefined;
