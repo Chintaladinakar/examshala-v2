@@ -7,7 +7,6 @@ const PROTECTED_ROUTES = [
   '/tutordashboard',
   '/parentdashboard',
   '/principledashboard',
-  '/superadmin',
   '/admin',
 ];
 

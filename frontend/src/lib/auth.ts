@@ -33,10 +33,9 @@ export function getDashboardPathForRole(role: string): string {
     case 'parent':
       return '/parentdashboard';
     case 'org_admin':
-      return '/admin';
     case 'superadmin':
     case 'admin':
-      return '/superadmin';
+      return '/admin';
     default:
       return '/';
   }
@@ -77,10 +76,9 @@ export function getAllowedDashboardPaths(role: string): string[] {
     case 'parent':
       return ['/parentdashboard'];
     case 'org_admin':
-      return ['/admin'];
     case 'superadmin':
     case 'admin':
-      return ['/superadmin'];
+      return ['/admin'];
     default:
       return ['/'];
   }

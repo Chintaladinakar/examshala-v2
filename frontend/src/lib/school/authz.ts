@@ -42,23 +42,24 @@ export async function requireSchoolAuth(): Promise<AuthContext> {
 
   if (!user || !user.isActive) throw new Error('UNAUTHORIZED');
 
-  let workspaceId = user.workspaceId;
+  const workspaceId = user.workspaceId;
   if (!workspaceId) {
-    const firstWorkspace = await prisma.workspace.findFirst({ select: { id: true } });
-    if (firstWorkspace) {
-      workspaceId = firstWorkspace.id;
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { workspaceId: firstWorkspace.id },
-      });
-    } else {
-      throw new Error('NO_WORKSPACE');
-    }
+    throw new Error('NO_WORKSPACE');
   }
 
   const role = (user.role || decoded?.role || '').toLowerCase();
   const rawMode = (user.mode || 'principal').toLowerCase();
   const mode: SchoolMode = (role === 'teacher' || role === 'tutor') ? 'teacher' : (rawMode === 'teacher' ? 'teacher' : 'principal');
+
+  if (role !== 'superadmin' && role !== 'org_admin' && role !== 'admin' && workspaceId) {
+    const workspace = await prisma.workspace.findUnique({
+      where: { id: workspaceId },
+      select: { status: true },
+    });
+    if (workspace && workspace.status === 'SUSPENDED') {
+      throw new Error('WORKSPACE_SUSPENDED');
+    }
+  }
 
   return { userId: user.id, role, mode, workspaceId };
 }

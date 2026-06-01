@@ -24,6 +24,11 @@ interface NavLink {
   icon: string;
 }
 
+interface NavGroup {
+  title: string;
+  links: NavLink[];
+}
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function getCookie(name: string): string {
@@ -34,7 +39,7 @@ function getCookie(name: string): string {
   return '';
 }
 
-function buildLinks(role: string, mode: string): NavLink[] {
+function buildLinks(role: string, mode: string): NavGroup[] {
   const isPrincipal = role === 'principal';
   const inPrincipalMode = isPrincipal && mode === 'principal';
 
@@ -43,40 +48,105 @@ function buildLinks(role: string, mode: string): NavLink[] {
     ? (inPrincipalMode ? '/principledashboard' : '/tutordashboard')
     : '/tutordashboard';
 
-  if (isPrincipal && inPrincipalMode) {
-    return [
-      { href: dashboardHref,  label: 'Dashboard', icon: '📊' },
-      { href: '/students',    label: 'Students',     icon: '🎓' },
-      { href: '/teachers',    label: 'Teachers',     icon: '👨‍🏫' },
-      { href: '/classes',     label: 'Classes',      icon: '🏫' },
-      { href: '/attendance',  label: 'Attendance',   icon: '📅' },
-      { href: '/assignments', label: 'Assignments',  icon: '📝' },
-      { href: '/logs',        label: 'Logs',         icon: '🗂️' },
-      { href: '/profile',     label: 'Profile',      icon: '👤' },
-    ];
-  }
+  const groups: NavGroup[] = [];
 
-  if (isPrincipal && !inPrincipalMode) {
-    // Principal in Teacher Mode
-    return [
-      { href: dashboardHref,  label: 'Dashboard',   icon: '📊' },
-      { href: '/students',    label: 'Students',     icon: '🎓' },
-      { href: '/classes',     label: 'Classes',      icon: '🏫' },
-      { href: '/attendance',  label: 'Attendance',   icon: '📅' },
-      { href: '/assignments', label: 'Assignments',  icon: '📝' },
-      { href: '/profile',     label: 'Profile',      icon: '👤' },
-    ];
-  }
+  // 1. Dashboard Group (no header title)
+  groups.push({
+    title: '',
+    links: [
+      { href: dashboardHref, label: 'Dashboard', icon: '📊' }
+    ]
+  });
 
-  // Regular teacher / tutor
-  return [
-    { href: '/tutordashboard',   label: 'Dashboard',   icon: '📊' },
-    { href: '/students',    label: 'Students',     icon: '🎓' },
-    { href: '/classes',     label: 'Classes',      icon: '🏫' },
-    { href: '/attendance',  label: 'Attendance',   icon: '📅' },
-    { href: '/assignments', label: 'Assignments',  icon: '📝' },
-    { href: '/profile',     label: 'Profile',      icon: '👤' },
+  // 2. Academic
+  const academicLinks: NavLink[] = [];
+  if (inPrincipalMode) {
+    academicLinks.push(
+      { href: '/principal/students', label: 'Students', icon: '🎓' },
+      { href: '/principal/teachers', label: 'Teachers', icon: '👨‍🏫' }
+    );
+  } else {
+    academicLinks.push({ href: '/students', label: 'Students', icon: '🎓' });
+  }
+  academicLinks.push(
+    { href: '/classes', label: 'Classes', icon: '🏫' },
+    { href: '/attendance', label: 'Attendance', icon: '📅' }
+  );
+  groups.push({
+    title: 'Academic',
+    links: academicLinks
+  });
+
+  // 3. Assessments
+  const assessmentLinks: NavLink[] = [
+    { href: '/coming-soon?feature=Exams', label: 'Exams', icon: '📝' },
+    { href: '/coming-soon?feature=QuestionBank', label: 'Question Bank', icon: '🗂️' },
   ];
+  if (inPrincipalMode) {
+    assessmentLinks.push({ href: '/principal/evaluations', label: 'Evaluations Override', icon: '🏆' });
+  } else {
+    assessmentLinks.push({ href: '/coming-soon?feature=Results', label: 'Results', icon: '🏆' });
+  }
+  groups.push({
+    title: 'Assessments',
+    links: assessmentLinks
+  });
+
+  // 4. Learning
+  groups.push({
+    title: 'Learning',
+    links: [
+      { href: '/assignments', label: 'Assignments', icon: '📚' },
+      { href: '/coming-soon?feature=StudyMaterials', label: 'Study Materials', icon: '📖' }
+    ]
+  });
+
+  // 5. Analytics
+  const analyticsLinks: NavLink[] = [
+    { href: '/coming-soon?feature=Reports', label: 'Reports', icon: '📈' }
+  ];
+  if (inPrincipalMode) {
+    analyticsLinks.push({ href: '/logs', label: 'Logs', icon: '📋' });
+  }
+  groups.push({
+    title: 'Analytics',
+    links: analyticsLinks
+  });
+
+  // 6. Communication
+  const communicationLinks: NavLink[] = [];
+  if (inPrincipalMode) {
+    communicationLinks.push(
+      { href: '/principal/announcements', label: 'Announcements Board', icon: '📣' }
+    );
+  } else {
+    communicationLinks.push(
+      { href: '/coming-soon?feature=Announcements', label: 'Announcements', icon: '📣' }
+    );
+  }
+  communicationLinks.push(
+    { href: '/coming-soon?feature=Calendar', label: 'Calendar', icon: '📆' }
+  );
+  groups.push({
+    title: 'Communication',
+    links: communicationLinks
+  });
+
+  // 7. Account
+  const accountLinks: NavLink[] = [
+    { href: '/profile', label: 'Profile', icon: '👤' }
+  ];
+  if (inPrincipalMode) {
+    accountLinks.push({ href: '/principal/settings', label: 'Admin Settings', icon: '⚙️' });
+  } else {
+    accountLinks.push({ href: '/coming-soon?feature=Settings', label: 'Settings', icon: '⚙️' });
+  }
+  groups.push({
+    title: 'Account',
+    links: accountLinks
+  });
+
+  return groups;
 }
 
 // ─── Skeleton ─────────────────────────────────────────────────────────────────
@@ -223,32 +293,41 @@ export default function DashboardSidebar() {
       </div>
 
       {/* ── Navigation ── */}
-      <nav className="flex-1 px-3 py-5 space-y-0.5 overflow-y-auto">
-        {links.map((link) => {
-          const isActive =
-            link.href === '/principledashboard'
-              ? pathname === link.href
-              : pathname.startsWith(link.href);
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-[13px] transition-all duration-150 group relative ${
-                isActive
-                  ? 'bg-teal-800/60 text-white shadow-inner border-l-[3px] border-teal-400 pl-[13px]'
-                  : 'text-teal-100/70 hover:bg-teal-800/30 hover:text-white border-l-[3px] border-transparent pl-[13px]'
-              }`}
-            >
-              <span className="text-base leading-none">{link.icon}</span>
-              <span className="leading-none">{link.label}</span>
+      <nav className="flex-1 px-3 py-5 space-y-4 overflow-y-auto">
+        {links.map((group, gIdx) => (
+          <div key={gIdx} className="space-y-0.5">
+            {group.title && (
+              <div className="text-[10px] text-teal-400/80 font-bold uppercase tracking-wider px-3.5 pt-3 pb-1 select-none">
+                {group.title}
+              </div>
+            )}
+            {group.links.map((link) => {
+              const isActive =
+                link.href === '/principledashboard' || link.href === '/tutordashboard'
+                  ? pathname === link.href
+                  : pathname.startsWith(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`flex items-center gap-3 px-3.5 py-2 rounded-xl font-medium text-[12px] transition-all duration-150 group relative ${
+                    isActive
+                      ? 'bg-teal-800/60 text-white shadow-inner border-l-[3px] border-teal-400 pl-[13px]'
+                      : 'text-teal-100/70 hover:bg-teal-800/30 hover:text-white border-l-[3px] border-transparent pl-[13px]'
+                  }`}
+                >
+                  <span className="text-base leading-none">{link.icon}</span>
+                  <span className="leading-none">{link.label}</span>
 
-              {/* Active indicator dot */}
-              {isActive && (
-                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0" />
-              )}
-            </Link>
-          );
-        })}
+                  {/* Active indicator dot */}
+                  {isActive && (
+                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0" />
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+        ))}
       </nav>
 
       {/* ── User section (bottom) ── */}

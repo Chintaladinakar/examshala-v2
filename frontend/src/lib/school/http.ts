@@ -17,6 +17,8 @@ export function mapAuthzError(err: unknown) {
       return jsonError('FORBIDDEN', 'Forbidden', 403);
     case 'NO_WORKSPACE':
       return jsonError('NO_WORKSPACE', 'No workspace selected', 400);
+    case 'WORKSPACE_SUSPENDED':
+      return jsonError('WORKSPACE_SUSPENDED', 'This workspace has been suspended. Please contact the administrator.', 403);
     default:
       return jsonError('BAD_REQUEST', 'Request failed', 400);
   }
