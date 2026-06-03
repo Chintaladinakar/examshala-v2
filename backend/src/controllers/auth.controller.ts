@@ -56,3 +56,29 @@ export const signinController = async (
     });
   }
 };
+
+export const resetPasswordController = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { email, currentPassword, newPassword } = req.body;
+    const result = await authService.resetPassword({ email, currentPassword, newPassword });
+
+    res.status(200).json({
+      success: true,
+      message: "Password reset successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    const status = error.status || 500;
+    const message = error.message || "Internal server error";
+    const code = error.code || "SERVER_ERROR";
+
+    res.status(status).json({
+      success: false,
+      code,
+      message,
+    });
+  }
+};

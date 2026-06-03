@@ -1,8 +1,8 @@
-import { prisma } from '@/lib/prisma';
-import { mapAuthzError } from '@/lib/school/http';
-import { jsonOk } from '@/lib/school/http';
-import { requireSchoolAuth, requireTeacherOrPrincipal } from '@/lib/school/authz';
 import { NextRequest } from 'next/server';
+import bcrypt from 'bcryptjs';
+import { prisma } from '@/lib/prisma';
+import { mapAuthzError, jsonError, jsonOk } from '@/lib/school/http';
+import { requireSchoolAuth, requireTeacherOrPrincipal } from '@/lib/school/authz';
 
 export async function GET() {
   try {
@@ -11,7 +11,7 @@ export async function GET() {
 
     const students = await prisma.user.findMany({
       where: { workspaceId: ctx.workspaceId, role: 'student' },
-      select: { id: true, name: true, email: true, isActive: true, status: true },
+      select: { id: true, username: true, name: true, email: true, isActive: true, status: true },
       orderBy: { createdAt: 'desc' },
     });
 
@@ -39,26 +39,97 @@ export async function POST(req: NextRequest) {
     const ctx = await requireSchoolAuth();
     requireTeacherOrPrincipal(ctx);
 
-    const body = (await req.json()) as { name?: string; email?: string; password?: string; classId?: string };
-    const name = (body.name || '').trim();
-    const email = (body.email || '').trim().toLowerCase();
+    const body = (await req.json()) as {
+      mode?: 'associate' | 'create';
+      uniqueId?: string;
+      name?: string;
+      email?: string;
+      password?: string;
+      classId?: string;
+    };
 
-    if (!name) throw new Error('BAD_REQUEST');
-    if (!email) throw new Error('BAD_REQUEST');
+    const mode = body.mode || 'create';
 
-    const student = await prisma.user.create({
-      data: {
-        name,
-        email,
-        role: 'student',
-        workspaceId: ctx.workspaceId,
-        passwordHash: body.password ? body.password : null,
-        isActive: true,
-        status: 'ACTIVE',
-      },
-      select: { id: true, name: true, email: true, isActive: true, status: true },
-    });
+    let student;
+    let generatedPassword = '';
 
+    if (mode === 'associate') {
+      const uniqueId = (body.uniqueId || '').trim();
+      if (!uniqueId) {
+        return jsonError('BAD_REQUEST', 'Unique ID/Email/Username is required for association', 400);
+      }
+
+      const existingUser = await prisma.user.findFirst({
+        where: {
+          OR: [
+            { id: uniqueId },
+            { email: uniqueId.toLowerCase() },
+            { username: uniqueId },
+          ],
+          role: 'student',
+        },
+      });
+
+      if (!existingUser) {
+        return jsonError('NOT_FOUND', 'No student account found with the provided identifier', 404);
+      }
+
+      // Update workspace association
+      student = await prisma.user.update({
+        where: { id: existingUser.id },
+        data: { workspaceId: ctx.workspaceId },
+        select: { id: true, username: true, name: true, email: true, isActive: true, status: true },
+      });
+
+      // Upsert workspace membership
+      await prisma.workspaceMembership.upsert({
+        where: { userId_workspaceId: { userId: student.id, workspaceId: ctx.workspaceId } },
+        create: { userId: student.id, workspaceId: ctx.workspaceId, role: 'student' },
+        update: { role: 'student' },
+      });
+    } else {
+      const name = (body.name || '').trim();
+      const email = (body.email || '').trim().toLowerCase();
+
+      if (!name || !email) {
+        return jsonError('BAD_REQUEST', 'Name and email are required', 400);
+      }
+
+      // Check if email already registered
+      const existing = await prisma.user.findUnique({ where: { email } });
+      if (existing) {
+        return jsonError('BAD_REQUEST', 'User with this email already exists', 400);
+      }
+
+      generatedPassword = body.password || `EX-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      const passwordHash = await bcrypt.hash(generatedPassword, 12);
+
+      // Generate a username based on email prefix
+      const usernameBase = email.split('@')[0];
+      const username = `${usernameBase}_${Math.floor(100 + Math.random() * 900)}`;
+
+      student = await prisma.user.create({
+        data: {
+          name,
+          email,
+          username,
+          role: 'student',
+          workspaceId: ctx.workspaceId,
+          passwordHash,
+          firstLogin: true,
+          isActive: true,
+          status: 'ACTIVE',
+        },
+        select: { id: true, username: true, name: true, email: true, isActive: true, status: true },
+      });
+
+      // Create workspace membership
+      await prisma.workspaceMembership.create({
+        data: { userId: student.id, workspaceId: ctx.workspaceId, role: 'student' },
+      });
+    }
+
+    // Link class
     if (body.classId) {
       const klass = await prisma.class.findFirst({ where: { id: body.classId, workspaceId: ctx.workspaceId } });
       if (klass) {
@@ -74,7 +145,11 @@ export async function POST(req: NextRequest) {
       data: { actionType: 'student_created', entityId: student.id, role: ctx.role, userId: ctx.userId },
     });
 
-    return jsonOk(student, { status: 201 });
+    return jsonOk({
+      ...student,
+      generatedPassword: generatedPassword || undefined,
+    }, { status: 201 });
+
   } catch (err) {
     return mapAuthzError(err);
   }

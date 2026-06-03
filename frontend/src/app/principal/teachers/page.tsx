@@ -77,6 +77,9 @@ export default function PrincipalTeachersPage() {
 
   // Forms state
   const [formName, setFormName] = useState('');
+  const [addMode, setAddMode] = useState<'create' | 'associate'>('create');
+  const [formUniqueId, setFormUniqueId] = useState('');
+  const [createdPassword, setCreatedPassword] = useState<string | null>(null);
   const [formEmail, setFormEmail] = useState('');
   const [formPhone, setFormPhone] = useState('');
   const [formPassword, setFormPassword] = useState('');
@@ -145,23 +148,39 @@ export default function PrincipalTeachersPage() {
     e.preventDefault();
     try {
       setSubmitting(true);
-      const res = await apiJson<Teacher>('/api/principal/teachers', {
+
+      const payload = addMode === 'associate'
+        ? {
+            mode: 'associate',
+            uniqueId: formUniqueId,
+            classIds: formClassIds,
+            subjects: formSubjects
+          }
+        : {
+            mode: 'create',
+            name: formName,
+            email: formEmail,
+            phone: formPhone,
+            qualification: formQualification,
+            experience: formExperience,
+            subjects: formSubjects,
+            classIds: formClassIds
+          };
+
+      const res = await apiJson<any>('/api/principal/teachers', {
         method: 'POST',
-        body: JSON.stringify({
-          name: formName,
-          email: formEmail,
-          phone: formPhone,
-          password: formPassword,
-          qualification: formQualification,
-          experience: formExperience,
-          subjects: formSubjects,
-          classIds: formClassIds
-        })
+        body: JSON.stringify(payload)
       });
-      setTeachers(prev => [res, ...prev]);
-      showMessage('Tutor account created and registered successfully', 'success');
-      setAddModalOpen(false);
-      resetForm();
+
+      showMessage(addMode === 'associate' ? 'Teacher associated' : 'Teacher created', 'success');
+      loadData();
+
+      if (addMode === 'create' && res.generatedPassword) {
+        setCreatedPassword(res.generatedPassword);
+      } else {
+        setAddModalOpen(false);
+        resetForm();
+      }
     } catch (e: any) {
       showError(e);
     } finally {
@@ -231,6 +250,8 @@ export default function PrincipalTeachersPage() {
     setFormExperience('');
     setFormSubjects([]);
     setFormClassIds([]);
+    setFormUniqueId('');
+    setCreatedPassword(null);
     setSelectedTeacher(null);
   };
 
@@ -469,173 +490,242 @@ export default function PrincipalTeachersPage() {
       {/* ─── ADD TEACHER MODAL ─────────────────────────────────────────────────── */}
       {addModalOpen && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-2xs flex items-center justify-center p-4 z-50 animate-fade-in">
-          <div className="bg-white w-full max-w-lg rounded-3xl border shadow-2xl overflow-hidden transform transition-all select-none">
-            <div className="bg-teal-950 p-6 text-white flex items-center justify-between">
-              <div>
-                <h3 className="text-base font-black flex items-center gap-2">
-                  <Plus className="w-5 h-5" /> Add Faculty Instructor
-                </h3>
-                <p className="text-[10px] text-teal-200 mt-0.5">Creating a teacher profile establishes an active Tutor account.</p>
+          {createdPassword ? (
+            <div className="bg-white w-full max-w-md rounded-2xl border shadow-xl p-6 space-y-4 text-center select-none animate-fade-in">
+              <div className="w-12 h-12 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-xl">
+                🎉
               </div>
-              <button onClick={() => setAddModalOpen(false)} className="text-teal-300 hover:text-white transition-all">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            
-            <form onSubmit={handleCreateTeacher} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
-              <div className="grid md:grid-cols-2 gap-3.5">
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Full Name *</label>
-                  <input
-                    type="text"
-                    required
-                    value={formName}
-                    onChange={e => setFormName(e.target.value)}
-                    placeholder="e.g. Prof. Rakesh Sharma"
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-teal-700/35"
-                  />
+              <div className="space-y-1">
+                <h2 className="text-base font-black text-slate-800">Teacher Account Created!</h2>
+                <p className="text-[10px] text-slate-400 font-bold uppercase">Save login credentials</p>
+              </div>
+              <div className="bg-slate-50 border p-4 rounded-xl space-y-2 text-left text-xs font-semibold">
+                <div>
+                  <span className="text-[9px] text-slate-400 block font-extrabold uppercase tracking-wide">Email Address</span>
+                  <span className="text-slate-700">{formEmail}</span>
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Email Address *</label>
-                  <input
-                    type="email"
-                    required
-                    value={formEmail}
-                    onChange={e => setFormEmail(e.target.value)}
-                    placeholder="e.g. rakesh@school.com"
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-teal-700/35"
-                  />
+                <div>
+                  <span className="text-[9px] text-slate-400 block font-extrabold uppercase tracking-wide">Temporary Password</span>
+                  <span className="text-slate-800 font-mono text-sm tracking-wider font-extrabold">{createdPassword}</span>
                 </div>
               </div>
-
-              <div className="grid md:grid-cols-2 gap-3.5">
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Phone Number</label>
-                  <input
-                    type="text"
-                    value={formPhone}
-                    onChange={e => setFormPhone(e.target.value)}
-                    placeholder="e.g. +91 99999 88888"
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-teal-700/35"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Account Password</label>
-                  <input
-                    type="password"
-                    value={formPassword}
-                    onChange={e => setFormPassword(e.target.value)}
-                    placeholder="Auto-generated if empty"
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-teal-700/35"
-                  />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-3.5">
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Qualifications</label>
-                  <input
-                    type="text"
-                    value={formQualification}
-                    onChange={e => setFormQualification(e.target.value)}
-                    placeholder="e.g. M.Sc, Ph.D in Physics"
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-teal-700/35"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Experience (Years)</label>
-                  <input
-                    type="text"
-                    value={formExperience}
-                    onChange={e => setFormExperience(e.target.value)}
-                    placeholder="e.g. 5+ Years"
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-teal-700/35"
-                  />
-                </div>
-              </div>
-
-              {/* Class Search Assignments */}
-              <div className="border rounded-2xl p-4 bg-slate-50/70 space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-bold text-slate-600 uppercase tracking-wide">Assign Grade Classes</span>
-                  <input
-                    type="text"
-                    placeholder="Filter classes..."
-                    value={classSearch}
-                    onChange={e => setClassSearch(e.target.value)}
-                    className="px-2.5 py-1 text-[10px] border border-slate-200 bg-white rounded-lg focus:outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
-                  {classes
-                    .filter(c => c.name.toLowerCase().includes(classSearch.toLowerCase()))
-                    .map(c => (
-                      <label key={c.id} className="flex items-center gap-2 text-[11px] font-semibold text-slate-700 hover:text-slate-900 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={formClassIds.includes(c.id)}
-                          onChange={e => {
-                            if (e.target.checked) setFormClassIds(prev => [...prev, c.id]);
-                            else setFormClassIds(prev => prev.filter(id => id !== c.id));
-                          }}
-                          className="w-3.5 h-3.5 border-slate-300 rounded text-teal-700 focus:ring-teal-700"
-                        />
-                        {c.name}
-                      </label>
-                    ))}
-                </div>
-              </div>
-
-              {/* Subject Search Assignments */}
-              <div className="border rounded-2xl p-4 bg-slate-50/70 space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-bold text-slate-600 uppercase tracking-wide">Assign Curriculum Subjects</span>
-                  <input
-                    type="text"
-                    placeholder="Filter subjects..."
-                    value={subjectSearch}
-                    onChange={e => setSubjectSearch(e.target.value)}
-                    className="px-2.5 py-1 text-[10px] border border-slate-200 bg-white rounded-lg focus:outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
-                  {defaultSubjects
-                    .filter(s => s.toLowerCase().includes(subjectSearch.toLowerCase()))
-                    .map(s => (
-                      <label key={s} className="flex items-center gap-2 text-[11px] font-semibold text-slate-700 hover:text-slate-900 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={formSubjects.includes(s)}
-                          onChange={e => {
-                            if (e.target.checked) setFormSubjects(prev => [...prev, s]);
-                            else setFormSubjects(prev => prev.filter(subj => subj !== s));
-                          }}
-                          className="w-3.5 h-3.5 border-slate-300 rounded text-teal-700 focus:ring-teal-700"
-                        />
-                        {s}
-                      </label>
-                    ))}
-                </div>
-              </div>
-
-              <div className="flex gap-2 pt-2 border-t">
+              <div className="flex gap-2">
                 <button
                   type="button"
-                  onClick={() => setAddModalOpen(false)}
-                  className="flex-1 px-4 py-2.5 border hover:bg-slate-50 font-extrabold text-xs rounded-xl transition-all"
+                  onClick={() => {
+                    navigator.clipboard.writeText(`Email: ${formEmail}\nPassword: ${createdPassword}`);
+                    showMessage('Credentials copied to clipboard!', 'success');
+                  }}
+                  className="flex-1 px-4 py-2 border rounded-xl hover:bg-slate-50 font-bold text-xs cursor-pointer transition-colors"
                 >
-                  Cancel
+                  📋 Copy Details
                 </button>
                 <button
-                  type="submit"
-                  disabled={submitting}
-                  className="flex-1 px-4 py-2.5 bg-teal-950 hover:bg-teal-900 text-white font-extrabold text-xs rounded-xl disabled:opacity-50 transition-all"
+                  type="button"
+                  onClick={() => {
+                    setCreatedPassword(null);
+                    setAddModalOpen(false);
+                    resetForm();
+                  }}
+                  className="flex-1 px-4 py-2 bg-teal-950 hover:bg-teal-900 text-white font-extrabold text-xs rounded-xl cursor-pointer transition-colors"
                 >
-                  {submitting ? 'Creating account…' : 'Create Teacher'}
+                  Done
                 </button>
               </div>
-            </form>
-          </div>
+            </div>
+          ) : (
+            <div className="bg-white w-full max-w-lg rounded-3xl border shadow-2xl overflow-hidden transform transition-all select-none">
+              <div className="bg-teal-950 p-6 text-white flex items-center justify-between">
+                <div>
+                  <h3 className="text-base font-black flex items-center gap-2">
+                    <Plus className="w-5 h-5" /> Add Faculty Instructor
+                  </h3>
+                  <p className="text-[10px] text-teal-200 mt-0.5 font-semibold">Register and initialize teacher/tutor workspace settings.</p>
+                </div>
+                <button onClick={() => { setAddModalOpen(false); resetForm(); }} className="text-teal-300 hover:text-white transition-all">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Tab Switcher */}
+              <div className="px-6 pt-4">
+                <div className="flex rounded-xl bg-slate-100 p-0.5 border text-xs font-semibold">
+                  <button
+                    type="button"
+                    onClick={() => setAddMode('create')}
+                    className={`flex-1 py-1.5 rounded-lg text-center cursor-pointer transition-all ${addMode === 'create' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-500'}`}
+                  >
+                    Create New Teacher
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setAddMode('associate')}
+                    className={`flex-1 py-1.5 rounded-lg text-center cursor-pointer transition-all ${addMode === 'associate' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-500'}`}
+                  >
+                    Associate Existing
+                  </button>
+                </div>
+              </div>
+              
+              <form onSubmit={handleCreateTeacher} className="p-6 space-y-4 max-h-[60vh] overflow-y-auto">
+                {addMode === 'create' ? (
+                  <>
+                    <div className="grid md:grid-cols-2 gap-3.5">
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Full Name *</label>
+                        <input
+                          type="text"
+                          required
+                          value={formName}
+                          onChange={e => setFormName(e.target.value)}
+                          placeholder="e.g. Prof. Rakesh Sharma"
+                          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Email Address *</label>
+                        <input
+                          type="email"
+                          required
+                          value={formEmail}
+                          onChange={e => setFormEmail(e.target.value)}
+                          placeholder="e.g. rakesh@school.com"
+                          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-3.5">
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Phone Number</label>
+                        <input
+                          type="text"
+                          value={formPhone}
+                          onChange={e => setFormPhone(e.target.value)}
+                          placeholder="e.g. +91 99999 88888"
+                          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Qualifications</label>
+                        <input
+                          type="text"
+                          value={formQualification}
+                          onChange={e => setFormQualification(e.target.value)}
+                          placeholder="e.g. M.Sc, Ph.D in Physics"
+                          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Experience (Years)</label>
+                      <input
+                        type="text"
+                        value={formExperience}
+                        onChange={e => setFormExperience(e.target.value)}
+                        placeholder="e.g. 5+ Years"
+                        className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Unique Identifier (Email, Username, or ID) *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formUniqueId}
+                      onChange={e => setFormUniqueId(e.target.value)}
+                      placeholder="Enter unique ID or email"
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none"
+                    />
+                  </div>
+                )}
+
+                {/* Class Search Assignments */}
+                <div className="border rounded-2xl p-4 bg-slate-50/70 space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[10px] font-bold text-slate-600 uppercase tracking-wide">Assign Grade Classes</span>
+                    <input
+                      type="text"
+                      placeholder="Filter classes..."
+                      value={classSearch}
+                      onChange={e => setClassSearch(e.target.value)}
+                      className="px-2.5 py-1 text-[10px] border border-slate-200 bg-white rounded-lg focus:outline-none"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
+                    {classes
+                      .filter(c => c.name.toLowerCase().includes(classSearch.toLowerCase()))
+                      .map(c => (
+                        <label key={c.id} className="flex items-center gap-2 text-[11px] font-semibold text-slate-700 hover:text-slate-900 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={formClassIds.includes(c.id)}
+                            onChange={e => {
+                              if (e.target.checked) setFormClassIds(prev => [...prev, c.id]);
+                              else setFormClassIds(prev => prev.filter(id => id !== c.id));
+                            }}
+                            className="w-3.5 h-3.5 border-slate-300 rounded text-teal-700 focus:ring-teal-700"
+                          />
+                          {c.name}
+                        </label>
+                      ))}
+                  </div>
+                </div>
+
+                {/* Subject Search Assignments */}
+                <div className="border rounded-2xl p-4 bg-slate-50/70 space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[10px] font-bold text-slate-600 uppercase tracking-wide">Assign Curriculum Subjects</span>
+                    <input
+                      type="text"
+                      placeholder="Filter subjects..."
+                      value={subjectSearch}
+                      onChange={e => setSubjectSearch(e.target.value)}
+                      className="px-2.5 py-1 text-[10px] border border-slate-200 bg-white rounded-lg focus:outline-none"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
+                    {defaultSubjects
+                      .filter(s => s.toLowerCase().includes(subjectSearch.toLowerCase()))
+                      .map(s => (
+                        <label key={s} className="flex items-center gap-2 text-[11px] font-semibold text-slate-700 hover:text-slate-900 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={formSubjects.includes(s)}
+                            onChange={e => {
+                              if (e.target.checked) setFormSubjects(prev => [...prev, s]);
+                              else setFormSubjects(prev => prev.filter(subj => subj !== s));
+                            }}
+                            className="w-3.5 h-3.5 border-slate-300 rounded text-teal-700 focus:ring-teal-700"
+                          />
+                          {s}
+                        </label>
+                      ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-2 pt-2 border-t">
+                  <button
+                    type="button"
+                    onClick={() => { setAddModalOpen(false); resetForm(); }}
+                    className="flex-1 px-4 py-2.5 border hover:bg-slate-50 font-extrabold text-xs rounded-xl transition-all"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="flex-1 px-4 py-2.5 bg-teal-950 hover:bg-teal-900 text-white font-extrabold text-xs rounded-xl disabled:opacity-50 transition-all"
+                  >
+                    {submitting ? 'Processing...' : addMode === 'associate' ? 'Associate Teacher' : 'Create Teacher'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
         </div>
       )}
 

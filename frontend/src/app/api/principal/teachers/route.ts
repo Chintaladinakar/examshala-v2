@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
 import { requireSchoolAuth, requirePrincipal } from '@/lib/school/authz';
 import { jsonOk, jsonError, mapAuthzError } from '@/lib/school/http';
@@ -79,8 +80,10 @@ export async function POST(req: NextRequest) {
     requirePrincipal(ctx);
 
     const body = (await req.json()) as {
-      name: string;
-      email: string;
+      mode?: 'associate' | 'create';
+      uniqueId?: string;
+      name?: string;
+      email?: string;
       phone?: string;
       password?: string;
       qualification?: string;
@@ -89,41 +92,102 @@ export async function POST(req: NextRequest) {
       classIds?: string[];
     };
 
-    const name = (body.name || '').trim();
-    const email = (body.email || '').trim().toLowerCase();
+    const mode = body.mode || 'create';
 
-    if (!name || !email) {
-      return jsonError('BAD_REQUEST', 'Name and email are required');
+    let teacher;
+    let generatedPassword = '';
+
+    if (mode === 'associate') {
+      const uniqueId = (body.uniqueId || '').trim();
+      if (!uniqueId) {
+        return jsonError('BAD_REQUEST', 'Unique ID/Email/Username is required for association', 400);
+      }
+
+      const existingUser = await prisma.user.findFirst({
+        where: {
+          OR: [
+            { id: uniqueId },
+            { email: uniqueId.toLowerCase() },
+            { username: uniqueId },
+          ],
+          role: { in: ['teacher', 'tutor'] },
+        },
+      });
+
+      if (!existingUser) {
+        return jsonError('NOT_FOUND', 'No teacher or tutor account found with the provided identifier', 404);
+      }
+
+      // Update workspace association
+      teacher = await prisma.user.update({
+        where: { id: existingUser.id },
+        data: { workspaceId: ctx.workspaceId },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          isActive: true,
+          status: true,
+        },
+      });
+
+      // Upsert workspace membership
+      await prisma.workspaceMembership.upsert({
+        where: { userId_workspaceId: { userId: teacher.id, workspaceId: ctx.workspaceId } },
+        create: { userId: teacher.id, workspaceId: ctx.workspaceId, role: 'tutor' }, // Map to tutor in memberships
+        update: { role: 'tutor' },
+      });
+    } else {
+      const name = (body.name || '').trim();
+      const email = (body.email || '').trim().toLowerCase();
+
+      if (!name || !email) {
+        return jsonError('BAD_REQUEST', 'Name and email are required', 400);
+      }
+
+      // Check if email already registered
+      const existing = await prisma.user.findUnique({
+        where: { email },
+      });
+
+      if (existing) {
+        return jsonError('BAD_REQUEST', 'User with this email already exists', 400);
+      }
+
+      generatedPassword = body.password || `EX-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      const passwordHash = await bcrypt.hash(generatedPassword, 12);
+
+      // Generate a username based on email prefix
+      const usernameBase = email.split('@')[0];
+      const username = `${usernameBase}_${Math.floor(100 + Math.random() * 900)}`;
+
+      teacher = await prisma.user.create({
+        data: {
+          name,
+          email,
+          username,
+          role: 'teacher',
+          workspaceId: ctx.workspaceId,
+          passwordHash,
+          firstLogin: true,
+          isActive: true,
+          status: 'ACTIVE',
+          mode: 'teacher',
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          isActive: true,
+          status: true,
+        },
+      });
+
+      // Create workspace membership
+      await prisma.workspaceMembership.create({
+        data: { userId: teacher.id, workspaceId: ctx.workspaceId, role: 'tutor' },
+      });
     }
-
-    // Check if user already exists
-    const existing = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (existing) {
-      return jsonError('BAD_REQUEST', 'User with this email already exists');
-    }
-
-    const teacher = await prisma.user.create({
-      data: {
-        name,
-        email,
-        role: 'teacher',
-        workspaceId: ctx.workspaceId,
-        passwordHash: body.password || 'password123',
-        isActive: true,
-        status: 'ACTIVE',
-        mode: 'teacher',
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        isActive: true,
-        status: true,
-      },
-    });
 
     // Link classes
     const classIds = Array.isArray(body.classIds) ? body.classIds : [];
@@ -149,6 +213,7 @@ export async function POST(req: NextRequest) {
 
     const fullTeacher = {
       ...teacher,
+      generatedPassword: generatedPassword || undefined,
       phone: body.phone || '+91 98765 43210',
       qualification: body.qualification || 'M.Sc. Education',
       experience: body.experience || '3 Years',

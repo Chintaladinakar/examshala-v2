@@ -5,11 +5,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
   id           String    @id @default(uuid())
+  username     String?   @unique
   name         String
   email        String    @unique
   passwordHash String?
@@ -18,10 +18,12 @@ model User {
   status       String    @default("ACTIVE") // ACTIVE, INACTIVE, INVITED
   workspaceId  String?
   mode         String?   // principal | teacher
+  firstLogin   Boolean   @default(true)
   createdAt    DateTime  @default(now())
 
   // Relations
   attempts         AssessmentAttempt[]
+  student          Student?
   memberships      WorkspaceMembership[]
   studentLinks     ParentStudentLink[] @relation("StudentRelation")
   parentLinks      ParentStudentLink[] @relation("ParentRelation")
@@ -114,18 +116,57 @@ model AssessmentAssignment {
   attempts           AssessmentAttempt[]
 }
 
+model Student {
+  id          String @id @default(cuid())
+  userId      String @unique
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  attempts    AssessmentAttempt[]
+
+  createdAt   DateTime @default(now())
+}
+
+model Assessment {
+  id            String @id @default(cuid())
+  title         String
+  subject       String
+  totalMarks    Int
+
+  attempts       AssessmentAttempt[]
+
+  createdAt      DateTime @default(now())
+}
+
 model AssessmentAttempt {
-  id           String    @id @default(uuid())
-  studentId    String
-  assignmentId String
-  focusLoss    Int       @default(0)
-  startedAt    DateTime  @default(now())
-  submittedAt  DateTime?
-  status       String    @default("in_progress") // "in_progress" | "submitted" | "evaluated"
+  id              String    @id @default(uuid())
+  studentId       String
+  assignmentId    String?
+  focusLoss       Int       @default(0)
+  startedAt       DateTime  @default(now())
+  submittedAt     DateTime?
+  status          String    @default("in_progress") // "in_progress" | "submitted" | "evaluated"
   
-  User         User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  Assignment   AssessmentAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
-  Result       AssessmentResult?
+  User            User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  Assignment      AssessmentAssignment? @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  Result          AssessmentResult?
+
+  // New Academic Results fields
+  profileStudentId String?
+  assessmentId     String?
+  obtainedMarks    Int?
+  totalMarks       Int?
+  percentage       Float?
+  rank             Int?
+
+  student          Student?    @relation(fields: [profileStudentId], references: [id], onDelete: Cascade)
+  assessment       Assessment? @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  createdAt        DateTime  @default(now())
+
+  @@index([profileStudentId])
+  @@index([assessmentId])
+  @@index([submittedAt])
+  @@index([status])
 }
 
 model AssessmentResult {

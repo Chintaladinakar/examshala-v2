@@ -12,6 +12,13 @@ import { logDeveloperError } from '@/lib/error-handler';
 type SignInResponse = {
   data: {
     token: string;
+    user?: {
+      id: string;
+      name: string;
+      email: string;
+      role: string;
+      firstLogin?: boolean;
+    };
   };
 };
 
@@ -23,6 +30,7 @@ export default function SignIn() {
   });
   const [error, setError] = useState<unknown>(null);
   const [loading, setLoading] = useState(false);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +44,12 @@ export default function SignIn() {
         body: JSON.stringify(formData),
         action: 'login',
       });
+
+      // Redirect if first login
+      if (data?.data?.user?.firstLogin) {
+        router.push(`/reset-password?email=${encodeURIComponent(formData.email)}&temp=${encodeURIComponent(formData.password)}`);
+        return;
+      }
 
       // Store token securely as a browser cookie for middleware and server actions
       document.cookie = `session_token=${data.data.token}; path=/; max-age=86400; SameSite=Lax`;

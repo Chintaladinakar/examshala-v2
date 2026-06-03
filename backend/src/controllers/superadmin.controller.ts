@@ -198,8 +198,8 @@ export const getAllResults = async (req: Request, res: Response) => {
     const formatted = results.map(r => ({
       id: r.id,
       studentName: r.Attempt.User.name,
-      examTitle: r.Attempt.Assignment.Test.title,
-      workspaceName: r.Attempt.Assignment.Workspace.name,
+      examTitle: r.Attempt.Assignment?.Test?.title || 'Unknown Exam',
+      workspaceName: r.Attempt.Assignment?.Workspace?.name || 'Unknown Workspace',
       score: r.score,
       maxScore: r.maxScore,
       status: r.Attempt.status,

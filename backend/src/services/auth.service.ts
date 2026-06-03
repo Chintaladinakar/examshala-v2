@@ -35,6 +35,7 @@ export const signup = async ({ name, email, password, role }: SignupInput) => {
       email,
       passwordHash,
       role: validRole,
+      firstLogin: false,
     },
   });
 
@@ -47,6 +48,7 @@ export const signup = async ({ name, email, password, role }: SignupInput) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      firstLogin: user.firstLogin,
     },
   };
 };
@@ -75,6 +77,46 @@ export const signin = async ({ email, password }: SigninInput) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      firstLogin: user.firstLogin,
+    },
+  };
+};
+
+export const resetPassword = async ({ email, currentPassword, newPassword }: any) => {
+  if (!email || !currentPassword || !newPassword) {
+    throw { status: 400, code: 'MISSING_FIELDS', message: 'Email, current password, and new password are required' };
+  }
+
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) {
+    throw { status: 404, code: 'USER_NOT_FOUND', message: 'User not found' };
+  }
+
+  const isPasswordValid = await bcrypt.compare(currentPassword, user.passwordHash || "");
+  if (!isPasswordValid) {
+    throw { status: 401, code: 'INVALID_CREDENTIALS', message: 'Invalid current password' };
+  }
+
+  const passwordHash = await bcrypt.hash(newPassword, 12);
+
+  const updatedUser = await prisma.user.update({
+    where: { email },
+    data: {
+      passwordHash,
+      firstLogin: false,
+    },
+  });
+
+  const token = generateToken({ userId: updatedUser.id, role: updatedUser.role });
+
+  return {
+    token,
+    user: {
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      firstLogin: updatedUser.firstLogin,
     },
   };
 };

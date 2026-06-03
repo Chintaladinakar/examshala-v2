@@ -121,7 +121,7 @@ export const getDashboardAggregatedData = async (studentId: string, workspaceIdC
     })),
     recentResults: recentResults.map(r => ({
       id: r.id,
-      title: r.Assignment.Test.title,
+      title: r.Assignment?.Test?.title || 'Unknown Exam',
       score: r.Result?.score,
       maxScore: r.Result?.maxScore,
       submittedAt: r.submittedAt

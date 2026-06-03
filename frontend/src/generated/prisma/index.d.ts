@@ -3593,6 +3593,7 @@ export namespace Prisma {
 
   export type UserMinAggregateOutputType = {
     id: string | null
+    username: string | null
     name: string | null
     email: string | null
     passwordHash: string | null
@@ -3601,11 +3602,13 @@ export namespace Prisma {
     status: string | null
     workspaceId: string | null
     mode: string | null
+    firstLogin: boolean | null
     createdAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
+    username: string | null
     name: string | null
     email: string | null
     passwordHash: string | null
@@ -3614,11 +3617,13 @@ export namespace Prisma {
     status: string | null
     workspaceId: string | null
     mode: string | null
+    firstLogin: boolean | null
     createdAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
+    username: number
     name: number
     email: number
     passwordHash: number
@@ -3627,6 +3632,7 @@ export namespace Prisma {
     status: number
     workspaceId: number
     mode: number
+    firstLogin: number
     createdAt: number
     _all: number
   }
@@ -3634,6 +3640,7 @@ export namespace Prisma {
 
   export type UserMinAggregateInputType = {
     id?: true
+    username?: true
     name?: true
     email?: true
     passwordHash?: true
@@ -3642,11 +3649,13 @@ export namespace Prisma {
     status?: true
     workspaceId?: true
     mode?: true
+    firstLogin?: true
     createdAt?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
+    username?: true
     name?: true
     email?: true
     passwordHash?: true
@@ -3655,11 +3664,13 @@ export namespace Prisma {
     status?: true
     workspaceId?: true
     mode?: true
+    firstLogin?: true
     createdAt?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
+    username?: true
     name?: true
     email?: true
     passwordHash?: true
@@ -3668,6 +3679,7 @@ export namespace Prisma {
     status?: true
     workspaceId?: true
     mode?: true
+    firstLogin?: true
     createdAt?: true
     _all?: true
   }
@@ -3746,6 +3758,7 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: string
+    username: string | null
     name: string
     email: string
     passwordHash: string | null
@@ -3754,6 +3767,7 @@ export namespace Prisma {
     status: string
     workspaceId: string | null
     mode: string | null
+    firstLogin: boolean
     createdAt: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -3776,6 +3790,7 @@ export namespace Prisma {
 
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    username?: boolean
     name?: boolean
     email?: boolean
     passwordHash?: boolean
@@ -3784,6 +3799,7 @@ export namespace Prisma {
     status?: boolean
     workspaceId?: boolean
     mode?: boolean
+    firstLogin?: boolean
     createdAt?: boolean
     attempts?: boolean | User$attemptsArgs<ExtArgs>
     student?: boolean | User$studentArgs<ExtArgs>
@@ -3806,6 +3822,7 @@ export namespace Prisma {
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    username?: boolean
     name?: boolean
     email?: boolean
     passwordHash?: boolean
@@ -3814,11 +3831,13 @@ export namespace Prisma {
     status?: boolean
     workspaceId?: boolean
     mode?: boolean
+    firstLogin?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    username?: boolean
     name?: boolean
     email?: boolean
     passwordHash?: boolean
@@ -3827,11 +3846,13 @@ export namespace Prisma {
     status?: boolean
     workspaceId?: boolean
     mode?: boolean
+    firstLogin?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
+    username?: boolean
     name?: boolean
     email?: boolean
     passwordHash?: boolean
@@ -3840,10 +3861,11 @@ export namespace Prisma {
     status?: boolean
     workspaceId?: boolean
     mode?: boolean
+    firstLogin?: boolean
     createdAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "isActive" | "status" | "workspaceId" | "mode" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "name" | "email" | "passwordHash" | "role" | "isActive" | "status" | "workspaceId" | "mode" | "firstLogin" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     attempts?: boolean | User$attemptsArgs<ExtArgs>
     student?: boolean | User$studentArgs<ExtArgs>
@@ -3888,6 +3910,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      username: string | null
       name: string
       email: string
       passwordHash: string | null
@@ -3896,6 +3919,7 @@ export namespace Prisma {
       status: string
       workspaceId: string | null
       mode: string | null
+      firstLogin: boolean
       createdAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -4337,6 +4361,7 @@ export namespace Prisma {
    */
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
+    readonly username: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly passwordHash: FieldRef<"User", 'String'>
@@ -4345,6 +4370,7 @@ export namespace Prisma {
     readonly status: FieldRef<"User", 'String'>
     readonly workspaceId: FieldRef<"User", 'String'>
     readonly mode: FieldRef<"User", 'String'>
+    readonly firstLogin: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
   }
     
@@ -32792,6 +32818,7 @@ export namespace Prisma {
 
   export const UserScalarFieldEnum: {
     id: 'id',
+    username: 'username',
     name: 'name',
     email: 'email',
     passwordHash: 'passwordHash',
@@ -32800,6 +32827,7 @@ export namespace Prisma {
     status: 'status',
     workspaceId: 'workspaceId',
     mode: 'mode',
+    firstLogin: 'firstLogin',
     createdAt: 'createdAt'
   };
 
@@ -33264,6 +33292,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
+    username?: StringNullableFilter<"User"> | string | null
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     passwordHash?: StringNullableFilter<"User"> | string | null
@@ -33272,6 +33301,7 @@ export namespace Prisma {
     status?: StringFilter<"User"> | string
     workspaceId?: StringNullableFilter<"User"> | string | null
     mode?: StringNullableFilter<"User"> | string | null
+    firstLogin?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     attempts?: AssessmentAttemptListRelationFilter
     student?: XOR<StudentNullableScalarRelationFilter, StudentWhereInput> | null
@@ -33293,6 +33323,7 @@ export namespace Prisma {
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
+    username?: SortOrderInput | SortOrder
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrderInput | SortOrder
@@ -33301,6 +33332,7 @@ export namespace Prisma {
     status?: SortOrder
     workspaceId?: SortOrderInput | SortOrder
     mode?: SortOrderInput | SortOrder
+    firstLogin?: SortOrder
     createdAt?: SortOrder
     attempts?: AssessmentAttemptOrderByRelationAggregateInput
     student?: StudentOrderByWithRelationInput
@@ -33322,6 +33354,7 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    username?: string
     email?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -33333,6 +33366,7 @@ export namespace Prisma {
     status?: StringFilter<"User"> | string
     workspaceId?: StringNullableFilter<"User"> | string | null
     mode?: StringNullableFilter<"User"> | string | null
+    firstLogin?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     attempts?: AssessmentAttemptListRelationFilter
     student?: XOR<StudentNullableScalarRelationFilter, StudentWhereInput> | null
@@ -33350,10 +33384,11 @@ export namespace Prisma {
     submissions?: AssignmentSubmissionListRelationFilter
     schoolLogs?: SchoolLogListRelationFilter
     results?: ResultListRelationFilter
-  }, "id" | "email">
+  }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
+    username?: SortOrderInput | SortOrder
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrderInput | SortOrder
@@ -33362,6 +33397,7 @@ export namespace Prisma {
     status?: SortOrder
     workspaceId?: SortOrderInput | SortOrder
     mode?: SortOrderInput | SortOrder
+    firstLogin?: SortOrder
     createdAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -33373,6 +33409,7 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
+    username?: StringNullableWithAggregatesFilter<"User"> | string | null
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     passwordHash?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -33381,6 +33418,7 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"User"> | string
     workspaceId?: StringNullableWithAggregatesFilter<"User"> | string | null
     mode?: StringNullableWithAggregatesFilter<"User"> | string | null
+    firstLogin?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
@@ -35107,6 +35145,7 @@ export namespace Prisma {
 
   export type UserCreateInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -35115,6 +35154,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -35136,6 +35176,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -35144,6 +35185,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -35165,6 +35207,7 @@ export namespace Prisma {
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35173,6 +35216,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -35194,6 +35238,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35202,6 +35247,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -35223,6 +35269,7 @@ export namespace Prisma {
 
   export type UserCreateManyInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -35231,11 +35278,13 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35244,11 +35293,13 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35257,6 +35308,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -37234,6 +37286,7 @@ export namespace Prisma {
 
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
+    username?: SortOrder
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrder
@@ -37242,11 +37295,13 @@ export namespace Prisma {
     status?: SortOrder
     workspaceId?: SortOrder
     mode?: SortOrder
+    firstLogin?: SortOrder
     createdAt?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
+    username?: SortOrder
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrder
@@ -37255,11 +37310,13 @@ export namespace Prisma {
     status?: SortOrder
     workspaceId?: SortOrder
     mode?: SortOrder
+    firstLogin?: SortOrder
     createdAt?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
+    username?: SortOrder
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrder
@@ -37268,6 +37325,7 @@ export namespace Prisma {
     status?: SortOrder
     workspaceId?: SortOrder
     mode?: SortOrder
+    firstLogin?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -41730,6 +41788,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutMembershipsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -41738,6 +41797,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -41758,6 +41818,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutMembershipsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -41766,6 +41827,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -41833,6 +41895,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutMembershipsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41841,6 +41904,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -41861,6 +41925,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutMembershipsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41869,6 +41934,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -41926,6 +41992,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutStudentProfilesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -41934,6 +42001,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -41954,6 +42022,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutStudentProfilesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -41962,6 +42031,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -42029,6 +42099,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutStudentProfilesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42037,6 +42108,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -42057,6 +42129,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutStudentProfilesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42065,6 +42138,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -42356,6 +42430,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutStudentInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -42364,6 +42439,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -42384,6 +42460,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutStudentInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -42392,6 +42469,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -42472,6 +42550,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutStudentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42480,6 +42559,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -42500,6 +42580,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutStudentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42508,6 +42589,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -42604,6 +42686,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutAttemptsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -42612,6 +42695,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -42632,6 +42716,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutAttemptsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -42640,6 +42725,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -42768,6 +42854,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutAttemptsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42776,6 +42863,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -42796,6 +42884,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutAttemptsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42804,6 +42893,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -43092,6 +43182,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutStudentLinksInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -43100,6 +43191,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -43120,6 +43212,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutStudentLinksInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -43128,6 +43221,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -43153,6 +43247,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutParentLinksInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -43161,6 +43256,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -43181,6 +43277,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutParentLinksInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -43189,6 +43286,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -43225,6 +43323,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutStudentLinksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43233,6 +43332,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -43253,6 +43353,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutStudentLinksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43261,6 +43362,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -43292,6 +43394,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutParentLinksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43300,6 +43403,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -43320,6 +43424,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutParentLinksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43328,6 +43433,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -43627,6 +43733,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutClassTeachersInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -43635,6 +43742,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -43655,6 +43763,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutClassTeachersInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -43663,6 +43772,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -43730,6 +43840,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutClassTeachersInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43738,6 +43849,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -43758,6 +43870,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutClassTeachersInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43766,6 +43879,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -43811,6 +43925,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutClassStudentsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -43819,6 +43934,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -43839,6 +43955,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutClassStudentsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -43847,6 +43964,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -43914,6 +44032,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutClassStudentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43922,6 +44041,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -43942,6 +44062,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutClassStudentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43950,6 +44071,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -43995,6 +44117,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutAttendancesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -44003,6 +44126,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -44023,6 +44147,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutAttendancesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -44031,6 +44156,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -44056,6 +44182,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutMarkedAttendancesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -44064,6 +44191,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -44084,6 +44212,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -44092,6 +44221,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -44117,6 +44247,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutUpdatedAttendancesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -44125,6 +44256,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -44145,6 +44277,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutUpdatedAttendancesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -44153,6 +44286,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -44220,6 +44354,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44228,6 +44363,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -44248,6 +44384,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44256,6 +44393,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -44287,6 +44425,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutMarkedAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44295,6 +44434,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -44315,6 +44455,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44323,6 +44464,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -44354,6 +44496,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutUpdatedAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44362,6 +44505,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -44382,6 +44526,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutUpdatedAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44390,6 +44535,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -44435,6 +44581,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutSchoolAssignmentsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -44443,6 +44590,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -44463,6 +44611,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutSchoolAssignmentsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -44471,6 +44620,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -44592,6 +44742,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutSchoolAssignmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44600,6 +44751,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -44620,6 +44772,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutSchoolAssignmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44628,6 +44781,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -44721,6 +44875,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutFeedbacksInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -44729,6 +44884,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -44749,6 +44905,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutFeedbacksInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -44757,6 +44914,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -44840,6 +44998,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutFeedbacksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44848,6 +45007,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -44868,6 +45028,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutFeedbacksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44876,6 +45037,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -44937,6 +45099,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutSubmissionsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -44945,6 +45108,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -44965,6 +45129,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutSubmissionsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -44973,6 +45138,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -45056,6 +45222,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutSubmissionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45064,6 +45231,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -45084,6 +45252,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutSubmissionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45092,6 +45261,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -45112,6 +45282,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutSchoolLogsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -45120,6 +45291,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -45140,6 +45312,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutSchoolLogsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -45148,6 +45321,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -45184,6 +45358,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutSchoolLogsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45192,6 +45367,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -45212,6 +45388,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutSchoolLogsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45220,6 +45397,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -45240,6 +45418,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutResultsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -45248,6 +45427,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
@@ -45268,6 +45448,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutResultsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -45276,6 +45457,7 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -45312,6 +45494,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutResultsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45320,6 +45503,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
@@ -45340,6 +45524,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutResultsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45348,6 +45533,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput

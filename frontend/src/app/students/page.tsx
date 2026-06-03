@@ -37,10 +37,12 @@ export default function StudentsPage() {
   const [classFilter, setClassFilter] = useState('');
 
   const [addOpen, setAddOpen] = useState(false);
+  const [addMode, setAddMode] = useState<'create' | 'associate'>('create');
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
-  const [formPassword, setFormPassword] = useState('');
+  const [formUniqueId, setFormUniqueId] = useState('');
   const [formClassId, setFormClassId] = useState('');
+  const [createdPassword, setCreatedPassword] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const filtered = useMemo(() => {
@@ -77,17 +79,28 @@ export default function StudentsPage() {
     if (!canAdd) return;
     try {
       setSubmitting(true);
-      const created = await apiJson<StudentRow>('/api/students', {
+      
+      const payload = addMode === 'associate'
+        ? { mode: 'associate', uniqueId: formUniqueId, classId: formClassId || undefined }
+        : { mode: 'create', name: formName, email: formEmail, classId: formClassId || undefined };
+
+      const res = await apiJson<any>('/api/students', {
         method: 'POST',
-        body: JSON.stringify({ name: formName, email: formEmail, password: formPassword || undefined, classId: formClassId || undefined }),
+        body: JSON.stringify(payload),
       });
-      showMessage('Student added', 'success');
-      setStudents(prev => [created, ...prev]);
-      setAddOpen(false);
-      setFormName('');
-      setFormEmail('');
-      setFormPassword('');
-      setFormClassId('');
+
+      showMessage(addMode === 'associate' ? 'Student associated' : 'Student created', 'success');
+      load();
+
+      if (addMode === 'create' && res.generatedPassword) {
+        setCreatedPassword(res.generatedPassword);
+      } else {
+        setAddOpen(false);
+        setFormName('');
+        setFormEmail('');
+        setFormClassId('');
+        setFormUniqueId('');
+      }
     } catch (e2) {
       showError(e2);
     } finally {
@@ -219,36 +232,122 @@ export default function StudentsPage() {
         </div>
 
         {addOpen && (
-          <div className="fixed inset-0 bg-black/30 flex items-center justify-center p-4 z-50">
-            <div className="bg-white w-full max-w-md rounded-2xl border shadow-xl p-5 space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg font-bold text-slate-900">Add student</h2>
-                <button onClick={() => setAddOpen(false)} className="text-slate-500 hover:text-slate-800">
-                  ✕
-                </button>
-              </div>
-              <form onSubmit={onAdd} className="space-y-3">
-                <input required value={formName} onChange={e => setFormName(e.target.value)} placeholder="Full name" className="w-full px-3 py-2 border rounded-xl" />
-                <input required type="email" value={formEmail} onChange={e => setFormEmail(e.target.value)} placeholder="Email" className="w-full px-3 py-2 border rounded-xl" />
-                <input type="password" value={formPassword} onChange={e => setFormPassword(e.target.value)} placeholder="Password (optional)" className="w-full px-3 py-2 border rounded-xl" />
-                <select value={formClassId} onChange={e => setFormClassId(e.target.value)} className="w-full px-3 py-2 border rounded-xl bg-white">
-                  <option value="">Assign class (optional)</option>
-                  {classes.map(c => (
-                    <option key={c.id} value={c.id}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
-                <div className="flex gap-2 pt-2">
-                  <button type="button" onClick={() => setAddOpen(false)} className="flex-1 px-3 py-2 rounded-xl border font-semibold">
-                    Cancel
+          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-2xs flex items-center justify-center p-4 z-50">
+            {createdPassword ? (
+              <div className="bg-white w-full max-w-md rounded-2xl border shadow-xl p-6 space-y-4 text-center animate-fade-in">
+                <div className="w-12 h-12 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-xl">
+                  🎉
+                </div>
+                <div className="space-y-1">
+                  <h2 className="text-base font-black text-slate-800">Student Account Created!</h2>
+                  <p className="text-[10px] text-slate-400 font-bold uppercase">Save login credentials</p>
+                </div>
+                <div className="bg-slate-50 border p-4 rounded-xl space-y-2 text-left text-xs font-semibold">
+                  <div>
+                    <span className="text-[9px] text-slate-400 block font-extrabold uppercase tracking-wide">Email Address</span>
+                    <span className="text-slate-700">{formEmail}</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] text-slate-400 block font-extrabold uppercase tracking-wide">Temporary Password</span>
+                    <span className="text-slate-800 font-mono text-sm tracking-wider font-extrabold">{createdPassword}</span>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(`Email: ${formEmail}\nPassword: ${createdPassword}`);
+                      showMessage('Credentials copied to clipboard!', 'success');
+                    }}
+                    className="flex-1 px-4 py-2 border rounded-xl hover:bg-slate-50 font-bold text-xs cursor-pointer transition-colors"
+                  >
+                    📋 Copy Details
                   </button>
-                  <button disabled={submitting} className="flex-1 px-3 py-2 rounded-xl bg-teal-950 text-white font-semibold disabled:opacity-50">
-                    {submitting ? 'Adding...' : 'Add'}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCreatedPassword(null);
+                      setAddOpen(false);
+                      setFormName('');
+                      setFormEmail('');
+                      setFormClassId('');
+                      setFormUniqueId('');
+                    }}
+                    className="flex-1 px-4 py-2 bg-teal-950 hover:bg-teal-900 text-white font-extrabold text-xs rounded-xl cursor-pointer transition-colors"
+                  >
+                    Done
                   </button>
                 </div>
-              </form>
-            </div>
+              </div>
+            ) : (
+              <div className="bg-white w-full max-w-md rounded-2xl border shadow-xl p-5 space-y-4">
+                <div className="flex items-center justify-between border-b pb-3">
+                  <h2 className="text-lg font-bold text-slate-900">Add Student to Workspace</h2>
+                  <button onClick={() => { setAddOpen(false); setFormUniqueId(''); setFormEmail(''); setFormName(''); }} className="text-slate-500 hover:text-slate-800">
+                    ✕
+                  </button>
+                </div>
+                
+                {/* Tab Switcher */}
+                <div className="flex rounded-xl bg-slate-100 p-0.5 border text-xs font-semibold">
+                  <button
+                    type="button"
+                    onClick={() => setAddMode('create')}
+                    className={`flex-1 py-1.5 rounded-lg text-center cursor-pointer transition-all ${addMode === 'create' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-500'}`}
+                  >
+                    Create New Student
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setAddMode('associate')}
+                    className={`flex-1 py-1.5 rounded-lg text-center cursor-pointer transition-all ${addMode === 'associate' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-500'}`}
+                  >
+                    Associate Existing
+                  </button>
+                </div>
+
+                <form onSubmit={onAdd} className="space-y-4">
+                  {addMode === 'create' ? (
+                    <>
+                      <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wide">Full Name *</label>
+                        <input required value={formName} onChange={e => setFormName(e.target.value)} placeholder="Full name" className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wide">Email Address *</label>
+                        <input required type="email" value={formEmail} onChange={e => setFormEmail(e.target.value)} placeholder="Email" className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none" />
+                      </div>
+                    </>
+                  ) : (
+                    <div className="space-y-1">
+                      <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wide">Unique Identifier (Email, Username, or ID) *</label>
+                      <input required value={formUniqueId} onChange={e => setFormUniqueId(e.target.value)} placeholder="Enter unique ID or email" className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none" />
+                    </div>
+                  )}
+
+                  <div className="space-y-1">
+                    <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wide">Class Section (Optional)</label>
+                    <select value={formClassId} onChange={e => setFormClassId(e.target.value)} className="w-full px-3 py-2 border border-slate-200 rounded-xl bg-white text-xs font-semibold focus:outline-none">
+                      <option value="">Assign class (optional)</option>
+                      {classes.map(c => (
+                        <option key={c.id} value={c.id}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="flex gap-2 pt-2 border-t">
+                    <button type="button" onClick={() => { setAddOpen(false); setFormUniqueId(''); setFormEmail(''); setFormName(''); }} className="flex-1 px-3 py-2 rounded-xl border text-xs font-bold hover:bg-slate-50 transition-colors">
+                      Cancel
+                    </button>
+                    <button disabled={submitting} className="flex-1 px-3 py-2 rounded-xl bg-teal-950 text-white text-xs font-bold hover:bg-teal-900 transition-colors disabled:opacity-50">
+                      {submitting ? 'Processing...' : addMode === 'associate' ? 'Associate Student' : 'Create Student'}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
           </div>
         )}
       </main>

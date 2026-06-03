@@ -44,6 +44,16 @@ export type Test = $Result.DefaultSelection<Prisma.$TestPayload>
  */
 export type AssessmentAssignment = $Result.DefaultSelection<Prisma.$AssessmentAssignmentPayload>
 /**
+ * Model Student
+ * 
+ */
+export type Student = $Result.DefaultSelection<Prisma.$StudentPayload>
+/**
+ * Model Assessment
+ * 
+ */
+export type Assessment = $Result.DefaultSelection<Prisma.$AssessmentPayload>
+/**
  * Model AssessmentAttempt
  * 
  */
@@ -314,6 +324,26 @@ export class PrismaClient<
     * ```
     */
   get assessmentAssignment(): Prisma.AssessmentAssignmentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.student`: Exposes CRUD operations for the **Student** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Students
+    * const students = await prisma.student.findMany()
+    * ```
+    */
+  get student(): Prisma.StudentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.assessment`: Exposes CRUD operations for the **Assessment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Assessments
+    * const assessments = await prisma.assessment.findMany()
+    * ```
+    */
+  get assessment(): Prisma.AssessmentDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.assessmentAttempt`: Exposes CRUD operations for the **AssessmentAttempt** model.
@@ -934,6 +964,8 @@ export namespace Prisma {
     StudentWorkspaceProfile: 'StudentWorkspaceProfile',
     Test: 'Test',
     AssessmentAssignment: 'AssessmentAssignment',
+    Student: 'Student',
+    Assessment: 'Assessment',
     AssessmentAttempt: 'AssessmentAttempt',
     AssessmentResult: 'AssessmentResult',
     Notification: 'Notification',
@@ -967,7 +999,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "workspace" | "workspaceMembership" | "studentWorkspaceProfile" | "test" | "assessmentAssignment" | "assessmentAttempt" | "assessmentResult" | "notification" | "parentStudentLink" | "auditLog" | "invite" | "log" | "class" | "classTeacher" | "classStudent" | "attendance" | "assignment" | "assignmentFeedback" | "assignmentSubmission" | "material" | "schoolLog" | "platformSettings" | "result"
+      modelProps: "user" | "workspace" | "workspaceMembership" | "studentWorkspaceProfile" | "test" | "assessmentAssignment" | "student" | "assessment" | "assessmentAttempt" | "assessmentResult" | "notification" | "parentStudentLink" | "auditLog" | "invite" | "log" | "class" | "classTeacher" | "classStudent" | "attendance" | "assignment" | "assignmentFeedback" | "assignmentSubmission" | "material" | "schoolLog" | "platformSettings" | "result"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1412,6 +1444,154 @@ export namespace Prisma {
           count: {
             args: Prisma.AssessmentAssignmentCountArgs<ExtArgs>
             result: $Utils.Optional<AssessmentAssignmentCountAggregateOutputType> | number
+          }
+        }
+      }
+      Student: {
+        payload: Prisma.$StudentPayload<ExtArgs>
+        fields: Prisma.StudentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StudentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StudentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentPayload>
+          }
+          findFirst: {
+            args: Prisma.StudentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StudentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentPayload>
+          }
+          findMany: {
+            args: Prisma.StudentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentPayload>[]
+          }
+          create: {
+            args: Prisma.StudentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentPayload>
+          }
+          createMany: {
+            args: Prisma.StudentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StudentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentPayload>[]
+          }
+          delete: {
+            args: Prisma.StudentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentPayload>
+          }
+          update: {
+            args: Prisma.StudentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentPayload>
+          }
+          deleteMany: {
+            args: Prisma.StudentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StudentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StudentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentPayload>[]
+          }
+          upsert: {
+            args: Prisma.StudentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentPayload>
+          }
+          aggregate: {
+            args: Prisma.StudentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStudent>
+          }
+          groupBy: {
+            args: Prisma.StudentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StudentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StudentCountArgs<ExtArgs>
+            result: $Utils.Optional<StudentCountAggregateOutputType> | number
+          }
+        }
+      }
+      Assessment: {
+        payload: Prisma.$AssessmentPayload<ExtArgs>
+        fields: Prisma.AssessmentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AssessmentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AssessmentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPayload>
+          }
+          findFirst: {
+            args: Prisma.AssessmentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AssessmentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPayload>
+          }
+          findMany: {
+            args: Prisma.AssessmentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPayload>[]
+          }
+          create: {
+            args: Prisma.AssessmentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPayload>
+          }
+          createMany: {
+            args: Prisma.AssessmentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AssessmentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPayload>[]
+          }
+          delete: {
+            args: Prisma.AssessmentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPayload>
+          }
+          update: {
+            args: Prisma.AssessmentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPayload>
+          }
+          deleteMany: {
+            args: Prisma.AssessmentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AssessmentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AssessmentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPayload>[]
+          }
+          upsert: {
+            args: Prisma.AssessmentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPayload>
+          }
+          aggregate: {
+            args: Prisma.AssessmentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAssessment>
+          }
+          groupBy: {
+            args: Prisma.AssessmentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AssessmentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AssessmentCountArgs<ExtArgs>
+            result: $Utils.Optional<AssessmentCountAggregateOutputType> | number
           }
         }
       }
@@ -2861,6 +3041,8 @@ export namespace Prisma {
     studentWorkspaceProfile?: StudentWorkspaceProfileOmit
     test?: TestOmit
     assessmentAssignment?: AssessmentAssignmentOmit
+    student?: StudentOmit
+    assessment?: AssessmentOmit
     assessmentAttempt?: AssessmentAttemptOmit
     assessmentResult?: AssessmentResultOmit
     notification?: NotificationOmit
@@ -3241,6 +3423,68 @@ export namespace Prisma {
 
 
   /**
+   * Count Type StudentCountOutputType
+   */
+
+  export type StudentCountOutputType = {
+    attempts: number
+  }
+
+  export type StudentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    attempts?: boolean | StudentCountOutputTypeCountAttemptsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * StudentCountOutputType without action
+   */
+  export type StudentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCountOutputType
+     */
+    select?: StudentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * StudentCountOutputType without action
+   */
+  export type StudentCountOutputTypeCountAttemptsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssessmentAttemptWhereInput
+  }
+
+
+  /**
+   * Count Type AssessmentCountOutputType
+   */
+
+  export type AssessmentCountOutputType = {
+    attempts: number
+  }
+
+  export type AssessmentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    attempts?: boolean | AssessmentCountOutputTypeCountAttemptsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AssessmentCountOutputType without action
+   */
+  export type AssessmentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentCountOutputType
+     */
+    select?: AssessmentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AssessmentCountOutputType without action
+   */
+  export type AssessmentCountOutputTypeCountAttemptsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssessmentAttemptWhereInput
+  }
+
+
+  /**
    * Count Type ClassCountOutputType
    */
 
@@ -3354,6 +3598,7 @@ export namespace Prisma {
 
   export type UserMinAggregateOutputType = {
     id: string | null
+    username: string | null
     name: string | null
     email: string | null
     passwordHash: string | null
@@ -3362,11 +3607,13 @@ export namespace Prisma {
     status: string | null
     workspaceId: string | null
     mode: string | null
+    firstLogin: boolean | null
     createdAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
+    username: string | null
     name: string | null
     email: string | null
     passwordHash: string | null
@@ -3375,11 +3622,13 @@ export namespace Prisma {
     status: string | null
     workspaceId: string | null
     mode: string | null
+    firstLogin: boolean | null
     createdAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
+    username: number
     name: number
     email: number
     passwordHash: number
@@ -3388,6 +3637,7 @@ export namespace Prisma {
     status: number
     workspaceId: number
     mode: number
+    firstLogin: number
     createdAt: number
     _all: number
   }
@@ -3395,6 +3645,7 @@ export namespace Prisma {
 
   export type UserMinAggregateInputType = {
     id?: true
+    username?: true
     name?: true
     email?: true
     passwordHash?: true
@@ -3403,11 +3654,13 @@ export namespace Prisma {
     status?: true
     workspaceId?: true
     mode?: true
+    firstLogin?: true
     createdAt?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
+    username?: true
     name?: true
     email?: true
     passwordHash?: true
@@ -3416,11 +3669,13 @@ export namespace Prisma {
     status?: true
     workspaceId?: true
     mode?: true
+    firstLogin?: true
     createdAt?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
+    username?: true
     name?: true
     email?: true
     passwordHash?: true
@@ -3429,6 +3684,7 @@ export namespace Prisma {
     status?: true
     workspaceId?: true
     mode?: true
+    firstLogin?: true
     createdAt?: true
     _all?: true
   }
@@ -3507,6 +3763,7 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: string
+    username: string | null
     name: string
     email: string
     passwordHash: string | null
@@ -3515,6 +3772,7 @@ export namespace Prisma {
     status: string
     workspaceId: string | null
     mode: string | null
+    firstLogin: boolean
     createdAt: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -3537,6 +3795,7 @@ export namespace Prisma {
 
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    username?: boolean
     name?: boolean
     email?: boolean
     passwordHash?: boolean
@@ -3545,8 +3804,10 @@ export namespace Prisma {
     status?: boolean
     workspaceId?: boolean
     mode?: boolean
+    firstLogin?: boolean
     createdAt?: boolean
     attempts?: boolean | User$attemptsArgs<ExtArgs>
+    student?: boolean | User$studentArgs<ExtArgs>
     memberships?: boolean | User$membershipsArgs<ExtArgs>
     studentLinks?: boolean | User$studentLinksArgs<ExtArgs>
     parentLinks?: boolean | User$parentLinksArgs<ExtArgs>
@@ -3566,6 +3827,7 @@ export namespace Prisma {
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    username?: boolean
     name?: boolean
     email?: boolean
     passwordHash?: boolean
@@ -3574,11 +3836,13 @@ export namespace Prisma {
     status?: boolean
     workspaceId?: boolean
     mode?: boolean
+    firstLogin?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    username?: boolean
     name?: boolean
     email?: boolean
     passwordHash?: boolean
@@ -3587,11 +3851,13 @@ export namespace Prisma {
     status?: boolean
     workspaceId?: boolean
     mode?: boolean
+    firstLogin?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
+    username?: boolean
     name?: boolean
     email?: boolean
     passwordHash?: boolean
@@ -3600,12 +3866,14 @@ export namespace Prisma {
     status?: boolean
     workspaceId?: boolean
     mode?: boolean
+    firstLogin?: boolean
     createdAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "isActive" | "status" | "workspaceId" | "mode" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "name" | "email" | "passwordHash" | "role" | "isActive" | "status" | "workspaceId" | "mode" | "firstLogin" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     attempts?: boolean | User$attemptsArgs<ExtArgs>
+    student?: boolean | User$studentArgs<ExtArgs>
     memberships?: boolean | User$membershipsArgs<ExtArgs>
     studentLinks?: boolean | User$studentLinksArgs<ExtArgs>
     parentLinks?: boolean | User$parentLinksArgs<ExtArgs>
@@ -3629,6 +3897,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       attempts: Prisma.$AssessmentAttemptPayload<ExtArgs>[]
+      student: Prisma.$StudentPayload<ExtArgs> | null
       memberships: Prisma.$WorkspaceMembershipPayload<ExtArgs>[]
       studentLinks: Prisma.$ParentStudentLinkPayload<ExtArgs>[]
       parentLinks: Prisma.$ParentStudentLinkPayload<ExtArgs>[]
@@ -3646,6 +3915,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      username: string | null
       name: string
       email: string
       passwordHash: string | null
@@ -3654,6 +3924,7 @@ export namespace Prisma {
       status: string
       workspaceId: string | null
       mode: string | null
+      firstLogin: boolean
       createdAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -4050,6 +4321,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     attempts<T extends User$attemptsArgs<ExtArgs> = {}>(args?: Subset<T, User$attemptsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    student<T extends User$studentArgs<ExtArgs> = {}>(args?: Subset<T, User$studentArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     memberships<T extends User$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkspaceMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentLinks<T extends User$studentLinksArgs<ExtArgs> = {}>(args?: Subset<T, User$studentLinksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParentStudentLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     parentLinks<T extends User$parentLinksArgs<ExtArgs> = {}>(args?: Subset<T, User$parentLinksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParentStudentLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4094,6 +4366,7 @@ export namespace Prisma {
    */
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
+    readonly username: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly passwordHash: FieldRef<"User", 'String'>
@@ -4102,6 +4375,7 @@ export namespace Prisma {
     readonly status: FieldRef<"User", 'String'>
     readonly workspaceId: FieldRef<"User", 'String'>
     readonly mode: FieldRef<"User", 'String'>
+    readonly firstLogin: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
   }
     
@@ -4517,6 +4791,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AssessmentAttemptScalarFieldEnum | AssessmentAttemptScalarFieldEnum[]
+  }
+
+  /**
+   * User.student
+   */
+  export type User$studentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    where?: StudentWhereInput
   }
 
   /**
@@ -10501,6 +10794,2182 @@ export namespace Prisma {
 
 
   /**
+   * Model Student
+   */
+
+  export type AggregateStudent = {
+    _count: StudentCountAggregateOutputType | null
+    _min: StudentMinAggregateOutputType | null
+    _max: StudentMaxAggregateOutputType | null
+  }
+
+  export type StudentMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    createdAt: Date | null
+  }
+
+  export type StudentMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    createdAt: Date | null
+  }
+
+  export type StudentCountAggregateOutputType = {
+    id: number
+    userId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type StudentMinAggregateInputType = {
+    id?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type StudentMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type StudentCountAggregateInputType = {
+    id?: true
+    userId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type StudentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Student to aggregate.
+     */
+    where?: StudentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Students to fetch.
+     */
+    orderBy?: StudentOrderByWithRelationInput | StudentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StudentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Students from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Students.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Students
+    **/
+    _count?: true | StudentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StudentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StudentMaxAggregateInputType
+  }
+
+  export type GetStudentAggregateType<T extends StudentAggregateArgs> = {
+        [P in keyof T & keyof AggregateStudent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStudent[P]>
+      : GetScalarType<T[P], AggregateStudent[P]>
+  }
+
+
+
+
+  export type StudentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentWhereInput
+    orderBy?: StudentOrderByWithAggregationInput | StudentOrderByWithAggregationInput[]
+    by: StudentScalarFieldEnum[] | StudentScalarFieldEnum
+    having?: StudentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StudentCountAggregateInputType | true
+    _min?: StudentMinAggregateInputType
+    _max?: StudentMaxAggregateInputType
+  }
+
+  export type StudentGroupByOutputType = {
+    id: string
+    userId: string
+    createdAt: Date
+    _count: StudentCountAggregateOutputType | null
+    _min: StudentMinAggregateOutputType | null
+    _max: StudentMaxAggregateOutputType | null
+  }
+
+  type GetStudentGroupByPayload<T extends StudentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StudentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StudentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StudentGroupByOutputType[P]>
+            : GetScalarType<T[P], StudentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StudentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    attempts?: boolean | Student$attemptsArgs<ExtArgs>
+    _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["student"]>
+
+  export type StudentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["student"]>
+
+  export type StudentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["student"]>
+
+  export type StudentSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+  }
+
+  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "createdAt", ExtArgs["result"]["student"]>
+  export type StudentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    attempts?: boolean | Student$attemptsArgs<ExtArgs>
+    _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type StudentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type StudentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $StudentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Student"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      attempts: Prisma.$AssessmentAttemptPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      createdAt: Date
+    }, ExtArgs["result"]["student"]>
+    composites: {}
+  }
+
+  type StudentGetPayload<S extends boolean | null | undefined | StudentDefaultArgs> = $Result.GetResult<Prisma.$StudentPayload, S>
+
+  type StudentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StudentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StudentCountAggregateInputType | true
+    }
+
+  export interface StudentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Student'], meta: { name: 'Student' } }
+    /**
+     * Find zero or one Student that matches the filter.
+     * @param {StudentFindUniqueArgs} args - Arguments to find a Student
+     * @example
+     * // Get one Student
+     * const student = await prisma.student.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StudentFindUniqueArgs>(args: SelectSubset<T, StudentFindUniqueArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Student that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StudentFindUniqueOrThrowArgs} args - Arguments to find a Student
+     * @example
+     * // Get one Student
+     * const student = await prisma.student.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StudentFindUniqueOrThrowArgs>(args: SelectSubset<T, StudentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Student that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentFindFirstArgs} args - Arguments to find a Student
+     * @example
+     * // Get one Student
+     * const student = await prisma.student.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StudentFindFirstArgs>(args?: SelectSubset<T, StudentFindFirstArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Student that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentFindFirstOrThrowArgs} args - Arguments to find a Student
+     * @example
+     * // Get one Student
+     * const student = await prisma.student.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StudentFindFirstOrThrowArgs>(args?: SelectSubset<T, StudentFindFirstOrThrowArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Students that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Students
+     * const students = await prisma.student.findMany()
+     * 
+     * // Get first 10 Students
+     * const students = await prisma.student.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const studentWithIdOnly = await prisma.student.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StudentFindManyArgs>(args?: SelectSubset<T, StudentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Student.
+     * @param {StudentCreateArgs} args - Arguments to create a Student.
+     * @example
+     * // Create one Student
+     * const Student = await prisma.student.create({
+     *   data: {
+     *     // ... data to create a Student
+     *   }
+     * })
+     * 
+     */
+    create<T extends StudentCreateArgs>(args: SelectSubset<T, StudentCreateArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Students.
+     * @param {StudentCreateManyArgs} args - Arguments to create many Students.
+     * @example
+     * // Create many Students
+     * const student = await prisma.student.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StudentCreateManyArgs>(args?: SelectSubset<T, StudentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Students and returns the data saved in the database.
+     * @param {StudentCreateManyAndReturnArgs} args - Arguments to create many Students.
+     * @example
+     * // Create many Students
+     * const student = await prisma.student.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Students and only return the `id`
+     * const studentWithIdOnly = await prisma.student.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StudentCreateManyAndReturnArgs>(args?: SelectSubset<T, StudentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Student.
+     * @param {StudentDeleteArgs} args - Arguments to delete one Student.
+     * @example
+     * // Delete one Student
+     * const Student = await prisma.student.delete({
+     *   where: {
+     *     // ... filter to delete one Student
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StudentDeleteArgs>(args: SelectSubset<T, StudentDeleteArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Student.
+     * @param {StudentUpdateArgs} args - Arguments to update one Student.
+     * @example
+     * // Update one Student
+     * const student = await prisma.student.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StudentUpdateArgs>(args: SelectSubset<T, StudentUpdateArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Students.
+     * @param {StudentDeleteManyArgs} args - Arguments to filter Students to delete.
+     * @example
+     * // Delete a few Students
+     * const { count } = await prisma.student.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StudentDeleteManyArgs>(args?: SelectSubset<T, StudentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Students.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Students
+     * const student = await prisma.student.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StudentUpdateManyArgs>(args: SelectSubset<T, StudentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Students and returns the data updated in the database.
+     * @param {StudentUpdateManyAndReturnArgs} args - Arguments to update many Students.
+     * @example
+     * // Update many Students
+     * const student = await prisma.student.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Students and only return the `id`
+     * const studentWithIdOnly = await prisma.student.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StudentUpdateManyAndReturnArgs>(args: SelectSubset<T, StudentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Student.
+     * @param {StudentUpsertArgs} args - Arguments to update or create a Student.
+     * @example
+     * // Update or create a Student
+     * const student = await prisma.student.upsert({
+     *   create: {
+     *     // ... data to create a Student
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Student we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StudentUpsertArgs>(args: SelectSubset<T, StudentUpsertArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Students.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentCountArgs} args - Arguments to filter Students to count.
+     * @example
+     * // Count the number of Students
+     * const count = await prisma.student.count({
+     *   where: {
+     *     // ... the filter for the Students we want to count
+     *   }
+     * })
+    **/
+    count<T extends StudentCountArgs>(
+      args?: Subset<T, StudentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StudentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Student.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StudentAggregateArgs>(args: Subset<T, StudentAggregateArgs>): Prisma.PrismaPromise<GetStudentAggregateType<T>>
+
+    /**
+     * Group by Student.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StudentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StudentGroupByArgs['orderBy'] }
+        : { orderBy?: StudentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StudentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStudentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Student model
+   */
+  readonly fields: StudentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Student.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StudentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    attempts<T extends Student$attemptsArgs<ExtArgs> = {}>(args?: Subset<T, Student$attemptsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Student model
+   */
+  interface StudentFieldRefs {
+    readonly id: FieldRef<"Student", 'String'>
+    readonly userId: FieldRef<"Student", 'String'>
+    readonly createdAt: FieldRef<"Student", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Student findUnique
+   */
+  export type StudentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
+     * Filter, which Student to fetch.
+     */
+    where: StudentWhereUniqueInput
+  }
+
+  /**
+   * Student findUniqueOrThrow
+   */
+  export type StudentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
+     * Filter, which Student to fetch.
+     */
+    where: StudentWhereUniqueInput
+  }
+
+  /**
+   * Student findFirst
+   */
+  export type StudentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
+     * Filter, which Student to fetch.
+     */
+    where?: StudentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Students to fetch.
+     */
+    orderBy?: StudentOrderByWithRelationInput | StudentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Students.
+     */
+    cursor?: StudentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Students from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Students.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Students.
+     */
+    distinct?: StudentScalarFieldEnum | StudentScalarFieldEnum[]
+  }
+
+  /**
+   * Student findFirstOrThrow
+   */
+  export type StudentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
+     * Filter, which Student to fetch.
+     */
+    where?: StudentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Students to fetch.
+     */
+    orderBy?: StudentOrderByWithRelationInput | StudentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Students.
+     */
+    cursor?: StudentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Students from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Students.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Students.
+     */
+    distinct?: StudentScalarFieldEnum | StudentScalarFieldEnum[]
+  }
+
+  /**
+   * Student findMany
+   */
+  export type StudentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
+     * Filter, which Students to fetch.
+     */
+    where?: StudentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Students to fetch.
+     */
+    orderBy?: StudentOrderByWithRelationInput | StudentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Students.
+     */
+    cursor?: StudentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Students from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Students.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Students.
+     */
+    distinct?: StudentScalarFieldEnum | StudentScalarFieldEnum[]
+  }
+
+  /**
+   * Student create
+   */
+  export type StudentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Student.
+     */
+    data: XOR<StudentCreateInput, StudentUncheckedCreateInput>
+  }
+
+  /**
+   * Student createMany
+   */
+  export type StudentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Students.
+     */
+    data: StudentCreateManyInput | StudentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Student createManyAndReturn
+   */
+  export type StudentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * The data used to create many Students.
+     */
+    data: StudentCreateManyInput | StudentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Student update
+   */
+  export type StudentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Student.
+     */
+    data: XOR<StudentUpdateInput, StudentUncheckedUpdateInput>
+    /**
+     * Choose, which Student to update.
+     */
+    where: StudentWhereUniqueInput
+  }
+
+  /**
+   * Student updateMany
+   */
+  export type StudentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Students.
+     */
+    data: XOR<StudentUpdateManyMutationInput, StudentUncheckedUpdateManyInput>
+    /**
+     * Filter which Students to update
+     */
+    where?: StudentWhereInput
+    /**
+     * Limit how many Students to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Student updateManyAndReturn
+   */
+  export type StudentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * The data used to update Students.
+     */
+    data: XOR<StudentUpdateManyMutationInput, StudentUncheckedUpdateManyInput>
+    /**
+     * Filter which Students to update
+     */
+    where?: StudentWhereInput
+    /**
+     * Limit how many Students to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Student upsert
+   */
+  export type StudentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Student to update in case it exists.
+     */
+    where: StudentWhereUniqueInput
+    /**
+     * In case the Student found by the `where` argument doesn't exist, create a new Student with this data.
+     */
+    create: XOR<StudentCreateInput, StudentUncheckedCreateInput>
+    /**
+     * In case the Student was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StudentUpdateInput, StudentUncheckedUpdateInput>
+  }
+
+  /**
+   * Student delete
+   */
+  export type StudentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
+     * Filter which Student to delete.
+     */
+    where: StudentWhereUniqueInput
+  }
+
+  /**
+   * Student deleteMany
+   */
+  export type StudentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Students to delete
+     */
+    where?: StudentWhereInput
+    /**
+     * Limit how many Students to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Student.attempts
+   */
+  export type Student$attemptsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentAttempt
+     */
+    select?: AssessmentAttemptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentAttempt
+     */
+    omit?: AssessmentAttemptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentAttemptInclude<ExtArgs> | null
+    where?: AssessmentAttemptWhereInput
+    orderBy?: AssessmentAttemptOrderByWithRelationInput | AssessmentAttemptOrderByWithRelationInput[]
+    cursor?: AssessmentAttemptWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AssessmentAttemptScalarFieldEnum | AssessmentAttemptScalarFieldEnum[]
+  }
+
+  /**
+   * Student without action
+   */
+  export type StudentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Assessment
+   */
+
+  export type AggregateAssessment = {
+    _count: AssessmentCountAggregateOutputType | null
+    _avg: AssessmentAvgAggregateOutputType | null
+    _sum: AssessmentSumAggregateOutputType | null
+    _min: AssessmentMinAggregateOutputType | null
+    _max: AssessmentMaxAggregateOutputType | null
+  }
+
+  export type AssessmentAvgAggregateOutputType = {
+    totalMarks: number | null
+  }
+
+  export type AssessmentSumAggregateOutputType = {
+    totalMarks: number | null
+  }
+
+  export type AssessmentMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    subject: string | null
+    totalMarks: number | null
+    createdAt: Date | null
+  }
+
+  export type AssessmentMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    subject: string | null
+    totalMarks: number | null
+    createdAt: Date | null
+  }
+
+  export type AssessmentCountAggregateOutputType = {
+    id: number
+    title: number
+    subject: number
+    totalMarks: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AssessmentAvgAggregateInputType = {
+    totalMarks?: true
+  }
+
+  export type AssessmentSumAggregateInputType = {
+    totalMarks?: true
+  }
+
+  export type AssessmentMinAggregateInputType = {
+    id?: true
+    title?: true
+    subject?: true
+    totalMarks?: true
+    createdAt?: true
+  }
+
+  export type AssessmentMaxAggregateInputType = {
+    id?: true
+    title?: true
+    subject?: true
+    totalMarks?: true
+    createdAt?: true
+  }
+
+  export type AssessmentCountAggregateInputType = {
+    id?: true
+    title?: true
+    subject?: true
+    totalMarks?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AssessmentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Assessment to aggregate.
+     */
+    where?: AssessmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Assessments to fetch.
+     */
+    orderBy?: AssessmentOrderByWithRelationInput | AssessmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AssessmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Assessments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Assessments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Assessments
+    **/
+    _count?: true | AssessmentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AssessmentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AssessmentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AssessmentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AssessmentMaxAggregateInputType
+  }
+
+  export type GetAssessmentAggregateType<T extends AssessmentAggregateArgs> = {
+        [P in keyof T & keyof AggregateAssessment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAssessment[P]>
+      : GetScalarType<T[P], AggregateAssessment[P]>
+  }
+
+
+
+
+  export type AssessmentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssessmentWhereInput
+    orderBy?: AssessmentOrderByWithAggregationInput | AssessmentOrderByWithAggregationInput[]
+    by: AssessmentScalarFieldEnum[] | AssessmentScalarFieldEnum
+    having?: AssessmentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AssessmentCountAggregateInputType | true
+    _avg?: AssessmentAvgAggregateInputType
+    _sum?: AssessmentSumAggregateInputType
+    _min?: AssessmentMinAggregateInputType
+    _max?: AssessmentMaxAggregateInputType
+  }
+
+  export type AssessmentGroupByOutputType = {
+    id: string
+    title: string
+    subject: string
+    totalMarks: number
+    createdAt: Date
+    _count: AssessmentCountAggregateOutputType | null
+    _avg: AssessmentAvgAggregateOutputType | null
+    _sum: AssessmentSumAggregateOutputType | null
+    _min: AssessmentMinAggregateOutputType | null
+    _max: AssessmentMaxAggregateOutputType | null
+  }
+
+  type GetAssessmentGroupByPayload<T extends AssessmentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AssessmentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AssessmentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AssessmentGroupByOutputType[P]>
+            : GetScalarType<T[P], AssessmentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AssessmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    subject?: boolean
+    totalMarks?: boolean
+    createdAt?: boolean
+    attempts?: boolean | Assessment$attemptsArgs<ExtArgs>
+    _count?: boolean | AssessmentCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assessment"]>
+
+  export type AssessmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    subject?: boolean
+    totalMarks?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["assessment"]>
+
+  export type AssessmentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    subject?: boolean
+    totalMarks?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["assessment"]>
+
+  export type AssessmentSelectScalar = {
+    id?: boolean
+    title?: boolean
+    subject?: boolean
+    totalMarks?: boolean
+    createdAt?: boolean
+  }
+
+  export type AssessmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "subject" | "totalMarks" | "createdAt", ExtArgs["result"]["assessment"]>
+  export type AssessmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    attempts?: boolean | Assessment$attemptsArgs<ExtArgs>
+    _count?: boolean | AssessmentCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AssessmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AssessmentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $AssessmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Assessment"
+    objects: {
+      attempts: Prisma.$AssessmentAttemptPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      subject: string
+      totalMarks: number
+      createdAt: Date
+    }, ExtArgs["result"]["assessment"]>
+    composites: {}
+  }
+
+  type AssessmentGetPayload<S extends boolean | null | undefined | AssessmentDefaultArgs> = $Result.GetResult<Prisma.$AssessmentPayload, S>
+
+  type AssessmentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AssessmentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AssessmentCountAggregateInputType | true
+    }
+
+  export interface AssessmentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Assessment'], meta: { name: 'Assessment' } }
+    /**
+     * Find zero or one Assessment that matches the filter.
+     * @param {AssessmentFindUniqueArgs} args - Arguments to find a Assessment
+     * @example
+     * // Get one Assessment
+     * const assessment = await prisma.assessment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AssessmentFindUniqueArgs>(args: SelectSubset<T, AssessmentFindUniqueArgs<ExtArgs>>): Prisma__AssessmentClient<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Assessment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AssessmentFindUniqueOrThrowArgs} args - Arguments to find a Assessment
+     * @example
+     * // Get one Assessment
+     * const assessment = await prisma.assessment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AssessmentFindUniqueOrThrowArgs>(args: SelectSubset<T, AssessmentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssessmentClient<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Assessment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentFindFirstArgs} args - Arguments to find a Assessment
+     * @example
+     * // Get one Assessment
+     * const assessment = await prisma.assessment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AssessmentFindFirstArgs>(args?: SelectSubset<T, AssessmentFindFirstArgs<ExtArgs>>): Prisma__AssessmentClient<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Assessment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentFindFirstOrThrowArgs} args - Arguments to find a Assessment
+     * @example
+     * // Get one Assessment
+     * const assessment = await prisma.assessment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AssessmentFindFirstOrThrowArgs>(args?: SelectSubset<T, AssessmentFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssessmentClient<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Assessments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Assessments
+     * const assessments = await prisma.assessment.findMany()
+     * 
+     * // Get first 10 Assessments
+     * const assessments = await prisma.assessment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const assessmentWithIdOnly = await prisma.assessment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AssessmentFindManyArgs>(args?: SelectSubset<T, AssessmentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Assessment.
+     * @param {AssessmentCreateArgs} args - Arguments to create a Assessment.
+     * @example
+     * // Create one Assessment
+     * const Assessment = await prisma.assessment.create({
+     *   data: {
+     *     // ... data to create a Assessment
+     *   }
+     * })
+     * 
+     */
+    create<T extends AssessmentCreateArgs>(args: SelectSubset<T, AssessmentCreateArgs<ExtArgs>>): Prisma__AssessmentClient<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Assessments.
+     * @param {AssessmentCreateManyArgs} args - Arguments to create many Assessments.
+     * @example
+     * // Create many Assessments
+     * const assessment = await prisma.assessment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AssessmentCreateManyArgs>(args?: SelectSubset<T, AssessmentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Assessments and returns the data saved in the database.
+     * @param {AssessmentCreateManyAndReturnArgs} args - Arguments to create many Assessments.
+     * @example
+     * // Create many Assessments
+     * const assessment = await prisma.assessment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Assessments and only return the `id`
+     * const assessmentWithIdOnly = await prisma.assessment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AssessmentCreateManyAndReturnArgs>(args?: SelectSubset<T, AssessmentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Assessment.
+     * @param {AssessmentDeleteArgs} args - Arguments to delete one Assessment.
+     * @example
+     * // Delete one Assessment
+     * const Assessment = await prisma.assessment.delete({
+     *   where: {
+     *     // ... filter to delete one Assessment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AssessmentDeleteArgs>(args: SelectSubset<T, AssessmentDeleteArgs<ExtArgs>>): Prisma__AssessmentClient<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Assessment.
+     * @param {AssessmentUpdateArgs} args - Arguments to update one Assessment.
+     * @example
+     * // Update one Assessment
+     * const assessment = await prisma.assessment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AssessmentUpdateArgs>(args: SelectSubset<T, AssessmentUpdateArgs<ExtArgs>>): Prisma__AssessmentClient<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Assessments.
+     * @param {AssessmentDeleteManyArgs} args - Arguments to filter Assessments to delete.
+     * @example
+     * // Delete a few Assessments
+     * const { count } = await prisma.assessment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AssessmentDeleteManyArgs>(args?: SelectSubset<T, AssessmentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Assessments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Assessments
+     * const assessment = await prisma.assessment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AssessmentUpdateManyArgs>(args: SelectSubset<T, AssessmentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Assessments and returns the data updated in the database.
+     * @param {AssessmentUpdateManyAndReturnArgs} args - Arguments to update many Assessments.
+     * @example
+     * // Update many Assessments
+     * const assessment = await prisma.assessment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Assessments and only return the `id`
+     * const assessmentWithIdOnly = await prisma.assessment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AssessmentUpdateManyAndReturnArgs>(args: SelectSubset<T, AssessmentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Assessment.
+     * @param {AssessmentUpsertArgs} args - Arguments to update or create a Assessment.
+     * @example
+     * // Update or create a Assessment
+     * const assessment = await prisma.assessment.upsert({
+     *   create: {
+     *     // ... data to create a Assessment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Assessment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AssessmentUpsertArgs>(args: SelectSubset<T, AssessmentUpsertArgs<ExtArgs>>): Prisma__AssessmentClient<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Assessments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentCountArgs} args - Arguments to filter Assessments to count.
+     * @example
+     * // Count the number of Assessments
+     * const count = await prisma.assessment.count({
+     *   where: {
+     *     // ... the filter for the Assessments we want to count
+     *   }
+     * })
+    **/
+    count<T extends AssessmentCountArgs>(
+      args?: Subset<T, AssessmentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AssessmentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Assessment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AssessmentAggregateArgs>(args: Subset<T, AssessmentAggregateArgs>): Prisma.PrismaPromise<GetAssessmentAggregateType<T>>
+
+    /**
+     * Group by Assessment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AssessmentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AssessmentGroupByArgs['orderBy'] }
+        : { orderBy?: AssessmentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AssessmentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssessmentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Assessment model
+   */
+  readonly fields: AssessmentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Assessment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AssessmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    attempts<T extends Assessment$attemptsArgs<ExtArgs> = {}>(args?: Subset<T, Assessment$attemptsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Assessment model
+   */
+  interface AssessmentFieldRefs {
+    readonly id: FieldRef<"Assessment", 'String'>
+    readonly title: FieldRef<"Assessment", 'String'>
+    readonly subject: FieldRef<"Assessment", 'String'>
+    readonly totalMarks: FieldRef<"Assessment", 'Int'>
+    readonly createdAt: FieldRef<"Assessment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Assessment findUnique
+   */
+  export type AssessmentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Assessment to fetch.
+     */
+    where: AssessmentWhereUniqueInput
+  }
+
+  /**
+   * Assessment findUniqueOrThrow
+   */
+  export type AssessmentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Assessment to fetch.
+     */
+    where: AssessmentWhereUniqueInput
+  }
+
+  /**
+   * Assessment findFirst
+   */
+  export type AssessmentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Assessment to fetch.
+     */
+    where?: AssessmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Assessments to fetch.
+     */
+    orderBy?: AssessmentOrderByWithRelationInput | AssessmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Assessments.
+     */
+    cursor?: AssessmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Assessments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Assessments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Assessments.
+     */
+    distinct?: AssessmentScalarFieldEnum | AssessmentScalarFieldEnum[]
+  }
+
+  /**
+   * Assessment findFirstOrThrow
+   */
+  export type AssessmentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Assessment to fetch.
+     */
+    where?: AssessmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Assessments to fetch.
+     */
+    orderBy?: AssessmentOrderByWithRelationInput | AssessmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Assessments.
+     */
+    cursor?: AssessmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Assessments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Assessments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Assessments.
+     */
+    distinct?: AssessmentScalarFieldEnum | AssessmentScalarFieldEnum[]
+  }
+
+  /**
+   * Assessment findMany
+   */
+  export type AssessmentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Assessments to fetch.
+     */
+    where?: AssessmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Assessments to fetch.
+     */
+    orderBy?: AssessmentOrderByWithRelationInput | AssessmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Assessments.
+     */
+    cursor?: AssessmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Assessments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Assessments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Assessments.
+     */
+    distinct?: AssessmentScalarFieldEnum | AssessmentScalarFieldEnum[]
+  }
+
+  /**
+   * Assessment create
+   */
+  export type AssessmentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Assessment.
+     */
+    data: XOR<AssessmentCreateInput, AssessmentUncheckedCreateInput>
+  }
+
+  /**
+   * Assessment createMany
+   */
+  export type AssessmentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Assessments.
+     */
+    data: AssessmentCreateManyInput | AssessmentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Assessment createManyAndReturn
+   */
+  export type AssessmentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * The data used to create many Assessments.
+     */
+    data: AssessmentCreateManyInput | AssessmentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Assessment update
+   */
+  export type AssessmentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Assessment.
+     */
+    data: XOR<AssessmentUpdateInput, AssessmentUncheckedUpdateInput>
+    /**
+     * Choose, which Assessment to update.
+     */
+    where: AssessmentWhereUniqueInput
+  }
+
+  /**
+   * Assessment updateMany
+   */
+  export type AssessmentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Assessments.
+     */
+    data: XOR<AssessmentUpdateManyMutationInput, AssessmentUncheckedUpdateManyInput>
+    /**
+     * Filter which Assessments to update
+     */
+    where?: AssessmentWhereInput
+    /**
+     * Limit how many Assessments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Assessment updateManyAndReturn
+   */
+  export type AssessmentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * The data used to update Assessments.
+     */
+    data: XOR<AssessmentUpdateManyMutationInput, AssessmentUncheckedUpdateManyInput>
+    /**
+     * Filter which Assessments to update
+     */
+    where?: AssessmentWhereInput
+    /**
+     * Limit how many Assessments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Assessment upsert
+   */
+  export type AssessmentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Assessment to update in case it exists.
+     */
+    where: AssessmentWhereUniqueInput
+    /**
+     * In case the Assessment found by the `where` argument doesn't exist, create a new Assessment with this data.
+     */
+    create: XOR<AssessmentCreateInput, AssessmentUncheckedCreateInput>
+    /**
+     * In case the Assessment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AssessmentUpdateInput, AssessmentUncheckedUpdateInput>
+  }
+
+  /**
+   * Assessment delete
+   */
+  export type AssessmentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentInclude<ExtArgs> | null
+    /**
+     * Filter which Assessment to delete.
+     */
+    where: AssessmentWhereUniqueInput
+  }
+
+  /**
+   * Assessment deleteMany
+   */
+  export type AssessmentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Assessments to delete
+     */
+    where?: AssessmentWhereInput
+    /**
+     * Limit how many Assessments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Assessment.attempts
+   */
+  export type Assessment$attemptsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentAttempt
+     */
+    select?: AssessmentAttemptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentAttempt
+     */
+    omit?: AssessmentAttemptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentAttemptInclude<ExtArgs> | null
+    where?: AssessmentAttemptWhereInput
+    orderBy?: AssessmentAttemptOrderByWithRelationInput | AssessmentAttemptOrderByWithRelationInput[]
+    cursor?: AssessmentAttemptWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AssessmentAttemptScalarFieldEnum | AssessmentAttemptScalarFieldEnum[]
+  }
+
+  /**
+   * Assessment without action
+   */
+  export type AssessmentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model AssessmentAttempt
    */
 
@@ -10514,10 +12983,18 @@ export namespace Prisma {
 
   export type AssessmentAttemptAvgAggregateOutputType = {
     focusLoss: number | null
+    obtainedMarks: number | null
+    totalMarks: number | null
+    percentage: number | null
+    rank: number | null
   }
 
   export type AssessmentAttemptSumAggregateOutputType = {
     focusLoss: number | null
+    obtainedMarks: number | null
+    totalMarks: number | null
+    percentage: number | null
+    rank: number | null
   }
 
   export type AssessmentAttemptMinAggregateOutputType = {
@@ -10528,6 +13005,13 @@ export namespace Prisma {
     startedAt: Date | null
     submittedAt: Date | null
     status: string | null
+    profileStudentId: string | null
+    assessmentId: string | null
+    obtainedMarks: number | null
+    totalMarks: number | null
+    percentage: number | null
+    rank: number | null
+    createdAt: Date | null
   }
 
   export type AssessmentAttemptMaxAggregateOutputType = {
@@ -10538,6 +13022,13 @@ export namespace Prisma {
     startedAt: Date | null
     submittedAt: Date | null
     status: string | null
+    profileStudentId: string | null
+    assessmentId: string | null
+    obtainedMarks: number | null
+    totalMarks: number | null
+    percentage: number | null
+    rank: number | null
+    createdAt: Date | null
   }
 
   export type AssessmentAttemptCountAggregateOutputType = {
@@ -10548,16 +13039,31 @@ export namespace Prisma {
     startedAt: number
     submittedAt: number
     status: number
+    profileStudentId: number
+    assessmentId: number
+    obtainedMarks: number
+    totalMarks: number
+    percentage: number
+    rank: number
+    createdAt: number
     _all: number
   }
 
 
   export type AssessmentAttemptAvgAggregateInputType = {
     focusLoss?: true
+    obtainedMarks?: true
+    totalMarks?: true
+    percentage?: true
+    rank?: true
   }
 
   export type AssessmentAttemptSumAggregateInputType = {
     focusLoss?: true
+    obtainedMarks?: true
+    totalMarks?: true
+    percentage?: true
+    rank?: true
   }
 
   export type AssessmentAttemptMinAggregateInputType = {
@@ -10568,6 +13074,13 @@ export namespace Prisma {
     startedAt?: true
     submittedAt?: true
     status?: true
+    profileStudentId?: true
+    assessmentId?: true
+    obtainedMarks?: true
+    totalMarks?: true
+    percentage?: true
+    rank?: true
+    createdAt?: true
   }
 
   export type AssessmentAttemptMaxAggregateInputType = {
@@ -10578,6 +13091,13 @@ export namespace Prisma {
     startedAt?: true
     submittedAt?: true
     status?: true
+    profileStudentId?: true
+    assessmentId?: true
+    obtainedMarks?: true
+    totalMarks?: true
+    percentage?: true
+    rank?: true
+    createdAt?: true
   }
 
   export type AssessmentAttemptCountAggregateInputType = {
@@ -10588,6 +13108,13 @@ export namespace Prisma {
     startedAt?: true
     submittedAt?: true
     status?: true
+    profileStudentId?: true
+    assessmentId?: true
+    obtainedMarks?: true
+    totalMarks?: true
+    percentage?: true
+    rank?: true
+    createdAt?: true
     _all?: true
   }
 
@@ -10680,11 +13207,18 @@ export namespace Prisma {
   export type AssessmentAttemptGroupByOutputType = {
     id: string
     studentId: string
-    assignmentId: string
+    assignmentId: string | null
     focusLoss: number
     startedAt: Date
     submittedAt: Date | null
     status: string
+    profileStudentId: string | null
+    assessmentId: string | null
+    obtainedMarks: number | null
+    totalMarks: number | null
+    percentage: number | null
+    rank: number | null
+    createdAt: Date
     _count: AssessmentAttemptCountAggregateOutputType | null
     _avg: AssessmentAttemptAvgAggregateOutputType | null
     _sum: AssessmentAttemptSumAggregateOutputType | null
@@ -10714,9 +13248,18 @@ export namespace Prisma {
     startedAt?: boolean
     submittedAt?: boolean
     status?: boolean
+    profileStudentId?: boolean
+    assessmentId?: boolean
+    obtainedMarks?: boolean
+    totalMarks?: boolean
+    percentage?: boolean
+    rank?: boolean
+    createdAt?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
-    Assignment?: boolean | AssessmentAssignmentDefaultArgs<ExtArgs>
+    Assignment?: boolean | AssessmentAttempt$AssignmentArgs<ExtArgs>
     Result?: boolean | AssessmentAttempt$ResultArgs<ExtArgs>
+    student?: boolean | AssessmentAttempt$studentArgs<ExtArgs>
+    assessment?: boolean | AssessmentAttempt$assessmentArgs<ExtArgs>
   }, ExtArgs["result"]["assessmentAttempt"]>
 
   export type AssessmentAttemptSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10727,8 +13270,17 @@ export namespace Prisma {
     startedAt?: boolean
     submittedAt?: boolean
     status?: boolean
+    profileStudentId?: boolean
+    assessmentId?: boolean
+    obtainedMarks?: boolean
+    totalMarks?: boolean
+    percentage?: boolean
+    rank?: boolean
+    createdAt?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
-    Assignment?: boolean | AssessmentAssignmentDefaultArgs<ExtArgs>
+    Assignment?: boolean | AssessmentAttempt$AssignmentArgs<ExtArgs>
+    student?: boolean | AssessmentAttempt$studentArgs<ExtArgs>
+    assessment?: boolean | AssessmentAttempt$assessmentArgs<ExtArgs>
   }, ExtArgs["result"]["assessmentAttempt"]>
 
   export type AssessmentAttemptSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10739,8 +13291,17 @@ export namespace Prisma {
     startedAt?: boolean
     submittedAt?: boolean
     status?: boolean
+    profileStudentId?: boolean
+    assessmentId?: boolean
+    obtainedMarks?: boolean
+    totalMarks?: boolean
+    percentage?: boolean
+    rank?: boolean
+    createdAt?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
-    Assignment?: boolean | AssessmentAssignmentDefaultArgs<ExtArgs>
+    Assignment?: boolean | AssessmentAttempt$AssignmentArgs<ExtArgs>
+    student?: boolean | AssessmentAttempt$studentArgs<ExtArgs>
+    assessment?: boolean | AssessmentAttempt$assessmentArgs<ExtArgs>
   }, ExtArgs["result"]["assessmentAttempt"]>
 
   export type AssessmentAttemptSelectScalar = {
@@ -10751,38 +13312,60 @@ export namespace Prisma {
     startedAt?: boolean
     submittedAt?: boolean
     status?: boolean
+    profileStudentId?: boolean
+    assessmentId?: boolean
+    obtainedMarks?: boolean
+    totalMarks?: boolean
+    percentage?: boolean
+    rank?: boolean
+    createdAt?: boolean
   }
 
-  export type AssessmentAttemptOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "assignmentId" | "focusLoss" | "startedAt" | "submittedAt" | "status", ExtArgs["result"]["assessmentAttempt"]>
+  export type AssessmentAttemptOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "assignmentId" | "focusLoss" | "startedAt" | "submittedAt" | "status" | "profileStudentId" | "assessmentId" | "obtainedMarks" | "totalMarks" | "percentage" | "rank" | "createdAt", ExtArgs["result"]["assessmentAttempt"]>
   export type AssessmentAttemptInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | UserDefaultArgs<ExtArgs>
-    Assignment?: boolean | AssessmentAssignmentDefaultArgs<ExtArgs>
+    Assignment?: boolean | AssessmentAttempt$AssignmentArgs<ExtArgs>
     Result?: boolean | AssessmentAttempt$ResultArgs<ExtArgs>
+    student?: boolean | AssessmentAttempt$studentArgs<ExtArgs>
+    assessment?: boolean | AssessmentAttempt$assessmentArgs<ExtArgs>
   }
   export type AssessmentAttemptIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | UserDefaultArgs<ExtArgs>
-    Assignment?: boolean | AssessmentAssignmentDefaultArgs<ExtArgs>
+    Assignment?: boolean | AssessmentAttempt$AssignmentArgs<ExtArgs>
+    student?: boolean | AssessmentAttempt$studentArgs<ExtArgs>
+    assessment?: boolean | AssessmentAttempt$assessmentArgs<ExtArgs>
   }
   export type AssessmentAttemptIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | UserDefaultArgs<ExtArgs>
-    Assignment?: boolean | AssessmentAssignmentDefaultArgs<ExtArgs>
+    Assignment?: boolean | AssessmentAttempt$AssignmentArgs<ExtArgs>
+    student?: boolean | AssessmentAttempt$studentArgs<ExtArgs>
+    assessment?: boolean | AssessmentAttempt$assessmentArgs<ExtArgs>
   }
 
   export type $AssessmentAttemptPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AssessmentAttempt"
     objects: {
       User: Prisma.$UserPayload<ExtArgs>
-      Assignment: Prisma.$AssessmentAssignmentPayload<ExtArgs>
+      Assignment: Prisma.$AssessmentAssignmentPayload<ExtArgs> | null
       Result: Prisma.$AssessmentResultPayload<ExtArgs> | null
+      student: Prisma.$StudentPayload<ExtArgs> | null
+      assessment: Prisma.$AssessmentPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       studentId: string
-      assignmentId: string
+      assignmentId: string | null
       focusLoss: number
       startedAt: Date
       submittedAt: Date | null
       status: string
+      profileStudentId: string | null
+      assessmentId: string | null
+      obtainedMarks: number | null
+      totalMarks: number | null
+      percentage: number | null
+      rank: number | null
+      createdAt: Date
     }, ExtArgs["result"]["assessmentAttempt"]>
     composites: {}
   }
@@ -11178,8 +13761,10 @@ export namespace Prisma {
   export interface Prisma__AssessmentAttemptClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    Assignment<T extends AssessmentAssignmentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentAssignmentDefaultArgs<ExtArgs>>): Prisma__AssessmentAssignmentClient<$Result.GetResult<Prisma.$AssessmentAssignmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    Assignment<T extends AssessmentAttempt$AssignmentArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentAttempt$AssignmentArgs<ExtArgs>>): Prisma__AssessmentAssignmentClient<$Result.GetResult<Prisma.$AssessmentAssignmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     Result<T extends AssessmentAttempt$ResultArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentAttempt$ResultArgs<ExtArgs>>): Prisma__AssessmentResultClient<$Result.GetResult<Prisma.$AssessmentResultPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    student<T extends AssessmentAttempt$studentArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentAttempt$studentArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    assessment<T extends AssessmentAttempt$assessmentArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentAttempt$assessmentArgs<ExtArgs>>): Prisma__AssessmentClient<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11216,6 +13801,13 @@ export namespace Prisma {
     readonly startedAt: FieldRef<"AssessmentAttempt", 'DateTime'>
     readonly submittedAt: FieldRef<"AssessmentAttempt", 'DateTime'>
     readonly status: FieldRef<"AssessmentAttempt", 'String'>
+    readonly profileStudentId: FieldRef<"AssessmentAttempt", 'String'>
+    readonly assessmentId: FieldRef<"AssessmentAttempt", 'String'>
+    readonly obtainedMarks: FieldRef<"AssessmentAttempt", 'Int'>
+    readonly totalMarks: FieldRef<"AssessmentAttempt", 'Int'>
+    readonly percentage: FieldRef<"AssessmentAttempt", 'Float'>
+    readonly rank: FieldRef<"AssessmentAttempt", 'Int'>
+    readonly createdAt: FieldRef<"AssessmentAttempt", 'DateTime'>
   }
     
 
@@ -11617,6 +14209,25 @@ export namespace Prisma {
   }
 
   /**
+   * AssessmentAttempt.Assignment
+   */
+  export type AssessmentAttempt$AssignmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentAssignment
+     */
+    select?: AssessmentAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentAssignment
+     */
+    omit?: AssessmentAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentAssignmentInclude<ExtArgs> | null
+    where?: AssessmentAssignmentWhereInput
+  }
+
+  /**
    * AssessmentAttempt.Result
    */
   export type AssessmentAttempt$ResultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11633,6 +14244,44 @@ export namespace Prisma {
      */
     include?: AssessmentResultInclude<ExtArgs> | null
     where?: AssessmentResultWhereInput
+  }
+
+  /**
+   * AssessmentAttempt.student
+   */
+  export type AssessmentAttempt$studentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Student
+     */
+    omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    where?: StudentWhereInput
+  }
+
+  /**
+   * AssessmentAttempt.assessment
+   */
+  export type AssessmentAttempt$assessmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assessment
+     */
+    select?: AssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assessment
+     */
+    omit?: AssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentInclude<ExtArgs> | null
+    where?: AssessmentWhereInput
   }
 
   /**
@@ -30304,6 +32953,7 @@ export namespace Prisma {
 
   export const UserScalarFieldEnum: {
     id: 'id',
+    username: 'username',
     name: 'name',
     email: 'email',
     passwordHash: 'passwordHash',
@@ -30312,6 +32962,7 @@ export namespace Prisma {
     status: 'status',
     workspaceId: 'workspaceId',
     mode: 'mode',
+    firstLogin: 'firstLogin',
     createdAt: 'createdAt'
   };
 
@@ -30380,6 +33031,26 @@ export namespace Prisma {
   export type AssessmentAssignmentScalarFieldEnum = (typeof AssessmentAssignmentScalarFieldEnum)[keyof typeof AssessmentAssignmentScalarFieldEnum]
 
 
+  export const StudentScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    createdAt: 'createdAt'
+  };
+
+  export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
+
+
+  export const AssessmentScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    subject: 'subject',
+    totalMarks: 'totalMarks',
+    createdAt: 'createdAt'
+  };
+
+  export type AssessmentScalarFieldEnum = (typeof AssessmentScalarFieldEnum)[keyof typeof AssessmentScalarFieldEnum]
+
+
   export const AssessmentAttemptScalarFieldEnum: {
     id: 'id',
     studentId: 'studentId',
@@ -30387,7 +33058,14 @@ export namespace Prisma {
     focusLoss: 'focusLoss',
     startedAt: 'startedAt',
     submittedAt: 'submittedAt',
-    status: 'status'
+    status: 'status',
+    profileStudentId: 'profileStudentId',
+    assessmentId: 'assessmentId',
+    obtainedMarks: 'obtainedMarks',
+    totalMarks: 'totalMarks',
+    percentage: 'percentage',
+    rank: 'rank',
+    createdAt: 'createdAt'
   };
 
   export type AssessmentAttemptScalarFieldEnum = (typeof AssessmentAttemptScalarFieldEnum)[keyof typeof AssessmentAttemptScalarFieldEnum]
@@ -30749,6 +33427,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
+    username?: StringNullableFilter<"User"> | string | null
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     passwordHash?: StringNullableFilter<"User"> | string | null
@@ -30757,8 +33436,10 @@ export namespace Prisma {
     status?: StringFilter<"User"> | string
     workspaceId?: StringNullableFilter<"User"> | string | null
     mode?: StringNullableFilter<"User"> | string | null
+    firstLogin?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     attempts?: AssessmentAttemptListRelationFilter
+    student?: XOR<StudentNullableScalarRelationFilter, StudentWhereInput> | null
     memberships?: WorkspaceMembershipListRelationFilter
     studentLinks?: ParentStudentLinkListRelationFilter
     parentLinks?: ParentStudentLinkListRelationFilter
@@ -30777,6 +33458,7 @@ export namespace Prisma {
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
+    username?: SortOrderInput | SortOrder
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrderInput | SortOrder
@@ -30785,8 +33467,10 @@ export namespace Prisma {
     status?: SortOrder
     workspaceId?: SortOrderInput | SortOrder
     mode?: SortOrderInput | SortOrder
+    firstLogin?: SortOrder
     createdAt?: SortOrder
     attempts?: AssessmentAttemptOrderByRelationAggregateInput
+    student?: StudentOrderByWithRelationInput
     memberships?: WorkspaceMembershipOrderByRelationAggregateInput
     studentLinks?: ParentStudentLinkOrderByRelationAggregateInput
     parentLinks?: ParentStudentLinkOrderByRelationAggregateInput
@@ -30805,6 +33489,7 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    username?: string
     email?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -30816,8 +33501,10 @@ export namespace Prisma {
     status?: StringFilter<"User"> | string
     workspaceId?: StringNullableFilter<"User"> | string | null
     mode?: StringNullableFilter<"User"> | string | null
+    firstLogin?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     attempts?: AssessmentAttemptListRelationFilter
+    student?: XOR<StudentNullableScalarRelationFilter, StudentWhereInput> | null
     memberships?: WorkspaceMembershipListRelationFilter
     studentLinks?: ParentStudentLinkListRelationFilter
     parentLinks?: ParentStudentLinkListRelationFilter
@@ -30832,10 +33519,11 @@ export namespace Prisma {
     submissions?: AssignmentSubmissionListRelationFilter
     schoolLogs?: SchoolLogListRelationFilter
     results?: ResultListRelationFilter
-  }, "id" | "email">
+  }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
+    username?: SortOrderInput | SortOrder
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrderInput | SortOrder
@@ -30844,6 +33532,7 @@ export namespace Prisma {
     status?: SortOrder
     workspaceId?: SortOrderInput | SortOrder
     mode?: SortOrderInput | SortOrder
+    firstLogin?: SortOrder
     createdAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -30855,6 +33544,7 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
+    username?: StringNullableWithAggregatesFilter<"User"> | string | null
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     passwordHash?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -30863,6 +33553,7 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"User"> | string
     workspaceId?: StringNullableWithAggregatesFilter<"User"> | string | null
     mode?: StringNullableWithAggregatesFilter<"User"> | string | null
+    firstLogin?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
@@ -31204,33 +33895,156 @@ export namespace Prisma {
     isReady?: BoolWithAggregatesFilter<"AssessmentAssignment"> | boolean
   }
 
+  export type StudentWhereInput = {
+    AND?: StudentWhereInput | StudentWhereInput[]
+    OR?: StudentWhereInput[]
+    NOT?: StudentWhereInput | StudentWhereInput[]
+    id?: StringFilter<"Student"> | string
+    userId?: StringFilter<"Student"> | string
+    createdAt?: DateTimeFilter<"Student"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    attempts?: AssessmentAttemptListRelationFilter
+  }
+
+  export type StudentOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    attempts?: AssessmentAttemptOrderByRelationAggregateInput
+  }
+
+  export type StudentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: StudentWhereInput | StudentWhereInput[]
+    OR?: StudentWhereInput[]
+    NOT?: StudentWhereInput | StudentWhereInput[]
+    createdAt?: DateTimeFilter<"Student"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    attempts?: AssessmentAttemptListRelationFilter
+  }, "id" | "userId">
+
+  export type StudentOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    _count?: StudentCountOrderByAggregateInput
+    _max?: StudentMaxOrderByAggregateInput
+    _min?: StudentMinOrderByAggregateInput
+  }
+
+  export type StudentScalarWhereWithAggregatesInput = {
+    AND?: StudentScalarWhereWithAggregatesInput | StudentScalarWhereWithAggregatesInput[]
+    OR?: StudentScalarWhereWithAggregatesInput[]
+    NOT?: StudentScalarWhereWithAggregatesInput | StudentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Student"> | string
+    userId?: StringWithAggregatesFilter<"Student"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Student"> | Date | string
+  }
+
+  export type AssessmentWhereInput = {
+    AND?: AssessmentWhereInput | AssessmentWhereInput[]
+    OR?: AssessmentWhereInput[]
+    NOT?: AssessmentWhereInput | AssessmentWhereInput[]
+    id?: StringFilter<"Assessment"> | string
+    title?: StringFilter<"Assessment"> | string
+    subject?: StringFilter<"Assessment"> | string
+    totalMarks?: IntFilter<"Assessment"> | number
+    createdAt?: DateTimeFilter<"Assessment"> | Date | string
+    attempts?: AssessmentAttemptListRelationFilter
+  }
+
+  export type AssessmentOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    subject?: SortOrder
+    totalMarks?: SortOrder
+    createdAt?: SortOrder
+    attempts?: AssessmentAttemptOrderByRelationAggregateInput
+  }
+
+  export type AssessmentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AssessmentWhereInput | AssessmentWhereInput[]
+    OR?: AssessmentWhereInput[]
+    NOT?: AssessmentWhereInput | AssessmentWhereInput[]
+    title?: StringFilter<"Assessment"> | string
+    subject?: StringFilter<"Assessment"> | string
+    totalMarks?: IntFilter<"Assessment"> | number
+    createdAt?: DateTimeFilter<"Assessment"> | Date | string
+    attempts?: AssessmentAttemptListRelationFilter
+  }, "id">
+
+  export type AssessmentOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    subject?: SortOrder
+    totalMarks?: SortOrder
+    createdAt?: SortOrder
+    _count?: AssessmentCountOrderByAggregateInput
+    _avg?: AssessmentAvgOrderByAggregateInput
+    _max?: AssessmentMaxOrderByAggregateInput
+    _min?: AssessmentMinOrderByAggregateInput
+    _sum?: AssessmentSumOrderByAggregateInput
+  }
+
+  export type AssessmentScalarWhereWithAggregatesInput = {
+    AND?: AssessmentScalarWhereWithAggregatesInput | AssessmentScalarWhereWithAggregatesInput[]
+    OR?: AssessmentScalarWhereWithAggregatesInput[]
+    NOT?: AssessmentScalarWhereWithAggregatesInput | AssessmentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Assessment"> | string
+    title?: StringWithAggregatesFilter<"Assessment"> | string
+    subject?: StringWithAggregatesFilter<"Assessment"> | string
+    totalMarks?: IntWithAggregatesFilter<"Assessment"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Assessment"> | Date | string
+  }
+
   export type AssessmentAttemptWhereInput = {
     AND?: AssessmentAttemptWhereInput | AssessmentAttemptWhereInput[]
     OR?: AssessmentAttemptWhereInput[]
     NOT?: AssessmentAttemptWhereInput | AssessmentAttemptWhereInput[]
     id?: StringFilter<"AssessmentAttempt"> | string
     studentId?: StringFilter<"AssessmentAttempt"> | string
-    assignmentId?: StringFilter<"AssessmentAttempt"> | string
+    assignmentId?: StringNullableFilter<"AssessmentAttempt"> | string | null
     focusLoss?: IntFilter<"AssessmentAttempt"> | number
     startedAt?: DateTimeFilter<"AssessmentAttempt"> | Date | string
     submittedAt?: DateTimeNullableFilter<"AssessmentAttempt"> | Date | string | null
     status?: StringFilter<"AssessmentAttempt"> | string
+    profileStudentId?: StringNullableFilter<"AssessmentAttempt"> | string | null
+    assessmentId?: StringNullableFilter<"AssessmentAttempt"> | string | null
+    obtainedMarks?: IntNullableFilter<"AssessmentAttempt"> | number | null
+    totalMarks?: IntNullableFilter<"AssessmentAttempt"> | number | null
+    percentage?: FloatNullableFilter<"AssessmentAttempt"> | number | null
+    rank?: IntNullableFilter<"AssessmentAttempt"> | number | null
+    createdAt?: DateTimeFilter<"AssessmentAttempt"> | Date | string
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
-    Assignment?: XOR<AssessmentAssignmentScalarRelationFilter, AssessmentAssignmentWhereInput>
+    Assignment?: XOR<AssessmentAssignmentNullableScalarRelationFilter, AssessmentAssignmentWhereInput> | null
     Result?: XOR<AssessmentResultNullableScalarRelationFilter, AssessmentResultWhereInput> | null
+    student?: XOR<StudentNullableScalarRelationFilter, StudentWhereInput> | null
+    assessment?: XOR<AssessmentNullableScalarRelationFilter, AssessmentWhereInput> | null
   }
 
   export type AssessmentAttemptOrderByWithRelationInput = {
     id?: SortOrder
     studentId?: SortOrder
-    assignmentId?: SortOrder
+    assignmentId?: SortOrderInput | SortOrder
     focusLoss?: SortOrder
     startedAt?: SortOrder
     submittedAt?: SortOrderInput | SortOrder
     status?: SortOrder
+    profileStudentId?: SortOrderInput | SortOrder
+    assessmentId?: SortOrderInput | SortOrder
+    obtainedMarks?: SortOrderInput | SortOrder
+    totalMarks?: SortOrderInput | SortOrder
+    percentage?: SortOrderInput | SortOrder
+    rank?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     User?: UserOrderByWithRelationInput
     Assignment?: AssessmentAssignmentOrderByWithRelationInput
     Result?: AssessmentResultOrderByWithRelationInput
+    student?: StudentOrderByWithRelationInput
+    assessment?: AssessmentOrderByWithRelationInput
   }
 
   export type AssessmentAttemptWhereUniqueInput = Prisma.AtLeast<{
@@ -31239,24 +34053,40 @@ export namespace Prisma {
     OR?: AssessmentAttemptWhereInput[]
     NOT?: AssessmentAttemptWhereInput | AssessmentAttemptWhereInput[]
     studentId?: StringFilter<"AssessmentAttempt"> | string
-    assignmentId?: StringFilter<"AssessmentAttempt"> | string
+    assignmentId?: StringNullableFilter<"AssessmentAttempt"> | string | null
     focusLoss?: IntFilter<"AssessmentAttempt"> | number
     startedAt?: DateTimeFilter<"AssessmentAttempt"> | Date | string
     submittedAt?: DateTimeNullableFilter<"AssessmentAttempt"> | Date | string | null
     status?: StringFilter<"AssessmentAttempt"> | string
+    profileStudentId?: StringNullableFilter<"AssessmentAttempt"> | string | null
+    assessmentId?: StringNullableFilter<"AssessmentAttempt"> | string | null
+    obtainedMarks?: IntNullableFilter<"AssessmentAttempt"> | number | null
+    totalMarks?: IntNullableFilter<"AssessmentAttempt"> | number | null
+    percentage?: FloatNullableFilter<"AssessmentAttempt"> | number | null
+    rank?: IntNullableFilter<"AssessmentAttempt"> | number | null
+    createdAt?: DateTimeFilter<"AssessmentAttempt"> | Date | string
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
-    Assignment?: XOR<AssessmentAssignmentScalarRelationFilter, AssessmentAssignmentWhereInput>
+    Assignment?: XOR<AssessmentAssignmentNullableScalarRelationFilter, AssessmentAssignmentWhereInput> | null
     Result?: XOR<AssessmentResultNullableScalarRelationFilter, AssessmentResultWhereInput> | null
+    student?: XOR<StudentNullableScalarRelationFilter, StudentWhereInput> | null
+    assessment?: XOR<AssessmentNullableScalarRelationFilter, AssessmentWhereInput> | null
   }, "id">
 
   export type AssessmentAttemptOrderByWithAggregationInput = {
     id?: SortOrder
     studentId?: SortOrder
-    assignmentId?: SortOrder
+    assignmentId?: SortOrderInput | SortOrder
     focusLoss?: SortOrder
     startedAt?: SortOrder
     submittedAt?: SortOrderInput | SortOrder
     status?: SortOrder
+    profileStudentId?: SortOrderInput | SortOrder
+    assessmentId?: SortOrderInput | SortOrder
+    obtainedMarks?: SortOrderInput | SortOrder
+    totalMarks?: SortOrderInput | SortOrder
+    percentage?: SortOrderInput | SortOrder
+    rank?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     _count?: AssessmentAttemptCountOrderByAggregateInput
     _avg?: AssessmentAttemptAvgOrderByAggregateInput
     _max?: AssessmentAttemptMaxOrderByAggregateInput
@@ -31270,11 +34100,18 @@ export namespace Prisma {
     NOT?: AssessmentAttemptScalarWhereWithAggregatesInput | AssessmentAttemptScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"AssessmentAttempt"> | string
     studentId?: StringWithAggregatesFilter<"AssessmentAttempt"> | string
-    assignmentId?: StringWithAggregatesFilter<"AssessmentAttempt"> | string
+    assignmentId?: StringNullableWithAggregatesFilter<"AssessmentAttempt"> | string | null
     focusLoss?: IntWithAggregatesFilter<"AssessmentAttempt"> | number
     startedAt?: DateTimeWithAggregatesFilter<"AssessmentAttempt"> | Date | string
     submittedAt?: DateTimeNullableWithAggregatesFilter<"AssessmentAttempt"> | Date | string | null
     status?: StringWithAggregatesFilter<"AssessmentAttempt"> | string
+    profileStudentId?: StringNullableWithAggregatesFilter<"AssessmentAttempt"> | string | null
+    assessmentId?: StringNullableWithAggregatesFilter<"AssessmentAttempt"> | string | null
+    obtainedMarks?: IntNullableWithAggregatesFilter<"AssessmentAttempt"> | number | null
+    totalMarks?: IntNullableWithAggregatesFilter<"AssessmentAttempt"> | number | null
+    percentage?: FloatNullableWithAggregatesFilter<"AssessmentAttempt"> | number | null
+    rank?: IntNullableWithAggregatesFilter<"AssessmentAttempt"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"AssessmentAttempt"> | Date | string
   }
 
   export type AssessmentResultWhereInput = {
@@ -32443,6 +35280,7 @@ export namespace Prisma {
 
   export type UserCreateInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -32451,8 +35289,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -32471,6 +35311,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -32479,8 +35320,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -32499,6 +35342,7 @@ export namespace Prisma {
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32507,8 +35351,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -32527,6 +35373,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32535,8 +35382,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -32555,6 +35404,7 @@ export namespace Prisma {
 
   export type UserCreateManyInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -32563,11 +35413,13 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32576,11 +35428,13 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32589,6 +35443,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -32943,25 +35798,144 @@ export namespace Prisma {
     isReady?: BoolFieldUpdateOperationsInput | boolean
   }
 
+  export type StudentCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutStudentInput
+    attempts?: AssessmentAttemptCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentUncheckedCreateInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutStudentNestedInput
+    attempts?: AssessmentAttemptUpdateManyWithoutStudentNestedInput
+  }
+
+  export type StudentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUncheckedUpdateManyWithoutStudentNestedInput
+  }
+
+  export type StudentCreateManyInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type StudentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssessmentCreateInput = {
+    id?: string
+    title: string
+    subject: string
+    totalMarks: number
+    createdAt?: Date | string
+    attempts?: AssessmentAttemptCreateNestedManyWithoutAssessmentInput
+  }
+
+  export type AssessmentUncheckedCreateInput = {
+    id?: string
+    title: string
+    subject: string
+    totalMarks: number
+    createdAt?: Date | string
+    attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutAssessmentInput
+  }
+
+  export type AssessmentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    totalMarks?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUpdateManyWithoutAssessmentNestedInput
+  }
+
+  export type AssessmentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    totalMarks?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUncheckedUpdateManyWithoutAssessmentNestedInput
+  }
+
+  export type AssessmentCreateManyInput = {
+    id?: string
+    title: string
+    subject: string
+    totalMarks: number
+    createdAt?: Date | string
+  }
+
+  export type AssessmentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    totalMarks?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssessmentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    totalMarks?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AssessmentAttemptCreateInput = {
     id?: string
     focusLoss?: number
     startedAt?: Date | string
     submittedAt?: Date | string | null
     status?: string
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
     User: UserCreateNestedOneWithoutAttemptsInput
-    Assignment: AssessmentAssignmentCreateNestedOneWithoutAttemptsInput
+    Assignment?: AssessmentAssignmentCreateNestedOneWithoutAttemptsInput
     Result?: AssessmentResultCreateNestedOneWithoutAttemptInput
+    student?: StudentCreateNestedOneWithoutAttemptsInput
+    assessment?: AssessmentCreateNestedOneWithoutAttemptsInput
   }
 
   export type AssessmentAttemptUncheckedCreateInput = {
     id?: string
     studentId: string
-    assignmentId: string
+    assignmentId?: string | null
     focusLoss?: number
     startedAt?: Date | string
     submittedAt?: Date | string | null
     status?: string
+    profileStudentId?: string | null
+    assessmentId?: string | null
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
     Result?: AssessmentResultUncheckedCreateNestedOneWithoutAttemptInput
   }
 
@@ -32971,30 +35945,51 @@ export namespace Prisma {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     User?: UserUpdateOneRequiredWithoutAttemptsNestedInput
-    Assignment?: AssessmentAssignmentUpdateOneRequiredWithoutAttemptsNestedInput
+    Assignment?: AssessmentAssignmentUpdateOneWithoutAttemptsNestedInput
     Result?: AssessmentResultUpdateOneWithoutAttemptNestedInput
+    student?: StudentUpdateOneWithoutAttemptsNestedInput
+    assessment?: AssessmentUpdateOneWithoutAttemptsNestedInput
   }
 
   export type AssessmentAttemptUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
-    assignmentId?: StringFieldUpdateOperationsInput | string
+    assignmentId?: NullableStringFieldUpdateOperationsInput | string | null
     focusLoss?: IntFieldUpdateOperationsInput | number
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
+    profileStudentId?: NullableStringFieldUpdateOperationsInput | string | null
+    assessmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Result?: AssessmentResultUncheckedUpdateOneWithoutAttemptNestedInput
   }
 
   export type AssessmentAttemptCreateManyInput = {
     id?: string
     studentId: string
-    assignmentId: string
+    assignmentId?: string | null
     focusLoss?: number
     startedAt?: Date | string
     submittedAt?: Date | string | null
     status?: string
+    profileStudentId?: string | null
+    assessmentId?: string | null
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
   }
 
   export type AssessmentAttemptUpdateManyMutationInput = {
@@ -33003,16 +35998,28 @@ export namespace Prisma {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AssessmentAttemptUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
-    assignmentId?: StringFieldUpdateOperationsInput | string
+    assignmentId?: NullableStringFieldUpdateOperationsInput | string | null
     focusLoss?: IntFieldUpdateOperationsInput | number
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
+    profileStudentId?: NullableStringFieldUpdateOperationsInput | string | null
+    assessmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AssessmentResultCreateInput = {
@@ -34288,6 +37295,11 @@ export namespace Prisma {
     none?: AssessmentAttemptWhereInput
   }
 
+  export type StudentNullableScalarRelationFilter = {
+    is?: StudentWhereInput | null
+    isNot?: StudentWhereInput | null
+  }
+
   export type WorkspaceMembershipListRelationFilter = {
     every?: WorkspaceMembershipWhereInput
     some?: WorkspaceMembershipWhereInput
@@ -34409,6 +37421,7 @@ export namespace Prisma {
 
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
+    username?: SortOrder
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrder
@@ -34417,11 +37430,13 @@ export namespace Prisma {
     status?: SortOrder
     workspaceId?: SortOrder
     mode?: SortOrder
+    firstLogin?: SortOrder
     createdAt?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
+    username?: SortOrder
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrder
@@ -34430,11 +37445,13 @@ export namespace Prisma {
     status?: SortOrder
     workspaceId?: SortOrder
     mode?: SortOrder
+    firstLogin?: SortOrder
     createdAt?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
+    username?: SortOrder
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrder
@@ -34443,6 +37460,7 @@ export namespace Prisma {
     status?: SortOrder
     workspaceId?: SortOrder
     mode?: SortOrder
+    firstLogin?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -34807,14 +37825,91 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type AssessmentAssignmentScalarRelationFilter = {
-    is?: AssessmentAssignmentWhereInput
-    isNot?: AssessmentAssignmentWhereInput
+  export type StudentCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StudentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StudentMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AssessmentCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    subject?: SortOrder
+    totalMarks?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AssessmentAvgOrderByAggregateInput = {
+    totalMarks?: SortOrder
+  }
+
+  export type AssessmentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    subject?: SortOrder
+    totalMarks?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AssessmentMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    subject?: SortOrder
+    totalMarks?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AssessmentSumOrderByAggregateInput = {
+    totalMarks?: SortOrder
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type AssessmentAssignmentNullableScalarRelationFilter = {
+    is?: AssessmentAssignmentWhereInput | null
+    isNot?: AssessmentAssignmentWhereInput | null
   }
 
   export type AssessmentResultNullableScalarRelationFilter = {
     is?: AssessmentResultWhereInput | null
     isNot?: AssessmentResultWhereInput | null
+  }
+
+  export type AssessmentNullableScalarRelationFilter = {
+    is?: AssessmentWhereInput | null
+    isNot?: AssessmentWhereInput | null
   }
 
   export type AssessmentAttemptCountOrderByAggregateInput = {
@@ -34825,10 +37920,21 @@ export namespace Prisma {
     startedAt?: SortOrder
     submittedAt?: SortOrder
     status?: SortOrder
+    profileStudentId?: SortOrder
+    assessmentId?: SortOrder
+    obtainedMarks?: SortOrder
+    totalMarks?: SortOrder
+    percentage?: SortOrder
+    rank?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AssessmentAttemptAvgOrderByAggregateInput = {
     focusLoss?: SortOrder
+    obtainedMarks?: SortOrder
+    totalMarks?: SortOrder
+    percentage?: SortOrder
+    rank?: SortOrder
   }
 
   export type AssessmentAttemptMaxOrderByAggregateInput = {
@@ -34839,6 +37945,13 @@ export namespace Prisma {
     startedAt?: SortOrder
     submittedAt?: SortOrder
     status?: SortOrder
+    profileStudentId?: SortOrder
+    assessmentId?: SortOrder
+    obtainedMarks?: SortOrder
+    totalMarks?: SortOrder
+    percentage?: SortOrder
+    rank?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AssessmentAttemptMinOrderByAggregateInput = {
@@ -34849,10 +37962,53 @@ export namespace Prisma {
     startedAt?: SortOrder
     submittedAt?: SortOrder
     status?: SortOrder
+    profileStudentId?: SortOrder
+    assessmentId?: SortOrder
+    obtainedMarks?: SortOrder
+    totalMarks?: SortOrder
+    percentage?: SortOrder
+    rank?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AssessmentAttemptSumOrderByAggregateInput = {
     focusLoss?: SortOrder
+    obtainedMarks?: SortOrder
+    totalMarks?: SortOrder
+    percentage?: SortOrder
+    rank?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type AssessmentAttemptScalarRelationFilter = {
@@ -35191,17 +38347,6 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type AssignmentCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -35257,22 +38402,6 @@ export namespace Prisma {
 
   export type AssignmentSumOrderByAggregateInput = {
     marks?: SortOrder
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type AssignmentScalarRelationFilter = {
@@ -35511,6 +38640,12 @@ export namespace Prisma {
     connect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
   }
 
+  export type StudentCreateNestedOneWithoutUserInput = {
+    create?: XOR<StudentCreateWithoutUserInput, StudentUncheckedCreateWithoutUserInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutUserInput
+    connect?: StudentWhereUniqueInput
+  }
+
   export type WorkspaceMembershipCreateNestedManyWithoutUserInput = {
     create?: XOR<WorkspaceMembershipCreateWithoutUserInput, WorkspaceMembershipUncheckedCreateWithoutUserInput> | WorkspaceMembershipCreateWithoutUserInput[] | WorkspaceMembershipUncheckedCreateWithoutUserInput[]
     connectOrCreate?: WorkspaceMembershipCreateOrConnectWithoutUserInput | WorkspaceMembershipCreateOrConnectWithoutUserInput[]
@@ -35614,6 +38749,12 @@ export namespace Prisma {
     connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutUserInput | AssessmentAttemptCreateOrConnectWithoutUserInput[]
     createMany?: AssessmentAttemptCreateManyUserInputEnvelope
     connect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+  }
+
+  export type StudentUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<StudentCreateWithoutUserInput, StudentUncheckedCreateWithoutUserInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutUserInput
+    connect?: StudentWhereUniqueInput
   }
 
   export type WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput = {
@@ -35742,6 +38883,16 @@ export namespace Prisma {
     update?: AssessmentAttemptUpdateWithWhereUniqueWithoutUserInput | AssessmentAttemptUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: AssessmentAttemptUpdateManyWithWhereWithoutUserInput | AssessmentAttemptUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: AssessmentAttemptScalarWhereInput | AssessmentAttemptScalarWhereInput[]
+  }
+
+  export type StudentUpdateOneWithoutUserNestedInput = {
+    create?: XOR<StudentCreateWithoutUserInput, StudentUncheckedCreateWithoutUserInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutUserInput
+    upsert?: StudentUpsertWithoutUserInput
+    disconnect?: StudentWhereInput | boolean
+    delete?: StudentWhereInput | boolean
+    connect?: StudentWhereUniqueInput
+    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutUserInput, StudentUpdateWithoutUserInput>, StudentUncheckedUpdateWithoutUserInput>
   }
 
   export type WorkspaceMembershipUpdateManyWithoutUserNestedInput = {
@@ -35952,6 +39103,16 @@ export namespace Prisma {
     update?: AssessmentAttemptUpdateWithWhereUniqueWithoutUserInput | AssessmentAttemptUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: AssessmentAttemptUpdateManyWithWhereWithoutUserInput | AssessmentAttemptUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: AssessmentAttemptScalarWhereInput | AssessmentAttemptScalarWhereInput[]
+  }
+
+  export type StudentUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<StudentCreateWithoutUserInput, StudentUncheckedCreateWithoutUserInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutUserInput
+    upsert?: StudentUpsertWithoutUserInput
+    disconnect?: StudentWhereInput | boolean
+    delete?: StudentWhereInput | boolean
+    connect?: StudentWhereUniqueInput
+    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutUserInput, StudentUpdateWithoutUserInput>, StudentUncheckedUpdateWithoutUserInput>
   }
 
   export type WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput = {
@@ -36540,6 +39701,104 @@ export namespace Prisma {
     deleteMany?: AssessmentAttemptScalarWhereInput | AssessmentAttemptScalarWhereInput[]
   }
 
+  export type UserCreateNestedOneWithoutStudentInput = {
+    create?: XOR<UserCreateWithoutStudentInput, UserUncheckedCreateWithoutStudentInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStudentInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type AssessmentAttemptCreateNestedManyWithoutStudentInput = {
+    create?: XOR<AssessmentAttemptCreateWithoutStudentInput, AssessmentAttemptUncheckedCreateWithoutStudentInput> | AssessmentAttemptCreateWithoutStudentInput[] | AssessmentAttemptUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutStudentInput | AssessmentAttemptCreateOrConnectWithoutStudentInput[]
+    createMany?: AssessmentAttemptCreateManyStudentInputEnvelope
+    connect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+  }
+
+  export type AssessmentAttemptUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<AssessmentAttemptCreateWithoutStudentInput, AssessmentAttemptUncheckedCreateWithoutStudentInput> | AssessmentAttemptCreateWithoutStudentInput[] | AssessmentAttemptUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutStudentInput | AssessmentAttemptCreateOrConnectWithoutStudentInput[]
+    createMany?: AssessmentAttemptCreateManyStudentInputEnvelope
+    connect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutStudentNestedInput = {
+    create?: XOR<UserCreateWithoutStudentInput, UserUncheckedCreateWithoutStudentInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStudentInput
+    upsert?: UserUpsertWithoutStudentInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStudentInput, UserUpdateWithoutStudentInput>, UserUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type AssessmentAttemptUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<AssessmentAttemptCreateWithoutStudentInput, AssessmentAttemptUncheckedCreateWithoutStudentInput> | AssessmentAttemptCreateWithoutStudentInput[] | AssessmentAttemptUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutStudentInput | AssessmentAttemptCreateOrConnectWithoutStudentInput[]
+    upsert?: AssessmentAttemptUpsertWithWhereUniqueWithoutStudentInput | AssessmentAttemptUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: AssessmentAttemptCreateManyStudentInputEnvelope
+    set?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    disconnect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    delete?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    connect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    update?: AssessmentAttemptUpdateWithWhereUniqueWithoutStudentInput | AssessmentAttemptUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: AssessmentAttemptUpdateManyWithWhereWithoutStudentInput | AssessmentAttemptUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: AssessmentAttemptScalarWhereInput | AssessmentAttemptScalarWhereInput[]
+  }
+
+  export type AssessmentAttemptUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<AssessmentAttemptCreateWithoutStudentInput, AssessmentAttemptUncheckedCreateWithoutStudentInput> | AssessmentAttemptCreateWithoutStudentInput[] | AssessmentAttemptUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutStudentInput | AssessmentAttemptCreateOrConnectWithoutStudentInput[]
+    upsert?: AssessmentAttemptUpsertWithWhereUniqueWithoutStudentInput | AssessmentAttemptUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: AssessmentAttemptCreateManyStudentInputEnvelope
+    set?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    disconnect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    delete?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    connect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    update?: AssessmentAttemptUpdateWithWhereUniqueWithoutStudentInput | AssessmentAttemptUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: AssessmentAttemptUpdateManyWithWhereWithoutStudentInput | AssessmentAttemptUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: AssessmentAttemptScalarWhereInput | AssessmentAttemptScalarWhereInput[]
+  }
+
+  export type AssessmentAttemptCreateNestedManyWithoutAssessmentInput = {
+    create?: XOR<AssessmentAttemptCreateWithoutAssessmentInput, AssessmentAttemptUncheckedCreateWithoutAssessmentInput> | AssessmentAttemptCreateWithoutAssessmentInput[] | AssessmentAttemptUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutAssessmentInput | AssessmentAttemptCreateOrConnectWithoutAssessmentInput[]
+    createMany?: AssessmentAttemptCreateManyAssessmentInputEnvelope
+    connect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+  }
+
+  export type AssessmentAttemptUncheckedCreateNestedManyWithoutAssessmentInput = {
+    create?: XOR<AssessmentAttemptCreateWithoutAssessmentInput, AssessmentAttemptUncheckedCreateWithoutAssessmentInput> | AssessmentAttemptCreateWithoutAssessmentInput[] | AssessmentAttemptUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutAssessmentInput | AssessmentAttemptCreateOrConnectWithoutAssessmentInput[]
+    createMany?: AssessmentAttemptCreateManyAssessmentInputEnvelope
+    connect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+  }
+
+  export type AssessmentAttemptUpdateManyWithoutAssessmentNestedInput = {
+    create?: XOR<AssessmentAttemptCreateWithoutAssessmentInput, AssessmentAttemptUncheckedCreateWithoutAssessmentInput> | AssessmentAttemptCreateWithoutAssessmentInput[] | AssessmentAttemptUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutAssessmentInput | AssessmentAttemptCreateOrConnectWithoutAssessmentInput[]
+    upsert?: AssessmentAttemptUpsertWithWhereUniqueWithoutAssessmentInput | AssessmentAttemptUpsertWithWhereUniqueWithoutAssessmentInput[]
+    createMany?: AssessmentAttemptCreateManyAssessmentInputEnvelope
+    set?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    disconnect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    delete?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    connect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    update?: AssessmentAttemptUpdateWithWhereUniqueWithoutAssessmentInput | AssessmentAttemptUpdateWithWhereUniqueWithoutAssessmentInput[]
+    updateMany?: AssessmentAttemptUpdateManyWithWhereWithoutAssessmentInput | AssessmentAttemptUpdateManyWithWhereWithoutAssessmentInput[]
+    deleteMany?: AssessmentAttemptScalarWhereInput | AssessmentAttemptScalarWhereInput[]
+  }
+
+  export type AssessmentAttemptUncheckedUpdateManyWithoutAssessmentNestedInput = {
+    create?: XOR<AssessmentAttemptCreateWithoutAssessmentInput, AssessmentAttemptUncheckedCreateWithoutAssessmentInput> | AssessmentAttemptCreateWithoutAssessmentInput[] | AssessmentAttemptUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutAssessmentInput | AssessmentAttemptCreateOrConnectWithoutAssessmentInput[]
+    upsert?: AssessmentAttemptUpsertWithWhereUniqueWithoutAssessmentInput | AssessmentAttemptUpsertWithWhereUniqueWithoutAssessmentInput[]
+    createMany?: AssessmentAttemptCreateManyAssessmentInputEnvelope
+    set?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    disconnect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    delete?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    connect?: AssessmentAttemptWhereUniqueInput | AssessmentAttemptWhereUniqueInput[]
+    update?: AssessmentAttemptUpdateWithWhereUniqueWithoutAssessmentInput | AssessmentAttemptUpdateWithWhereUniqueWithoutAssessmentInput[]
+    updateMany?: AssessmentAttemptUpdateManyWithWhereWithoutAssessmentInput | AssessmentAttemptUpdateManyWithWhereWithoutAssessmentInput[]
+    deleteMany?: AssessmentAttemptScalarWhereInput | AssessmentAttemptScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutAttemptsInput = {
     create?: XOR<UserCreateWithoutAttemptsInput, UserUncheckedCreateWithoutAttemptsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAttemptsInput
@@ -36558,10 +39817,38 @@ export namespace Prisma {
     connect?: AssessmentResultWhereUniqueInput
   }
 
+  export type StudentCreateNestedOneWithoutAttemptsInput = {
+    create?: XOR<StudentCreateWithoutAttemptsInput, StudentUncheckedCreateWithoutAttemptsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutAttemptsInput
+    connect?: StudentWhereUniqueInput
+  }
+
+  export type AssessmentCreateNestedOneWithoutAttemptsInput = {
+    create?: XOR<AssessmentCreateWithoutAttemptsInput, AssessmentUncheckedCreateWithoutAttemptsInput>
+    connectOrCreate?: AssessmentCreateOrConnectWithoutAttemptsInput
+    connect?: AssessmentWhereUniqueInput
+  }
+
   export type AssessmentResultUncheckedCreateNestedOneWithoutAttemptInput = {
     create?: XOR<AssessmentResultCreateWithoutAttemptInput, AssessmentResultUncheckedCreateWithoutAttemptInput>
     connectOrCreate?: AssessmentResultCreateOrConnectWithoutAttemptInput
     connect?: AssessmentResultWhereUniqueInput
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type UserUpdateOneRequiredWithoutAttemptsNestedInput = {
@@ -36572,10 +39859,12 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAttemptsInput, UserUpdateWithoutAttemptsInput>, UserUncheckedUpdateWithoutAttemptsInput>
   }
 
-  export type AssessmentAssignmentUpdateOneRequiredWithoutAttemptsNestedInput = {
+  export type AssessmentAssignmentUpdateOneWithoutAttemptsNestedInput = {
     create?: XOR<AssessmentAssignmentCreateWithoutAttemptsInput, AssessmentAssignmentUncheckedCreateWithoutAttemptsInput>
     connectOrCreate?: AssessmentAssignmentCreateOrConnectWithoutAttemptsInput
     upsert?: AssessmentAssignmentUpsertWithoutAttemptsInput
+    disconnect?: AssessmentAssignmentWhereInput | boolean
+    delete?: AssessmentAssignmentWhereInput | boolean
     connect?: AssessmentAssignmentWhereUniqueInput
     update?: XOR<XOR<AssessmentAssignmentUpdateToOneWithWhereWithoutAttemptsInput, AssessmentAssignmentUpdateWithoutAttemptsInput>, AssessmentAssignmentUncheckedUpdateWithoutAttemptsInput>
   }
@@ -36588,6 +39877,26 @@ export namespace Prisma {
     delete?: AssessmentResultWhereInput | boolean
     connect?: AssessmentResultWhereUniqueInput
     update?: XOR<XOR<AssessmentResultUpdateToOneWithWhereWithoutAttemptInput, AssessmentResultUpdateWithoutAttemptInput>, AssessmentResultUncheckedUpdateWithoutAttemptInput>
+  }
+
+  export type StudentUpdateOneWithoutAttemptsNestedInput = {
+    create?: XOR<StudentCreateWithoutAttemptsInput, StudentUncheckedCreateWithoutAttemptsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutAttemptsInput
+    upsert?: StudentUpsertWithoutAttemptsInput
+    disconnect?: StudentWhereInput | boolean
+    delete?: StudentWhereInput | boolean
+    connect?: StudentWhereUniqueInput
+    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutAttemptsInput, StudentUpdateWithoutAttemptsInput>, StudentUncheckedUpdateWithoutAttemptsInput>
+  }
+
+  export type AssessmentUpdateOneWithoutAttemptsNestedInput = {
+    create?: XOR<AssessmentCreateWithoutAttemptsInput, AssessmentUncheckedCreateWithoutAttemptsInput>
+    connectOrCreate?: AssessmentCreateOrConnectWithoutAttemptsInput
+    upsert?: AssessmentUpsertWithoutAttemptsInput
+    disconnect?: AssessmentWhereInput | boolean
+    delete?: AssessmentWhereInput | boolean
+    connect?: AssessmentWhereUniqueInput
+    update?: XOR<XOR<AssessmentUpdateToOneWithWhereWithoutAttemptsInput, AssessmentUpdateWithoutAttemptsInput>, AssessmentUncheckedUpdateWithoutAttemptsInput>
   }
 
   export type AssessmentResultUncheckedUpdateOneWithoutAttemptNestedInput = {
@@ -37003,14 +40312,6 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type ClassUpdateOneRequiredWithoutAssignmentsNestedInput = {
     create?: XOR<ClassCreateWithoutAssignmentsInput, ClassUncheckedCreateWithoutAssignmentsInput>
     connectOrCreate?: ClassCreateOrConnectWithoutAssignmentsInput
@@ -37381,6 +40682,17 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -37397,7 +40709,7 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
     notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -37405,7 +40717,12 @@ export namespace Prisma {
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -37430,17 +40747,31 @@ export namespace Prisma {
     startedAt?: Date | string
     submittedAt?: Date | string | null
     status?: string
-    Assignment: AssessmentAssignmentCreateNestedOneWithoutAttemptsInput
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
+    Assignment?: AssessmentAssignmentCreateNestedOneWithoutAttemptsInput
     Result?: AssessmentResultCreateNestedOneWithoutAttemptInput
+    student?: StudentCreateNestedOneWithoutAttemptsInput
+    assessment?: AssessmentCreateNestedOneWithoutAttemptsInput
   }
 
   export type AssessmentAttemptUncheckedCreateWithoutUserInput = {
     id?: string
-    assignmentId: string
+    assignmentId?: string | null
     focusLoss?: number
     startedAt?: Date | string
     submittedAt?: Date | string | null
     status?: string
+    profileStudentId?: string | null
+    assessmentId?: string | null
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
     Result?: AssessmentResultUncheckedCreateNestedOneWithoutAttemptInput
   }
 
@@ -37452,6 +40783,23 @@ export namespace Prisma {
   export type AssessmentAttemptCreateManyUserInputEnvelope = {
     data: AssessmentAttemptCreateManyUserInput | AssessmentAttemptCreateManyUserInput[]
     skipDuplicates?: boolean
+  }
+
+  export type StudentCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    attempts?: AssessmentAttemptCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentUncheckedCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentCreateOrConnectWithoutUserInput = {
+    where: StudentWhereUniqueInput
+    create: XOR<StudentCreateWithoutUserInput, StudentUncheckedCreateWithoutUserInput>
   }
 
   export type WorkspaceMembershipCreateWithoutUserInput = {
@@ -37896,11 +41244,41 @@ export namespace Prisma {
     NOT?: AssessmentAttemptScalarWhereInput | AssessmentAttemptScalarWhereInput[]
     id?: StringFilter<"AssessmentAttempt"> | string
     studentId?: StringFilter<"AssessmentAttempt"> | string
-    assignmentId?: StringFilter<"AssessmentAttempt"> | string
+    assignmentId?: StringNullableFilter<"AssessmentAttempt"> | string | null
     focusLoss?: IntFilter<"AssessmentAttempt"> | number
     startedAt?: DateTimeFilter<"AssessmentAttempt"> | Date | string
     submittedAt?: DateTimeNullableFilter<"AssessmentAttempt"> | Date | string | null
     status?: StringFilter<"AssessmentAttempt"> | string
+    profileStudentId?: StringNullableFilter<"AssessmentAttempt"> | string | null
+    assessmentId?: StringNullableFilter<"AssessmentAttempt"> | string | null
+    obtainedMarks?: IntNullableFilter<"AssessmentAttempt"> | number | null
+    totalMarks?: IntNullableFilter<"AssessmentAttempt"> | number | null
+    percentage?: FloatNullableFilter<"AssessmentAttempt"> | number | null
+    rank?: IntNullableFilter<"AssessmentAttempt"> | number | null
+    createdAt?: DateTimeFilter<"AssessmentAttempt"> | Date | string
+  }
+
+  export type StudentUpsertWithoutUserInput = {
+    update: XOR<StudentUpdateWithoutUserInput, StudentUncheckedUpdateWithoutUserInput>
+    create: XOR<StudentCreateWithoutUserInput, StudentUncheckedCreateWithoutUserInput>
+    where?: StudentWhereInput
+  }
+
+  export type StudentUpdateToOneWithWhereWithoutUserInput = {
+    where?: StudentWhereInput
+    data: XOR<StudentUpdateWithoutUserInput, StudentUncheckedUpdateWithoutUserInput>
+  }
+
+  export type StudentUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUpdateManyWithoutStudentNestedInput
+  }
+
+  export type StudentUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type WorkspaceMembershipUpsertWithWhereUniqueWithoutUserInput = {
@@ -38545,6 +41923,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutMembershipsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -38553,8 +41932,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutUserInput
@@ -38572,6 +41953,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutMembershipsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -38580,8 +41962,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutUserInput
@@ -38646,6 +42030,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutMembershipsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38654,8 +42039,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutUserNestedInput
@@ -38673,6 +42060,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutMembershipsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38681,8 +42069,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -38737,6 +42127,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutStudentProfilesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -38745,8 +42136,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -38764,6 +42157,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutStudentProfilesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -38772,8 +42166,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -38838,6 +42234,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutStudentProfilesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38846,8 +42243,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -38865,6 +42264,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutStudentProfilesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38873,8 +42273,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -39041,8 +42443,15 @@ export namespace Prisma {
     startedAt?: Date | string
     submittedAt?: Date | string | null
     status?: string
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
     User: UserCreateNestedOneWithoutAttemptsInput
     Result?: AssessmentResultCreateNestedOneWithoutAttemptInput
+    student?: StudentCreateNestedOneWithoutAttemptsInput
+    assessment?: AssessmentCreateNestedOneWithoutAttemptsInput
   }
 
   export type AssessmentAttemptUncheckedCreateWithoutAssignmentInput = {
@@ -39052,6 +42461,13 @@ export namespace Prisma {
     startedAt?: Date | string
     submittedAt?: Date | string | null
     status?: string
+    profileStudentId?: string | null
+    assessmentId?: string | null
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
     Result?: AssessmentResultUncheckedCreateNestedOneWithoutAttemptInput
   }
 
@@ -39147,8 +42563,9 @@ export namespace Prisma {
     data: XOR<AssessmentAttemptUpdateManyMutationInput, AssessmentAttemptUncheckedUpdateManyWithoutAssignmentInput>
   }
 
-  export type UserCreateWithoutAttemptsInput = {
+  export type UserCreateWithoutStudentInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -39157,7 +42574,265 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
+    attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
+    studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
+    parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
+    studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutUserInput
+    classTeachers?: ClassTeacherCreateNestedManyWithoutTeacherInput
+    classStudents?: ClassStudentCreateNestedManyWithoutStudentInput
+    attendances?: AttendanceCreateNestedManyWithoutStudentInput
+    markedAttendances?: AttendanceCreateNestedManyWithoutMarkedByInput
+    updatedAttendances?: AttendanceCreateNestedManyWithoutUpdatedByInput
+    schoolAssignments?: AssignmentCreateNestedManyWithoutCreatorInput
+    feedbacks?: AssignmentFeedbackCreateNestedManyWithoutCreatorInput
+    submissions?: AssignmentSubmissionCreateNestedManyWithoutStudentInput
+    schoolLogs?: SchoolLogCreateNestedManyWithoutUserInput
+    results?: ResultCreateNestedManyWithoutStudentInput
+  }
+
+  export type UserUncheckedCreateWithoutStudentInput = {
+    id?: string
+    username?: string | null
+    name: string
+    email: string
+    passwordHash?: string | null
+    role?: string
+    isActive?: boolean
+    status?: string
+    workspaceId?: string | null
+    mode?: string | null
+    firstLogin?: boolean
+    createdAt?: Date | string
+    attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
+    studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
+    parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutUserInput
+    classTeachers?: ClassTeacherUncheckedCreateNestedManyWithoutTeacherInput
+    classStudents?: ClassStudentUncheckedCreateNestedManyWithoutStudentInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutStudentInput
+    markedAttendances?: AttendanceUncheckedCreateNestedManyWithoutMarkedByInput
+    updatedAttendances?: AttendanceUncheckedCreateNestedManyWithoutUpdatedByInput
+    schoolAssignments?: AssignmentUncheckedCreateNestedManyWithoutCreatorInput
+    feedbacks?: AssignmentFeedbackUncheckedCreateNestedManyWithoutCreatorInput
+    submissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+    schoolLogs?: SchoolLogUncheckedCreateNestedManyWithoutUserInput
+    results?: ResultUncheckedCreateNestedManyWithoutStudentInput
+  }
+
+  export type UserCreateOrConnectWithoutStudentInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutStudentInput, UserUncheckedCreateWithoutStudentInput>
+  }
+
+  export type AssessmentAttemptCreateWithoutStudentInput = {
+    id?: string
+    focusLoss?: number
+    startedAt?: Date | string
+    submittedAt?: Date | string | null
+    status?: string
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
+    User: UserCreateNestedOneWithoutAttemptsInput
+    Assignment?: AssessmentAssignmentCreateNestedOneWithoutAttemptsInput
+    Result?: AssessmentResultCreateNestedOneWithoutAttemptInput
+    assessment?: AssessmentCreateNestedOneWithoutAttemptsInput
+  }
+
+  export type AssessmentAttemptUncheckedCreateWithoutStudentInput = {
+    id?: string
+    studentId: string
+    assignmentId?: string | null
+    focusLoss?: number
+    startedAt?: Date | string
+    submittedAt?: Date | string | null
+    status?: string
+    assessmentId?: string | null
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
+    Result?: AssessmentResultUncheckedCreateNestedOneWithoutAttemptInput
+  }
+
+  export type AssessmentAttemptCreateOrConnectWithoutStudentInput = {
+    where: AssessmentAttemptWhereUniqueInput
+    create: XOR<AssessmentAttemptCreateWithoutStudentInput, AssessmentAttemptUncheckedCreateWithoutStudentInput>
+  }
+
+  export type AssessmentAttemptCreateManyStudentInputEnvelope = {
+    data: AssessmentAttemptCreateManyStudentInput | AssessmentAttemptCreateManyStudentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutStudentInput = {
+    update: XOR<UserUpdateWithoutStudentInput, UserUncheckedUpdateWithoutStudentInput>
+    create: XOR<UserCreateWithoutStudentInput, UserUncheckedCreateWithoutStudentInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutStudentInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutStudentInput, UserUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type UserUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
+    studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
+    parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
+    studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutUserNestedInput
+    classTeachers?: ClassTeacherUpdateManyWithoutTeacherNestedInput
+    classStudents?: ClassStudentUpdateManyWithoutStudentNestedInput
+    attendances?: AttendanceUpdateManyWithoutStudentNestedInput
+    markedAttendances?: AttendanceUpdateManyWithoutMarkedByNestedInput
+    updatedAttendances?: AttendanceUpdateManyWithoutUpdatedByNestedInput
+    schoolAssignments?: AssignmentUpdateManyWithoutCreatorNestedInput
+    feedbacks?: AssignmentFeedbackUpdateManyWithoutCreatorNestedInput
+    submissions?: AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+    schoolLogs?: SchoolLogUpdateManyWithoutUserNestedInput
+    results?: ResultUpdateManyWithoutStudentNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
+    studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
+    parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutUserNestedInput
+    classTeachers?: ClassTeacherUncheckedUpdateManyWithoutTeacherNestedInput
+    classStudents?: ClassStudentUncheckedUpdateManyWithoutStudentNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+    markedAttendances?: AttendanceUncheckedUpdateManyWithoutMarkedByNestedInput
+    updatedAttendances?: AttendanceUncheckedUpdateManyWithoutUpdatedByNestedInput
+    schoolAssignments?: AssignmentUncheckedUpdateManyWithoutCreatorNestedInput
+    feedbacks?: AssignmentFeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+    submissions?: AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    schoolLogs?: SchoolLogUncheckedUpdateManyWithoutUserNestedInput
+    results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
+  }
+
+  export type AssessmentAttemptUpsertWithWhereUniqueWithoutStudentInput = {
+    where: AssessmentAttemptWhereUniqueInput
+    update: XOR<AssessmentAttemptUpdateWithoutStudentInput, AssessmentAttemptUncheckedUpdateWithoutStudentInput>
+    create: XOR<AssessmentAttemptCreateWithoutStudentInput, AssessmentAttemptUncheckedCreateWithoutStudentInput>
+  }
+
+  export type AssessmentAttemptUpdateWithWhereUniqueWithoutStudentInput = {
+    where: AssessmentAttemptWhereUniqueInput
+    data: XOR<AssessmentAttemptUpdateWithoutStudentInput, AssessmentAttemptUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type AssessmentAttemptUpdateManyWithWhereWithoutStudentInput = {
+    where: AssessmentAttemptScalarWhereInput
+    data: XOR<AssessmentAttemptUpdateManyMutationInput, AssessmentAttemptUncheckedUpdateManyWithoutStudentInput>
+  }
+
+  export type AssessmentAttemptCreateWithoutAssessmentInput = {
+    id?: string
+    focusLoss?: number
+    startedAt?: Date | string
+    submittedAt?: Date | string | null
+    status?: string
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
+    User: UserCreateNestedOneWithoutAttemptsInput
+    Assignment?: AssessmentAssignmentCreateNestedOneWithoutAttemptsInput
+    Result?: AssessmentResultCreateNestedOneWithoutAttemptInput
+    student?: StudentCreateNestedOneWithoutAttemptsInput
+  }
+
+  export type AssessmentAttemptUncheckedCreateWithoutAssessmentInput = {
+    id?: string
+    studentId: string
+    assignmentId?: string | null
+    focusLoss?: number
+    startedAt?: Date | string
+    submittedAt?: Date | string | null
+    status?: string
+    profileStudentId?: string | null
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
+    Result?: AssessmentResultUncheckedCreateNestedOneWithoutAttemptInput
+  }
+
+  export type AssessmentAttemptCreateOrConnectWithoutAssessmentInput = {
+    where: AssessmentAttemptWhereUniqueInput
+    create: XOR<AssessmentAttemptCreateWithoutAssessmentInput, AssessmentAttemptUncheckedCreateWithoutAssessmentInput>
+  }
+
+  export type AssessmentAttemptCreateManyAssessmentInputEnvelope = {
+    data: AssessmentAttemptCreateManyAssessmentInput | AssessmentAttemptCreateManyAssessmentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AssessmentAttemptUpsertWithWhereUniqueWithoutAssessmentInput = {
+    where: AssessmentAttemptWhereUniqueInput
+    update: XOR<AssessmentAttemptUpdateWithoutAssessmentInput, AssessmentAttemptUncheckedUpdateWithoutAssessmentInput>
+    create: XOR<AssessmentAttemptCreateWithoutAssessmentInput, AssessmentAttemptUncheckedCreateWithoutAssessmentInput>
+  }
+
+  export type AssessmentAttemptUpdateWithWhereUniqueWithoutAssessmentInput = {
+    where: AssessmentAttemptWhereUniqueInput
+    data: XOR<AssessmentAttemptUpdateWithoutAssessmentInput, AssessmentAttemptUncheckedUpdateWithoutAssessmentInput>
+  }
+
+  export type AssessmentAttemptUpdateManyWithWhereWithoutAssessmentInput = {
+    where: AssessmentAttemptScalarWhereInput
+    data: XOR<AssessmentAttemptUpdateManyMutationInput, AssessmentAttemptUncheckedUpdateManyWithoutAssessmentInput>
+  }
+
+  export type UserCreateWithoutAttemptsInput = {
+    id?: string
+    username?: string | null
+    name: string
+    email: string
+    passwordHash?: string | null
+    role?: string
+    isActive?: boolean
+    status?: string
+    workspaceId?: string | null
+    mode?: string | null
+    firstLogin?: boolean
+    createdAt?: Date | string
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -39176,6 +42851,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutAttemptsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -39184,7 +42860,9 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -39260,6 +42938,44 @@ export namespace Prisma {
     create: XOR<AssessmentResultCreateWithoutAttemptInput, AssessmentResultUncheckedCreateWithoutAttemptInput>
   }
 
+  export type StudentCreateWithoutAttemptsInput = {
+    id?: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutStudentInput
+  }
+
+  export type StudentUncheckedCreateWithoutAttemptsInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type StudentCreateOrConnectWithoutAttemptsInput = {
+    where: StudentWhereUniqueInput
+    create: XOR<StudentCreateWithoutAttemptsInput, StudentUncheckedCreateWithoutAttemptsInput>
+  }
+
+  export type AssessmentCreateWithoutAttemptsInput = {
+    id?: string
+    title: string
+    subject: string
+    totalMarks: number
+    createdAt?: Date | string
+  }
+
+  export type AssessmentUncheckedCreateWithoutAttemptsInput = {
+    id?: string
+    title: string
+    subject: string
+    totalMarks: number
+    createdAt?: Date | string
+  }
+
+  export type AssessmentCreateOrConnectWithoutAttemptsInput = {
+    where: AssessmentWhereUniqueInput
+    create: XOR<AssessmentCreateWithoutAttemptsInput, AssessmentUncheckedCreateWithoutAttemptsInput>
+  }
+
   export type UserUpsertWithoutAttemptsInput = {
     update: XOR<UserUpdateWithoutAttemptsInput, UserUncheckedUpdateWithoutAttemptsInput>
     create: XOR<UserCreateWithoutAttemptsInput, UserUncheckedCreateWithoutAttemptsInput>
@@ -39273,6 +42989,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutAttemptsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39281,7 +42998,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -39300,6 +43019,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutAttemptsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39308,7 +43028,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -39391,24 +43113,88 @@ export namespace Prisma {
     feedback?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type StudentUpsertWithoutAttemptsInput = {
+    update: XOR<StudentUpdateWithoutAttemptsInput, StudentUncheckedUpdateWithoutAttemptsInput>
+    create: XOR<StudentCreateWithoutAttemptsInput, StudentUncheckedCreateWithoutAttemptsInput>
+    where?: StudentWhereInput
+  }
+
+  export type StudentUpdateToOneWithWhereWithoutAttemptsInput = {
+    where?: StudentWhereInput
+    data: XOR<StudentUpdateWithoutAttemptsInput, StudentUncheckedUpdateWithoutAttemptsInput>
+  }
+
+  export type StudentUpdateWithoutAttemptsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutStudentNestedInput
+  }
+
+  export type StudentUncheckedUpdateWithoutAttemptsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssessmentUpsertWithoutAttemptsInput = {
+    update: XOR<AssessmentUpdateWithoutAttemptsInput, AssessmentUncheckedUpdateWithoutAttemptsInput>
+    create: XOR<AssessmentCreateWithoutAttemptsInput, AssessmentUncheckedCreateWithoutAttemptsInput>
+    where?: AssessmentWhereInput
+  }
+
+  export type AssessmentUpdateToOneWithWhereWithoutAttemptsInput = {
+    where?: AssessmentWhereInput
+    data: XOR<AssessmentUpdateWithoutAttemptsInput, AssessmentUncheckedUpdateWithoutAttemptsInput>
+  }
+
+  export type AssessmentUpdateWithoutAttemptsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    totalMarks?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssessmentUncheckedUpdateWithoutAttemptsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    totalMarks?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AssessmentAttemptCreateWithoutResultInput = {
     id?: string
     focusLoss?: number
     startedAt?: Date | string
     submittedAt?: Date | string | null
     status?: string
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
     User: UserCreateNestedOneWithoutAttemptsInput
-    Assignment: AssessmentAssignmentCreateNestedOneWithoutAttemptsInput
+    Assignment?: AssessmentAssignmentCreateNestedOneWithoutAttemptsInput
+    student?: StudentCreateNestedOneWithoutAttemptsInput
+    assessment?: AssessmentCreateNestedOneWithoutAttemptsInput
   }
 
   export type AssessmentAttemptUncheckedCreateWithoutResultInput = {
     id?: string
     studentId: string
-    assignmentId: string
+    assignmentId?: string | null
     focusLoss?: number
     startedAt?: Date | string
     submittedAt?: Date | string | null
     status?: string
+    profileStudentId?: string | null
+    assessmentId?: string | null
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
   }
 
   export type AssessmentAttemptCreateOrConnectWithoutResultInput = {
@@ -39433,18 +43219,32 @@ export namespace Prisma {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     User?: UserUpdateOneRequiredWithoutAttemptsNestedInput
-    Assignment?: AssessmentAssignmentUpdateOneRequiredWithoutAttemptsNestedInput
+    Assignment?: AssessmentAssignmentUpdateOneWithoutAttemptsNestedInput
+    student?: StudentUpdateOneWithoutAttemptsNestedInput
+    assessment?: AssessmentUpdateOneWithoutAttemptsNestedInput
   }
 
   export type AssessmentAttemptUncheckedUpdateWithoutResultInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
-    assignmentId?: StringFieldUpdateOperationsInput | string
+    assignmentId?: NullableStringFieldUpdateOperationsInput | string | null
     focusLoss?: IntFieldUpdateOperationsInput | number
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
+    profileStudentId?: NullableStringFieldUpdateOperationsInput | string | null
+    assessmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type WorkspaceCreateWithoutNotificationsInput = {
@@ -39517,6 +43317,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutStudentLinksInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -39525,8 +43326,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutUserInput
@@ -39544,6 +43347,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutStudentLinksInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -39552,8 +43356,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutUserInput
@@ -39576,6 +43382,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutParentLinksInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -39584,8 +43391,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutUserInput
@@ -39603,6 +43412,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutParentLinksInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -39611,8 +43421,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutUserInput
@@ -39646,6 +43458,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutStudentLinksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39654,8 +43467,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutUserNestedInput
@@ -39673,6 +43488,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutStudentLinksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39681,8 +43497,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -39711,6 +43529,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutParentLinksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39719,8 +43538,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutUserNestedInput
@@ -39738,6 +43559,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutParentLinksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39746,8 +43568,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -40044,6 +43868,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutClassTeachersInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -40052,8 +43877,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -40071,6 +43898,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutClassTeachersInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -40079,8 +43907,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -40145,6 +43975,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutClassTeachersInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40153,8 +43984,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -40172,6 +44005,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutClassTeachersInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40180,8 +44014,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -40224,6 +44060,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutClassStudentsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -40232,8 +44069,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -40251,6 +44090,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutClassStudentsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -40259,8 +44099,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -40325,6 +44167,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutClassStudentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40333,8 +44176,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -40352,6 +44197,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutClassStudentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40360,8 +44206,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -40404,6 +44252,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutAttendancesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -40412,8 +44261,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -40431,6 +44282,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutAttendancesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -40439,8 +44291,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -40463,6 +44317,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutMarkedAttendancesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -40471,8 +44326,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -40490,6 +44347,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -40498,8 +44356,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -40522,6 +44382,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutUpdatedAttendancesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -40530,8 +44391,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -40549,6 +44412,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutUpdatedAttendancesInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -40557,8 +44421,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -40623,6 +44489,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40631,8 +44498,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -40650,6 +44519,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40658,8 +44528,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -40688,6 +44560,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutMarkedAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40696,8 +44569,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -40715,6 +44590,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40723,8 +44599,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -40753,6 +44631,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutUpdatedAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40761,8 +44640,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -40780,6 +44661,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutUpdatedAttendancesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40788,8 +44670,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -40832,6 +44716,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutSchoolAssignmentsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -40840,8 +44725,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -40859,6 +44746,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutSchoolAssignmentsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -40867,8 +44755,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -40987,6 +44877,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutSchoolAssignmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40995,8 +44886,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -41014,6 +44907,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutSchoolAssignmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41022,8 +44916,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -41114,6 +45010,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutFeedbacksInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -41122,8 +45019,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -41141,6 +45040,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutFeedbacksInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -41149,8 +45049,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -41231,6 +45133,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutFeedbacksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41239,8 +45142,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -41258,6 +45163,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutFeedbacksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41266,8 +45172,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -41326,6 +45234,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutSubmissionsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -41334,8 +45243,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -41353,6 +45264,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutSubmissionsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -41361,8 +45273,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -41443,6 +45357,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutSubmissionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41451,8 +45366,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -41470,6 +45387,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutSubmissionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41478,8 +45396,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -41497,6 +45417,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutSchoolLogsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -41505,8 +45426,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -41524,6 +45447,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutSchoolLogsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -41532,8 +45456,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -41567,6 +45493,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutSchoolLogsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41575,8 +45502,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -41594,6 +45523,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutSchoolLogsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41602,8 +45532,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -41621,6 +45553,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutResultsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -41629,8 +45562,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
@@ -41648,6 +45583,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutResultsInput = {
     id?: string
+    username?: string | null
     name: string
     email: string
     passwordHash?: string | null
@@ -41656,8 +45592,10 @@ export namespace Prisma {
     status?: string
     workspaceId?: string | null
     mode?: string | null
+    firstLogin?: boolean
     createdAt?: Date | string
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
     parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
@@ -41691,6 +45629,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutResultsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41699,8 +45638,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
@@ -41718,6 +45659,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutResultsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41726,8 +45668,10 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
     parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
@@ -41745,11 +45689,18 @@ export namespace Prisma {
 
   export type AssessmentAttemptCreateManyUserInput = {
     id?: string
-    assignmentId: string
+    assignmentId?: string | null
     focusLoss?: number
     startedAt?: Date | string
     submittedAt?: Date | string | null
     status?: string
+    profileStudentId?: string | null
+    assessmentId?: string | null
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
   }
 
   export type WorkspaceMembershipCreateManyUserInput = {
@@ -41896,27 +45847,48 @@ export namespace Prisma {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
-    Assignment?: AssessmentAssignmentUpdateOneRequiredWithoutAttemptsNestedInput
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Assignment?: AssessmentAssignmentUpdateOneWithoutAttemptsNestedInput
     Result?: AssessmentResultUpdateOneWithoutAttemptNestedInput
+    student?: StudentUpdateOneWithoutAttemptsNestedInput
+    assessment?: AssessmentUpdateOneWithoutAttemptsNestedInput
   }
 
   export type AssessmentAttemptUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    assignmentId?: StringFieldUpdateOperationsInput | string
+    assignmentId?: NullableStringFieldUpdateOperationsInput | string | null
     focusLoss?: IntFieldUpdateOperationsInput | number
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
+    profileStudentId?: NullableStringFieldUpdateOperationsInput | string | null
+    assessmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Result?: AssessmentResultUncheckedUpdateOneWithoutAttemptNestedInput
   }
 
   export type AssessmentAttemptUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    assignmentId?: StringFieldUpdateOperationsInput | string
+    assignmentId?: NullableStringFieldUpdateOperationsInput | string | null
     focusLoss?: IntFieldUpdateOperationsInput | number
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
+    profileStudentId?: NullableStringFieldUpdateOperationsInput | string | null
+    assessmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type WorkspaceMembershipUpdateWithoutUserInput = {
@@ -42580,6 +46552,13 @@ export namespace Prisma {
     startedAt?: Date | string
     submittedAt?: Date | string | null
     status?: string
+    profileStudentId?: string | null
+    assessmentId?: string | null
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
   }
 
   export type AssessmentAttemptUpdateWithoutAssignmentInput = {
@@ -42588,8 +46567,15 @@ export namespace Prisma {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     User?: UserUpdateOneRequiredWithoutAttemptsNestedInput
     Result?: AssessmentResultUpdateOneWithoutAttemptNestedInput
+    student?: StudentUpdateOneWithoutAttemptsNestedInput
+    assessment?: AssessmentUpdateOneWithoutAttemptsNestedInput
   }
 
   export type AssessmentAttemptUncheckedUpdateWithoutAssignmentInput = {
@@ -42599,6 +46585,13 @@ export namespace Prisma {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
+    profileStudentId?: NullableStringFieldUpdateOperationsInput | string | null
+    assessmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Result?: AssessmentResultUncheckedUpdateOneWithoutAttemptNestedInput
   }
 
@@ -42609,6 +46602,145 @@ export namespace Prisma {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
+    profileStudentId?: NullableStringFieldUpdateOperationsInput | string | null
+    assessmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssessmentAttemptCreateManyStudentInput = {
+    id?: string
+    studentId: string
+    assignmentId?: string | null
+    focusLoss?: number
+    startedAt?: Date | string
+    submittedAt?: Date | string | null
+    status?: string
+    assessmentId?: string | null
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
+  }
+
+  export type AssessmentAttemptUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    focusLoss?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    User?: UserUpdateOneRequiredWithoutAttemptsNestedInput
+    Assignment?: AssessmentAssignmentUpdateOneWithoutAttemptsNestedInput
+    Result?: AssessmentResultUpdateOneWithoutAttemptNestedInput
+    assessment?: AssessmentUpdateOneWithoutAttemptsNestedInput
+  }
+
+  export type AssessmentAttemptUncheckedUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    assignmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    focusLoss?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    assessmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Result?: AssessmentResultUncheckedUpdateOneWithoutAttemptNestedInput
+  }
+
+  export type AssessmentAttemptUncheckedUpdateManyWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    assignmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    focusLoss?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    assessmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssessmentAttemptCreateManyAssessmentInput = {
+    id?: string
+    studentId: string
+    assignmentId?: string | null
+    focusLoss?: number
+    startedAt?: Date | string
+    submittedAt?: Date | string | null
+    status?: string
+    profileStudentId?: string | null
+    obtainedMarks?: number | null
+    totalMarks?: number | null
+    percentage?: number | null
+    rank?: number | null
+    createdAt?: Date | string
+  }
+
+  export type AssessmentAttemptUpdateWithoutAssessmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    focusLoss?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    User?: UserUpdateOneRequiredWithoutAttemptsNestedInput
+    Assignment?: AssessmentAssignmentUpdateOneWithoutAttemptsNestedInput
+    Result?: AssessmentResultUpdateOneWithoutAttemptNestedInput
+    student?: StudentUpdateOneWithoutAttemptsNestedInput
+  }
+
+  export type AssessmentAttemptUncheckedUpdateWithoutAssessmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    assignmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    focusLoss?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    profileStudentId?: NullableStringFieldUpdateOperationsInput | string | null
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Result?: AssessmentResultUncheckedUpdateOneWithoutAttemptNestedInput
+  }
+
+  export type AssessmentAttemptUncheckedUpdateManyWithoutAssessmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    assignmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    focusLoss?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    profileStudentId?: NullableStringFieldUpdateOperationsInput | string | null
+    obtainedMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ClassTeacherCreateManyClassInput = {
