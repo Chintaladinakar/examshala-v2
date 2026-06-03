@@ -9,6 +9,7 @@ type UserContextType = {
   setUser: (user: UserProfile | null) => void;
   loadProfile: () => Promise<void>;
   switchMode: () => Promise<string | null>;
+  switchWorkspace: (workspaceId: string) => Promise<void>;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -19,12 +20,13 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const setUser = useUserStore((s) => s.setUser);
   const loadProfile = useUserStore((s) => s.loadProfile);
   const switchMode = useUserStore((s) => s.switchMode);
+  const switchWorkspace = useUserStore((s) => s.switchWorkspace);
 
   useEffect(() => {
     loadProfile().catch(() => undefined);
   }, [loadProfile]);
 
-  return <UserContext.Provider value={{ user, loading, setUser, loadProfile, switchMode }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user, loading, setUser, loadProfile, switchMode, switchWorkspace }}>{children}</UserContext.Provider>;
 }
 
 export function useUser() {

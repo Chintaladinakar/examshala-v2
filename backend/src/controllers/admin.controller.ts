@@ -41,6 +41,11 @@ export const getAllUsers = async (req: AuthRequest, res: Response): Promise<void
         isActive: true,
         workspaceId: true,
         createdAt: true,
+        memberships: {
+          select: {
+            workspaceId: true,
+          },
+        },
       }
     });
 
@@ -119,7 +124,7 @@ export const updateUserStatus = async (req: AuthRequest, res: Response): Promise
 export const editUser = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const id = req.params.id as string;
-    const { name, email, role, workspaceId, status } = req.body;
+    const { name, email, role, workspaceId, workspaceIds, status } = req.body;
 
     const user = await prisma.user.findUnique({ where: { id } });
     if (!user) {
@@ -152,8 +157,14 @@ export const editUser = async (req: AuthRequest, res: Response): Promise<void> =
       updateData.status = status;
       updateData.isActive = status === 'ACTIVE';
     }
-    if (workspaceId !== undefined) {
-      updateData.workspaceId = workspaceId || null;
+
+    let activeWorkspaceId = workspaceId;
+    if (Array.isArray(workspaceIds)) {
+      activeWorkspaceId = workspaceIds[0] || null;
+    }
+
+    if (activeWorkspaceId !== undefined) {
+      updateData.workspaceId = activeWorkspaceId || null;
     }
 
     const updatedUser = await prisma.user.update({
@@ -161,7 +172,30 @@ export const editUser = async (req: AuthRequest, res: Response): Promise<void> =
       data: updateData,
     });
 
-    if (workspaceId !== undefined) {
+    if (Array.isArray(workspaceIds)) {
+      // 1. Delete memberships no longer assigned
+      await prisma.workspaceMembership.deleteMany({
+        where: {
+          userId: id,
+          workspaceId: { notIn: workspaceIds },
+        },
+      });
+
+      // 2. Upsert memberships for selected workspaces
+      for (const wsId of workspaceIds) {
+        await prisma.workspaceMembership.upsert({
+          where: {
+            userId_workspaceId: { userId: id, workspaceId: wsId },
+          },
+          update: { role: (role || user.role).toLowerCase() },
+          create: {
+            userId: id,
+            workspaceId: wsId,
+            role: (role || user.role).toLowerCase(),
+          },
+        });
+      }
+    } else if (workspaceId !== undefined) {
       if (workspaceId) {
         await prisma.workspaceMembership.upsert({
           where: {
@@ -472,7 +506,7 @@ export const getAllInvites = async (req: AuthRequest, res: Response): Promise<vo
 
 export const sendInvite = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const { email, role, workspaceId } = req.body;
+    const { email, role, workspaceId, workspaceIds } = req.body;
 
     if (!email || !role) {
       res.status(400).json({
@@ -516,6 +550,15 @@ export const sendInvite = async (req: AuthRequest, res: Response): Promise<void>
       },
     });
 
+    let activeWorkspaceId = workspaceId;
+    let finalWorkspaceIds: string[] = [];
+    if (Array.isArray(workspaceIds)) {
+      activeWorkspaceId = workspaceIds[0] || null;
+      finalWorkspaceIds = workspaceIds;
+    } else if (workspaceId) {
+      finalWorkspaceIds = [workspaceId];
+    }
+
     // Initialize an INVITED user in inactive state so they can register later
     const defaultPassword = process.env.INVITE_DEFAULT_PASSWORD || 'ExamshalaInvited@123';
     const passwordHash = await bcrypt.hash(defaultPassword, 12);
@@ -527,19 +570,21 @@ export const sendInvite = async (req: AuthRequest, res: Response): Promise<void>
         role,
         status: 'INVITED',
         isActive: false, // Inactive until registered/accepted
-        workspaceId: workspaceId || null,
+        workspaceId: activeWorkspaceId || null,
       },
     });
 
-    // If workspace was provided, create an initial membership record
-    if (workspaceId) {
-      await prisma.workspaceMembership.create({
-        data: {
-          userId: pendingUser.id,
-          workspaceId,
-          role: role.toLowerCase(),
-        },
-      });
+    // Create memberships
+    if (finalWorkspaceIds.length > 0) {
+      for (const wsId of finalWorkspaceIds) {
+        await prisma.workspaceMembership.create({
+          data: {
+            userId: pendingUser.id,
+            workspaceId: wsId,
+            role: role.toLowerCase(),
+          },
+        });
+      }
     }
 
     // Audit Logging

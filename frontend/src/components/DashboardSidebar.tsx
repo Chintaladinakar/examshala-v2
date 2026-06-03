@@ -5,6 +5,25 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { fetchJson } from '@/lib/api';
 import { useUser } from '@/context/UserContext';
+import { 
+  LayoutDashboard, 
+  Users, 
+  GraduationCap, 
+  Building2, 
+  Calendar, 
+  FileText, 
+  ClipboardList, 
+  Trophy, 
+  BookOpen, 
+  TrendingUp, 
+  Terminal, 
+  Megaphone, 
+  User, 
+  Settings, 
+  LogOut, 
+  ChevronDown,
+  Sparkles
+} from 'lucide-react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -21,7 +40,7 @@ interface UserProfile {
 interface NavLink {
   href: string;
   label: string;
-  icon: string;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 interface NavGroup {
@@ -54,7 +73,7 @@ function buildLinks(role: string, mode: string): NavGroup[] {
   groups.push({
     title: '',
     links: [
-      { href: dashboardHref, label: 'Dashboard', icon: '📊' }
+      { href: dashboardHref, label: 'Dashboard', icon: LayoutDashboard }
     ]
   });
 
@@ -62,15 +81,15 @@ function buildLinks(role: string, mode: string): NavGroup[] {
   const academicLinks: NavLink[] = [];
   if (inPrincipalMode) {
     academicLinks.push(
-      { href: '/principal/students', label: 'Students', icon: '🎓' },
-      { href: '/principal/teachers', label: 'Teachers', icon: '👨‍🏫' }
+      { href: '/principal/students', label: 'Students', icon: Users },
+      { href: '/principal/teachers', label: 'Teachers', icon: GraduationCap }
     );
   } else {
-    academicLinks.push({ href: '/students', label: 'Students', icon: '🎓' });
+    academicLinks.push({ href: '/students', label: 'Students', icon: Users });
   }
   academicLinks.push(
-    { href: '/classes', label: 'Classes', icon: '🏫' },
-    { href: '/attendance', label: 'Attendance', icon: '📅' }
+    { href: '/classes', label: 'Classes', icon: Building2 },
+    { href: '/attendance', label: 'Attendance', icon: Calendar }
   );
   groups.push({
     title: 'Academic',
@@ -79,13 +98,13 @@ function buildLinks(role: string, mode: string): NavGroup[] {
 
   // 3. Assessments
   const assessmentLinks: NavLink[] = [
-    { href: '/coming-soon?feature=Exams', label: 'Exams', icon: '📝' },
-    { href: '/coming-soon?feature=QuestionBank', label: 'Question Bank', icon: '🗂️' },
+    { href: '/coming-soon?feature=Exams', label: 'Exams', icon: FileText },
+    { href: '/coming-soon?feature=QuestionBank', label: 'Question Bank', icon: ClipboardList },
   ];
   if (inPrincipalMode) {
-    assessmentLinks.push({ href: '/principal/evaluations', label: 'Evaluations Override', icon: '🏆' });
+    assessmentLinks.push({ href: '/principal/evaluations', label: 'Evaluations Override', icon: Trophy });
   } else {
-    assessmentLinks.push({ href: '/coming-soon?feature=Results', label: 'Results', icon: '🏆' });
+    assessmentLinks.push({ href: '/coming-soon?feature=Results', label: 'Results', icon: Trophy });
   }
   groups.push({
     title: 'Assessments',
@@ -96,17 +115,17 @@ function buildLinks(role: string, mode: string): NavGroup[] {
   groups.push({
     title: 'Learning',
     links: [
-      { href: '/assignments', label: 'Assignments', icon: '📚' },
-      { href: '/coming-soon?feature=StudyMaterials', label: 'Study Materials', icon: '📖' }
+      { href: '/assignments', label: 'Assignments', icon: ClipboardList },
+      { href: '/coming-soon?feature=StudyMaterials', label: 'Study Materials', icon: BookOpen }
     ]
   });
 
   // 5. Analytics
   const analyticsLinks: NavLink[] = [
-    { href: '/coming-soon?feature=Reports', label: 'Reports', icon: '📈' }
+    { href: '/coming-soon?feature=Reports', label: 'Reports', icon: TrendingUp }
   ];
   if (inPrincipalMode) {
-    analyticsLinks.push({ href: '/logs', label: 'Logs', icon: '📋' });
+    analyticsLinks.push({ href: '/logs', label: 'Logs', icon: Terminal });
   }
   groups.push({
     title: 'Analytics',
@@ -117,15 +136,15 @@ function buildLinks(role: string, mode: string): NavGroup[] {
   const communicationLinks: NavLink[] = [];
   if (inPrincipalMode) {
     communicationLinks.push(
-      { href: '/principal/announcements', label: 'Announcements Board', icon: '📣' }
+      { href: '/principal/announcements', label: 'Announcements Board', icon: Megaphone }
     );
   } else {
     communicationLinks.push(
-      { href: '/coming-soon?feature=Announcements', label: 'Announcements', icon: '📣' }
+      { href: '/coming-soon?feature=Announcements', label: 'Announcements', icon: Megaphone }
     );
   }
   communicationLinks.push(
-    { href: '/coming-soon?feature=Calendar', label: 'Calendar', icon: '📆' }
+    { href: '/coming-soon?feature=Calendar', label: 'Calendar', icon: Calendar }
   );
   groups.push({
     title: 'Communication',
@@ -134,12 +153,12 @@ function buildLinks(role: string, mode: string): NavGroup[] {
 
   // 7. Account
   const accountLinks: NavLink[] = [
-    { href: '/profile', label: 'Profile', icon: '👤' }
+    { href: '/profile', label: 'Profile', icon: User }
   ];
   if (inPrincipalMode) {
-    accountLinks.push({ href: '/principal/settings', label: 'Admin Settings', icon: '⚙️' });
+    accountLinks.push({ href: '/principal/settings', label: 'Admin Settings', icon: Settings });
   } else {
-    accountLinks.push({ href: '/coming-soon?feature=Settings', label: 'Settings', icon: '⚙️' });
+    accountLinks.push({ href: '/coming-soon?feature=Settings', label: 'Settings', icon: Settings });
   }
   groups.push({
     title: 'Account',
@@ -155,7 +174,7 @@ function SidebarSkeleton() {
   return (
     <aside
       style={{ backgroundColor: '#0f2b2b' }}
-      className="w-64 min-h-screen flex flex-col border-r border-teal-900/60 shrink-0 select-none animate-pulse"
+      className="w-64 h-screen sticky top-0 flex flex-col border-r border-teal-900/60 shrink-0 select-none animate-pulse"
     >
       <div className="p-6 border-b border-teal-900/60 space-y-3">
         <div className="h-8 bg-teal-900/60 rounded-lg w-3/4" />
@@ -179,11 +198,14 @@ function SidebarSkeleton() {
 export default function DashboardSidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { user: profile, loading, switchMode } = useUser();
+  const { user: profile, loading, switchMode, switchWorkspace } = useUser();
   const [switching, setSwitching] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [workspaceDropdownOpen, setWorkspaceDropdownOpen] = useState(false);
+  const [workspaceSwitching, setWorkspaceSwitching] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const workspaceDropdownRef = useRef<HTMLDivElement>(null);
 
   // ── Close dropdown on outside click ──────────────────────────────────────
 
@@ -192,12 +214,30 @@ export default function DashboardSidebar() {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setDropdownOpen(false);
       }
+      if (workspaceDropdownRef.current && !workspaceDropdownRef.current.contains(e.target as Node)) {
+        setWorkspaceDropdownOpen(false);
+      }
     }
-    if (dropdownOpen) {
+    if (dropdownOpen || workspaceDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [dropdownOpen]);
+  }, [dropdownOpen, workspaceDropdownOpen]);
+
+  // ── Workspace switch with redirect ────────────────────────────────────────
+
+  const handleWorkspaceSwitch = async (workspaceId: string) => {
+    if (workspaceId === profile?.workspaceId) return;
+    try {
+      setWorkspaceSwitching(true);
+      await switchWorkspace(workspaceId);
+      window.location.reload();
+    } catch (err) {
+      alert('Failed to switch workspace: ' + (err instanceof Error ? err.message : 'Unknown error'));
+    } finally {
+      setWorkspaceSwitching(false);
+    }
+  };
 
   // ── Mode switch with redirect ─────────────────────────────────────────────
 
@@ -248,7 +288,7 @@ export default function DashboardSidebar() {
   return (
     <aside
       style={{ backgroundColor: '#0f2b2b' }}
-      className="w-64 min-h-screen flex flex-col border-r border-teal-900/60 shrink-0 select-none"
+      className="w-64 h-screen sticky top-0 flex flex-col border-r border-teal-900/60 shrink-0 select-none"
     >
       {/* ── Header ── */}
       <div className="px-5 pt-6 pb-5 border-b border-teal-900/60 space-y-3">
@@ -262,14 +302,68 @@ export default function DashboardSidebar() {
           </span>
         </Link>
 
-        {/* Workspace name */}
-        <div className="flex items-center gap-1.5">
-          <span className="text-[10px] text-teal-400/80 font-semibold tracking-widest uppercase leading-none">
-            🏫
-          </span>
-          <span className="text-[11px] text-teal-300/80 font-semibold truncate leading-none">
-            {profile?.workspaceName || 'Loading workspace…'}
-          </span>
+        {/* Workspace selector dropdown trigger */}
+        <div className="relative" ref={workspaceDropdownRef}>
+          {profile?.workspaces && profile.workspaces.length > 1 ? (
+            <button
+              onClick={() => setWorkspaceDropdownOpen((prev) => !prev)}
+              className="w-full flex items-center justify-between gap-1.5 p-2 rounded-xl bg-white/5 border border-white/5 text-left text-teal-100 hover:bg-white/10 hover:text-white transition-all cursor-pointer group"
+            >
+              <div className="flex items-center gap-1.5 truncate">
+                <span className="text-[10px] leading-none shrink-0">🏫</span>
+                <span className="text-[11px] font-bold truncate leading-none">
+                  {profile.workspaceName}
+                </span>
+              </div>
+              <ChevronDown
+                className={`w-3 h-3 text-teal-400 shrink-0 transition-transform duration-200 ${
+                  workspaceDropdownOpen ? 'rotate-180 text-emerald-400' : 'group-hover:text-teal-200'
+                }`}
+              />
+            </button>
+          ) : (
+            <div className="flex items-center gap-1.5 px-2 py-1 select-none">
+              <span className="text-[10px] leading-none shrink-0">🏫</span>
+              <span className="text-[11px] text-teal-300/80 font-bold truncate leading-none">
+                {profile?.workspaceName || 'Loading workspace…'}
+              </span>
+            </div>
+          )}
+
+          {/* Workspace dropdown list */}
+          {workspaceDropdownOpen && profile?.workspaces && (
+            <div
+              className="absolute top-full left-0 right-0 mt-1 rounded-xl border border-white/10 shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-1 duration-200 p-1 space-y-0.5"
+              style={{ backgroundColor: '#0d2424', backdropFilter: 'blur(12px)' }}
+            >
+              <div className="px-2.5 py-1 text-[9px] font-extrabold text-teal-400/40 uppercase tracking-widest border-b border-white/5 mb-1">
+                Your Workspaces
+              </div>
+              {profile.workspaces.map((ws) => {
+                const isActive = ws.id === profile.workspaceId;
+                return (
+                  <button
+                    key={ws.id}
+                    onClick={() => {
+                      setWorkspaceDropdownOpen(false);
+                      handleWorkspaceSwitch(ws.id);
+                    }}
+                    disabled={workspaceSwitching || isActive}
+                    className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-[11px] font-semibold transition-all duration-150 cursor-pointer ${
+                      isActive
+                        ? 'bg-emerald-500/10 text-emerald-300'
+                        : 'text-teal-100/80 hover:bg-white/5 hover:text-white disabled:opacity-50'
+                    }`}
+                  >
+                    <span className="truncate">{ws.name}</span>
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 shadow-sm ml-1.5" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Mode badge */}
@@ -293,11 +387,11 @@ export default function DashboardSidebar() {
       </div>
 
       {/* ── Navigation ── */}
-      <nav className="flex-1 px-3 py-5 space-y-4 overflow-y-auto">
+      <nav className="flex-1 px-3 py-5 space-y-4 overflow-y-auto custom-sidebar-scrollbar">
         {links.map((group, gIdx) => (
           <div key={gIdx} className="space-y-0.5">
             {group.title && (
-              <div className="text-[10px] text-teal-400/80 font-bold uppercase tracking-wider px-3.5 pt-3 pb-1 select-none">
+              <div className="text-[10px] text-teal-400/40 font-extrabold uppercase tracking-widest px-3.5 pt-4 pb-1.5 select-none">
                 {group.title}
               </div>
             )}
@@ -310,18 +404,18 @@ export default function DashboardSidebar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`flex items-center gap-3 px-3.5 py-2 rounded-xl font-medium text-[12px] transition-all duration-150 group relative ${
+                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-[12px] transition-all duration-200 group relative border-l-4 ${
                     isActive
-                      ? 'bg-teal-800/60 text-white shadow-inner border-l-[3px] border-teal-400 pl-[13px]'
-                      : 'text-teal-100/70 hover:bg-teal-800/30 hover:text-white border-l-[3px] border-transparent pl-[13px]'
+                      ? 'bg-white/10 text-white shadow-sm border-emerald-400 pl-3.5'
+                      : 'text-teal-100/60 hover:bg-white/5 hover:text-teal-50 hover:pl-4 border-transparent pl-3.5'
                   }`}
                 >
-                  <span className="text-base leading-none">{link.icon}</span>
+                  <link.icon className={`w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-110 ${isActive ? 'text-emerald-400' : 'text-teal-300/50 group-hover:text-teal-200'}`} />
                   <span className="leading-none">{link.label}</span>
 
                   {/* Active indicator dot */}
                   {isActive && (
-                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0" />
+                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 shadow-sm" />
                   )}
                 </Link>
               );
@@ -335,15 +429,15 @@ export default function DashboardSidebar() {
         {/* Dropdown panel */}
         {dropdownOpen && (
           <div
-            className="absolute bottom-full left-3 right-3 mb-2 rounded-2xl border border-teal-800/70 shadow-2xl overflow-hidden z-50"
-            style={{ backgroundColor: '#0d2424' }}
+            className="absolute bottom-full left-3 right-3 mb-2 rounded-2xl border border-white/10 shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-bottom-2 duration-200"
+            style={{ backgroundColor: '#0d2424', backdropFilter: 'blur(12px)' }}
           >
             {/* User info header */}
-            <div className="px-4 py-3 border-b border-teal-800/50 bg-teal-900/20">
-              <p className="text-xs font-bold text-teal-100 truncate">
+            <div className="px-4 py-3 border-b border-white/5 bg-white/5">
+              <p className="text-xs font-bold text-teal-50 truncate">
                 {profile?.name || 'User'}
               </p>
-              <p className="text-[10px] text-teal-400 truncate mt-0.5">
+              <p className="text-[10px] text-teal-300/60 truncate mt-0.5">
                 {profile?.email}
               </p>
             </div>
@@ -375,9 +469,9 @@ export default function DashboardSidebar() {
               <Link
                 href="/profile"
                 onClick={() => setDropdownOpen(false)}
-                className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[12px] font-semibold text-teal-100/80 hover:bg-teal-800/40 hover:text-white transition-all duration-150"
+                className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[12px] font-semibold text-teal-100/80 hover:bg-white/5 hover:text-white transition-all duration-150"
               >
-                <span>👤</span>
+                <User className="w-3.5 h-3.5 text-teal-300/60" />
                 <span>View Profile</span>
               </Link>
 
@@ -386,7 +480,7 @@ export default function DashboardSidebar() {
                 onClick={handleLogout}
                 className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[12px] font-semibold text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 transition-all duration-150 cursor-pointer"
               >
-                <span>🚪</span>
+                <LogOut className="w-3.5 h-3.5 text-rose-400" />
                 <span>Sign Out</span>
               </button>
             </div>
@@ -396,50 +490,34 @@ export default function DashboardSidebar() {
         {/* Avatar trigger button */}
         <button
           onClick={() => setDropdownOpen((prev) => !prev)}
-          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 cursor-pointer group ${
+          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 cursor-pointer group ${
             dropdownOpen
-              ? 'bg-teal-800/50 ring-1 ring-teal-700/60'
-              : 'hover:bg-teal-800/30'
+              ? 'bg-white/10 ring-1 ring-white/10'
+              : 'hover:bg-white/5'
           }`}
         >
           {/* Avatar */}
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-teal-600 to-teal-800 border border-teal-600/60 flex items-center justify-center font-bold text-white text-xs shrink-0 shadow-inner">
-            {initials}
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-600 border border-emerald-400/30 flex items-center justify-center font-bold text-white text-xs shrink-0 shadow-sm relative overflow-hidden">
+            <span className="relative z-10">{initials}</span>
+            <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </div>
 
           {/* Name + email */}
           <div className="min-w-0 flex-1 text-left">
-            <div className="text-[12px] font-bold text-teal-100 truncate leading-snug">
+            <div className="text-[12px] font-bold text-teal-50 truncate leading-snug group-hover:text-white transition-colors">
               {profile?.name || 'User'}
             </div>
-            <div className="text-[10px] text-teal-400 truncate leading-snug">
+            <div className="text-[10px] text-teal-300/60 truncate leading-snug group-hover:text-teal-200/80 transition-colors">
               {profile?.email}
             </div>
           </div>
 
           {/* Chevron */}
-          <svg
-            className={`w-3.5 h-3.5 text-teal-500 shrink-0 transition-transform duration-200 ${
-              dropdownOpen ? 'rotate-180' : ''
+          <ChevronDown
+            className={`w-3.5 h-3.5 text-teal-400/60 group-hover:text-teal-200 shrink-0 transition-transform duration-300 ${
+              dropdownOpen ? 'rotate-180 text-emerald-400' : ''
             }`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2.5}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
-          </svg>
-        </button>
-
-        {/* Always-visible Sign Out button */}
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 mt-1 rounded-xl text-[12px] font-bold text-rose-400 hover:bg-rose-500/15 hover:text-rose-300 transition-all duration-150 cursor-pointer group border border-transparent hover:border-rose-500/20"
-        >
-          <span className="w-8 h-8 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-sm shrink-0 group-hover:bg-rose-500/20 transition-all">
-            🚪
-          </span>
-          <span>Sign Out</span>
+          />
         </button>
       </div>
     </aside>

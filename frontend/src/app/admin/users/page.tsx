@@ -12,6 +12,7 @@ interface User {
   isActive: boolean;
   workspaceId: string | null;
   createdAt: string;
+  memberships?: { workspaceId: string }[];
 }
 
 interface Workspace {
@@ -34,7 +35,7 @@ export default function UsersManagementPage() {
   const [inviteModalOpen, setInviteModalOpen] = useState(false);
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteRole, setInviteRole] = useState<'ORG_ADMIN' | 'PRINCIPAL' | 'TEACHER' | 'STUDENT'>('TEACHER');
-  const [inviteWorkspaceId, setInviteWorkspaceId] = useState('');
+  const [inviteWorkspaceIds, setInviteWorkspaceIds] = useState<string[]>([]);
   const [submittingInvite, setSubmittingInvite] = useState(false);
   const [inviteSuccessMsg, setInviteSuccessMsg] = useState<string | null>(null);
   const [inviteErrorMsg, setInviteErrorMsg] = useState<string | null>(null);
@@ -49,7 +50,7 @@ export default function UsersManagementPage() {
   const [editName, setEditName] = useState('');
   const [editEmail, setEditEmail] = useState('');
   const [editRole, setEditRole] = useState<'ORG_ADMIN' | 'PRINCIPAL' | 'TEACHER' | 'STUDENT'>('TEACHER');
-  const [editWorkspaceId, setEditWorkspaceId] = useState('');
+  const [editWorkspaceIds, setEditWorkspaceIds] = useState<string[]>([]);
   const [editStatus, setEditStatus] = useState<'ACTIVE' | 'INACTIVE' | 'INVITED'>('ACTIVE');
   const [submittingEdit, setSubmittingEdit] = useState(false);
   const [editSuccessMsg, setEditSuccessMsg] = useState<string | null>(null);
@@ -150,10 +151,8 @@ export default function UsersManagementPage() {
       const body: any = {
         email: inviteEmail,
         role: inviteRole,
+        workspaceIds: inviteWorkspaceIds,
       };
-      if (inviteWorkspaceId) {
-        body.workspaceId = inviteWorkspaceId;
-      }
 
       const res = await fetchJson<{ success: boolean; data: { password?: string } }>('/api/admin/invites', {
         method: 'POST',
@@ -168,7 +167,7 @@ export default function UsersManagementPage() {
       setGeneratedPassword(tempPassword);
       setInviteSuccessMsg(`Successfully sent invite to ${inviteEmail}!`);
       setInviteEmail('');
-      setInviteWorkspaceId('');
+      setInviteWorkspaceIds([]);
       setInviteRole('TEACHER');
       
       // Reload users list to show the new INVITED entry
@@ -185,7 +184,7 @@ export default function UsersManagementPage() {
     setEditName(user.name || '');
     setEditEmail(user.email || '');
     setEditRole(user.role);
-    setEditWorkspaceId(user.workspaceId || '');
+    setEditWorkspaceIds(user.memberships?.map(m => m.workspaceId) || (user.workspaceId ? [user.workspaceId] : []));
     setEditStatus(user.status);
     setEditSuccessMsg(null);
     setEditErrorMsg(null);
@@ -212,7 +211,7 @@ export default function UsersManagementPage() {
           name: editName,
           email: editEmail,
           role: editRole,
-          workspaceId: editWorkspaceId || null,
+          workspaceIds: editWorkspaceIds,
           status: editStatus,
         }),
       });
@@ -409,11 +408,21 @@ export default function UsersManagementPage() {
                         </span>
                       </td>
                       <td className="px-6 py-4.5">
-                        {workspace ? (
-                          <span className="text-xs font-medium text-slate-700">{workspace.name}</span>
-                        ) : (
-                          <span className="text-xs text-slate-400 italic">None</span>
-                        )}
+                        {(() => {
+                          const userWorkspaceIds = user.memberships?.map(m => m.workspaceId) || (user.workspaceId ? [user.workspaceId] : []);
+                          const assignedWorkspaces = workspaces.filter(w => userWorkspaceIds.includes(w.id));
+                          return assignedWorkspaces.length > 0 ? (
+                            <div className="flex flex-wrap gap-1 max-w-[220px]">
+                              {assignedWorkspaces.map(ws => (
+                                <span key={ws.id} className="inline-flex items-center px-2 py-0.5 bg-slate-50 border border-slate-200/80 rounded-md text-[10px] font-bold text-slate-600 shadow-3xs">
+                                  {ws.name}
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <span className="text-xs text-slate-400 italic">None</span>
+                          );
+                        })()}
                       </td>
                       <td className="px-6 py-4.5">
                         <span className="text-xs text-slate-400 font-medium">{joinedDate}</span>
@@ -568,23 +577,37 @@ export default function UsersManagementPage() {
                       </select>
                     </div>
 
-                    {/* Optional Workspace dropdown */}
-                    <div className="space-y-1">
+                    {/* Workspace checkboxes list for multi-select */}
+                    <div className="space-y-1.5">
                       <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
-                        Workspace Mapping <span className="text-slate-400 lowercase italic">(optional)</span>
+                        Workspace Mappings <span className="text-slate-400 lowercase italic">(Select all that apply)</span>
                       </label>
-                      <select
-                        value={inviteWorkspaceId}
-                        onChange={e => setInviteWorkspaceId(e.target.value)}
-                        className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-700 py-2.5 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
-                      >
-                        <option value="">None (Link later)</option>
-                        {workspaces.map(ws => (
-                          <option key={ws.id} value={ws.id}>
-                            {ws.name}
-                          </option>
-                        ))}
-                      </select>
+                      <div className="max-h-36 overflow-y-auto border border-slate-200 rounded-xl p-3 bg-slate-50/50 space-y-2">
+                        {workspaces.length === 0 ? (
+                          <span className="text-xs text-slate-400 italic block">No workspaces available</span>
+                        ) : (
+                          workspaces.map(ws => {
+                            const isChecked = inviteWorkspaceIds.includes(ws.id);
+                            return (
+                              <label key={ws.id} className="flex items-center gap-2.5 text-xs text-slate-700 font-semibold cursor-pointer select-none py-0.5 hover:text-slate-900">
+                                <input
+                                  type="checkbox"
+                                  checked={isChecked}
+                                  onChange={() => {
+                                    if (isChecked) {
+                                      setInviteWorkspaceIds(prev => prev.filter(id => id !== ws.id));
+                                    } else {
+                                      setInviteWorkspaceIds(prev => [...prev, ws.id]);
+                                    }
+                                  }}
+                                  className="rounded text-teal-950 focus:ring-teal-950/20 w-4 h-4 border-slate-300"
+                                />
+                                <span>{ws.name}</span>
+                              </label>
+                            );
+                          })
+                        )}
+                      </div>
                     </div>
 
                     {/* Submission buttons */}
@@ -686,23 +709,37 @@ export default function UsersManagementPage() {
                   </select>
                 </div>
 
-                {/* Optional Workspace dropdown */}
-                <div className="space-y-1">
+                {/* Workspace checkboxes list for multi-select */}
+                <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
-                    Workspace Mapping <span className="text-slate-400 lowercase italic">(optional)</span>
+                    Workspace Mappings <span className="text-slate-400 lowercase italic">(Select all that apply)</span>
                   </label>
-                  <select
-                    value={editWorkspaceId}
-                    onChange={e => setEditWorkspaceId(e.target.value)}
-                    className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white text-slate-700 py-2.5 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 transition-all text-sm"
-                  >
-                    <option value="">None (Unlinked)</option>
-                    {workspaces.map(ws => (
-                      <option key={ws.id} value={ws.id}>
-                        {ws.name}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="max-h-36 overflow-y-auto border border-slate-200 rounded-xl p-3 bg-slate-50/50 space-y-2">
+                    {workspaces.length === 0 ? (
+                      <span className="text-xs text-slate-400 italic block">No workspaces available</span>
+                    ) : (
+                      workspaces.map(ws => {
+                        const isChecked = editWorkspaceIds.includes(ws.id);
+                        return (
+                          <label key={ws.id} className="flex items-center gap-2.5 text-xs text-slate-700 font-semibold cursor-pointer select-none py-0.5 hover:text-slate-900">
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              onChange={() => {
+                                if (isChecked) {
+                                  setEditWorkspaceIds(prev => prev.filter(id => id !== ws.id));
+                                } else {
+                                  setEditWorkspaceIds(prev => [...prev, ws.id]);
+                                }
+                              }}
+                              className="rounded text-teal-950 focus:ring-teal-950/20 w-4 h-4 border-slate-300"
+                            />
+                            <span>{ws.name}</span>
+                          </label>
+                        );
+                      })
+                    )}
+                  </div>
                 </div>
 
                 {/* Status Selection */}

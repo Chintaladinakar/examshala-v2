@@ -13,6 +13,7 @@ export type UserProfile = {
   mode: UserMode | null;
   workspaceId: string | null;
   workspaceName: string;
+  workspaces?: { id: string; name: string; role: string }[] | null;
 };
 
 type UserStore = {
@@ -21,6 +22,7 @@ type UserStore = {
   setUser: (user: UserProfile | null) => void;
   loadProfile: () => Promise<void>;
   switchMode: () => Promise<UserMode | null>;
+  switchWorkspace: (workspaceId: string) => Promise<void>;
 };
 
 async function safeJson<T>(res: Response): Promise<T | null> {
@@ -58,6 +60,17 @@ export const useUserStore = create<UserStore>((set, get) => ({
     set({ user: body.data });
     const mode = (body.data.mode || 'principal').toLowerCase() === 'teacher' ? 'teacher' : 'principal';
     return mode;
+  },
+  switchWorkspace: async (workspaceId: string) => {
+    const res = await fetch('/api/school/switch-workspace', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ workspaceId }),
+      credentials: 'include',
+    });
+    const body = await safeJson<{ success?: boolean; data?: UserProfile }>(res);
+    if (!res.ok || !body?.success || !body.data) throw new Error('Failed to switch workspace');
+    set({ user: body.data });
   },
 }));
 

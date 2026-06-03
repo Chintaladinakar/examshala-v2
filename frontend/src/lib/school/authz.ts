@@ -42,12 +42,14 @@ export async function requireSchoolAuth(): Promise<AuthContext> {
 
   if (!user || !user.isActive) throw new Error('UNAUTHORIZED');
 
+  const role = (user.role || decoded?.role || '').toLowerCase();
+  const isGlobalAdmin = role === 'superadmin' || role === 'org_admin' || role === 'admin';
+
   const workspaceId = user.workspaceId;
-  if (!workspaceId) {
+  if (!workspaceId && !isGlobalAdmin) {
     throw new Error('NO_WORKSPACE');
   }
 
-  const role = (user.role || decoded?.role || '').toLowerCase();
   const rawMode = (user.mode || 'principal').toLowerCase();
   const mode: SchoolMode = (role === 'teacher' || role === 'tutor') ? 'teacher' : (rawMode === 'teacher' ? 'teacher' : 'principal');
 
@@ -61,7 +63,7 @@ export async function requireSchoolAuth(): Promise<AuthContext> {
     }
   }
 
-  return { userId: user.id, role, mode, workspaceId };
+  return { userId: user.id, role, mode, workspaceId: workspaceId || '' };
 }
 
 export function requirePrincipal(ctx: AuthContext) {
