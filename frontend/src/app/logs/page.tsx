@@ -53,7 +53,7 @@ export default function LogsPage() {
         <DashboardSidebar />
         <main className="flex-1 p-6">
           <div className="max-w-3xl mx-auto bg-white border rounded-2xl p-6">
-            <h1 className="text-xl font-bold text-slate-900">Logs</h1>
+            <h1 className="text-xl font-bold text-slate-900">Workspace Activity</h1>
             <p className="text-slate-600 mt-2">Only principals can access this page.</p>
           </div>
         </main>
@@ -68,7 +68,7 @@ export default function LogsPage() {
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-slate-900">Logs</h1>
+              <h1 className="text-2xl font-bold text-slate-900">Workspace Activity</h1>
               <p className="text-sm text-slate-600">Attendance, assignments, and feedback events (workspace-scoped)</p>
             </div>
             <button onClick={load} className="px-3 py-2 border rounded-xl bg-white text-sm font-semibold">

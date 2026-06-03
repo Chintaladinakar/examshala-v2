@@ -126,7 +126,7 @@ function buildLinks(role: string, mode: string): NavGroup[] {
     { href: '/coming-soon?feature=Reports', label: 'Reports', icon: TrendingUp }
   ];
   if (inPrincipalMode) {
-    analyticsLinks.push({ href: '/logs', label: 'Logs', icon: Terminal });
+    analyticsLinks.push({ href: '/logs', label: 'Workspace Activity', icon: Terminal });
   }
   groups.push({
     title: 'Analytics',
