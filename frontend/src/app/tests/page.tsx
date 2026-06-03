@@ -13,9 +13,9 @@ export default function Tests() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
       <DashboardSidebar />
-      <main className="flex-1 p-8">
+      <main className="flex-1 min-w-0 p-8">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold text-gray-900">Available Tests</h1>

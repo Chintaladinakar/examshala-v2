@@ -49,9 +49,9 @@ export default function LogsPage() {
 
   if (!isPrincipalMode) {
     return (
-      <div className="flex min-h-screen bg-slate-50">
+      <div className="flex flex-col md:flex-row min-h-screen bg-slate-50">
         <DashboardSidebar />
-        <main className="flex-1 p-6">
+        <main className="flex-1 min-w-0 p-6">
           <div className="max-w-3xl mx-auto bg-white border rounded-2xl p-6">
             <h1 className="text-xl font-bold text-slate-900">Workspace Activity</h1>
             <p className="text-slate-600 mt-2">Only principals can access this page.</p>
@@ -62,9 +62,9 @@ export default function LogsPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex flex-col md:flex-row min-h-screen bg-slate-50">
       <DashboardSidebar />
-      <main className="flex-1 p-6">
+      <main className="flex-1 min-w-0 p-6">
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="flex items-center justify-between">
             <div>
@@ -76,7 +76,7 @@ export default function LogsPage() {
             </button>
           </div>
 
-          <div className="bg-white border rounded-2xl overflow-hidden">
+          <div className="bg-white border rounded-2xl overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-slate-50 text-slate-600">
                 <tr>

@@ -136,9 +136,9 @@ export default function StudentsPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex flex-col md:flex-row min-h-screen bg-slate-50">
       <DashboardSidebar />
-      <main className="flex-1 p-6">
+      <main className="flex-1 min-w-0 p-6">
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="flex items-center justify-between">
             <div>
@@ -167,7 +167,7 @@ export default function StudentsPage() {
             </button>
           </div>
 
-          <div className="bg-white border rounded-2xl overflow-hidden">
+          <div className="bg-white border rounded-2xl overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-slate-50 text-slate-600">
                 <tr>

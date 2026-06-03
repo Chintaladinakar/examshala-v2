@@ -114,12 +114,12 @@ export default function TutorDashboardPage() {
     : 'T';
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex flex-col md:flex-row min-h-screen bg-slate-50">
       {/* Dark teal premium Sidebar */}
       <DashboardSidebar />
 
       {/* Main Dashboard Panel */}
-      <main className="flex-1 p-6 md:p-8 overflow-y-auto">
+      <main className="flex-1 min-w-0 p-6 md:p-8 overflow-y-auto">
         <div className="max-w-7xl mx-auto space-y-8">
           
           {/* ── Header Section ── */}

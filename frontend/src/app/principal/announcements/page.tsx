@@ -235,9 +235,9 @@ export default function PrincipalAnnouncementsPage() {
 
   if (!isPrincipalMode) {
     return (
-      <div className="flex min-h-screen bg-slate-50">
+      <div className="flex flex-col md:flex-row min-h-screen bg-slate-50">
         <DashboardSidebar />
-        <main className="flex-1 p-8 flex flex-col justify-center items-center">
+        <main className="flex-1 min-w-0 p-8 flex flex-col justify-center items-center">
           <div className="bg-white border p-12 rounded-3xl shadow-xl max-w-md text-center space-y-4">
             <AlertCircle className="w-16 h-16 text-rose-500 mx-auto" />
             <h2 className="text-2xl font-black text-slate-800">Access Denied</h2>
@@ -251,10 +251,10 @@ export default function PrincipalAnnouncementsPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex flex-col md:flex-row min-h-screen bg-slate-50">
       <DashboardSidebar />
 
-      <main className="flex-1 p-6 md:p-8 overflow-y-auto select-none">
+      <main className="flex-1 min-w-0 p-6 md:p-8 overflow-y-auto select-none">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b">

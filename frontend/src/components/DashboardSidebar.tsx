@@ -22,7 +22,9 @@ import {
   Settings, 
   LogOut, 
   ChevronDown,
-  Sparkles
+  Sparkles,
+  Menu,
+  X
 } from 'lucide-react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -102,9 +104,7 @@ function buildLinks(role: string, mode: string): NavGroup[] {
     { href: '/coming-soon?feature=Exams', label: 'Exams', icon: FileText },
     { href: '/coming-soon?feature=QuestionBank', label: 'Question Bank', icon: ClipboardList },
   ];
-  if (inPrincipalMode) {
-    assessmentLinks.push({ href: '/principal/evaluations', label: 'Evaluations Override', icon: Trophy });
-  } else {
+  if (!inPrincipalMode) {
     assessmentLinks.push({ href: '/coming-soon?feature=Results', label: 'Results', icon: Trophy });
   }
   groups.push({
@@ -123,7 +123,7 @@ function buildLinks(role: string, mode: string): NavGroup[] {
 
   // 5. Analytics
   const analyticsLinks: NavLink[] = [
-    { href: '/coming-soon?feature=Reports', label: 'Reports', icon: TrendingUp }
+    { href: '/reports', label: 'Reports', icon: TrendingUp }
   ];
   if (inPrincipalMode) {
     analyticsLinks.push({ href: '/logs', label: 'Workspace Activity', icon: Terminal });
@@ -203,6 +203,7 @@ export default function DashboardSidebar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [workspaceDropdownOpen, setWorkspaceDropdownOpen] = useState(false);
   const [workspaceSwitching, setWorkspaceSwitching] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const workspaceDropdownRef = useRef<HTMLDivElement>(null);
@@ -267,14 +268,80 @@ export default function DashboardSidebar() {
   // ── Render ────────────────────────────────────────────────────────────────
 
   return (
-    <aside
-      style={{ backgroundColor: '#0f2b2b' }}
-      className="w-64 h-screen sticky top-0 flex flex-col border-r border-teal-900/60 shrink-0 select-none"
-    >
-      {/* ── Header ── */}
-      <div className="px-5 pt-6 pb-5 border-b border-teal-900/60 space-y-3">
-        {/* Logo + brand */}
-        <Link href="/principledashboard" className="flex items-center gap-2.5 group">
+    <>
+      {/* Premium Mobile Top Header Bar */}
+      <header
+        style={{ backgroundColor: '#0f2b2b' }}
+        className="w-full h-16 border-b border-teal-900/60 px-4 flex items-center justify-between sticky top-0 z-40 md:hidden select-none shrink-0"
+      >
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="p-2 -ml-2 rounded-xl text-teal-100/80 hover:bg-white/5 active:bg-white/10 transition-colors cursor-pointer"
+            aria-label="Open Navigation"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+          <Link 
+            href="/principledashboard" 
+            className="flex items-center gap-2 group"
+          >
+            <div className="w-7 h-7 bg-white text-teal-950 font-black rounded-lg flex items-center justify-center text-sm shadow-md group-hover:scale-105 transition-transform duration-200">
+              E
+            </div>
+            <span className="font-extrabold text-sm tracking-tight text-white leading-none">
+              Examshala
+            </span>
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-1 px-2.5 py-1 select-none rounded-xl bg-white/5 border border-white/5">
+            <span className="text-[10px] leading-none shrink-0">🏫</span>
+            <span className="text-[11px] text-teal-300/80 font-bold truncate max-w-[100px] leading-none">
+              {profile?.workspaceName || 'Loading…'}
+            </span>
+          </div>
+          <Link
+            href="/profile"
+            className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-600 border border-emerald-400/30 flex items-center justify-center font-bold text-white text-[11px] shadow-sm relative overflow-hidden shrink-0"
+          >
+            {initials}
+          </Link>
+        </div>
+      </header>
+
+      {/* Mobile Backdrop Mask */}
+      {mobileOpen && (
+        <div 
+          onClick={() => setMobileOpen(false)}
+          className="fixed inset-0 bg-black/60 z-40 md:hidden animate-in fade-in duration-200"
+        />
+      )}
+
+      <aside
+        style={{ backgroundColor: '#0f2b2b' }}
+        className={`fixed inset-y-0 left-0 z-50 w-64 h-screen flex flex-col border-r border-teal-900/60 shrink-0 select-none transition-transform duration-300 md:sticky md:top-0 md:translate-x-0 ${
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        {/* Close Button inside Sidebar on Mobile */}
+        <button
+          onClick={() => setMobileOpen(false)}
+          className="absolute top-4 right-4 text-teal-300/80 hover:text-white p-1 md:hidden cursor-pointer"
+          aria-label="Close Navigation"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        {/* ── Header ── */}
+        <div className="px-5 pt-6 pb-5 border-b border-teal-900/60 space-y-3">
+          {/* Logo + brand */}
+          <Link 
+            href="/principledashboard" 
+            onClick={() => setMobileOpen(false)}
+            className="flex items-center gap-2.5 group"
+          >
           <div className="w-8 h-8 bg-white text-teal-950 font-black rounded-lg flex items-center justify-center text-base shadow-md group-hover:scale-105 transition-transform duration-200">
             E
           </div>
@@ -372,6 +439,7 @@ export default function DashboardSidebar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  onClick={() => setMobileOpen(false)}
                   className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-[12px] transition-all duration-200 group relative border-l-4 ${
                     isActive
                       ? 'bg-white/10 text-white shadow-sm border-emerald-400 pl-3.5'
@@ -416,7 +484,10 @@ export default function DashboardSidebar() {
               {/* View profile */}
               <Link
                 href="/profile"
-                onClick={() => setDropdownOpen(false)}
+                onClick={() => {
+                  setDropdownOpen(false);
+                  setMobileOpen(false);
+                }}
                 className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[12px] font-semibold text-teal-100/80 hover:bg-white/5 hover:text-white transition-all duration-150"
               >
                 <User className="w-3.5 h-3.5 text-teal-300/60" />
@@ -469,5 +540,6 @@ export default function DashboardSidebar() {
         </button>
       </div>
     </aside>
+  </>
   );
 }

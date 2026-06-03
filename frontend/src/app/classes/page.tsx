@@ -144,10 +144,10 @@ export default function ClassesPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex flex-col md:flex-row min-h-screen bg-slate-50">
       <DashboardSidebar />
 
-      <main className="flex-1 p-6 md:p-8 overflow-y-auto select-none">
+      <main className="flex-1 min-w-0 p-6 md:p-8 overflow-y-auto select-none">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b">

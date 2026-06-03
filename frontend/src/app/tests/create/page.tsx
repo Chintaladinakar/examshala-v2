@@ -42,9 +42,9 @@ export default function CreateTest() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
       <DashboardSidebar />
-      <main className="flex-1 p-8">
+      <main className="flex-1 min-w-0 p-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold mb-8 text-gray-900">Create New Test</h1>
 

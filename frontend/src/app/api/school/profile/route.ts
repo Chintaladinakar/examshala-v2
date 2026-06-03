@@ -45,3 +45,28 @@ export async function GET() {
   }
 }
 
+export async function PATCH(req: Request) {
+  try {
+    const ctx = await requireSchoolAuth();
+    const body = await req.json();
+    const name = (body.name || '').trim();
+
+    if (!name) {
+      return Response.json(
+        { success: false, error: { code: 'BAD_REQUEST', message: 'Name is required' } },
+        { status: 400 }
+      );
+    }
+
+    const updated = await prisma.user.update({
+      where: { id: ctx.userId },
+      data: { name },
+      select: { id: true, name: true, email: true, role: true, mode: true, workspaceId: true },
+    });
+
+    return jsonOk(updated);
+  } catch (err) {
+    return mapAuthzError(err);
+  }
+}
+
