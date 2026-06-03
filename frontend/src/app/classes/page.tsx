@@ -50,9 +50,7 @@ export default function ClassesPage() {
   const { user } = useUser();
   const { showError, showMessage } = useToast();
 
-  const isPrincipalMode =
-    (user?.role || '').toLowerCase() === 'principal' &&
-    (user?.mode || 'principal') === 'principal';
+  const isPrincipalMode = (user?.role || '').toLowerCase() === 'principal';
 
   // State
   const [classes, setClasses] = useState<ClassRow[]>([]);

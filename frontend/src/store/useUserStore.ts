@@ -21,7 +21,6 @@ type UserStore = {
   loading: boolean;
   setUser: (user: UserProfile | null) => void;
   loadProfile: () => Promise<void>;
-  switchMode: () => Promise<UserMode | null>;
   switchWorkspace: (workspaceId: string) => Promise<void>;
 };
 
@@ -50,16 +49,6 @@ export const useUserStore = create<UserStore>((set, get) => ({
     } finally {
       set({ loading: false });
     }
-  },
-  switchMode: async () => {
-    const current = get().user;
-    if (!current) return null;
-    const res = await fetch('/api/switch-mode', { method: 'POST', credentials: 'include' });
-    const body = await safeJson<{ success?: boolean; data?: UserProfile }>(res);
-    if (!res.ok || !body?.success || !body.data) throw new Error('Failed to switch mode');
-    set({ user: body.data });
-    const mode = (body.data.mode || 'principal').toLowerCase() === 'teacher' ? 'teacher' : 'principal';
-    return mode;
   },
   switchWorkspace: async (workspaceId: string) => {
     const res = await fetch('/api/school/switch-workspace', {

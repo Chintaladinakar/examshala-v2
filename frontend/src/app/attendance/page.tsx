@@ -66,9 +66,7 @@ export default function AttendancePage() {
   const { user } = useUser();
   const { showError, showMessage } = useToast();
 
-  const isPrincipalMode =
-    (user?.role || '').toLowerCase() === 'principal' &&
-    (user?.mode || 'principal') === 'principal';
+  const isPrincipalMode = (user?.role || '').toLowerCase() === 'principal';
 
   // State
   const [classes, setClasses] = useState<ClassLite[]>([]);
@@ -633,7 +631,7 @@ export default function AttendancePage() {
                   <div>
                     <span className="font-extrabold">{activeClassStats.locked} records are locked</span> on this date.
                     {isPrincipalMode ? (
-                      <span className="font-semibold ml-1 text-violet-750">Principal mode is active. Changes bypass locking rules.</span>
+                      <span className="font-semibold ml-1 text-violet-750">Principal access is active. Changes bypass locking rules.</span>
                     ) : (
                       <span className="font-semibold ml-1">Bypassing locks requires administrator key access.</span>
                     )}

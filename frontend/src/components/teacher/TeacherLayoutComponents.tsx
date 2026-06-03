@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
@@ -43,8 +43,7 @@ const navItems = [
 export const TeacherSidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const { user: profile, switchMode } = useUser();
-  const [switching, setSwitching] = useState(false);
+  const { user: profile } = useUser();
 
   const isPrincipal = profile?.role?.toLowerCase() === 'principal';
 
@@ -59,21 +58,7 @@ export const TeacherSidebar = () => {
     router.refresh();
   };
 
-  const handleSwitchToPrincipal = async () => {
-    if (!isPrincipal) return;
-    try {
-      setSwitching(true);
-      const newMode = await switchMode();
-      if (newMode === 'principal') {
-        router.push('/principledashboard');
-      }
-    } catch (err) {
-      console.error('Failed to switch mode:', err);
-      alert('Failed to switch mode');
-    } finally {
-      setSwitching(false);
-    }
-  };
+
 
   return (
     <aside className="w-64 bg-white border-r border-gray-200 h-screen sticky top-0 flex flex-col overflow-y-auto">
@@ -86,13 +71,7 @@ export const TeacherSidebar = () => {
         </Link>
       </div>
 
-      {/* Mode Badge - show if principal is in teacher mode */}
-      {isPrincipal && (
-        <div className="mx-4 mb-3 px-3 py-2 bg-emerald-50 border border-emerald-200 rounded-lg">
-          <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">🟢 Teacher Mode</p>
-          <p className="text-[9px] text-emerald-600 mt-0.5">Viewing as teacher</p>
-        </div>
-      )}
+
 
       <nav className="flex-1 px-4 space-y-1 pb-8">
         {navItems.map((item) => {
@@ -127,18 +106,7 @@ export const TeacherSidebar = () => {
       </nav>
 
       <div className="p-4 border-t border-gray-200 space-y-1">
-        {/* Switch to Principal Mode — only for principals */}
-        {isPrincipal && (
-          <button
-            type="button"
-            onClick={handleSwitchToPrincipal}
-            disabled={switching}
-            className="flex items-center gap-3 px-3 py-2 w-full rounded-lg text-sm font-medium text-purple-600 hover:bg-purple-50 hover:text-purple-700 transition-colors disabled:opacity-50 cursor-pointer"
-          >
-            <ArrowLeftRight size={18} />
-            {switching ? 'Switching…' : 'Switch to Principal Mode'}
-          </button>
-        )}
+
 
         <button
           type="button"
@@ -157,7 +125,7 @@ export const TeacherHeader = () => {
   const { user: profile } = useUser();
 
   const displayName = profile?.name || 'Teacher';
-  const displayRole = profile?.role?.toLowerCase() === 'principal' ? 'Principal (Teacher Mode)' : 'Teacher';
+  const displayRole = profile?.role?.toLowerCase() === 'principal' ? 'Principal' : 'Teacher';
   const initials = displayName
     .trim()
     .split(/\s+/)

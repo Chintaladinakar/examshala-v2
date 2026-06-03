@@ -7,7 +7,6 @@ const router = Router();
 // Protect all school routes
 router.use(protect);
 
-router.post('/switch-mode', schoolController.switchMode);
 router.post('/students/add', schoolController.addStudent);
 router.patch('/users/activate', schoolController.activateUser);
 

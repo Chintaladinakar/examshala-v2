@@ -5,7 +5,6 @@ export default async function PrincipalDashboardLayout({ children }: { children:
   try {
     const ctx = await requireSchoolAuth();
     if (ctx.role !== 'principal') redirect('/tutordashboard');
-    if (ctx.mode !== 'principal') redirect('/tutordashboard');
     return (
       <div className="min-h-screen bg-slate-50">
         {children}

@@ -18,7 +18,6 @@ interface UserProfile {
 export default function ProfilePage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [switching, setSwitching] = useState(false);
 
   const getCookie = (name: string) => {
     if (typeof document === 'undefined') return '';
@@ -52,25 +51,6 @@ export default function ProfilePage() {
     loadProfile();
   }, []);
 
-  const handleModeSwitch = async () => {
-    if (!profile || profile.role.toLowerCase() !== 'principal') return;
-    try {
-      setSwitching(true);
-      const token = getCookie('session_token');
-      const response = await fetchJson<{ success: boolean; data: any }>('/api/school/switch-mode', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (response.success) {
-        await loadProfile();
-      }
-    } catch (err: any) {
-      alert(`Failed to switch mode: ${err.message || 'Request failed'}`);
-    } finally {
-      setSwitching(false);
-    }
-  };
-
   const isPrincipal = profile?.role.toLowerCase() === 'principal';
 
   return (
@@ -83,7 +63,7 @@ export default function ProfilePage() {
           {/* Header */}
           <div>
             <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">User Profile</h1>
-            <p className="text-slate-500 mt-1">Review account role permissions, tenant settings, and hybrid modes.</p>
+            <p className="text-slate-500 mt-1">Review account role permissions and tenant settings.</p>
           </div>
 
           {loading ? (
@@ -120,39 +100,6 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              {/* Mode Settings Widget (Principal only) */}
-              {isPrincipal && (
-                <div className="bg-white rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.01)] p-6 md:p-8 space-y-5">
-                  <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-                    <div>
-                      <h3 className="font-extrabold text-slate-800 text-sm">Principal & Teacher Hybrid Control</h3>
-                      <p className="text-xs text-slate-400 mt-0.5">Toggle active state between workspace administrator and instructor.</p>
-                    </div>
-                    <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full border tracking-wide ${
-                      profile.mode === 'principal'
-                        ? 'bg-amber-500/10 text-amber-300 border-amber-500/20'
-                        : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20'
-                    }`}>
-                      {profile.mode?.toUpperCase()} MODE ACTIVE
-                    </span>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-1">
-                    <p className="text-xs text-slate-500 leading-relaxed max-w-md">
-                      {profile.mode === 'principal'
-                        ? 'You are active in Principal Mode. You can manage classrooms, assign teachers, and lock/unlock sheets, but cannot create assignments.'
-                        : 'You are active in Teacher Mode. You can mark student attendance and draft homework assignments for your classes.'}
-                    </p>
-                    <button
-                      onClick={handleModeSwitch}
-                      disabled={switching}
-                      className="bg-teal-950 hover:bg-teal-900 text-white font-semibold py-2.5 px-5 rounded-xl text-xs transition-colors shrink-0 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                    >
-                      🔄 {switching ? 'Switching State...' : `Activate ${profile.mode === 'principal' ? 'Teacher' : 'Principal'} Mode`}
-                    </button>
-                  </div>
-                </div>
-              )}
 
               {/* Info panel */}
               <div className="bg-slate-50 border border-slate-200 p-5 rounded-2xl text-xs text-slate-450 leading-relaxed">

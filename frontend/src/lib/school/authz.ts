@@ -50,8 +50,7 @@ export async function requireSchoolAuth(): Promise<AuthContext> {
     throw new Error('NO_WORKSPACE');
   }
 
-  const rawMode = (user.mode || 'principal').toLowerCase();
-  const mode: SchoolMode = (role === 'teacher' || role === 'tutor') ? 'teacher' : (rawMode === 'teacher' ? 'teacher' : 'principal');
+  const mode: SchoolMode = (role === 'teacher' || role === 'tutor') ? 'teacher' : 'principal';
 
   if (role !== 'superadmin' && role !== 'org_admin' && role !== 'admin' && workspaceId) {
     const workspace = await prisma.workspace.findUnique({
@@ -68,12 +67,11 @@ export async function requireSchoolAuth(): Promise<AuthContext> {
 
 export function requirePrincipal(ctx: AuthContext) {
   if (ctx.role !== 'principal') throw new Error('FORBIDDEN');
-  if (ctx.mode !== 'principal') throw new Error('FORBIDDEN');
 }
 
 export function requireTeacherOrPrincipal(ctx: AuthContext) {
-  const isTeacher = ctx.role === 'teacher' || ctx.role === 'tutor' || (ctx.role === 'principal' && ctx.mode === 'teacher');
-  const isPrincipal = ctx.role === 'principal' && ctx.mode === 'principal';
+  const isTeacher = ctx.role === 'teacher' || ctx.role === 'tutor';
+  const isPrincipal = ctx.role === 'principal';
   if (!isTeacher && !isPrincipal) throw new Error('FORBIDDEN');
   return { isTeacher, isPrincipal };
 }

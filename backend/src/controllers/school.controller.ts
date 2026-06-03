@@ -20,51 +20,6 @@ const createSchoolLog = async (userId: string, role: string, actionType: string,
 };
 
 // -------------------------------------------------------------
-// 1. AUTH & ROLE SWITCHING
-// -------------------------------------------------------------
-
-export const switchMode = async (req: AuthRequest, res: Response): Promise<void> => {
-  try {
-    const userId = req.user?.userId;
-    const user = await prisma.user.findUnique({ where: { id: userId } });
-
-    if (!user) {
-      res.status(404).json({ success: false, code: 'USER_NOT_FOUND', message: 'User not found' });
-      return;
-    }
-
-    if (user.role.toLowerCase() !== 'principal') {
-      res.status(403).json({
-        success: false,
-        code: 'ACCESS_DENIED',
-        message: 'Only a user with the base role of PRINCIPAL can toggle active modes.',
-      });
-      return;
-    }
-
-    const nextMode = user.mode === 'teacher' ? 'principal' : 'teacher';
-
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: { mode: nextMode },
-      select: { id: true, name: true, email: true, role: true, mode: true },
-    });
-
-    res.status(200).json({
-      success: true,
-      message: `Switched mode to ${nextMode.toUpperCase()}`,
-      data: updatedUser,
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      code: 'SERVER_ERROR',
-      message: error.message || 'Internal server error',
-    });
-  }
-};
-
-// -------------------------------------------------------------
 // 2. CLASSROOMS
 // -------------------------------------------------------------
 
@@ -562,20 +517,17 @@ export const createAssignment = async (req: AuthRequest, res: Response): Promise
     }
 
     // Role checks:
-    // Blocked if in principal mode! Must toggle to teacher mode first.
-    if (user.role.toLowerCase() === 'principal' && user.mode === 'principal') {
+    if (user.role.toLowerCase() === 'principal') {
       res.status(403).json({
         success: false,
-        code: 'PRINCIPAL_MODE_BLOCKED',
-        message: 'Assignment creation is blocked in Principal Mode. Please switch to Teacher Mode first.',
+        code: 'PRINCIPAL_BLOCKED',
+        message: 'Assignment creation is blocked for Principals.',
       });
       return;
     }
 
     const isTeacher = user.role.toLowerCase() === 'teacher';
-    const isPrincipalTeacherMode = user.role.toLowerCase() === 'principal' && user.mode === 'teacher';
-
-    if (!isTeacher && !isPrincipalTeacherMode) {
+    if (!isTeacher) {
       res.status(403).json({ success: false, code: 'ACCESS_DENIED', message: 'Only teachers can create assignments.' });
       return;
     }
@@ -593,7 +545,7 @@ export const createAssignment = async (req: AuthRequest, res: Response): Promise
       return;
     }
 
-    const createdRole = isPrincipalTeacherMode ? 'principal-teacher-mode' : 'teacher';
+    const createdRole = 'teacher';
 
     const assignment = await prisma.assignment.create({
       data: {
@@ -672,12 +624,12 @@ export const addFeedback = async (req: AuthRequest, res: Response): Promise<void
       return;
     }
 
-    // Role check: Principal mode only
-    if (user.role.toLowerCase() !== 'principal' || user.mode !== 'principal') {
+    // Role check: Principal only
+    if (user.role.toLowerCase() !== 'principal') {
       res.status(403).json({
         success: false,
         code: 'PRINCIPAL_ONLY',
-        message: 'Feedback comments can only be added when active in Principal Mode.',
+        message: 'Feedback comments can only be added by a Principal.',
       });
       return;
     }
@@ -786,7 +738,7 @@ export const getSchoolProfile = async (req: AuthRequest, res: Response): Promise
         name: user.name,
         email: user.email,
         role: user.role,
-        mode: user.mode,
+        mode: user.role.toLowerCase() === 'principal' ? 'principal' : (user.mode || 'teacher'),
         isActive: user.isActive,
         workspaceId: user.workspaceId,
         workspaceName: workspace?.name || 'Unassigned Workspace',

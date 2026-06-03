@@ -26,8 +26,9 @@ export default function StudentsPage() {
   const { user } = useUser();
   const { showError, showMessage } = useToast();
 
-  const canManage = (user?.role || '').toLowerCase() === 'principal' && (user?.mode || 'principal') === 'principal';
-  const canAdd = (user?.role || '').toLowerCase() === 'principal' || (user?.role || '').toLowerCase() === 'teacher' || (user?.role || '').toLowerCase() === 'tutor' || (user?.mode || '') === 'teacher';
+  const roleLower = (user?.role || '').toLowerCase();
+  const canManage = roleLower === 'principal';
+  const canAdd = roleLower === 'principal' || roleLower === 'teacher' || roleLower === 'tutor';
 
   const [students, setStudents] = useState<StudentRow[]>([]);
   const [classes, setClasses] = useState<ClassLite[]>([]);
@@ -109,7 +110,7 @@ export default function StudentsPage() {
   }
 
   async function toggleActive(student: StudentRow) {
-    if (!canManage) return showMessage('Only principal mode can manage students', 'info');
+    if (!canManage) return showMessage('Only principals can manage students', 'info');
     try {
       const updated = await apiJson<{ id: string; isActive: boolean }>('/api/students/status', {
         method: 'PATCH',

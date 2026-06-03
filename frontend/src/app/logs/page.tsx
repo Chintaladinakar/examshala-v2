@@ -54,7 +54,7 @@ export default function LogsPage() {
         <main className="flex-1 p-6">
           <div className="max-w-3xl mx-auto bg-white border rounded-2xl p-6">
             <h1 className="text-xl font-bold text-slate-900">Logs</h1>
-            <p className="text-slate-600 mt-2">Only principals (principal mode) can access this page.</p>
+            <p className="text-slate-600 mt-2">Only principals can access this page.</p>
           </div>
         </main>
       </div>

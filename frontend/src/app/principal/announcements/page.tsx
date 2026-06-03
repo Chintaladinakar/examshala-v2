@@ -242,7 +242,7 @@ export default function PrincipalAnnouncementsPage() {
             <AlertCircle className="w-16 h-16 text-rose-500 mx-auto" />
             <h2 className="text-2xl font-black text-slate-800">Access Denied</h2>
             <p className="text-slate-500 text-sm leading-relaxed">
-              This dashboard is exclusive to Principals in Principal Mode. Please toggle your role from the sidebar.
+              This dashboard is exclusive to Principals.
             </p>
           </div>
         </main>

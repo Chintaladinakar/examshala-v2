@@ -31,9 +31,8 @@ export default function AssignmentsPage() {
   const { showError, showMessage } = useToast();
 
   const role = (user?.role || '').toLowerCase();
-  const mode = (user?.mode || 'principal').toLowerCase();
-  const isTeacherMode = role === 'teacher' || role === 'tutor' || (role === 'principal' && mode === 'teacher');
-  const isPrincipalMode = role === 'principal' && mode === 'principal';
+  const isTeacherMode = role === 'teacher' || role === 'tutor';
+  const isPrincipalMode = role === 'principal';
 
   const [assignments, setAssignments] = useState<AssignmentRow[]>([]);
   const [classes, setClasses] = useState<ClassLite[]>([]);

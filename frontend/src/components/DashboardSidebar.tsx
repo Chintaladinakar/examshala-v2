@@ -199,8 +199,7 @@ function SidebarSkeleton() {
 export default function DashboardSidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { user: profile, loading, switchMode, switchWorkspace } = useUser();
-  const [switching, setSwitching] = useState(false);
+  const { user: profile, loading, switchWorkspace } = useUser();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [workspaceDropdownOpen, setWorkspaceDropdownOpen] = useState(false);
   const [workspaceSwitching, setWorkspaceSwitching] = useState(false);
@@ -240,26 +239,7 @@ export default function DashboardSidebar() {
     }
   };
 
-  // ── Mode switch with redirect ─────────────────────────────────────────────
 
-  const handleModeSwitch = async () => {
-    if (!profile || profile.role.toLowerCase() !== 'principal') return;
-    setDropdownOpen(false);
-    try {
-      setSwitching(true);
-      const newMode = await switchMode();
-      if (newMode) {
-        // Redirect to the correct dashboard for the new mode
-        const targetPath = newMode === 'teacher' ? '/tutordashboard' : '/principledashboard';
-        router.push(targetPath);
-      }
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Request failed';
-      alert(`Failed to switch mode: ${msg}`);
-    } finally {
-      setSwitching(false);
-    }
-  };
 
   // ── Logout ────────────────────────────────────────────────────────────────
 
@@ -367,24 +347,11 @@ export default function DashboardSidebar() {
           )}
         </div>
 
-        {/* Mode badge */}
-        {isPrincipal ? (
-          <span
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
-              inPrincipalMode
-                ? 'bg-violet-500/15 text-violet-300 border-violet-500/25'
-                : 'bg-emerald-500/15 text-emerald-300 border-emerald-500/25'
-            }`}
-          >
-            <span className="text-[8px]">{inPrincipalMode ? '🟣' : '🟢'}</span>
-            {inPrincipalMode ? 'Principal Mode' : 'Teacher Mode'}
-          </span>
-        ) : (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-300 border border-emerald-500/25">
-            <span className="text-[8px]">🟢</span>
-            {role}
-          </span>
-        )}
+        {/* Role badge */}
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-300 border border-emerald-500/25">
+          <span className="text-[8px]">🟢</span>
+          {role}
+        </span>
       </div>
 
       {/* ── Navigation ── */}
@@ -444,27 +411,7 @@ export default function DashboardSidebar() {
             </div>
 
             <div className="p-1.5 space-y-0.5">
-              {/* Switch mode — only for principals */}
-              {isPrincipal && (
-                <button
-                  onClick={handleModeSwitch}
-                  disabled={switching}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[12px] font-semibold transition-all duration-150 cursor-pointer disabled:opacity-50 ${
-                    inPrincipalMode
-                      ? 'text-emerald-300 hover:bg-emerald-500/10'
-                      : 'text-violet-300 hover:bg-violet-500/10'
-                  }`}
-                >
-                  <span>{switching ? '⏳' : '🔄'}</span>
-                  <span>
-                    {switching
-                      ? 'Switching…'
-                      : inPrincipalMode
-                      ? 'Switch to Teacher Mode'
-                      : 'Switch to Principal Mode'}
-                  </span>
-                </button>
-              )}
+
 
               {/* View profile */}
               <Link
