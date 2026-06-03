@@ -18,7 +18,8 @@ import {
   TeacherActivitySummaryCard,
   StatSkeleton,
   CardSkeleton,
-  PerformanceOverviewSkeleton
+  PerformanceOverviewSkeleton,
+  WorkspaceSetupChecklist
 } from '@/components/teacher/DashboardWidgets';
 import {
   Users,
@@ -219,6 +220,11 @@ export default function PrincipalDashboardPage() {
               {/* Principal workspace overview banner */}
               {data.workspaceOverview && (
                 <WorkspaceOverviewCard stats={data.workspaceOverview} />
+              )}
+
+              {/* Workspace onboarding setup checklist (only shows for new workspaces) */}
+              {data.workspaceOverview && (
+                <WorkspaceSetupChecklist stats={data.workspaceOverview} />
               )}
 
               {/* ── 4 Quick Stats Row ── */}

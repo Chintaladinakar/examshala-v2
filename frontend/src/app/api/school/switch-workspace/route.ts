@@ -1,7 +1,32 @@
 import { NextRequest } from 'next/server';
+import { cookies } from 'next/headers';
+import crypto from 'crypto';
 import { prisma } from '@/lib/prisma';
 import { mapAuthzError, jsonError, jsonOk } from '@/lib/school/http';
 import { requireSchoolAuth } from '@/lib/school/authz';
+
+function signJwt(payload: any, secret: string): string {
+  const header = { alg: 'HS256', typ: 'JWT' };
+  
+  const base64Url = (str: string) => 
+    Buffer.from(str)
+      .toString('base64')
+      .replace(/=/g, '')
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_');
+      
+  const unsignedToken = `${base64Url(JSON.stringify(header))}.${base64Url(JSON.stringify(payload))}`;
+  
+  const signature = crypto
+    .createHmac('sha256', secret)
+    .update(unsignedToken)
+    .digest('base64')
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+    
+  return `${unsignedToken}.${signature}`;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -29,10 +54,17 @@ export async function POST(req: NextRequest) {
       return jsonError('FORBIDDEN', 'You do not have access to this workspace', 403);
     }
     
-    // 2. Update the user's active workspaceId in the User database model
+    const targetRole = membership.role.toUpperCase();
+    const targetMode = (membership.role.toLowerCase() === 'teacher' || membership.role.toLowerCase() === 'tutor') ? 'teacher' : 'principal';
+
+    // 2. Update the user's active workspaceId, role, and mode in the User database model
     await prisma.user.update({
       where: { id: ctx.userId },
-      data: { workspaceId: workspaceId },
+      data: {
+        workspaceId: workspaceId,
+        role: targetRole,
+        mode: targetMode,
+      },
     });
     
     // 3. Fetch the new active workspace details
@@ -65,6 +97,22 @@ export async function POST(req: NextRequest) {
       name: m.Workspace.name,
       role: m.role,
     }));
+
+    // 6. Generate and set a new JWT token to update user's session cookie
+    const jwtSecret = process.env.JWT_SECRET || 'examshala-jwt-secret-change-in-production';
+    const payload = {
+      userId: ctx.userId,
+      role: targetRole,
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60,
+    };
+    const token = signJwt(payload, jwtSecret);
+    
+    (await cookies()).set('session_token', token, {
+      path: '/',
+      maxAge: 86400,
+      sameSite: 'lax',
+    });
     
     return jsonOk({
       id: user?.id,
@@ -80,3 +128,4 @@ export async function POST(req: NextRequest) {
     return mapAuthzError(err);
   }
 }
+

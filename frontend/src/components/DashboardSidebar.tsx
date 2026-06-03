@@ -81,8 +81,9 @@ function buildLinks(role: string, mode: string): NavGroup[] {
   const academicLinks: NavLink[] = [];
   if (inPrincipalMode) {
     academicLinks.push(
-      { href: '/principal/students', label: 'Students', icon: Users },
-      { href: '/principal/teachers', label: 'Teachers', icon: GraduationCap }
+      { href: '/students', label: 'Students', icon: Users },
+      { href: '/principal/teachers', label: 'Teachers', icon: GraduationCap },
+      { href: '/principal/join-requests', label: 'Admission Requests', icon: Users }
     );
   } else {
     academicLinks.push({ href: '/students', label: 'Students', icon: Users });

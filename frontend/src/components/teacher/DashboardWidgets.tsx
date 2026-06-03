@@ -20,7 +20,8 @@ import {
   Percent,
   Check,
   X,
-  Volume2
+  Volume2,
+  ArrowUpRight
 } from 'lucide-react';
 import { useToast } from '@/components/ui/ToastProvider';
 
@@ -81,7 +82,7 @@ export function PendingGradingCard({ items, onReview }: {
   onReview?: (id: string) => void;
 }) {
   return (
-    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col h-full">
+    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col">
       <div className="flex items-center justify-between mb-5 select-none">
         <div>
           <h2 className="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
@@ -132,7 +133,7 @@ export function UpcomingClassesCard({ timetable }: {
   timetable: { id: string; className: string; subject: string; startTime: string; endTime: string }[];
 }) {
   return (
-    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col h-full">
+    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col">
       <div className="flex items-center justify-between mb-5 select-none">
         <div>
           <h2 className="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
@@ -197,7 +198,7 @@ export function AnnouncementsCard({ announcements, isPrincipal, onPublish }: {
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col h-full relative">
+    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col relative">
       <div className="flex items-center justify-between mb-5 select-none">
         <div>
           <h2 className="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
@@ -307,7 +308,7 @@ export function AttendanceSummaryCard({ stats }: {
   const latePct = total > 0 ? Math.round((stats.late / total) * 100) : 0;
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col h-full">
+    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col">
       <div className="flex items-center justify-between mb-5 select-none">
         <div>
           <h2 className="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
@@ -377,7 +378,7 @@ export function AssignmentAnalyticsCard({ stats }: {
   const overduePct = stats.total > 0 ? Math.round((stats.overdue / stats.total) * 100) : 10;
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col h-full">
+    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col">
       <div className="flex items-center justify-between mb-5 select-none">
         <div>
           <h2 className="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
@@ -464,7 +465,7 @@ export function CalendarWidget() {
   }, []);
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col h-full">
+    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col">
       <div className="flex items-center justify-between mb-4 select-none">
         <div>
           <h2 className="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
@@ -653,7 +654,7 @@ export function RecentActivityFeed({ feed }: {
   feed: { id: string; type: string; description: string; timestamp: string; actor: string }[];
 }) {
   return (
-    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col h-full">
+    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col">
       <div className="flex items-center justify-between mb-5 select-none">
         <div>
           <h2 className="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
@@ -739,6 +740,123 @@ export function WorkspaceOverviewCard({ stats }: {
   );
 }
 
+// ─── Workspace Onboarding / Setup Checklist ──────────────────────────────
+export function WorkspaceSetupChecklist({ stats }: {
+  stats: { totalTeachers: number; totalStudents: number; totalClasses: number; activeExams: number };
+}) {
+  const steps = [
+    {
+      title: 'Add Grade Classes',
+      desc: 'Create classroom sections for student assignments.',
+      completed: stats.totalClasses > 0,
+      href: '/principal/settings',
+      actionText: 'Manage Classes',
+    },
+    {
+      title: 'Invite Faculty Teachers',
+      desc: 'Register teacher profiles to manage curriculum lectures.',
+      completed: stats.totalTeachers > 0,
+      href: '/principal/teachers',
+      actionText: 'Manage Teachers',
+    },
+    {
+      title: 'Review Admission Requests',
+      desc: 'Approve pending student registration requests.',
+      completed: stats.totalStudents > 0,
+      href: '/principal/join-requests',
+      actionText: 'Review Queue',
+    },
+    {
+      title: 'Broadcast Announcement',
+      desc: 'Send a campus-wide alert or school bulletin.',
+      completed: stats.activeExams > 0 || stats.totalClasses > 1, // dynamically check configuration
+      href: '/principal/announcements',
+      actionText: 'Create Notice',
+    },
+  ];
+
+  const completedCount = steps.filter(s => s.completed).length;
+  const progressPct = Math.round((completedCount / steps.length) * 100);
+
+  // Show if the workspace is new (e.g. no classes or teachers)
+  const isNewWorkspace = stats.totalClasses === 0 || stats.totalTeachers === 0;
+  if (!isNewWorkspace) return null;
+
+  return (
+    <div className="bg-gradient-to-br from-teal-950 via-[#0f2b2b] to-emerald-950 border border-teal-800/40 shadow-xl p-6 md:p-8 rounded-3xl text-white space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            Getting Started
+          </span>
+          <h2 className="text-xl md:text-2xl font-black tracking-tight flex items-center gap-2 mt-1">
+            🚀 Setup institutional workspace
+          </h2>
+          <p className="text-teal-100/60 text-xs font-semibold">
+            Complete the checklist below to initialize all institution operations and unlock active dashboards.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="text-right">
+            <span className="text-sm font-black block text-emerald-400">{completedCount} of {steps.length} Completed</span>
+            <span className="text-[10px] text-teal-200/50">Setup Progress</span>
+          </div>
+          <div className="w-12 h-12 rounded-full border-4 border-teal-900 flex items-center justify-center relative bg-teal-950 font-black text-xs">
+            {progressPct}%
+          </div>
+        </div>
+      </div>
+
+      {/* Progress Bar */}
+      <div className="w-full bg-teal-950 h-2 rounded-full overflow-hidden border border-teal-900/60">
+        <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500" style={{ width: `${progressPct}%` }} />
+      </div>
+
+      {/* Steps Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {steps.map((step, idx) => (
+          <div
+            key={idx}
+            className={`p-5 rounded-2xl border transition-all duration-200 flex flex-col justify-between h-full ${
+              step.completed
+                ? 'bg-emerald-950/20 border-emerald-800/40 text-emerald-100'
+                : 'bg-white/5 border-white/5 text-teal-100 hover:bg-white/10 hover:border-white/10'
+            }`}
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-xs font-black">{step.title}</span>
+                {step.completed ? (
+                  <span className="text-xs">✅</span>
+                ) : (
+                  <span className="text-xs text-teal-400/60">⏳</span>
+                )}
+              </div>
+              <p className="text-[10px] leading-relaxed text-teal-100/50 font-medium mt-1">
+                {step.desc}
+              </p>
+            </div>
+
+            <div className="pt-4 mt-4 border-t border-white/5 flex items-center justify-between">
+              {step.completed ? (
+                <span className="text-[9px] font-black uppercase text-emerald-400">Completed</span>
+              ) : (
+                <a
+                  href={step.href}
+                  className="inline-flex items-center gap-1 text-[10px] font-extrabold text-teal-300 hover:text-white transition-colors"
+                >
+                  {step.actionText} <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Principal-only Teacher Activity Summary ───────────────────────────────
 export function TeacherActivitySummaryCard({ teachers }: {
   teachers: { id: string; teacherName: string; classesAssigned: number; examsCreated: number; assignmentsCreated: number }[];
@@ -819,7 +937,7 @@ export function StatSkeleton() {
 
 export function CardSkeleton() {
   return (
-    <div className="bg-white border border-slate-100 shadow-3xs p-6 rounded-3xl animate-pulse space-y-4 select-none h-full min-h-[220px]">
+    <div className="bg-white border border-slate-100 shadow-3xs p-6 rounded-3xl animate-pulse space-y-4 select-none min-h-[220px]">
       <div className="space-y-2">
         <div className="h-4 bg-slate-200 rounded w-1/3" />
         <div className="h-3 bg-slate-100 rounded w-1/2" />
