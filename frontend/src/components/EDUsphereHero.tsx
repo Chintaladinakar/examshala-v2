@@ -7,10 +7,7 @@ const EdusphereHero = () => {
       {/* Top Navbar */}
       <header className="px-6 py-5 max-w-7xl mx-auto flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5 cursor-pointer">
-          <div className="w-8 h-8 bg-teal-700 rounded-lg flex items-center justify-center shadow-sm">
-            <span className="text-white font-bold text-xl leading-none">E</span>
-          </div>
-          <span className="text-xl font-bold tracking-tight text-slate-900">EDUsphere</span>
+          <img src="/edusphere logo1.png" className="h-9 w-auto object-contain" alt="EDUsphere Logo" />
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
           <Link href="/coming-soon" className="hover:text-teal-700 transition-colors">Features</Link>

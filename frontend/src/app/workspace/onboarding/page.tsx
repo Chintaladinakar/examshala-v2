@@ -23,9 +23,7 @@ export default function WorkspaceOnboardingPage() {
       {/* Header */}
       <header className="max-w-7xl w-full mx-auto px-6 py-6 flex items-center justify-between z-10">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-white text-teal-950 font-black rounded-lg flex items-center justify-center text-base shadow-lg">
-            E
-          </div>
+          <img src="/logo.png" className="w-8 h-8 object-contain rounded-lg shadow-lg" alt="Logo" />
           <span className="font-extrabold text-lg tracking-tight text-white">
             EDUsphere
           </span>

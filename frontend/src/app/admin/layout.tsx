@@ -110,9 +110,7 @@ export default function AdminLayout({
           {/* Logo Brand */}
           <div className="px-6 py-6 border-b border-teal-900 flex items-center justify-between">
             <Link href="/admin" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-white text-teal-950 font-black rounded-lg flex items-center justify-center">
-                E
-              </div>
+              <img src="/logo.png" className="w-8 h-8 object-contain rounded-lg" alt="Logo" />
               <span className="font-extrabold text-lg tracking-tight text-white">EDUsphere Admin</span>
             </Link>
             <button 

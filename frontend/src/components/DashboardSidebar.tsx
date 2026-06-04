@@ -285,9 +285,7 @@ export default function DashboardSidebar() {
             href="/principledashboard" 
             className="flex items-center gap-2 group"
           >
-            <div className="w-7 h-7 bg-white text-teal-950 font-black rounded-lg flex items-center justify-center text-sm shadow-md group-hover:scale-105 transition-transform duration-200">
-              E
-            </div>
+            <img src="/logo.png" className="w-7 h-7 object-contain rounded-lg shadow-md group-hover:scale-105 transition-transform duration-200" alt="E" />
             <span className="font-extrabold text-sm tracking-tight text-white leading-none">
               EDUsphere
             </span>
@@ -341,9 +339,7 @@ export default function DashboardSidebar() {
             onClick={() => setMobileOpen(false)}
             className="flex items-center gap-2.5 group"
           >
-          <div className="w-8 h-8 bg-white text-teal-950 font-black rounded-lg flex items-center justify-center text-base shadow-md group-hover:scale-105 transition-transform duration-200">
-            E
-          </div>
+          <img src="/logo.png" className="w-8 h-8 object-contain rounded-lg shadow-md group-hover:scale-105 transition-transform duration-200" alt="E" />
           <span className="font-extrabold text-lg tracking-tight text-white leading-none">
             EDUsphere
           </span>

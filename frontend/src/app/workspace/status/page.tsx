@@ -68,9 +68,7 @@ export default function WorkspaceRequestStatusPage() {
       {/* Top Navbar */}
       <header className="max-w-7xl w-full mx-auto px-6 py-5 flex items-center justify-between border-b border-slate-900 z-10">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 bg-white text-teal-950 font-black rounded-lg flex items-center justify-center text-sm shadow-md">
-            E
-          </div>
+          <img src="/logo.png" className="w-7 h-7 object-contain rounded-lg shadow-md" alt="Logo" />
           <span className="font-extrabold text-base tracking-tight text-white">
             EDUsphere
           </span>
