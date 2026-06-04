@@ -74,7 +74,7 @@ async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
 }
 
 export default function ActiveWorkspacesPage() {
-  const { user } = useUser();
+  const { user, loading: profileLoading } = useUser();
   const { showError, showMessage } = useToast();
   const router = useRouter();
 
@@ -169,6 +169,17 @@ export default function ActiveWorkspacesPage() {
     setWorkspaceToSuspend(workspace);
     setSuspendModalOpen(true);
   };
+
+  if (profileLoading) {
+    return (
+      <div className="min-h-screen bg-slate-955 flex flex-col justify-center items-center select-none text-slate-100 relative overflow-hidden">
+        <div className="flex flex-col items-center gap-2">
+          <RefreshCw className="w-8 h-8 animate-spin text-teal-500" />
+          <span className="text-xs font-bold text-slate-400">Verifying administrator authorization...</span>
+        </div>
+      </div>
+    );
+  }
 
   if (!isSuperAdmin) {
     return (
