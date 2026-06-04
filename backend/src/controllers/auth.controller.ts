@@ -82,3 +82,55 @@ export const resetPasswordController = async (
     });
   }
 };
+
+export const forgotPasswordController = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { email } = req.body;
+    const result = await authService.forgotPassword({ email });
+
+    res.status(200).json({
+      success: true,
+      message: "If a user with this email exists, a password reset link has been generated.",
+      data: result,
+    });
+  } catch (error: any) {
+    const status = error.status || 500;
+    const message = error.message || "Internal server error";
+    const code = error.code || "SERVER_ERROR";
+
+    res.status(status).json({
+      success: false,
+      code,
+      message,
+    });
+  }
+};
+
+export const resetPasswordWithTokenController = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { token, password } = req.body;
+    const result = await authService.resetPasswordWithToken({ token, password });
+
+    res.status(200).json({
+      success: true,
+      message: "Password reset successfully.",
+      data: result,
+    });
+  } catch (error: any) {
+    const status = error.status || 500;
+    const message = error.message || "Internal server error";
+    const code = error.code || "SERVER_ERROR";
+
+    res.status(status).json({
+      success: false,
+      code,
+      message,
+    });
+  }
+};

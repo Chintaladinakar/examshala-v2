@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import prisma from '../lib/prisma';
 import { generateToken } from '../lib/jwt';
+import jwt from 'jsonwebtoken';
 
 interface SignupInput {
   name: string;
@@ -152,5 +153,93 @@ export const resetPassword = async ({ email, currentPassword, newPassword }: any
       role: updatedUser.role,
       firstLogin: updatedUser.firstLogin,
     },
+  };
+};
+
+/**
+ * Initiates the password reset process by generating a signed JWT token.
+ * The token's signing key includes the user's current password hash,
+ * rendering the token single-use once the password is successfully updated.
+ */
+export const forgotPassword = async ({ email }: { email: string }) => {
+  if (!email) {
+    throw { status: 400, code: 'MISSING_FIELDS', message: 'Email is required' };
+  }
+
+  const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
+  if (!user) {
+    throw { status: 404, code: 'USER_NOT_FOUND', message: 'No account exists with this email address' };
+  }
+
+  const JWT_SECRET = process.env.JWT_SECRET || 'examshala-dev-secret-change-in-production';
+  const secret = JWT_SECRET + (user.passwordHash || '');
+  const token = jwt.sign({ email: user.email }, secret, { expiresIn: '1h' });
+
+  const resetLink = `http://localhost:3000/reset-password-with-token?token=${encodeURIComponent(token)}`;
+  
+  console.log('\n----------------------------------------');
+  console.log(`[auth] Password reset requested for: ${user.email}`);
+  console.log(`[auth] Dev Reset Link: ${resetLink}`);
+  console.log('----------------------------------------\n');
+
+  return {
+    success: true,
+    resetLink, // Returned for dev testing convenience
+  };
+};
+
+/**
+ * Resets a user's password using a valid, unexpired reset token.
+ * Validates token signature dynamically based on the current password hash.
+ */
+export const resetPasswordWithToken = async ({ token, password }: any) => {
+  if (!token || !password) {
+    throw { status: 400, code: 'MISSING_FIELDS', message: 'Token and new password are required' };
+  }
+
+  if (password.length < 6) {
+    throw { status: 400, code: 'INVALID_PASSWORD', message: 'Password must be at least 6 characters long' };
+  }
+
+  // 1. Decode token to find email
+  let decoded: any;
+  try {
+    decoded = jwt.decode(token);
+  } catch (err) {
+    throw { status: 400, code: 'INVALID_TOKEN', message: 'Invalid token format' };
+  }
+
+  if (!decoded || !decoded.email) {
+    throw { status: 400, code: 'INVALID_TOKEN', message: 'Invalid reset token payload' };
+  }
+
+  // 2. Fetch user
+  const user = await prisma.user.findUnique({ where: { email: decoded.email } });
+  if (!user) {
+    throw { status: 404, code: 'USER_NOT_FOUND', message: 'User not found' };
+  }
+
+  // 3. Verify token with user's dynamic secret
+  const JWT_SECRET = process.env.JWT_SECRET || 'examshala-dev-secret-change-in-production';
+  const secret = JWT_SECRET + (user.passwordHash || '');
+
+  try {
+    jwt.verify(token, secret);
+  } catch (err: any) {
+    throw { status: 400, code: 'TOKEN_EXPIRED', message: 'Reset token is invalid or has expired' };
+  }
+
+  // 4. Hash new password and update user record
+  const passwordHash = await bcrypt.hash(password, 12);
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      passwordHash,
+      firstLogin: false, // Reset password establishes credentials
+    },
+  });
+
+  return {
+    success: true,
   };
 };

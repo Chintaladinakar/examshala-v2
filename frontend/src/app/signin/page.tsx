@@ -99,6 +99,12 @@ export default function SignIn() {
             required
           />
 
+          <div className="flex items-center justify-end text-xs -mt-3">
+            <Link href="/forgot-password" className="text-blue-600 hover:underline font-semibold">
+              Forgot password?
+            </Link>
+          </div>
+
           <button
             type="submit"
             disabled={loading}
