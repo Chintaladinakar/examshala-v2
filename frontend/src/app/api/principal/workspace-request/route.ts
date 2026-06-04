@@ -121,8 +121,31 @@ export async function POST(req: NextRequest) {
       rejectionReason: '',
     };
 
+    /**
+     * Generates a unique, short, and brand-consistent 8-character Workspace ID.
+     * The ID is prefixed with 'ES-' (Examshala) followed by 5 random uppercase letters/numbers.
+     * Exposes a user-friendly mnemonic code (e.g. ES-6MCED) instead of long UUID database keys,
+     * protecting DB schema privacy and making it extremely easy for users to type and share.
+     */
+    const generateWorkspaceId = async (): Promise<string> => {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let attempts = 0;
+      while (attempts < 50) {
+        let code = 'ES-';
+        for (let i = 0; i < 5; i++) {
+          code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        const existing = await prisma.workspace.findUnique({ where: { id: code } });
+        if (!existing) return code;
+        attempts++;
+      }
+      return `ES-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    };
+    const workspaceId = await generateWorkspaceId();
+
     const workspace = await prisma.workspace.create({
       data: {
+        id: workspaceId,
         name,
         status: 'PENDING',
         createdBy: `JSON_REQ:${JSON.stringify(metaData)}`,

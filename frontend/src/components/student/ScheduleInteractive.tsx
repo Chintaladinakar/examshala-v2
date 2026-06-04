@@ -140,7 +140,6 @@ export function ScheduleInteractive({ initialData }: ScheduleInteractiveProps) {
             {([
               { id: 'all', label: 'All' },
               { id: 'exam', label: 'Exams' },
-              { id: 'assignment', label: 'Assignments' },
               { id: 'live_class', label: 'Live Classes' }
             ] as const).map((tab) => (
               <button
@@ -380,26 +379,7 @@ export function ScheduleInteractive({ initialData }: ScheduleInteractiveProps) {
                         </>
                       )}
 
-                      {isAssignment && (
-                        <>
-                          {event.status === 'Completed' ? (
-                            <span className="text-xs font-bold text-emerald-700 px-3 py-2 bg-emerald-50 border border-emerald-100 rounded-xl flex items-center gap-1">
-                              <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5px]" /> Submitted
-                            </span>
-                          ) : event.status === 'Missed' ? (
-                            <span className="text-xs font-bold text-rose-700 px-3 py-2 bg-rose-50 border border-rose-100 rounded-xl">
-                              Past Due Date
-                            </span>
-                          ) : (
-                            <Link 
-                              href={event.metadata.joinUrl || '/studentdashboard/assignments'}
-                              className="inline-flex items-center gap-1.5 px-4.5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-3xs hover:shadow-xs transition-all cursor-pointer"
-                            >
-                              Submit <ChevronRight className="w-3.5 h-3.5" />
-                            </Link>
-                          )}
-                        </>
-                      )}
+
                     </div>
 
                   </div>

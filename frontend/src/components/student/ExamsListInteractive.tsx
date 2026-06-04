@@ -279,7 +279,7 @@ export function ExamsListInteractive({
               View Schedule
             </Link>
             <Link 
-              href={`/studentdashboard/assignments/${nearestExam.id}`}
+              href={`/studentdashboard/exams/${nearestExam.id}`}
               className="flex-1 md:flex-none inline-flex items-center justify-center gap-1.5 px-4.5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all hover:shadow-2xs select-none"
             >
               Start Practice <ChevronRight className="w-3.5 h-3.5" />
@@ -462,7 +462,7 @@ export function ExamsListInteractive({
                     </div>
                   ) : (
                     <Link 
-                      href={`/studentdashboard/assignments/${exam.id}`}
+                      href={`/studentdashboard/exams/${exam.id}`}
                       className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl transition-all duration-200 shadow-3xs hover:shadow-xs select-none cursor-pointer"
                     >
                       Start <PlayCircle className="w-3.5 h-3.5" />

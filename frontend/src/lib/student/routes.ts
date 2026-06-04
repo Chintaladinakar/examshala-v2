@@ -26,8 +26,6 @@ export const studentPortalRoutes: StudentRouteItem[] = [
   { href: '/studentdashboard/exams', label: 'Exams', icon: ClipboardList },
   { href: '/studentdashboard/results', label: 'Results', icon: FileText },
   { href: '/studentdashboard/schedule', label: 'Schedule', icon: Calendar },
-  { href: '/studentdashboard/assignments', label: 'Assignments', icon: FolderOpen },
-  { href: '/studentdashboard/materials', label: 'Materials', icon: FolderOpen },
   { href: '/studentdashboard/profile', label: 'Profile', icon: User },
   { href: '/studentdashboard/settings', label: 'Settings', icon: Settings },
 ];

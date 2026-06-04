@@ -31,9 +31,7 @@ export type TutorQuickAction = { label: string; icon: LucideIcon; color: string;
 export const tutorQuickActionsMock: TutorQuickAction[] = [
   { label: 'Create Question', icon: Plus, color: 'bg-indigo-600', href: '/tutordashboard/questions' },
   { label: 'Create Paper', icon: FilePlus, color: 'bg-emerald-600', href: '/tutordashboard/papers' },
-  { label: 'Start Evaluation', icon: PlayCircle, color: 'bg-amber-600', href: '/tutordashboard/evaluation' },
   { label: 'Publish Results', icon: CheckCircle2, color: 'bg-blue-600', href: '/tutordashboard/results' },
-  { label: 'Add Assignment', icon: ClipboardCheck, color: 'bg-purple-600', href: '/tutordashboard/assignments' },
 ];
 
 export const tutorScheduleMock = [

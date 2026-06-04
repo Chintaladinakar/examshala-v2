@@ -224,11 +224,6 @@ export async function GET(req: NextRequest) {
             select: {
               status: true
             }
-          },
-          schoolAssignments: {
-            select: {
-              id: true
-            }
           }
         },
         orderBy: { name: 'asc' }
@@ -247,15 +242,14 @@ export async function GET(req: NextRequest) {
           email: t.email,
           isActive: t.isActive,
           classes: clsList,
-          assignmentsCount: t.schoolAssignments.length,
           attendanceRate: Math.round(attendanceRate * 10) / 10
         };
       });
 
       const demoTutors = processedTutors.length > 0 ? processedTutors : [
-        { id: 'demo-t1', name: 'Professor John Doe', email: 'john@examshala.com', isActive: true, classes: [{ id: 'c1', name: 'Grade 10-A' }], assignmentsCount: 8, attendanceRate: 98.2 },
-        { id: 'demo-t2', name: 'Professor Sarah Smith', email: 'sarah@examshala.com', isActive: true, classes: [{ id: 'c1', name: 'Grade 10-A' }, { id: 'c2', name: 'Grade 11-B' }], assignmentsCount: 12, attendanceRate: 95.0 },
-        { id: 'demo-t3', name: 'Professor Robert Johnson', email: 'robert@examshala.com', isActive: true, classes: [{ id: 'c2', name: 'Grade 11-B' }], assignmentsCount: 4, attendanceRate: 88.4 },
+        { id: 'demo-t1', name: 'Professor John Doe', email: 'john@examshala.com', isActive: true, classes: [{ id: 'c1', name: 'Grade 10-A' }], attendanceRate: 98.2 },
+        { id: 'demo-t2', name: 'Professor Sarah Smith', email: 'sarah@examshala.com', isActive: true, classes: [{ id: 'c1', name: 'Grade 10-A' }, { id: 'c2', name: 'Grade 11-B' }], attendanceRate: 95.0 },
+        { id: 'demo-t3', name: 'Professor Robert Johnson', email: 'robert@examshala.com', isActive: true, classes: [{ id: 'c2', name: 'Grade 11-B' }], attendanceRate: 88.4 },
       ];
 
       return jsonOk({
@@ -311,18 +305,6 @@ export async function GET(req: NextRequest) {
       const classes = tutorClasses.map(tc => tc.Class);
       const classIds = classes.map(c => c.id);
 
-      // 3. Fetch assignments created
-      const dbAssignments = await prisma.assignment.findMany({
-        where: { createdByUserId: profileUserId },
-        include: {
-          Class: { select: { id: true, name: true } },
-          submissions: {
-            select: { id: true }
-          }
-        },
-        orderBy: { dueDate: 'desc' }
-      });
-
       // 4. Fetch class average results for students in tutor's classes
       const studentLinks = await prisma.classStudent.findMany({
         where: { classId: { in: classIds } },
@@ -335,14 +317,6 @@ export async function GET(req: NextRequest) {
       });
 
       const finalAttendance = dbAttendance.length > 0 ? dbAttendance : mockTutorAttendance;
-      const finalAssignments = dbAssignments.map(a => ({
-        id: a.id,
-        title: a.title,
-        description: a.description,
-        dueDate: a.dueDate.toISOString(),
-        Class: a.Class,
-        submissionCount: a.submissions.length
-      }));
       const finalClassResults = dbClassResults.length > 0 ? dbClassResults : mockResults;
 
       return jsonOk({
@@ -351,7 +325,6 @@ export async function GET(req: NextRequest) {
         tutor: userInfo,
         classes,
         attendance: finalAttendance,
-        assignmentsCreated: finalAssignments,
         classResults: finalClassResults
       });
     }
@@ -379,24 +352,6 @@ export async function GET(req: NextRequest) {
       orderBy: { date: 'desc' }
     });
 
-    // Fetch assignments for the student's classes
-    const dbAssignments = await prisma.assignment.findMany({
-      where: { classId: { in: classIds } },
-      include: {
-        Class: { select: { id: true, name: true } },
-        submissions: {
-          where: { studentId: profileUserId }
-        },
-        feedbacks: {
-          orderBy: { createdAt: 'desc' },
-          include: {
-            Creator: { select: { name: true } }
-          }
-        }
-      },
-      orderBy: { dueDate: 'desc' }
-    });
-
     // Fetch general academic test results
     const dbResults = await prisma.result.findMany({
       where: { studentId: profileUserId },
@@ -418,7 +373,6 @@ export async function GET(req: NextRequest) {
     });
 
     const finalAttendance = dbAttendance.length > 0 ? dbAttendance : mockAttendance;
-    const finalAssignments = dbAssignments.length > 0 ? dbAssignments : mockAssignments;
     const finalResults = dbResults.length > 0 ? dbResults : mockResults;
     const finalAttempts = dbAttempts.length > 0 ? dbAttempts.map(a => ({
       id: a.id,
@@ -443,7 +397,6 @@ export async function GET(req: NextRequest) {
       student: userInfo,
       classes,
       attendance: finalAttendance,
-      assignments: finalAssignments,
       results: finalResults,
       attempts: finalAttempts
     });

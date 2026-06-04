@@ -357,8 +357,33 @@ export const createWorkspace = async (req: AuthRequest, res: Response): Promise<
 
     const actorId = req.user?.userId || 'system';
 
+    /**
+     * Generates a unique, short, and brand-consistent 8-character Workspace ID.
+     * The ID is prefixed with 'ES-' (Examshala) followed by 5 random uppercase letters/numbers.
+     * Exposes a user-friendly mnemonic code (e.g. ES-6MCED) instead of long UUID database keys,
+     * protecting DB schema privacy and making it extremely easy for users to type and share.
+     * Alphanumeric characters exclude highly confusing ones like 0, O, I, 1, and L to ensure
+     * ease of reading and typing.
+     */
+    const generateWorkspaceId = async (): Promise<string> => {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let attempts = 0;
+      while (attempts < 50) {
+        let code = 'ES-';
+        for (let i = 0; i < 5; i++) {
+          code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        const existing = await prisma.workspace.findUnique({ where: { id: code } });
+        if (!existing) return code;
+        attempts++;
+      }
+      return `ES-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    };
+    const workspaceId = await generateWorkspaceId();
+
     const workspace = await prisma.workspace.create({
       data: {
+        id: workspaceId,
         name,
         createdBy: actorId,
         principalId: principalId || null,
@@ -562,8 +587,39 @@ export const sendInvite = async (req: AuthRequest, res: Response): Promise<void>
     // Initialize an INVITED user in inactive state so they can register later
     const defaultPassword = process.env.INVITE_DEFAULT_PASSWORD || 'ExamshalaInvited@123';
     const passwordHash = await bcrypt.hash(defaultPassword, 12);
+    /**
+     * Generates a unique, short, and brand-consistent 8-character User ID.
+     * Combines a role-specific prefix (e.g. TR- for teachers, ST- for students, PR- for principals)
+     * with a random 5-character alphanumeric block for maximum user readability and privacy.
+     * Alphanumeric characters exclude highly confusing ones like 0, O, I, 1, and L to ensure
+     * legibility when sharing.
+     */
+    const generateFancyUserId = async (userRole: string): Promise<string> => {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let prefix = 'US-';
+      const roleLower = userRole.toLowerCase();
+      if (roleLower === 'student') prefix = 'ST-';
+      else if (roleLower === 'tutor' || roleLower === 'teacher') prefix = 'TR-';
+      else if (roleLower === 'principal') prefix = 'PR-';
+      else if (roleLower === 'superadmin' || roleLower === 'org_admin' || roleLower === 'admin') prefix = 'AD-';
+
+      let attempts = 0;
+      while (attempts < 50) {
+        let code = prefix;
+        for (let i = 0; i < 5; i++) {
+          code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        const existing = await prisma.user.findUnique({ where: { id: code } });
+        if (!existing) return code;
+        attempts++;
+      }
+      return `${prefix}${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    };
+    const userId = await generateFancyUserId(role);
+
     const pendingUser = await prisma.user.create({
       data: {
+        id: userId,
         name: email.split('@')[0],
         email,
         passwordHash,

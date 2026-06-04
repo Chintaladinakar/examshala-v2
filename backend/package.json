@@ -9,7 +9,8 @@
     "start": "node dist/server.js",
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev",
-    "seed:admin": "ts-node src/scripts/seed-admin.ts"
+    "seed:admin": "ts-node src/scripts/seed-admin.ts",
+    "migrate:workspaces": "ts-node src/scripts/migrate-workspaces.ts"
   },
   "keywords": [],
   "author": "",

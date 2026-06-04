@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { useToast } from '@/components/ui/ToastProvider';
 import { useUser } from '@/context/UserContext';
@@ -45,7 +45,6 @@ interface TutorLite {
   email: string;
   isActive: boolean;
   classes: { id: string; name: string }[];
-  assignmentsCount: number;
   attendanceRate: number;
 }
 
@@ -137,18 +136,8 @@ interface StudentReport {
   };
   classes: { id: string; name: string }[];
   attendance: AttendanceRecord[];
-  assignments: AssignmentRecord[];
   results: ExamResult[];
   attempts: VirtualAttempt[];
-}
-
-interface TutorAssignmentRecord {
-  id: string;
-  title: string;
-  description: string;
-  dueDate: string;
-  Class: { name: string };
-  submissionCount: number;
 }
 
 interface TutorReport {
@@ -163,7 +152,6 @@ interface TutorReport {
   };
   classes: { id: string; name: string }[];
   attendance: AttendanceRecord[];
-  assignmentsCreated: TutorAssignmentRecord[];
   classResults: ExamResult[];
 }
 
@@ -200,8 +188,13 @@ export default function ReportsPage() {
   const [selectedTutorId, setSelectedTutorId] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
   
+  // Search bar for either student or tutor
+  const [searchUserQuery, setSearchUserQuery] = useState<string>('');
+  const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+  
   // Tabs & interaction
-  const [activeTab, setActiveTab] = useState<'overview' | 'attendance' | 'assignments' | 'exams' | 'tutorAssignments' | 'classPerformance'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'attendance' | 'exams' | 'classPerformance'>('overview');
   const [hoveredChartIndex, setHoveredChartIndex] = useState<number | null>(null);
 
   // Load Classes list for selectors
@@ -271,6 +264,31 @@ export default function ReportsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
+  const searchSuggestions = useMemo(() => {
+    if (!searchUserQuery.trim() || !summaryData) return [];
+    const query = searchUserQuery.toLowerCase();
+
+    const studentMatches = (summaryData.students || [])
+      .filter(s => s.name.toLowerCase().includes(query) || s.email.toLowerCase().includes(query))
+      .map(s => ({ id: s.id, name: s.name, email: s.email, type: 'student' }));
+
+    const tutorMatches = (summaryData.tutors || [])
+      .filter(t => t.name.toLowerCase().includes(query) || t.email.toLowerCase().includes(query))
+      .map(t => ({ id: t.id, name: t.name, email: t.email, type: 'tutor' }));
+
+    return [...studentMatches, ...tutorMatches].slice(0, 10);
+  }, [searchUserQuery, summaryData]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setShowSuggestions(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   // Derived student list for dropdown/table depending on selected class
   const classFilteredStudents = useMemo(() => {
     if (!summaryData) return [];
@@ -313,8 +331,11 @@ export default function ReportsPage() {
     setSelectedStudentId(studentId);
     setSelectedTutorId('');
     if (studentId) {
+      const student = summaryData?.students.find(s => s.id === studentId);
+      if (student) setSearchUserQuery(student.name);
       loadReport(studentId);
     } else {
+      setSearchUserQuery('');
       setReportData(null);
     }
   };
@@ -323,8 +344,11 @@ export default function ReportsPage() {
     setSelectedTutorId(tutorId);
     setSelectedStudentId('');
     if (tutorId) {
+      const tutor = summaryData?.tutors.find(t => t.id === tutorId);
+      if (tutor) setSearchUserQuery(tutor.name);
       loadReport(tutorId);
     } else {
+      setSearchUserQuery('');
       setReportData(null);
     }
   };
@@ -332,13 +356,14 @@ export default function ReportsPage() {
   const clearSelection = () => {
     setSelectedStudentId('');
     setSelectedTutorId('');
+    setSearchUserQuery('');
     setReportData(null);
   };
 
   // ─── Stat Calculations ───────────────────────────────────────────────────────
   
   const stats = useMemo(() => {
-    if (!reportData) return { attendanceRate: 100, assignmentRate: 0, avgScore: 0, completedAssignments: 0, totalAssignments: 0 };
+    if (!reportData) return { attendanceRate: 100, avgScore: 0 };
     
     // Tutor Attendance vs Student Attendance
     const totalAtt = reportData.attendance.length;
@@ -347,8 +372,6 @@ export default function ReportsPage() {
 
     if (reportData.isTutor) {
       const tutorData = reportData as TutorReport;
-      const assignmentsCreated = tutorData.assignmentsCreated.length;
-      const classesTaught = tutorData.classes.length;
       
       const classScores = tutorData.classResults;
       const avgClassScore = classScores.length 
@@ -357,17 +380,10 @@ export default function ReportsPage() {
 
       return {
         attendanceRate,
-        assignmentRate: 100,
-        avgScore: avgClassScore,
-        completedAssignments: assignmentsCreated,
-        totalAssignments: classesTaught
+        avgScore: avgClassScore
       };
     } else {
       const studentData = reportData as StudentReport;
-      // Assignments
-      const totalAsg = studentData.assignments.length;
-      const completedAsg = studentData.assignments.filter(a => a.submissions.length > 0).length;
-      const assignmentRate = totalAsg ? Math.round((completedAsg / totalAsg) * 100) : 0;
 
       // Average Exam Score
       const examResults = studentData.results;
@@ -377,10 +393,7 @@ export default function ReportsPage() {
 
       return {
         attendanceRate,
-        assignmentRate,
-        avgScore,
-        completedAssignments: completedAsg,
-        totalAssignments: totalAsg
+        avgScore
       };
     }
   }, [reportData]);
@@ -469,6 +482,67 @@ export default function ReportsPage() {
           {/* ─── TOOLBAR SELECTORS (FOR TUTORS / PRINCIPALS) ─── */}
           {isTeacherOrPrincipal && (
             <div className="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm flex flex-col md:flex-row items-center gap-4">
+              <div className="w-full md:flex-1 relative" ref={searchContainerRef}>
+                <label className="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1">
+                  Search Student or Tutor
+                </label>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="Search candidate name or email..."
+                    value={searchUserQuery}
+                    onChange={(e) => {
+                      setSearchUserQuery(e.target.value);
+                      setShowSuggestions(true);
+                    }}
+                    onFocus={() => setShowSuggestions(true)}
+                    className="w-full pl-9 pr-8 py-2 border border-slate-200 rounded-xl bg-slate-50 text-xs font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition"
+                  />
+                  {searchUserQuery && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSearchUserQuery('');
+                        clearSelection();
+                      }}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-650 text-xs font-bold p-0.5 rounded-full hover:bg-slate-200"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+                {showSuggestions && searchSuggestions.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 p-1.5 space-y-0.5 max-h-60 overflow-y-auto">
+                    {searchSuggestions.map((candidate) => (
+                      <button
+                        key={candidate.id}
+                        type="button"
+                        onClick={() => {
+                          setSearchUserQuery(candidate.name);
+                          setShowSuggestions(false);
+                          if (candidate.type === 'student') {
+                            handleStudentSelect(candidate.id);
+                          } else {
+                            handleTutorSelect(candidate.id);
+                          }
+                        }}
+                        className="w-full text-left px-3 py-2 rounded-xl hover:bg-slate-50 flex items-center justify-between transition-colors"
+                      >
+                        <div>
+                          <div className="text-xs font-bold text-slate-800">{candidate.name}</div>
+                          <div className="text-[10px] text-slate-400">{candidate.email}</div>
+                        </div>
+                        <span className={`text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                          candidate.type === 'student' ? 'bg-teal-50 text-teal-700 border border-teal-100' : 'bg-indigo-50 text-indigo-750 border border-indigo-100'
+                        }`}>
+                          {candidate.type}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
               <div className="w-full md:w-56">
                 <label className="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1">
                   Class Filter
@@ -767,7 +841,6 @@ export default function ReportsPage() {
                               <th className="py-4 px-6">Tutor Name</th>
                               <th className="py-4 px-6">Assigned Divisions</th>
                               <th className="py-4 px-6">Tutor Attendance Rate</th>
-                              <th className="py-4 px-6">Coursework Created</th>
                               <th className="py-4 px-6">Status</th>
                               <th className="py-4 px-6 text-right">Actions</th>
                             </tr>
@@ -801,11 +874,8 @@ export default function ReportsPage() {
                                           style={{ width: `${t.attendanceRate}%` }}
                                         />
                                       </div>
-                                      <span className="font-extrabold text-slate-700">{t.attendanceRate}%</span>
+                                      <span className="font-extrabold text-slate-750">{t.attendanceRate}%</span>
                                     </div>
-                                  </td>
-                                  <td className="py-4 px-6 font-bold text-slate-650">
-                                    {t.assignmentsCount} assignments
                                   </td>
                                   <td className="py-4 px-6">
                                     <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold ${t.isActive ? 'bg-emerald-500/10 text-emerald-600' : 'bg-slate-100 text-slate-500'}`}>
@@ -876,11 +946,6 @@ export default function ReportsPage() {
                         </div>
                         <div className="w-px bg-white/10 h-8 self-center" />
                         <div className="text-center">
-                          <span className="text-[9px] font-extrabold uppercase tracking-widest text-emerald-300/60 block">Assignments Created</span>
-                          <span className="text-xl font-extrabold block mt-0.5">{stats.completedAssignments}</span>
-                        </div>
-                        <div className="w-px bg-white/10 h-8 self-center" />
-                        <div className="text-center">
                           <span className="text-[9px] font-extrabold uppercase tracking-widest text-emerald-300/60 block">Class Avg Performance</span>
                           <span className="text-xl font-extrabold text-emerald-400 block mt-0.5">{stats.avgScore}%</span>
                         </div>
@@ -911,11 +976,6 @@ export default function ReportsPage() {
                         <div className="text-center">
                           <span className="text-[9px] font-extrabold uppercase tracking-widest text-emerald-300/60 block">Attendance</span>
                           <span className="text-xl font-extrabold block mt-0.5">{stats.attendanceRate}%</span>
-                        </div>
-                        <div className="w-px bg-white/10 h-8 self-center" />
-                        <div className="text-center">
-                          <span className="text-[9px] font-extrabold uppercase tracking-widest text-emerald-300/60 block">Assignments</span>
-                          <span className="text-xl font-extrabold block mt-0.5">{stats.completedAssignments}/{stats.totalAssignments}</span>
                         </div>
                         <div className="w-px bg-white/10 h-8 self-center" />
                         <div className="text-center">
@@ -951,16 +1011,6 @@ export default function ReportsPage() {
                         Tutor Check-Ins Ledger
                       </button>
                       <button
-                        onClick={() => setActiveTab('tutorAssignments')}
-                        className={`px-4 py-3 font-bold text-xs uppercase tracking-wider transition-all border-b-2 leading-none whitespace-nowrap ${
-                          activeTab === 'tutorAssignments' 
-                            ? 'border-emerald-600 text-emerald-650 font-extrabold' 
-                            : 'border-transparent text-slate-400 hover:text-slate-700'
-                        }`}
-                      >
-                        Coursework Published ({(reportData as TutorReport).assignmentsCreated.length})
-                      </button>
-                      <button
                         onClick={() => setActiveTab('classPerformance')}
                         className={`px-4 py-3 font-bold text-xs uppercase tracking-wider transition-all border-b-2 leading-none whitespace-nowrap ${
                           activeTab === 'classPerformance' 
@@ -993,16 +1043,6 @@ export default function ReportsPage() {
                         }`}
                       >
                         Attendance Ledger
-                      </button>
-                      <button
-                        onClick={() => setActiveTab('assignments')}
-                        className={`px-4 py-3 font-bold text-xs uppercase tracking-wider transition-all border-b-2 leading-none whitespace-nowrap ${
-                          activeTab === 'assignments' 
-                            ? 'border-emerald-600 text-emerald-650 font-extrabold' 
-                            : 'border-transparent text-slate-400 hover:text-slate-700'
-                        }`}
-                      >
-                        Assignments Log ({stats.totalAssignments})
                       </button>
                       <button
                         onClick={() => setActiveTab('exams')}
@@ -1046,16 +1086,6 @@ export default function ReportsPage() {
                               <h4 className="font-bold text-slate-850 text-xs font-black">Division Assignments</h4>
                               <p className="text-[11px] text-slate-500 mt-0.5">
                                 Assigned to {reportData.classes.length} divisions: {reportData.classes.map(c => c.name).join(', ') || 'None'}.
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className="flex items-start gap-3 p-3 bg-teal-50/50 rounded-2xl border border-teal-100/50">
-                            <BookOpen className="w-5 h-5 text-teal-650 shrink-0 mt-0.5" />
-                            <div>
-                              <h4 className="font-bold text-slate-850 text-xs font-black">Published Coursework</h4>
-                              <p className="text-[11px] text-slate-500 mt-0.5">
-                                Created {(reportData as TutorReport).assignmentsCreated.length} homework coursework briefs for workspace classes.
                               </p>
                             </div>
                           </div>
@@ -1169,37 +1199,7 @@ export default function ReportsPage() {
                     </div>
                   )}
 
-                  {/* TUTOR COURSEWORK PUBLISHED TAB */}
-                  {reportData.isTutor && activeTab === 'tutorAssignments' && (
-                    <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-4">
-                      <h3 className="font-bold text-slate-800 text-sm">Coursework Assignments Published</h3>
-                      
-                      <div className="space-y-4">
-                        {(reportData as TutorReport).assignmentsCreated.length > 0 ? (
-                          (reportData as TutorReport).assignmentsCreated.map((asg) => (
-                            <div key={asg.id} className="border border-slate-150 rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50/30">
-                              <div>
-                                <h4 className="font-bold text-slate-800 text-sm">{asg.title}</h4>
-                                <span className="inline-block text-[10px] font-semibold text-slate-450 mt-1">
-                                  🏫 Division: {asg.Class.name} • Due: {new Date(asg.dueDate).toLocaleDateString()}
-                                </span>
-                                {asg.description && (
-                                  <p className="text-xs text-slate-500 font-medium mt-1.5 line-clamp-2">{asg.description}</p>
-                                )}
-                              </div>
-                              <div className="shrink-0 text-right bg-emerald-50/70 border border-emerald-100 rounded-xl px-4 py-2 text-xs font-bold text-emerald-700">
-                                {asg.submissionCount} Submissions logged
-                              </div>
-                            </div>
-                          ))
-                        ) : (
-                          <div className="text-center text-slate-400 text-xs py-8">
-                            No assignments published by this tutor.
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
+
 
                   {/* TUTOR CLASS PERFORMANCE TAB (SVG TREND GRAPH FOR TUTORS) */}
                   {reportData.isTutor && activeTab === 'classPerformance' && (
@@ -1359,19 +1359,6 @@ export default function ReportsPage() {
                             </div>
                           </div>
 
-                          <div className="flex items-start gap-3 p-3 bg-teal-50/50 rounded-2xl border border-teal-100/50">
-                            <BookOpen className="w-5 h-5 text-teal-650 shrink-0 mt-0.5" />
-                            <div>
-                              <h4 className="font-bold text-slate-800 text-xs">Assignment Hand-in</h4>
-                              <p className="text-[11px] text-slate-500 mt-0.5">
-                                Handed in {stats.completedAssignments} out of {stats.totalAssignments} class assignments.
-                                {stats.totalAssignments - stats.completedAssignments > 0 
-                                  ? ` You have ${stats.totalAssignments - stats.completedAssignments} assignments pending completion.` 
-                                  : ' Excellent! No pending assignments.'}
-                              </p>
-                            </div>
-                          </div>
-
                           <div className="flex items-start gap-3 p-3 bg-indigo-50/50 rounded-2xl border border-indigo-100/50">
                             <Award className="w-5 h-5 text-indigo-650 shrink-0 mt-0.5" />
                             <div>
@@ -1394,8 +1381,7 @@ export default function ReportsPage() {
                         <div className="space-y-3 max-h-64 overflow-y-auto">
                           {[
                             ...reportData.attendance.slice(0, 3).map(a => ({ type: 'attendance' as const, date: a.date, data: a })),
-                            ...((reportData as StudentReport).results.slice(0, 3).map(r => ({ type: 'result' as const, date: r.createdAt, data: r }))),
-                            ...((reportData as StudentReport).assignments.flatMap(as => as.submissions.map(sub => ({ type: 'submission' as const, date: sub.submittedAt, data: as }))).slice(0, 3))
+                            ...((reportData as StudentReport).results.slice(0, 3).map(r => ({ type: 'result' as const, date: r.createdAt, data: r })))
                           ]
                             .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                             .map((act, index) => {
@@ -1413,28 +1399,14 @@ export default function ReportsPage() {
                                   </div>
                                 );
                               }
-                              if (act.type === 'result') {
-                                const res = act.data as ExamResult;
-                                return (
-                                  <div key={index} className="flex gap-4 border-b border-slate-50 pb-3 last:border-b-0 last:pb-0 text-xs">
-                                    <div className="text-slate-400 font-semibold w-24 shrink-0">
-                                      {new Date(dateStr).toLocaleDateString()}
-                                    </div>
-                                    <div className="flex-1">
-                                      Achieved score of <strong>{res.score}/{res.totalMarks} ({res.percentage}%)</strong> in subject <strong>{res.subject}</strong>.
-                                    </div>
-                                  </div>
-                                );
-                              }
-                              // Submission type
-                              const asgData = act.data as AssignmentRecord;
+                              const res = act.data as ExamResult;
                               return (
                                 <div key={index} className="flex gap-4 border-b border-slate-50 pb-3 last:border-b-0 last:pb-0 text-xs">
                                   <div className="text-slate-400 font-semibold w-24 shrink-0">
                                     {new Date(dateStr).toLocaleDateString()}
                                   </div>
                                   <div className="flex-1">
-                                    Submitted class assignment <strong>{asgData.title}</strong> for class <strong>{asgData.Class.name}</strong>.
+                                    Achieved score of <strong>{res.score}/{res.totalMarks} ({res.percentage}%)</strong> in subject <strong>{res.subject}</strong>.
                                   </div>
                                 </div>
                               );
@@ -1524,109 +1496,7 @@ export default function ReportsPage() {
                     </div>
                   )}
 
-                  {/* STUDENT ASSIGNMENTS LOG */}
-                  {!reportData.isTutor && activeTab === 'assignments' && (
-                    <div className="space-y-4">
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm text-center">
-                          <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 block">Total Assigned</span>
-                          <span className="text-2xl font-black text-slate-800 mt-1 block">{stats.totalAssignments}</span>
-                        </div>
-                        <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm text-center">
-                          <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 block">Submitted / Completed</span>
-                          <span className="text-2xl font-black text-emerald-600 mt-1 block">{stats.completedAssignments}</span>
-                        </div>
-                        <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm text-center">
-                          <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 block">Completion Rate</span>
-                          <span className="text-2xl font-black text-teal-600 mt-1 block">{stats.assignmentRate}%</span>
-                        </div>
-                      </div>
 
-                      <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-4">
-                        <h3 className="font-bold text-slate-800 text-sm">Class Assignment Roster</h3>
-                        <div className="space-y-4">
-                          {(reportData as StudentReport).assignments.map((asg) => {
-                            const submitted = asg.submissions.length > 0;
-                            const submission = asg.submissions[0];
-                            const isOverdue = new Date() > new Date(asg.dueDate) && !submitted;
-
-                            return (
-                              <div key={asg.id} className="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row justify-between gap-4 bg-slate-50/20">
-                                <div className="space-y-2 flex-1">
-                                  <div className="flex items-start gap-2 flex-wrap">
-                                    <h4 className="font-bold text-slate-800 text-sm">{asg.title}</h4>
-                                    <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-slate-100 text-slate-550 border">
-                                      🏫 {asg.Class.name}
-                                    </span>
-                                  </div>
-                                  <p className="text-xs text-slate-500 font-medium line-clamp-3">{asg.description}</p>
-                                  <div className="flex gap-4 text-[10px] font-semibold text-slate-400 pt-1">
-                                    <span>Due: {new Date(asg.dueDate).toLocaleDateString()}</span>
-                                    {submitted && (
-                                      <span className="text-emerald-600">Submitted: {new Date(submission.submittedAt).toLocaleDateString()}</span>
-                                    )}
-                                  </div>
-
-                                  {asg.feedbacks.length > 0 && (
-                                    <div className="bg-white border border-slate-100 rounded-xl p-3 space-y-2 mt-2">
-                                      <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 flex items-center gap-1">
-                                        <MessageSquare className="w-3 h-3 text-slate-400" />
-                                        Teacher Comments
-                                      </div>
-                                      {asg.feedbacks.map(f => (
-                                        <div key={f.id} className="text-xs text-slate-600 bg-slate-50/50 rounded-lg p-2">
-                                          <div className="font-bold text-slate-700 flex justify-between">
-                                            <span>{f.Creator?.name || 'Instructor'}</span>
-                                            <span className="font-normal text-[9px] text-slate-450">{new Date(f.createdAt).toLocaleDateString()}</span>
-                                          </div>
-                                          <div className="mt-1">{f.comment}</div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  )}
-                                </div>
-
-                                <div className="md:w-48 shrink-0 flex flex-col justify-center items-end gap-2 border-t md:border-t-0 border-slate-100 pt-3 md:pt-0">
-                                  <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold ${
-                                    submitted ? 'bg-emerald-50 text-emerald-700' : isOverdue ? 'bg-rose-50 text-rose-700 animate-pulse' : 'bg-slate-100 text-slate-600'
-                                  }`}>
-                                    {submitted ? (
-                                      <>
-                                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                                        Submitted
-                                      </>
-                                    ) : isOverdue ? (
-                                      <>
-                                        <AlertCircle className="w-3.5 h-3.5 text-rose-600" />
-                                        Overdue / Missing
-                                      </>
-                                    ) : (
-                                      <>
-                                        <Clock className="w-3.5 h-3.5 text-slate-500" />
-                                        Pending Hand-In
-                                      </>
-                                    )}
-                                  </span>
-
-                                  {submitted && submission.fileUrl && (
-                                    <a
-                                      href={submission.fileUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-[10px] font-bold text-emerald-600 hover:underline inline-flex items-center gap-1.5"
-                                    >
-                                      <Eye className="w-3 h-3" />
-                                      Review Submission File
-                                    </a>
-                                  )}
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  )}
 
                   {/* STUDENT EXAM TRANSCRIPTS */}
                   {!reportData.isTutor && activeTab === 'exams' && (

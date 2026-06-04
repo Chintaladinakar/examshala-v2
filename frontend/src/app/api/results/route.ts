@@ -33,6 +33,14 @@ const mockResults = [
 export async function GET() {
   try {
     const results = await prisma.result.findMany({
+      include: {
+        student: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      },
       orderBy: {
         createdAt: 'desc',
       },
@@ -45,9 +53,15 @@ export async function GET() {
       });
     }
 
+    const formattedResults = results.map(r => ({
+      ...r,
+      studentName: r.student?.name || 'Unknown Student',
+      studentEmail: r.student?.email || '',
+    }));
+
     return NextResponse.json({
       success: true,
-      data: results,
+      data: formattedResults,
     });
   } catch (error: any) {
     console.error('[API_RESULTS_ERROR]', error);

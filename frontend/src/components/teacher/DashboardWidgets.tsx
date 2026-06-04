@@ -369,62 +369,7 @@ export function AttendanceSummaryCard({ stats }: {
   );
 }
 
-// ─── Assignment Analytics Card ──────────────────────────────────────────────
-export function AssignmentAnalyticsCard({ stats }: {
-  stats: { total: number; submitted: number; pending: number; overdue: number };
-}) {
-  const submittedPct = stats.total > 0 ? Math.round((stats.submitted / stats.total) * 100) : 60;
-  const pendingPct = stats.total > 0 ? Math.round((stats.pending / stats.total) * 100) : 30;
-  const overduePct = stats.total > 0 ? Math.round((stats.overdue / stats.total) * 100) : 10;
 
-  return (
-    <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 flex flex-col">
-      <div className="flex items-center justify-between mb-5 select-none">
-        <div>
-          <h2 className="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-indigo-500" /> Learning Analytics
-          </h2>
-          <p className="text-slate-400 text-xs mt-0.5">Assigned coursework progress</p>
-        </div>
-      </div>
-
-      <div className="flex-1 space-y-4">
-        {/* Progress 1: Submitted */}
-        <div className="space-y-1.5">
-          <div className="flex justify-between items-center text-xs font-bold text-slate-500">
-            <span>Submitted Homework</span>
-            <span className="text-indigo-600">{stats.submitted} / {stats.total} ({submittedPct}%)</span>
-          </div>
-          <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-            <div className="h-full bg-indigo-500 rounded-full transition-all duration-500" style={{ width: `${submittedPct}%` }} />
-          </div>
-        </div>
-
-        {/* Progress 2: Pending */}
-        <div className="space-y-1.5">
-          <div className="flex justify-between items-center text-xs font-bold text-slate-500">
-            <span>Pending Submissions</span>
-            <span className="text-amber-600">{stats.pending} / {stats.total} ({pendingPct}%)</span>
-          </div>
-          <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-            <div className="h-full bg-amber-500 rounded-full transition-all duration-500" style={{ width: `${pendingPct}%` }} />
-          </div>
-        </div>
-
-        {/* Progress 3: Overdue */}
-        <div className="space-y-1.5">
-          <div className="flex justify-between items-center text-xs font-bold text-slate-500">
-            <span>Overdue Submissions</span>
-            <span className="text-rose-600">{stats.overdue} / {stats.total} ({overduePct}%)</span>
-          </div>
-          <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-            <div className="h-full bg-rose-500 rounded-full transition-all duration-500" style={{ width: `${overduePct}%` }} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // ─── Calendar Widget ────────────────────────────────────────────────────────
 export function CalendarWidget() {
@@ -859,7 +804,7 @@ export function WorkspaceSetupChecklist({ stats }: {
 
 // ─── Principal-only Teacher Activity Summary ───────────────────────────────
 export function TeacherActivitySummaryCard({ teachers }: {
-  teachers: { id: string; teacherName: string; classesAssigned: number; examsCreated: number; assignmentsCreated: number }[];
+  teachers: { id: string; teacherName: string; classesAssigned: number; examsCreated: number }[];
 }) {
   return (
     <div className="bg-white rounded-3xl border border-slate-100 shadow-3xs p-6 space-y-4">
@@ -877,13 +822,12 @@ export function TeacherActivitySummaryCard({ teachers }: {
               <th className="pb-3 pr-4">Teacher Name</th>
               <th className="pb-3 px-4 text-center">Classes Assigned</th>
               <th className="pb-3 px-4 text-center">Exams Created</th>
-              <th className="pb-3 pl-4 text-center">Assignments Created</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-50 font-semibold text-slate-700">
             {teachers.length === 0 ? (
               <tr>
-                <td colSpan={4} className="py-6 text-center text-slate-400">No teachers found in workspace.</td>
+                <td colSpan={3} className="py-6 text-center text-slate-400">No teachers found in workspace.</td>
               </tr>
             ) : (
               teachers.map((t) => (
@@ -891,7 +835,6 @@ export function TeacherActivitySummaryCard({ teachers }: {
                   <td className="py-3.5 pr-4 font-bold text-slate-800">{t.teacherName}</td>
                   <td className="py-3.5 px-4 text-center">{t.classesAssigned}</td>
                   <td className="py-3.5 px-4 text-center">{t.examsCreated}</td>
-                  <td className="py-3.5 pl-4 text-center">{t.assignmentsCreated}</td>
                 </tr>
               ))
             )}

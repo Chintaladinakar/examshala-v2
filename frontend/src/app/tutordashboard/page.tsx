@@ -6,11 +6,9 @@ import { useToast } from '@/components/ui/ToastProvider';
 import { useUser } from '@/context/UserContext';
 import {
   StatCard,
-  PendingGradingCard,
   UpcomingClassesCard,
   AnnouncementsCard,
   AttendanceSummaryCard,
-  AssignmentAnalyticsCard,
   CalendarWidget,
   PerformanceOverviewCard,
   RecentActivityFeed,
@@ -232,8 +230,8 @@ export default function TutorDashboardPage() {
                 <WorkspaceOverviewCard stats={data.workspaceOverview} />
               )}
 
-              {/* ── 4 Quick Stats Row ── */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {/* ── 2 Quick Stats Row ── */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl">
                 <StatCard
                   title={inPrincipalMode ? "Total Classes" : "Assigned Classes"}
                   value={data.stats.assignedClasses}
@@ -244,17 +242,6 @@ export default function TutorDashboardPage() {
                   value={data.stats.assignedStudents}
                   icon={Users}
                 />
-                <StatCard
-                  title="Assignments Created"
-                  value={data.stats.totalAssignments}
-                  icon={ClipboardList}
-                />
-                <StatCard
-                  title="Pending Evaluations"
-                  value={data.stats.pendingGrading}
-                  icon={AlertCircle}
-                  isHighlighted={true} // Highlighting the Pending grading stat
-                />
               </div>
 
               {/* ── Main Dashboard Grid ── */}
@@ -263,12 +250,6 @@ export default function TutorDashboardPage() {
                 {/* Left Column (Covers 2 sections out of 3 on large screens) */}
                 <div className="lg:col-span-2 space-y-6">
                   
-                  {/* Pending evaluations registry */}
-                  <PendingGradingCard
-                    items={data.pendingGradingList}
-                    onReview={handleReviewSubmission}
-                  />
-
                   {/* Dynamic timetables */}
                   <UpcomingClassesCard timetable={data.upcomingClasses} />
 
@@ -289,9 +270,6 @@ export default function TutorDashboardPage() {
 
                   {/* Attendance ring summary */}
                   <AttendanceSummaryCard stats={data.attendanceSummary} />
-
-                  {/* Coursework status visualizer */}
-                  <AssignmentAnalyticsCard stats={data.assignmentAnalytics} />
 
                   {/* Audit Logs activities timeline */}
                   <RecentActivityFeed feed={data.recentActivityFeed} />

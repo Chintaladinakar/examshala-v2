@@ -38,7 +38,7 @@ export function Sidebar() {
 
   // Group routes into logical sections
   const academicRoutes = studentPortalRoutes.filter(route => 
-    ['Dashboard', 'Exams', 'Assignments', 'Materials'].includes(route.label)
+    ['Dashboard', 'Exams'].includes(route.label)
   );
   
   const analysisRoutes = studentPortalRoutes.filter(route => 

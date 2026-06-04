@@ -56,7 +56,6 @@ export function getAllowedDashboardPaths(role: string): string[] {
     '/teachers',
     '/classes',
     '/attendance',
-    '/assignments',
     '/logs',
     '/tests',
     '/profile',

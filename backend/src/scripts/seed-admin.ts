@@ -10,119 +10,111 @@ const seedAdmin = async () => {
     // 1. Seed Org Admin
     const adminEmail = 'admin@examshala.com';
     const adminPassword = 'Admin@123';
-    console.log(`Checking for existing admin at ${adminEmail}...`);
-    let admin = await prisma.user.findUnique({ where: { email: adminEmail } });
-
     const passwordHash = await bcrypt.hash(adminPassword, 12);
 
-    if (!admin) {
-      admin = await prisma.user.create({
-        data: {
-          id: crypto.randomUUID(),
-          name: 'Global Org Admin',
-          email: adminEmail,
-          passwordHash,
-          role: 'ORG_ADMIN',
-          status: 'ACTIVE',
-          isActive: true,
+    // Clean up existing seeded users to ensure they get recreated with fancy 8-char IDs
+    await prisma.user.deleteMany({
+      where: {
+        email: {
+          in: [
+            adminEmail,
+            'principal.smith@examshala.com',
+            'principal.roy@examshala.com',
+            'sarah.teacher@examshala.com',
+            'walter.teacher@examshala.com',
+            'john.student@examshala.com',
+            'jane.student@examshala.com',
+          ],
         },
-      });
-      console.log('✅ Created new ORG_ADMIN user');
-    } else {
-      admin = await prisma.user.update({
-        where: { id: admin.id },
-        data: { role: 'ORG_ADMIN', status: 'ACTIVE', isActive: true, passwordHash },
-      });
-      console.log('✅ Updated existing user to ORG_ADMIN');
-    }
+      },
+    });
+
+    console.log(`Creating admin at ${adminEmail}...`);
+    // Seed Org Admin with a fixed brand-consistent 8-character ID conforming to 'AD-XXXXX' format
+    const admin = await prisma.user.create({
+      data: {
+        id: 'AD-ADMIN',
+        name: 'Global Org Admin',
+        email: adminEmail,
+        passwordHash,
+        role: 'ORG_ADMIN',
+        status: 'ACTIVE',
+        isActive: true,
+      },
+    });
+    console.log('✅ Seeded ORG_ADMIN');
 
     // 2. Create Principal Users
+    // Seed Principals with custom fixed 8-character mnemonic IDs (e.g. 'PR-SMITH', 'PR-ROYAL')
     const principalEmails = [
-      { email: 'principal.smith@examshala.com', name: 'Dr. John Smith' },
-      { email: 'principal.roy@examshala.com', name: 'Prof. Amit Roy' },
+      { email: 'principal.smith@examshala.com', name: 'Dr. John Smith', id: 'PR-SMITH' },
+      { email: 'principal.roy@examshala.com', name: 'Prof. Amit Roy', id: 'PR-ROYAL' },
     ];
 
     const principals = [];
     for (const p of principalEmails) {
-      let user = await prisma.user.findUnique({ where: { email: p.email } });
-      if (!user) {
-        user = await prisma.user.create({
-          data: {
-            id: crypto.randomUUID(),
-            name: p.name,
-            email: p.email,
-            passwordHash,
-            role: 'PRINCIPAL',
-            status: 'ACTIVE',
-            isActive: true,
-          },
-        });
-      }
+      const user = await prisma.user.create({
+        data: {
+          id: p.id,
+          name: p.name,
+          email: p.email,
+          passwordHash,
+          role: 'PRINCIPAL',
+          status: 'ACTIVE',
+          isActive: true,
+        },
+      });
       principals.push(user);
     }
     console.log('✅ Seeded Principals');
 
     // 3. Create Workspaces
+    // Seed Workspaces using fixed 8-character brand-consistent IDs starting with 'ES-'
     const workspaceNames = ['Silicon Valley Academy', 'Nalanda Institute', 'MIT Prep Center'];
+    const workspaceIds = ['ES-SILIC', 'ES-NALAN', 'ES-MITPC'];
     const workspaces = [];
     for (let i = 0; i < workspaceNames.length; i++) {
       const name = workspaceNames[i];
-      let ws = await prisma.workspace.findFirst({ where: { name } });
-      if (!ws) {
-        ws = await prisma.workspace.create({
-          data: {
-            id: crypto.randomUUID(),
-            name,
-            createdBy: admin.id,
-            principalId: principals[i % principals.length]?.id || null,
-          },
-        });
-      } else {
-        ws = await prisma.workspace.update({
-          where: { id: ws.id },
-          data: {
-            createdBy: admin.id,
-            principalId: principals[i % principals.length]?.id || null,
-          },
-        });
-      }
+      const fixedId = workspaceIds[i];
+      
+      // Delete any existing workspace with this name to ensure clean seed with new fancy ID
+      await prisma.workspace.deleteMany({ where: { name } });
+
+      const ws = await prisma.workspace.create({
+        data: {
+          id: fixedId,
+          name,
+          createdBy: admin.id,
+          principalId: principals[i % principals.length]?.id || null,
+        },
+      });
       workspaces.push(ws);
     }
     console.log('✅ Seeded Workspaces with Principals');
 
     // 4. Create Teachers and Students
+    // Seed teachers ('TR-XXXXX') and students ('ST-XXXXX') with custom readable 8-character IDs
     const testUsers = [
-      { name: 'Sarah Connor', email: 'sarah.teacher@examshala.com', role: 'TEACHER', workspaceIdx: 0 },
-      { name: 'Walter White', email: 'walter.teacher@examshala.com', role: 'TEACHER', workspaceIdx: 1 },
-      { name: 'John Doe', email: 'john.student@examshala.com', role: 'STUDENT', workspaceIdx: 0 },
-      { name: 'Jane Doe', email: 'jane.student@examshala.com', role: 'STUDENT', workspaceIdx: 2 },
+      { name: 'Sarah Connor', email: 'sarah.teacher@examshala.com', role: 'TEACHER', workspaceIdx: 0, id: 'TR-SARAH' },
+      { name: 'Walter White', email: 'walter.teacher@examshala.com', role: 'TEACHER', workspaceIdx: 1, id: 'TR-WALT2' },
+      { name: 'John Doe', email: 'john.student@examshala.com', role: 'STUDENT', workspaceIdx: 0, id: 'ST-JOHN1' },
+      { name: 'Jane Doe', email: 'jane.student@examshala.com', role: 'STUDENT', workspaceIdx: 2, id: 'ST-JANE1' },
     ];
 
     for (const tu of testUsers) {
-      let u = await prisma.user.findUnique({ where: { email: tu.email } });
       const targetWorkspace = workspaces[tu.workspaceIdx];
-      if (!u) {
-        u = await prisma.user.create({
-          data: {
-            id: crypto.randomUUID(),
-            name: tu.name,
-            email: tu.email,
-            passwordHash,
-            role: tu.role,
-            status: 'ACTIVE',
-            isActive: true,
-            workspaceId: targetWorkspace.id,
-          },
-        });
-      } else {
-        await prisma.user.update({
-          where: { id: u.id },
-          data: {
-            workspaceId: targetWorkspace.id,
-            role: tu.role,
-          },
-        });
-      }
+      await prisma.user.create({
+        data: {
+          id: tu.id,
+          name: tu.name,
+          email: tu.email,
+          passwordHash,
+          role: tu.role,
+          status: 'ACTIVE',
+          isActive: true,
+          workspaceId: targetWorkspace.id,
+        },
+      });
     }
     console.log('✅ Seeded Teachers and Students');
 

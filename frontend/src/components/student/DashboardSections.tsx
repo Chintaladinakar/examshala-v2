@@ -44,7 +44,7 @@ export function WelcomeBanner({ studentName, workspaceName, pendingCount, unread
           {/* Status chips stack */}
           <div className="flex flex-col gap-1.5 sm:flex-row lg:flex-col justify-center">
             <Link 
-              href="/studentdashboard/assignments" 
+              href="/studentdashboard/exams" 
               className="flex items-center gap-2 px-3 py-1.5 bg-amber-50 hover:bg-amber-100/70 text-amber-900 border border-amber-200/60 rounded-xl text-[11px] font-bold shadow-2xs transition-all duration-200"
             >
               <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
@@ -93,7 +93,7 @@ export function PendingWorkSection({ pendingItems }: { pendingItems: any[] }) {
         {pendingItems.map((item, idx) => (
           <Link
             key={idx}
-            href={`/studentdashboard/assignments/${item.id}`}
+            href={`/studentdashboard/exams/${item.id}`}
             className="group relative bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-lg hover:border-teal-500/40 hover:-translate-y-0.5 transition-all duration-300 flex gap-4 items-start"
           >
             {/* Hover subtle glow backing */}
@@ -300,7 +300,7 @@ export function UpcomingExamsSection({ exams }: { exams: any[] }) {
             {exams.map((ex, i) => (
               <Link 
                 key={i} 
-                href={`/studentdashboard/assignments/${ex.id}`}
+                href={`/studentdashboard/exams/${ex.id}`}
                 className="p-5 hover:bg-slate-50/60 transition-colors flex items-center justify-between group"
               >
                 <div className="flex items-start gap-4 min-w-0">

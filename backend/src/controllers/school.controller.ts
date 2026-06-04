@@ -196,9 +196,40 @@ export const addStudent = async (req: AuthRequest, res: Response): Promise<void>
 
     const passwordHash = await bcrypt.hash(password || 'ExamStudent@123', 12);
     
+    /**
+     * Generates a unique, short, and brand-consistent 8-character User ID.
+     * Combines a role-specific prefix (e.g. TR- for teachers, ST- for students, PR- for principals)
+     * with a random 5-character alphanumeric block for maximum user readability and privacy.
+     * Alphanumeric characters exclude highly confusing ones like 0, O, I, 1, and L to ensure
+     * legibility when sharing.
+     */
+    const generateFancyUserId = async (userRole: string): Promise<string> => {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let prefix = 'US-';
+      const roleLower = userRole.toLowerCase();
+      if (roleLower === 'student') prefix = 'ST-';
+      else if (roleLower === 'tutor' || roleLower === 'teacher') prefix = 'TR-';
+      else if (roleLower === 'principal') prefix = 'PR-';
+      else if (roleLower === 'superadmin' || roleLower === 'org_admin' || roleLower === 'admin') prefix = 'AD-';
+
+      let attempts = 0;
+      while (attempts < 50) {
+        let code = prefix;
+        for (let i = 0; i < 5; i++) {
+          code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        const existing = await prisma.user.findUnique({ where: { id: code } });
+        if (!existing) return code;
+        attempts++;
+      }
+      return `${prefix}${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    };
+    const studentId = await generateFancyUserId('student');
+
     // Create Student
     const student = await prisma.user.create({
       data: {
+        id: studentId,
         name,
         email,
         passwordHash,

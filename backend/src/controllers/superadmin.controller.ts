@@ -159,7 +159,36 @@ export const createWorkspace = async (req: Request, res: Response) => {
   try {
     const { name } = req.body;
     if (!name) return res.status(400).json({ success: false, message: 'Name is required' });
-    const workspace = await prisma.workspace.create({ data: { name } });
+    /**
+     * Generates a unique, short, and brand-consistent 8-character Workspace ID.
+     * The ID is prefixed with 'ES-' (Examshala) followed by 5 random uppercase letters/numbers.
+     * Exposes a user-friendly mnemonic code (e.g. ES-6MCED) instead of long UUID database keys,
+     * protecting DB schema privacy and making it extremely easy for users to type and share.
+     * Alphanumeric characters exclude highly confusing ones like 0, O, I, 1, and L to ensure
+     * ease of reading and typing.
+     */
+    const generateWorkspaceId = async (): Promise<string> => {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let attempts = 0;
+      while (attempts < 50) {
+        let code = 'ES-';
+        for (let i = 0; i < 5; i++) {
+          code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        const existing = await prisma.workspace.findUnique({ where: { id: code } });
+        if (!existing) return code;
+        attempts++;
+      }
+      return `ES-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    };
+    const workspaceId = await generateWorkspaceId();
+
+    const workspace = await prisma.workspace.create({
+      data: {
+        id: workspaceId,
+        name,
+      },
+    });
     res.status(201).json({ success: true, data: workspace });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });

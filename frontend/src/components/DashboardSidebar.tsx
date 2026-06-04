@@ -100,26 +100,25 @@ function buildLinks(role: string, mode: string): NavGroup[] {
   });
 
   // 3. Assessments
-  const assessmentLinks: NavLink[] = [
-    { href: '/coming-soon?feature=Exams', label: 'Exams', icon: FileText },
-    { href: '/coming-soon?feature=QuestionBank', label: 'Question Bank', icon: ClipboardList },
-  ];
-  if (!inPrincipalMode) {
-    assessmentLinks.push({ href: '/coming-soon?feature=Results', label: 'Results', icon: Trophy });
+  const assessmentLinks: NavLink[] = [];
+  if (inPrincipalMode) {
+    assessmentLinks.push(
+      { href: '/principal/ongoing-assessments', label: 'Ongoing Assessments', icon: ClipboardList },
+      { href: '/results', label: 'Results', icon: Trophy }
+    );
+  } else {
+    assessmentLinks.push(
+      { href: '/coming-soon?feature=Exams', label: 'Exams', icon: FileText },
+      { href: '/coming-soon?feature=QuestionBank', label: 'Question Bank', icon: ClipboardList },
+      { href: '/results', label: 'Results', icon: Trophy }
+    );
   }
   groups.push({
     title: 'Assessments',
     links: assessmentLinks
   });
 
-  // 4. Learning
-  groups.push({
-    title: 'Learning',
-    links: [
-      { href: '/assignments', label: 'Assignments', icon: ClipboardList },
-      { href: '/coming-soon?feature=StudyMaterials', label: 'Study Materials', icon: BookOpen }
-    ]
-  });
+
 
   // 5. Analytics
   const analyticsLinks: NavLink[] = [
