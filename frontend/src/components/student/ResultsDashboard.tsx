@@ -140,7 +140,7 @@ export default function ResultsDashboard({ resultsData }: ResultsDashboardProps)
         </head>
         <body>
           <div class="header">
-            <h1 class="title">Examshala Academic Report</h1>
+            <h1 class="title">EDUsphere Academic Report</h1>
             <p class="subtitle">Official Student Assessment Record</p>
           </div>
           <div class="grid">
@@ -199,7 +199,7 @@ export default function ResultsDashboard({ resultsData }: ResultsDashboardProps)
             </table>
           </div>
           <div class="footer">
-            Generated on ${new Date().toLocaleDateString()} | Examshala Analytics System &copy; 2026
+            Generated on ${new Date().toLocaleDateString()} | EDUsphere Analytics System &copy; 2026
           </div>
           <script>
             window.onload = function() { window.print(); }

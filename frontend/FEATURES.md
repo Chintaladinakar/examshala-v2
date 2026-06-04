@@ -1,4 +1,4 @@
-# Examshala Features Guide
+# EDUsphere Features Guide
 
 ## Component Library
 

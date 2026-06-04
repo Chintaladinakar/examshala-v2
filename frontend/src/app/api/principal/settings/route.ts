@@ -106,11 +106,11 @@ export async function GET(req: NextRequest) {
     // Workspace Profile details
     const workspaceProfile = {
       id: workspace?.id,
-      name: workspace?.name || 'Examshala Academy',
+      name: workspace?.name || 'EDUsphere Academy',
       institutionType: 'High School',
       address: '123 Education Drive, Suite 100',
       contactNumber: '+91 94000 87654',
-      email: 'admin@examshala.com',
+      email: 'admin@edusphere.com',
     };
 
     return jsonOk({
@@ -220,7 +220,7 @@ export async function PATCH(req: NextRequest) {
     const { action } = body;
 
     if (action === 'update_workspace') {
-      const workspaceName = body.workspaceName || 'Examshala Academy';
+      const workspaceName = body.workspaceName || 'EDUsphere Academy';
       await prisma.workspace.update({
         where: { id: ctx.workspaceId },
         data: { name: workspaceName },

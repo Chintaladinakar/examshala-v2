@@ -163,7 +163,7 @@ export default function UsersManagementPage() {
         body: JSON.stringify(body),
       });
 
-      const tempPassword = res.data?.password || 'ExamshalaInvited@123';
+      const tempPassword = res.data?.password || 'EDUsphereInvited@123';
       setGeneratedPassword(tempPassword);
       setInviteSuccessMsg(`Successfully sent invite to ${inviteEmail}!`);
       setInviteEmail('');

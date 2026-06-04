@@ -121,7 +121,7 @@ export function Sidebar() {
             </div>
             {!isCollapsed && (
               <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-teal-950 to-slate-800 bg-clip-text text-transparent group-hover:opacity-90 transition-opacity">
-                Examshala
+                EDUsphere
               </span>
             )}
           </Link>
@@ -186,7 +186,7 @@ export function Sidebar() {
               <GraduationCap className="text-white w-5 h-5" />
             </div>
             <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-teal-950 to-slate-800 bg-clip-text text-transparent">
-              Examshala
+              EDUsphere
             </span>
           </Link>
           <button 

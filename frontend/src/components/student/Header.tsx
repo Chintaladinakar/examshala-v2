@@ -34,7 +34,7 @@ export async function Header() {
 
   // Provide realistic sample workspaces in development if the student has no workspace memberships
   const fallbackWorkspaces = [
-    { id: 'examshala-academy', name: 'Examshala Academy' },
+    { id: 'edusphere-academy', name: 'EDUsphere Academy' },
     { id: 'greenwood-high', name: 'Greenwood High School' },
     { id: 'vanguard-science', name: 'Vanguard Science School' }
   ];

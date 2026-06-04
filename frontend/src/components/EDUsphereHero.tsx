@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-const ExamshalaHero = () => {
+const EdusphereHero = () => {
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-slate-800 font-sans selection:bg-teal-100 selection:text-teal-900 overflow-hidden">
       {/* Top Navbar */}
@@ -10,7 +10,7 @@ const ExamshalaHero = () => {
           <div className="w-8 h-8 bg-teal-700 rounded-lg flex items-center justify-center shadow-sm">
             <span className="text-white font-bold text-xl leading-none">E</span>
           </div>
-          <span className="text-xl font-bold tracking-tight text-slate-900">Examshala</span>
+          <span className="text-xl font-bold tracking-tight text-slate-900">EDUsphere</span>
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
           <Link href="/coming-soon" className="hover:text-teal-700 transition-colors">Features</Link>
@@ -91,7 +91,7 @@ const ExamshalaHero = () => {
               </div>
               <div className="flex-1 flex justify-center">
                 <div className="w-1/2 h-5 bg-white border border-slate-200 rounded flex items-center px-3 justify-center shadow-sm">
-                  <span className="text-[10px] font-mono text-slate-400">examshala.com/principledashboard</span>
+                  <span className="text-[10px] font-mono text-slate-400">edusphere.com/principledashboard</span>
                 </div>
               </div>
               <div className="w-10"></div> {/* Spacer for symmetry */}
@@ -154,4 +154,4 @@ const ExamshalaHero = () => {
   );
 };
 
-export default ExamshalaHero;
+export default EdusphereHero;

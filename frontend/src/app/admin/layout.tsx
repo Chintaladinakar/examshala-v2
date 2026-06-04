@@ -113,7 +113,7 @@ export default function AdminLayout({
               <div className="w-8 h-8 bg-white text-teal-950 font-black rounded-lg flex items-center justify-center">
                 E
               </div>
-              <span className="font-extrabold text-lg tracking-tight text-white">Examshala Admin</span>
+              <span className="font-extrabold text-lg tracking-tight text-white">EDUsphere Admin</span>
             </Link>
             <button 
               onClick={() => setSidebarOpen(false)}

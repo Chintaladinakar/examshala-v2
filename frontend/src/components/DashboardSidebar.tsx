@@ -289,7 +289,7 @@ export default function DashboardSidebar() {
               E
             </div>
             <span className="font-extrabold text-sm tracking-tight text-white leading-none">
-              Examshala
+              EDUsphere
             </span>
           </Link>
         </div>
@@ -345,7 +345,7 @@ export default function DashboardSidebar() {
             E
           </div>
           <span className="font-extrabold text-lg tracking-tight text-white leading-none">
-            Examshala
+            EDUsphere
           </span>
         </Link>
 

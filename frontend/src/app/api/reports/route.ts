@@ -199,10 +199,10 @@ export async function GET(req: NextRequest) {
       });
 
       const demoStudents = processedStudents.length > 0 ? processedStudents : [
-        { id: 'demo-s1', name: 'Aarav Sharma', email: 'aarav@examshala.com', isActive: true, class: { id: 'c1', name: 'Grade 10-A' }, avgScore: 88.5, attendanceRate: 94.2 },
-        { id: 'demo-s2', name: 'Diya Patel', email: 'diya@examshala.com', isActive: true, class: { id: 'c1', name: 'Grade 10-A' }, avgScore: 92.1, attendanceRate: 97.5 },
-        { id: 'demo-s3', name: 'Kabir Mehta', email: 'kabir@examshala.com', isActive: true, class: { id: 'c2', name: 'Grade 11-B' }, avgScore: 78.4, attendanceRate: 85.0 },
-        { id: 'demo-s4', name: 'Neha Reddy', email: 'neha@examshala.com', isActive: true, class: { id: 'c2', name: 'Grade 11-B' }, avgScore: 65.2, attendanceRate: 72.8 },
+        { id: 'demo-s1', name: 'Aarav Sharma', email: 'aarav@edusphere.com', isActive: true, class: { id: 'c1', name: 'Grade 10-A' }, avgScore: 88.5, attendanceRate: 94.2 },
+        { id: 'demo-s2', name: 'Diya Patel', email: 'diya@edusphere.com', isActive: true, class: { id: 'c1', name: 'Grade 10-A' }, avgScore: 92.1, attendanceRate: 97.5 },
+        { id: 'demo-s3', name: 'Kabir Mehta', email: 'kabir@edusphere.com', isActive: true, class: { id: 'c2', name: 'Grade 11-B' }, avgScore: 78.4, attendanceRate: 85.0 },
+        { id: 'demo-s4', name: 'Neha Reddy', email: 'neha@edusphere.com', isActive: true, class: { id: 'c2', name: 'Grade 11-B' }, avgScore: 65.2, attendanceRate: 72.8 },
       ];
 
       // 2. Fetch Tutors/Teachers (for the Principal to track Tutor Attendance)
@@ -247,9 +247,9 @@ export async function GET(req: NextRequest) {
       });
 
       const demoTutors = processedTutors.length > 0 ? processedTutors : [
-        { id: 'demo-t1', name: 'Professor John Doe', email: 'john@examshala.com', isActive: true, classes: [{ id: 'c1', name: 'Grade 10-A' }], attendanceRate: 98.2 },
-        { id: 'demo-t2', name: 'Professor Sarah Smith', email: 'sarah@examshala.com', isActive: true, classes: [{ id: 'c1', name: 'Grade 10-A' }, { id: 'c2', name: 'Grade 11-B' }], attendanceRate: 95.0 },
-        { id: 'demo-t3', name: 'Professor Robert Johnson', email: 'robert@examshala.com', isActive: true, classes: [{ id: 'c2', name: 'Grade 11-B' }], attendanceRate: 88.4 },
+        { id: 'demo-t1', name: 'Professor John Doe', email: 'john@edusphere.com', isActive: true, classes: [{ id: 'c1', name: 'Grade 10-A' }], attendanceRate: 98.2 },
+        { id: 'demo-t2', name: 'Professor Sarah Smith', email: 'sarah@edusphere.com', isActive: true, classes: [{ id: 'c1', name: 'Grade 10-A' }, { id: 'c2', name: 'Grade 11-B' }], attendanceRate: 95.0 },
+        { id: 'demo-t3', name: 'Professor Robert Johnson', email: 'robert@edusphere.com', isActive: true, classes: [{ id: 'c2', name: 'Grade 11-B' }], attendanceRate: 88.4 },
       ];
 
       return jsonOk({

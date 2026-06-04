@@ -5,7 +5,7 @@ const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
 /**
  * Generates a unique, short, and brand-consistent 8-character Workspace ID.
- * Prefixed with 'ES-' (Examshala) followed by 5 random alphanumeric characters,
+ * Prefixed with 'ES-' (EDUsphere) followed by 5 random alphanumeric characters,
  * excluding highly confusing visual duplicates (0, O, I, 1, and L).
  */
 function generateFancyId(): string {

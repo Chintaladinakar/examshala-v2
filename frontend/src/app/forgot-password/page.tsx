@@ -46,7 +46,7 @@ export default function ForgotPasswordPage() {
         {/* Header */}
         <div className="text-center space-y-2">
           <span className="text-2xl font-black text-white tracking-tight flex items-center justify-center gap-1">
-            🏫 Examshala
+            🏫 EDUsphere
           </span>
           <p className="text-xs text-teal-100/60 font-semibold uppercase tracking-wider">
             Reset Password

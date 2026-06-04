@@ -11,7 +11,7 @@ export default function Footer() {
               <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center shadow-sm">
                 <span className="text-white font-bold text-xl leading-none">E</span>
               </div>
-              <span className="text-xl font-bold tracking-tight text-white">Examshala</span>
+              <span className="text-xl font-bold tracking-tight text-white">EDUsphere</span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed">
               Smart virtual assessment platform designed to deliver secure, reliable, and scalable online examination experiences for institutions worldwide.
@@ -45,7 +45,7 @@ export default function Footer() {
             <h4 className="font-semibold text-white mb-4 tracking-wider uppercase text-xs">Get in Touch</h4>
             <p className="text-sm text-slate-400">Have questions? Reach out to our dedicated support team.</p>
             <div className="text-sm font-semibold text-teal-400 hover:underline">
-              <a href="mailto:support@examshala.com">support@examshala.com</a>
+              <a href="mailto:support@edusphere.com">support@edusphere.com</a>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-teal-900/60 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400">
           <div>
-            &copy; {new Date().getFullYear()} Examshala. All rights reserved.
+            &copy; {new Date().getFullYear()} EDUsphere. All rights reserved.
           </div>
           <div className="flex gap-6">
             <Link href="/coming-soon" className="hover:text-teal-400 transition-colors">Privacy Policy</Link>

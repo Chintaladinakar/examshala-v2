@@ -172,7 +172,7 @@ export default function WorkspaceRequestsPage() {
           <XCircle className="w-16 h-16 text-rose-500 mx-auto" />
           <h2 className="text-2xl font-black">Access Denied</h2>
           <p className="text-slate-400 text-xs leading-relaxed font-semibold">
-            This administration workspace is restricted to Examshala Admins only.
+            This administration workspace is restricted to EDUsphere Admins only.
           </p>
           <button
             onClick={() => router.push('/signin')}
@@ -526,7 +526,7 @@ export default function WorkspaceRequestsPage() {
                   <option value="">Select rejection statement...</option>
                   <option value="Incomplete Information: Institution credentials could not be validated.">Incomplete Information</option>
                   <option value="Invalid Details: Provided phone or email address is unreachable.">Invalid Details</option>
-                  <option value="Duplicate Institution: This academy is already registered on Examshala.">Duplicate Institution</option>
+                  <option value="Duplicate Institution: This academy is already registered on EDUsphere.">Duplicate Institution</option>
                   <option value="Invalid Academic Entity: Does not meet platform registration metrics.">Invalid Academic Entity</option>
                 </select>
               </div>

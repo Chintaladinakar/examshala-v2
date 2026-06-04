@@ -8,7 +8,7 @@ const seedAdmin = async () => {
     console.log('Clearing old system logs, invites, and workspaces (selective)...');
     
     // 1. Seed Org Admin
-    const adminEmail = 'admin@examshala.com';
+    const adminEmail = 'admin@edusphere.com';
     const adminPassword = 'Admin@123';
     const passwordHash = await bcrypt.hash(adminPassword, 12);
 
@@ -18,12 +18,12 @@ const seedAdmin = async () => {
         email: {
           in: [
             adminEmail,
-            'principal.smith@examshala.com',
-            'principal.roy@examshala.com',
-            'sarah.teacher@examshala.com',
-            'walter.teacher@examshala.com',
-            'john.student@examshala.com',
-            'jane.student@examshala.com',
+            'principal.smith@edusphere.com',
+            'principal.roy@edusphere.com',
+            'sarah.teacher@edusphere.com',
+            'walter.teacher@edusphere.com',
+            'john.student@edusphere.com',
+            'jane.student@edusphere.com',
           ],
         },
       },
@@ -47,8 +47,8 @@ const seedAdmin = async () => {
     // 2. Create Principal Users
     // Seed Principals with custom fixed 8-character mnemonic IDs (e.g. 'PR-SMITH', 'PR-ROYAL')
     const principalEmails = [
-      { email: 'principal.smith@examshala.com', name: 'Dr. John Smith', id: 'PR-SMITH' },
-      { email: 'principal.roy@examshala.com', name: 'Prof. Amit Roy', id: 'PR-ROYAL' },
+      { email: 'principal.smith@edusphere.com', name: 'Dr. John Smith', id: 'PR-SMITH' },
+      { email: 'principal.roy@edusphere.com', name: 'Prof. Amit Roy', id: 'PR-ROYAL' },
     ];
 
     const principals = [];
@@ -95,10 +95,10 @@ const seedAdmin = async () => {
     // 4. Create Teachers and Students
     // Seed teachers ('TR-XXXXX') and students ('ST-XXXXX') with custom readable 8-character IDs
     const testUsers = [
-      { name: 'Sarah Connor', email: 'sarah.teacher@examshala.com', role: 'TEACHER', workspaceIdx: 0, id: 'TR-SARAH' },
-      { name: 'Walter White', email: 'walter.teacher@examshala.com', role: 'TEACHER', workspaceIdx: 1, id: 'TR-WALT2' },
-      { name: 'John Doe', email: 'john.student@examshala.com', role: 'STUDENT', workspaceIdx: 0, id: 'ST-JOHN1' },
-      { name: 'Jane Doe', email: 'jane.student@examshala.com', role: 'STUDENT', workspaceIdx: 2, id: 'ST-JANE1' },
+      { name: 'Sarah Connor', email: 'sarah.teacher@edusphere.com', role: 'TEACHER', workspaceIdx: 0, id: 'TR-SARAH' },
+      { name: 'Walter White', email: 'walter.teacher@edusphere.com', role: 'TEACHER', workspaceIdx: 1, id: 'TR-WALT2' },
+      { name: 'John Doe', email: 'john.student@edusphere.com', role: 'STUDENT', workspaceIdx: 0, id: 'ST-JOHN1' },
+      { name: 'Jane Doe', email: 'jane.student@edusphere.com', role: 'STUDENT', workspaceIdx: 2, id: 'ST-JANE1' },
     ];
 
     for (const tu of testUsers) {
@@ -120,9 +120,9 @@ const seedAdmin = async () => {
 
     // 5. Seed Invites
     const sampleInvites = [
-      { email: 'invited.teacher1@examshala.com', role: 'TEACHER', status: 'PENDING', workspaceIdx: 0 },
-      { email: 'invited.student1@examshala.com', role: 'STUDENT', status: 'PENDING', workspaceIdx: 1 },
-      { email: 'accepted.principal@examshala.com', role: 'PRINCIPAL', status: 'ACCEPTED', workspaceIdx: 2 },
+      { email: 'invited.teacher1@edusphere.com', role: 'TEACHER', status: 'PENDING', workspaceIdx: 0 },
+      { email: 'invited.student1@edusphere.com', role: 'STUDENT', status: 'PENDING', workspaceIdx: 1 },
+      { email: 'accepted.principal@edusphere.com', role: 'PRINCIPAL', status: 'ACCEPTED', workspaceIdx: 2 },
     ];
 
     await prisma.invite.deleteMany({});
@@ -144,7 +144,7 @@ const seedAdmin = async () => {
       { userId: admin.id, action: 'USER_CREATED', entity: 'USER', entityId: admin.id, metadata: { email: admin.email, role: 'ORG_ADMIN' } },
       { userId: admin.id, action: 'WORKSPACE_CREATED', entity: 'WORKSPACE', entityId: workspaces[0].id, metadata: { name: workspaces[0].name } },
       { userId: admin.id, action: 'WORKSPACE_CREATED', entity: 'WORKSPACE', entityId: workspaces[1].id, metadata: { name: workspaces[1].name } },
-      { userId: admin.id, action: 'INVITE_SENT', entity: 'INVITE', entityId: 'invite-1', metadata: { email: 'invited.teacher1@examshala.com', role: 'TEACHER' } },
+      { userId: admin.id, action: 'INVITE_SENT', entity: 'INVITE', entityId: 'invite-1', metadata: { email: 'invited.teacher1@edusphere.com', role: 'TEACHER' } },
       { userId: admin.id, action: 'ROLE_ASSIGNED', entity: 'USER', entityId: principals[0].id, metadata: { role: 'PRINCIPAL', workspace: workspaces[0].name } },
     ];
 

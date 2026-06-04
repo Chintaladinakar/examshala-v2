@@ -171,7 +171,7 @@ export const forgotPassword = async ({ email }: { email: string }) => {
     throw { status: 404, code: 'USER_NOT_FOUND', message: 'No account exists with this email address' };
   }
 
-  const JWT_SECRET = process.env.JWT_SECRET || 'examshala-dev-secret-change-in-production';
+  const JWT_SECRET = process.env.JWT_SECRET || 'edusphere-dev-secret-change-in-production';
   const secret = JWT_SECRET + (user.passwordHash || '');
   const token = jwt.sign({ email: user.email }, secret, { expiresIn: '1h' });
 
@@ -220,7 +220,7 @@ export const resetPasswordWithToken = async ({ token, password }: any) => {
   }
 
   // 3. Verify token with user's dynamic secret
-  const JWT_SECRET = process.env.JWT_SECRET || 'examshala-dev-secret-change-in-production';
+  const JWT_SECRET = process.env.JWT_SECRET || 'edusphere-dev-secret-change-in-production';
   const secret = JWT_SECRET + (user.passwordHash || '');
 
   try {

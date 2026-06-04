@@ -11,7 +11,7 @@ export function Navbar() {
     <div className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="font-black text-slate-900">Examshala School</div>
+          <div className="font-black text-slate-900">EDUsphere School</div>
           {user?.workspaceName ? <span className="text-xs text-slate-500">Workspace: {user.workspaceName}</span> : null}
         </div>
         <div className="flex items-center gap-3">

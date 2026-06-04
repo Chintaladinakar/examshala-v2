@@ -177,7 +177,7 @@ export default function ActiveWorkspacesPage() {
           <XCircle className="w-16 h-16 text-rose-500 mx-auto" />
           <h2 className="text-2xl font-black">Access Denied</h2>
           <p className="text-slate-400 text-xs leading-relaxed font-semibold">
-            This administration workspace is restricted to Examshala Admins only.
+            This administration workspace is restricted to EDUsphere Admins only.
           </p>
           <button
             onClick={() => router.push('/signin')}

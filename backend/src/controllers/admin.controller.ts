@@ -359,7 +359,7 @@ export const createWorkspace = async (req: AuthRequest, res: Response): Promise<
 
     /**
      * Generates a unique, short, and brand-consistent 8-character Workspace ID.
-     * The ID is prefixed with 'ES-' (Examshala) followed by 5 random uppercase letters/numbers.
+     * The ID is prefixed with 'ES-' (EDUsphere) followed by 5 random uppercase letters/numbers.
      * Exposes a user-friendly mnemonic code (e.g. ES-6MCED) instead of long UUID database keys,
      * protecting DB schema privacy and making it extremely easy for users to type and share.
      * Alphanumeric characters exclude highly confusing ones like 0, O, I, 1, and L to ensure
@@ -585,7 +585,7 @@ export const sendInvite = async (req: AuthRequest, res: Response): Promise<void>
     }
 
     // Initialize an INVITED user in inactive state so they can register later
-    const defaultPassword = process.env.INVITE_DEFAULT_PASSWORD || 'ExamshalaInvited@123';
+    const defaultPassword = process.env.INVITE_DEFAULT_PASSWORD || 'EDUsphereInvited@123';
     const passwordHash = await bcrypt.hash(defaultPassword, 12);
     /**
      * Generates a unique, short, and brand-consistent 8-character User ID.

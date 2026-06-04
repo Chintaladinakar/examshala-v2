@@ -29,7 +29,7 @@ app.use('/api/materials', materialRoutes);
 
 // Health check
 app.get('/api/health', (_req, res) => {
-  res.status(200).json({ status: 'ok', message: 'Examshala API is running' });
+  res.status(200).json({ status: 'ok', message: 'EDUsphere API is running' });
 });
 
 import prisma from './lib/prisma';

@@ -4,7 +4,7 @@ import { ToastProvider } from "@/components/ui/ToastProvider";
 import { UserProvider } from "@/context/UserContext";
 
 export const metadata: Metadata = {
-  title: "Examshala - Virtual Assessment Platform",
+  title: "EDUsphere - Virtual Assessment Platform",
   description: "Secure, reliable, and scalable online examination system.",
 };
 

@@ -55,7 +55,7 @@ export default function WorkspaceSetupPage() {
 
   // Step 4: Invite Teachers
   const [invites, setInvites] = useState<{ name: string; email: string }[]>([
-    { name: 'Dr. John Smith', email: 'principal.smith@examshala.com' }
+    { name: 'Dr. John Smith', email: 'principal.smith@edusphere.com' }
   ]);
   const [newTeacherName, setNewTeacherName] = useState('');
   const [newTeacherEmail, setNewTeacherEmail] = useState('');
@@ -165,7 +165,7 @@ export default function WorkspaceSetupPage() {
             E
           </div>
           <span className="font-extrabold text-base tracking-tight text-white">
-            Examshala
+            EDUsphere
           </span>
         </div>
         <span className="text-[10px] text-teal-400 font-extrabold uppercase bg-teal-500/10 border border-teal-500/25 px-2.5 py-1 rounded-lg">
@@ -470,7 +470,7 @@ export default function WorkspaceSetupPage() {
 
       {/* Footer */}
       <footer className="w-full text-center py-6 text-[10px] text-slate-700 font-medium z-10 border-t border-slate-900">
-        © {new Date().getFullYear()} Examshala Examination Portal.
+        © {new Date().getFullYear()} EDUsphere Examination Portal.
       </footer>
     </div>
   );

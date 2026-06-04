@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import ExamshalaHero from '@/components/ExamshalaHero';
-import ExamshalaFeatures from '@/components/ExamshalaFeatures';
+import EDUsphereHero from '@/components/EDUsphereHero';
+import EDUsphereFeatures from '@/components/EDUsphereFeatures';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -18,11 +18,11 @@ export default function Home() {
   const faqs = [
     {
       question: "How does the virtual monitoring and anti-cheat mechanism work?",
-      answer: "Examshala utilizes browser lock technologies combined with automated webcam proctoring. The system monitors browser focus, alerts invigilators when candidates try to leave the test window, tracks progress, and signals warnings in real-time."
+      answer: "EDUsphere utilizes browser lock technologies combined with automated webcam proctoring. The system monitors browser focus, alerts invigilators when candidates try to leave the test window, tracks progress, and signals warnings in real-time."
     },
     {
       question: "Can it support large-scale examinations simultaneously?",
-      answer: "Yes. Our cloud infrastructure is designed to scale dynamically. Examshala can handle tens of thousands of simultaneous test-takers with zero lag and extremely low latency for image feeds and test responses."
+      answer: "Yes. Our cloud infrastructure is designed to scale dynamically. EDUsphere can handle tens of thousands of simultaneous test-takers with zero lag and extremely low latency for image feeds and test responses."
     },
     {
       question: "Is there support for different question types (MCQs, coding, essays)?",
@@ -42,10 +42,10 @@ export default function Home() {
     <div className="min-h-screen bg-[#FDFBF7] flex flex-col font-sans selection:bg-teal-100 selection:text-teal-900">
       
       {/* 1. Hero & Navigation Section */}
-      <ExamshalaHero />
+      <EDUsphereHero />
 
       {/* 2. Key Product Features Section */}
-      <ExamshalaFeatures />
+      <EDUsphereFeatures />
 
       {/* 3. Sarcastic Single-Plan Pricing Section */}
       <section className="bg-[#FDFBF7] py-24 border-t border-slate-100">
@@ -140,7 +140,7 @@ export default function Home() {
               Frequently asked questions
             </h2>
             <p className="text-lg text-slate-600">
-              Everything you need to know about the Examshala proctoring and assessment experience.
+              Everything you need to know about the EDUsphere proctoring and assessment experience.
             </p>
           </div>
 
@@ -190,7 +190,7 @@ export default function Home() {
                 Ready to elevate your assessment integrity?
               </h2>
               <p className="text-lg md:text-xl text-teal-100 mb-10 leading-relaxed max-w-2xl mx-auto">
-                Join hundreds of forward-thinking institutions using Examshala to conduct simple, secure, and stress-free digital exams.
+                Join hundreds of forward-thinking institutions using EDUsphere to conduct simple, secure, and stress-free digital exams.
               </p>
               
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

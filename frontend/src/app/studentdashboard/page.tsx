@@ -99,7 +99,7 @@ export default async function StudentDashboardPage() {
       title: typeof n.title === 'string' ? n.title : '',
       message: typeof n.message === 'string' ? n.message : '',
     assignedByType: "system", // Usually mapped via action if needed
-    assignedByName: "Examshala System",
+    assignedByName: "EDUsphere System",
       assignedAt: n.createdAt,
     };
   });

@@ -7,7 +7,7 @@ type DashboardResponse = { data?: StudentDashboardData };
 type ParentsResponse = { data?: StudentParentsData };
 
 const isFallbackId = (id?: string) => 
-  id === 'examshala-academy' || id === 'greenwood-high' || id === 'vanguard-science';
+  id === 'edusphere-academy' || id === 'greenwood-high' || id === 'vanguard-science';
 
 export async function getStudentDashboard(token: string, workspaceId?: string): Promise<StudentDashboardData> {
   try {

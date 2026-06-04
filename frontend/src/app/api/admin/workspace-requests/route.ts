@@ -140,7 +140,7 @@ export async function PATCH(req: NextRequest) {
       // 5. Initialize settings
       await prisma.platformSettings.upsert({
         where: { id: 'global-settings' },
-        create: { platformName: 'Examshala Academy', supportEmail: 'support@examshala.com' },
+        create: { platformName: 'EDUsphere Academy', supportEmail: 'support@edusphere.com' },
         update: {},
       });
 

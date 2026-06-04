@@ -123,7 +123,7 @@ export async function POST(req: NextRequest) {
 
     /**
      * Generates a unique, short, and brand-consistent 8-character Workspace ID.
-     * The ID is prefixed with 'ES-' (Examshala) followed by 5 random uppercase letters/numbers.
+     * The ID is prefixed with 'ES-' (EDUsphere) followed by 5 random uppercase letters/numbers.
      * Exposes a user-friendly mnemonic code (e.g. ES-6MCED) instead of long UUID database keys,
      * protecting DB schema privacy and making it extremely easy for users to type and share.
      */

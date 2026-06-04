@@ -133,7 +133,7 @@ export default function WorkspaceCreatePage() {
             E
           </div>
           <span className="font-extrabold text-base tracking-tight text-white">
-            Examshala
+            EDUsphere
           </span>
         </div>
         <span className="text-[10px] text-slate-500 font-extrabold uppercase bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800">
@@ -490,7 +490,7 @@ export default function WorkspaceCreatePage() {
               <div className="flex items-start gap-3 bg-slate-950/40 p-3.5 border rounded-xl">
                 <Info className="w-5 h-5 text-teal-500 shrink-0 mt-0.5" />
                 <p className="text-[10px] text-slate-400 leading-relaxed font-semibold">
-                  Examshala restricts workspaces to verified entities. Your request will enter the pending review queue. Super Admins will validate your institution credentials before activation.
+                  EDUsphere restricts workspaces to verified entities. Your request will enter the pending review queue. Super Admins will validate your institution credentials before activation.
                 </p>
               </div>
             </div>
@@ -533,7 +533,7 @@ export default function WorkspaceCreatePage() {
 
       {/* Footer */}
       <footer className="w-full text-center py-6 text-[10px] text-slate-700 font-medium z-10 border-t border-slate-900">
-        © {new Date().getFullYear()} Examshala Examination Portal.
+        © {new Date().getFullYear()} EDUsphere Examination Portal.
       </footer>
     </div>
   );

@@ -16,7 +16,7 @@ export const getStudentProfile = async (studentId: string, workspaceIdContext?: 
       className: 'Class 10',
       section: 'A',
       academicYear: '2025-2026',
-      email: 'student@examshala.com',
+      email: 'student@edusphere.com',
       mobileNumber: '+1 234-567-8900',
       parentName: 'Parent User',
       parentMobile: '+1 987-654-3210',

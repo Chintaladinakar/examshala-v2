@@ -1,16 +1,16 @@
 import React from 'react';
 
-const ExamshalaFeatures = () => {
+const EdusphereFeatures = () => {
   return (
     <div className="bg-[#FDFBF7] text-slate-800 font-sans pb-24 md:pb-32">
       
-      {/* Why Examshala Block */}
+      {/* Why EDUsphere Block */}
       <section className="max-w-7xl mx-auto px-6 py-20 lg:py-28">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
           
           <div className="lg:w-1/3 pt-4">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 mb-6 leading-tight">
-              Why leading institutions choose <span className="text-teal-700">Examshala</span>
+              Why leading institutions choose <span className="text-teal-700">EDUsphere</span>
             </h2>
             <p className="text-lg text-slate-600 leading-relaxed">
               We provide a robust testing foundation that prioritizes academic integrity while completely eliminating the administrative overhead of traditional examinations.
@@ -98,4 +98,4 @@ const ExamshalaFeatures = () => {
   );
 };
 
-export default ExamshalaFeatures;
+export default EdusphereFeatures;

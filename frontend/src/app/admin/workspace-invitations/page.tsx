@@ -97,7 +97,7 @@ export default function WorkspaceInvitationsPage() {
           <XCircle className="w-16 h-16 text-rose-500 mx-auto" />
           <h2 className="text-2xl font-black">Access Denied</h2>
           <p className="text-slate-400 text-xs leading-relaxed font-semibold">
-            This administration workspace is restricted to Examshala Admins only.
+            This administration workspace is restricted to EDUsphere Admins only.
           </p>
           <button
             onClick={() => router.push('/signin')}
@@ -121,7 +121,7 @@ export default function WorkspaceInvitationsPage() {
             Workspace Invitations Tracker
           </h1>
           <p className="text-slate-500 text-xs md:text-sm font-semibold mt-1">
-            Read-only central command ledger monitoring student, tutor, and administrative workspace invites across Examshala.
+            Read-only central command ledger monitoring student, tutor, and administrative workspace invites across EDUsphere.
           </p>
         </div>
         

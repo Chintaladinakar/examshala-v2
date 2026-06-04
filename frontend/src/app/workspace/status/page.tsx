@@ -72,7 +72,7 @@ export default function WorkspaceRequestStatusPage() {
             E
           </div>
           <span className="font-extrabold text-base tracking-tight text-white">
-            Examshala
+            EDUsphere
           </span>
         </div>
         
@@ -227,7 +227,7 @@ export default function WorkspaceRequestStatusPage() {
 
       {/* Footer */}
       <footer className="w-full text-center py-6 text-[10px] text-slate-700 font-medium z-10 border-t border-slate-900">
-        © {new Date().getFullYear()} Examshala Examination Portal.
+        © {new Date().getFullYear()} EDUsphere Examination Portal.
       </footer>
     </div>
   );

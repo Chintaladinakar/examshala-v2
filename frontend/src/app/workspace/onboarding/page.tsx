@@ -27,7 +27,7 @@ export default function WorkspaceOnboardingPage() {
             E
           </div>
           <span className="font-extrabold text-lg tracking-tight text-white">
-            Examshala
+            EDUsphere
           </span>
         </div>
         <button
@@ -42,7 +42,7 @@ export default function WorkspaceOnboardingPage() {
       <main className="max-w-4xl w-full mx-auto px-6 py-12 flex flex-col items-center justify-center flex-1 z-10">
         <div className="text-center space-y-3 max-w-xl mx-auto mb-12">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-teal-500/20 bg-teal-500/10 text-teal-300">
-            <Sparkles className="w-3 h-3 text-teal-400" /> Welcome to Examshala
+            <Sparkles className="w-3 h-3 text-teal-400" /> Welcome to EDUsphere
           </span>
           <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white">
             Set up your workspace
@@ -112,7 +112,7 @@ export default function WorkspaceOnboardingPage() {
 
       {/* Footer */}
       <footer className="w-full text-center py-6 text-[10px] text-slate-600 font-medium z-10">
-        © {new Date().getFullYear()} Examshala Examination Portal. All Rights Reserved.
+        © {new Date().getFullYear()} EDUsphere Examination Portal. All Rights Reserved.
       </footer>
     </div>
   );

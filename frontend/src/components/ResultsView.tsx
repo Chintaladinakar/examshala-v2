@@ -388,7 +388,7 @@ export default function ResultsView({ role, resultsData }: ResultsViewProps) {
                 <div className="w-10 h-10 bg-teal-950 text-white font-black rounded-xl flex items-center justify-center text-lg mx-auto shadow-md">
                   E
                 </div>
-                <h4 className="font-extrabold text-slate-900 mt-2 text-sm tracking-wide uppercase leading-none">Examshala Academy</h4>
+                <h4 className="font-extrabold text-slate-900 mt-2 text-sm tracking-wide uppercase leading-none">EDUsphere Academy</h4>
                 <p className="text-[9px] text-slate-400 font-extrabold uppercase tracking-widest mt-1">Official Student Performance Report</p>
               </div>
 
@@ -471,7 +471,7 @@ export default function ResultsView({ role, resultsData }: ResultsViewProps) {
 
             {/* Print Friendly Footer warning */}
             <div className="hidden print:block text-center text-[9px] text-slate-400 border-t pt-4 pb-6 select-none font-semibold">
-              This is a computer generated scorecard certified by Examshala Analytics System.
+              This is a computer generated scorecard certified by EDUsphere Analytics System.
             </div>
 
             {/* Footer */}

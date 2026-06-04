@@ -65,7 +65,7 @@ export const TeacherSidebar = () => {
           <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-xl">E</span>
           </div>
-          <span className="text-xl font-bold text-gray-900 tracking-tight">Examshala</span>
+          <span className="text-xl font-bold text-gray-900 tracking-tight">EDUsphere</span>
         </Link>
       </div>
 

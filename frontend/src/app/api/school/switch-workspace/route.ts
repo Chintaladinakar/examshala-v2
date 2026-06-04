@@ -99,7 +99,7 @@ export async function POST(req: NextRequest) {
     }));
 
     // 6. Generate and set a new JWT token to update user's session cookie
-    const jwtSecret = process.env.JWT_SECRET || 'examshala-jwt-secret-change-in-production';
+    const jwtSecret = process.env.JWT_SECRET || 'edusphere-jwt-secret-change-in-production';
     const payload = {
       userId: ctx.userId,
       role: targetRole,

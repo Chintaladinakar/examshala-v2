@@ -174,7 +174,7 @@ export default function ResetPasswordWithTokenPage() {
       <div className="w-full max-w-md bg-white/[0.03] backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-3xl shadow-2xl space-y-6">
         <div className="text-center space-y-2">
           <span className="text-2xl font-black text-white tracking-tight flex items-center justify-center gap-1">
-            🏫 Examshala
+            🏫 EDUsphere
           </span>
           <p className="text-xs text-teal-100/60 font-semibold uppercase tracking-wider">
             Establish Credentials
