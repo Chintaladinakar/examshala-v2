@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
-    "build": "tsc && powershell -Command \"Remove-Item -Recurse -Force dist/generated/prisma; Copy-Item -Recurse -Force src/generated/prisma dist/generated\"",
+    "build": "tsc && node -e \"const fs=require('fs'); const path=require('path'); const src='src/generated/prisma'; const dest='dist/generated/prisma'; fs.rmSync(dest,{recursive:true,force:true}); fs.mkdirSync(path.dirname(dest),{recursive:true}); fs.cpSync(src,dest,{recursive:true});\"",
     "start": "node dist/server.js",
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev",
