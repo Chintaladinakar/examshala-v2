@@ -21,7 +21,7 @@ export default function InputField({
 }: InputFieldProps) {
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-2">
+      <label htmlFor={id} className="block text-sm font-semibold text-slate-300 mb-2">
         {label}
       </label>
       <input
@@ -29,7 +29,7 @@ export default function InputField({
         id={id}
         value={value}
         onChange={onChange}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+        className="w-full px-4 py-3 rounded-xl border border-slate-700 bg-slate-900/80 text-slate-100 placeholder:text-slate-500 shadow-sm transition-all outline-none selection:bg-teal-500 selection:text-slate-950 focus:border-teal-400 focus:ring-4 focus:ring-teal-500/15 focus:bg-slate-900 disabled:bg-slate-900/40 disabled:text-slate-500 disabled:cursor-not-allowed"
         placeholder={placeholder}
         required={required}
         disabled={disabled}
