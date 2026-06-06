@@ -3,6 +3,7 @@ import { AuthRequest } from '../middleware/auth.middleware';
 import prisma from '../lib/prisma';
 import { createSystemLog } from '../services/log.service';
 import bcrypt from 'bcryptjs';
+import { isMailConfigured, sendUserInvitationEmail } from '../services/mail.service';
 
 // -------------------------------------------------------------
 // 1. USER CONTROLLERS
@@ -564,6 +565,12 @@ export const sendInvite = async (req: AuthRequest, res: Response): Promise<void>
     }
 
     const actorId = req.user?.userId || 'system';
+    const actor = req.user?.userId
+      ? await prisma.user.findUnique({
+          where: { id: req.user.userId },
+          select: { name: true },
+        })
+      : null;
 
     // Create invite record
     const invite = await prisma.invite.create({
@@ -601,7 +608,7 @@ export const sendInvite = async (req: AuthRequest, res: Response): Promise<void>
       if (roleLower === 'student') prefix = 'ST-';
       else if (roleLower === 'tutor' || roleLower === 'teacher') prefix = 'TR-';
       else if (roleLower === 'principal') prefix = 'PR-';
-      else if (roleLower === 'superadmin' || roleLower === 'org_admin' || roleLower === 'admin') prefix = 'AD-';
+      else if (roleLower === 'org_admin') prefix = 'AD-';
 
       let attempts = 0;
       while (attempts < 50) {
@@ -643,6 +650,16 @@ export const sendInvite = async (req: AuthRequest, res: Response): Promise<void>
       }
     }
 
+    const workspaceNames = finalWorkspaceIds.length
+      ? await prisma.workspace.findMany({
+          where: { id: { in: finalWorkspaceIds } },
+          select: { name: true },
+          orderBy: { name: 'asc' },
+        })
+      : [];
+
+    const workspaceName = workspaceNames.map((item) => item.name).join(', ');
+
     // Audit Logging
     await createSystemLog({
       userId: actorId,
@@ -660,12 +677,36 @@ export const sendInvite = async (req: AuthRequest, res: Response): Promise<void>
       metadata: { email, role, status: 'INVITED' },
     });
 
+    let mailStatus: 'sent' | 'skipped' | 'failed' = 'skipped';
+    let mailError: string | undefined;
+
+    if (isMailConfigured()) {
+      try {
+        await sendUserInvitationEmail({
+          to: email,
+          invitedRole: role,
+          invitedByName: actor?.name,
+          workspaceName: workspaceName || null,
+          temporaryPassword: defaultPassword,
+        });
+        mailStatus = 'sent';
+      } catch (error: any) {
+        mailStatus = 'failed';
+        mailError = error?.message || 'Unknown mail error';
+        console.error('[mail] Failed to send invitation email:', mailError);
+      }
+    }
+
     res.status(201).json({
       success: true,
-      message: 'Invitation sent successfully',
+      message: mailStatus === 'sent'
+        ? 'Invitation created and email sent successfully'
+        : 'Invitation created successfully',
       data: {
         ...invite,
         password: defaultPassword,
+        mailStatus,
+        ...(mailError ? { mailError } : {}),
       },
     });
   } catch (error: any) {

@@ -43,7 +43,7 @@ export async function requireSchoolAuth(): Promise<AuthContext> {
   if (!user || !user.isActive) throw new Error('UNAUTHORIZED');
 
   const role = (user.role || decoded?.role || '').toLowerCase();
-  const isGlobalAdmin = role === 'superadmin' || role === 'org_admin' || role === 'admin';
+  const isGlobalAdmin = role === 'org_admin';
 
   const workspaceId = user.workspaceId;
   if (!workspaceId && !isGlobalAdmin) {
@@ -52,7 +52,7 @@ export async function requireSchoolAuth(): Promise<AuthContext> {
 
   const mode: SchoolMode = (role === 'teacher' || role === 'tutor') ? 'teacher' : 'principal';
 
-  if (role !== 'superadmin' && role !== 'org_admin' && role !== 'admin' && workspaceId) {
+  if (role !== 'org_admin' && workspaceId) {
     const workspace = await prisma.workspace.findUnique({
       where: { id: workspaceId },
       select: { status: true },

@@ -48,7 +48,7 @@ export default function WorkspaceInvitationsPage() {
   const router = useRouter();
 
   const role = user?.role?.toLowerCase();
-  const isSuperAdmin = role === 'superadmin' || role === 'org_admin' || role === 'admin';
+  const isOrgAdmin = role === 'org_admin';
 
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(true);
@@ -101,7 +101,7 @@ export default function WorkspaceInvitationsPage() {
     );
   }
 
-  if (!isSuperAdmin) {
+  if (!isOrgAdmin) {
     return (
       <div className="min-h-screen bg-slate-955 flex flex-col justify-center items-center select-none text-slate-100 relative overflow-hidden">
         <div className="bg-slate-900 border border-slate-850 p-12 rounded-3xl shadow-2xl max-w-md text-center space-y-4 z-10">

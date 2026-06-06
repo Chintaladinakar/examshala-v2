@@ -6,7 +6,7 @@ import { jsonOk, jsonError, mapAuthzError } from '@/lib/school/http';
 export async function GET() {
   try {
     const ctx = await requireSchoolAuth();
-    if (ctx.role !== 'superadmin' && ctx.role !== 'org_admin' && ctx.role !== 'admin') {
+    if (ctx.role !== 'org_admin') {
       return jsonError('FORBIDDEN', 'Only Admins can access this resource.', 403);
     }
 
@@ -59,7 +59,7 @@ export async function GET() {
 export async function PATCH(req: NextRequest) {
   try {
     const ctx = await requireSchoolAuth();
-    if (ctx.role !== 'superadmin' && ctx.role !== 'org_admin' && ctx.role !== 'admin') {
+    if (ctx.role !== 'org_admin') {
       return jsonError('FORBIDDEN', 'Only Admins can review workspace requests.', 403);
     }
 

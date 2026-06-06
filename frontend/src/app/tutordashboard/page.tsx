@@ -84,7 +84,7 @@ export default function TutorDashboardPage() {
     if (!profileLoading) {
       if (!profile) {
         router.push('/signin');
-      } else if (!profile.workspaceId && profile.role !== 'superadmin') {
+      } else if (!profile.workspaceId && profile.role !== 'org_admin') {
         router.push('/workspace/onboarding');
       } else {
         loadDashboardData();

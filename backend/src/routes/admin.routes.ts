@@ -4,9 +4,9 @@ import * as adminController from '../controllers/admin.controller';
 
 const router = Router();
 
-// Protect all routes and restrict to ORG_ADMIN or admin role
+// Protect all routes and restrict to ORG_ADMIN only
 router.use(protect);
-router.use(authorizeRoles('ORG_ADMIN', 'admin'));
+router.use(authorizeRoles('ORG_ADMIN'));
 
 // -------------------------------------------------------------
 // Users REST API

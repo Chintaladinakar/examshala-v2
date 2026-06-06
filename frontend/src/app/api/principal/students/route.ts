@@ -120,7 +120,7 @@ export async function POST(req: NextRequest) {
       if (roleLower === 'student') prefix = 'ST-';
       else if (roleLower === 'tutor' || roleLower === 'teacher') prefix = 'TR-';
       else if (roleLower === 'principal') prefix = 'PR-';
-      else if (roleLower === 'superadmin' || roleLower === 'org_admin' || roleLower === 'admin') prefix = 'AD-';
+      else if (roleLower === 'org_admin') prefix = 'AD-';
 
       let attempts = 0;
       while (attempts < 50) {

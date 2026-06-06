@@ -54,10 +54,25 @@ export async function POST(req: NextRequest) {
       return jsonError('FORBIDDEN', 'You do not have access to this workspace', 403);
     }
     
-    const targetRole = membership.role.toUpperCase();
-    const targetMode = (membership.role.toLowerCase() === 'teacher' || membership.role.toLowerCase() === 'tutor') ? 'teacher' : 'principal';
+    const currentUser = await prisma.user.findUnique({
+      where: { id: ctx.userId },
+      select: { role: true, mode: true },
+    });
 
-    // 2. Update the user's active workspaceId, role, and mode in the User database model
+    if (!currentUser) {
+      return jsonError('UNAUTHORIZED', 'Unauthorized', 401);
+    }
+
+    const currentRole = (currentUser.role || '').toLowerCase();
+    const isGlobalAdmin = currentRole === 'org_admin';
+
+    const membershipRole = membership.role.toLowerCase();
+    const targetRole = isGlobalAdmin ? currentUser.role : membershipRole.toUpperCase();
+    const targetMode = isGlobalAdmin
+      ? (currentUser.mode || 'principal')
+      : (membershipRole === 'teacher' || membershipRole === 'tutor' ? 'teacher' : 'principal');
+
+    // 2. Update the active workspace without downgrading global admins into workspace roles
     await prisma.user.update({
       where: { id: ctx.userId },
       data: {
@@ -128,4 +143,3 @@ export async function POST(req: NextRequest) {
     return mapAuthzError(err);
   }
 }
-

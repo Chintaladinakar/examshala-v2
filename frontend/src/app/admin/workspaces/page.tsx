@@ -79,7 +79,7 @@ export default function ActiveWorkspacesPage() {
   const router = useRouter();
 
   const role = user?.role?.toLowerCase();
-  const isSuperAdmin = role === 'superadmin' || role === 'org_admin' || role === 'admin';
+  const isOrgAdmin = role === 'org_admin';
 
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [loading, setLoading] = useState(true);
@@ -109,10 +109,10 @@ export default function ActiveWorkspacesPage() {
   }
 
   useEffect(() => {
-    if (isSuperAdmin) {
+    if (isOrgAdmin) {
       loadWorkspaces();
     }
-  }, [isSuperAdmin]);
+  }, [isOrgAdmin]);
 
   const filteredWorkspaces = useMemo(() => {
     return workspaces.filter(w => {
@@ -181,7 +181,7 @@ export default function ActiveWorkspacesPage() {
     );
   }
 
-  if (!isSuperAdmin) {
+  if (!isOrgAdmin) {
     return (
       <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center select-none text-slate-100 relative overflow-hidden">
         <div className="bg-slate-900 border border-slate-850 p-12 rounded-3xl shadow-2xl max-w-md text-center space-y-4 z-10">

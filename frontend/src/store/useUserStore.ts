@@ -2,7 +2,7 @@
 
 import { create } from 'zustand';
 
-export type UserRole = 'principal' | 'teacher' | 'tutor' | 'student' | 'parent' | 'org_admin' | 'admin' | 'superadmin' | string;
+export type UserRole = 'principal' | 'teacher' | 'tutor' | 'student' | 'parent' | 'org_admin' | string;
 export type UserMode = 'principal' | 'teacher';
 
 export type UserProfile = {
