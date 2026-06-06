@@ -71,10 +71,10 @@ export default function WorkspaceInvitationsPage() {
   }
 
   useEffect(() => {
-    if (isSuperAdmin) {
+    if (isOrgAdmin) {
       loadInvitations();
     }
-  }, [isSuperAdmin]);
+  }, [isOrgAdmin]);
 
   const filteredInvitations = useMemo(() => {
     return invitations.filter(i => {
