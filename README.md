@@ -2,7 +2,7 @@
 
 A comprehensive full-stack educational platform built with modern web technologies for exam preparation and learning management.
 
-**Live Demo:** [https://examshala.vercel.app](https://examshala.vercel.app)
+**Live Demo:** [https://edusphere-sand-two.vercel.app/](https://edusphere-sand-two.vercel.app/)
 
 ## 📋 Overview
 
@@ -217,7 +217,7 @@ This project is licensed under the ISC License.
 ## 🔗 Links
 
 - **Repository:** [https://github.com/Chintaladinakar/examshala-v2](https://github.com/Chintaladinakar/examshala-v2)
-- **Live Demo:** [https://examshala.vercel.app](https://examshala.vercel.app)
+- **Live Demo:** [https://edusphere-sand-two.vercel.app/](https://edusphere-sand-two.vercel.app/)
 - **Issues:** [Report a bug](https://github.com/Chintaladinakar/examshala-v2/issues)
 
 ## 💬 Support
