@@ -172,11 +172,11 @@ The backend exposes RESTful API endpoints for:
 
 ## 🏗️ Development Workflow
 
-1. **Create a feature branch** from `main`
-2. **Make your changes** following the TypeScript conventions
-3. **Test thoroughly** using the development servers
-4. **Submit a Pull Request** with detailed description
-5. **Code review** and merge to main
+1. Create a feature branch from `main`
+2. Make changes following TypeScript conventions and best practices
+3. Test thoroughly using the development servers
+4. Submit a Pull Request with detailed description
+5. Ensure code review standards are met before merging
 
 ## 📋 Environment Variables
 
@@ -194,41 +194,50 @@ NEXT_PUBLIC_API_URL=http://localhost:5000
 NEXT_PUBLIC_APP_NAME=EDUsphere
 ```
 
-## 🤝 Contributing
+## 🤝 Contributing & Bug Reports
 
-We welcome contributions! To contribute:
+Contributions are welcome from the community. For any contributions, bug reports, feature requests, or approval-related inquiries, please contact the developer:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+**Email:** [chintaladinakar7@gmail.com](mailto:chintaladinakar7@gmail.com)
+
+When contacting, please include:
+- Detailed description of the contribution or bug
+- Steps to reproduce (for bugs)
+- Expected vs actual behavior
+- Environment details (OS, Node version, etc.)
+- Screenshots or logs (if applicable)
 
 ## 📄 License
 
 This project is licensed under the ISC License.
 
-## 👤 Author
+## 👤 Developer
 
 **Dinakara Chintala**
-- GitHub: [@Chintaladinakar](https://github.com/Chintaladinakar)
-- Repository: [examshala-v2](https://github.com/Chintaladinakar/examshala-v2)
 
-## 🔗 Links
+Full-stack developer specializing in modern web technologies and educational software solutions.
+
+- **GitHub:** [@Chintaladinakar](https://github.com/Chintaladinakar)
+- **Email:** [chintaladinakar7@gmail.com](mailto:chintaladinakar7@gmail.com)
+- **Repository:** [examshala-v2](https://github.com/Chintaladinakar/examshala-v2)
+
+## 🔗 Resources
 
 - **Repository:** [https://github.com/Chintaladinakar/examshala-v2](https://github.com/Chintaladinakar/examshala-v2)
 - **Live Demo:** [https://edusphere-sand-two.vercel.app/](https://edusphere-sand-two.vercel.app/)
-- **Issues:** [Report a bug](https://github.com/Chintaladinakar/examshala-v2/issues)
+- **Issue Tracker:** [Report Issues](https://github.com/Chintaladinakar/examshala-v2/issues)
 
-## 💬 Support
+## 💬 Support & Feedback
 
-For questions, feedback, or support:
+For technical issues, feature requests, or general feedback:
+
+- Email the developer at [chintaladinakar7@gmail.com](mailto:chintaladinakar7@gmail.com)
 - Open an issue on [GitHub Issues](https://github.com/Chintaladinakar/examshala-v2/issues)
-- Check existing documentation and FAQs
-- Review closed issues for solutions
+- Review existing documentation and FAQs
+- Check closed issues for solutions to common problems
 
 ---
 
 **Last Updated:** June 2026
 
-Made with ❤️ by the EDUsphere team
+© 2026 Dinakara Chintala. All rights reserved.
