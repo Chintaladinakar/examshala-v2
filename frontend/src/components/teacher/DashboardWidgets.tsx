@@ -21,7 +21,12 @@ import {
   Check,
   X,
   Volume2,
-  ArrowUpRight
+  ArrowUpRight,
+  School,
+  ClipboardList,
+  Rocket,
+  Timer,
+  BadgeCheck
 } from 'lucide-react';
 import { useToast } from '@/components/ui/ToastProvider';
 
@@ -654,7 +659,9 @@ export function WorkspaceOverviewCard({ stats }: {
             <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Total Teachers</span>
             <div className="text-2xl font-black text-slate-800 tracking-tight">{stats.totalTeachers}</div>
           </div>
-          <span className="text-2xl leading-none select-none">👨‍🏫</span>
+          <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-500 shrink-0">
+            <Users className="w-5 h-5" />
+          </div>
         </div>
 
         <div className="bg-white/80 backdrop-blur-xs p-4 rounded-2xl border border-indigo-100 flex items-center justify-between gap-3 shadow-3xs">
@@ -662,7 +669,9 @@ export function WorkspaceOverviewCard({ stats }: {
             <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Total Students</span>
             <div className="text-2xl font-black text-slate-800 tracking-tight">{stats.totalStudents}</div>
           </div>
-          <span className="text-2xl leading-none select-none">🎓</span>
+          <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-500 shrink-0">
+            <GraduationCap className="w-5 h-5" />
+          </div>
         </div>
 
         <div className="bg-white/80 backdrop-blur-xs p-4 rounded-2xl border border-indigo-100 flex items-center justify-between gap-3 shadow-3xs">
@@ -670,7 +679,9 @@ export function WorkspaceOverviewCard({ stats }: {
             <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Total Classes</span>
             <div className="text-2xl font-black text-slate-800 tracking-tight">{stats.totalClasses}</div>
           </div>
-          <span className="text-2xl leading-none select-none">🏫</span>
+          <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-500 shrink-0">
+            <School className="w-5 h-5" />
+          </div>
         </div>
 
         <div className="bg-white/80 backdrop-blur-xs p-4 rounded-2xl border border-indigo-100 flex items-center justify-between gap-3 shadow-3xs">
@@ -678,7 +689,9 @@ export function WorkspaceOverviewCard({ stats }: {
             <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Active Exams</span>
             <div className="text-2xl font-black text-slate-800 tracking-tight">{stats.activeExams}</div>
           </div>
-          <span className="text-2xl leading-none select-none">📝</span>
+          <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-500 shrink-0">
+            <ClipboardList className="w-5 h-5" />
+          </div>
         </div>
       </div>
     </div>
@@ -735,7 +748,7 @@ export function WorkspaceSetupChecklist({ stats }: {
             Getting Started
           </span>
           <h2 className="text-xl md:text-2xl font-black tracking-tight flex items-center gap-2 mt-1">
-            🚀 Setup institutional workspace
+            <Rocket className="w-5 h-5 text-emerald-400" aria-hidden="true" /> Setup institutional workspace
           </h2>
           <p className="text-teal-100/60 text-xs font-semibold">
             Complete the checklist below to initialize all institution operations and unlock active dashboards.
@@ -773,9 +786,9 @@ export function WorkspaceSetupChecklist({ stats }: {
               <div className="flex items-center justify-between gap-2">
                 <span className="text-xs font-black">{step.title}</span>
                 {step.completed ? (
-                  <span className="text-xs">✅</span>
+                  <BadgeCheck className="w-4 h-4 text-emerald-400" aria-label="Completed" />
                 ) : (
-                  <span className="text-xs text-teal-400/60">⏳</span>
+                  <Timer className="w-4 h-4 text-teal-400/60" aria-label="Pending" />
                 )}
               </div>
               <p className="text-[10px] leading-relaxed text-teal-100/50 font-medium mt-1">

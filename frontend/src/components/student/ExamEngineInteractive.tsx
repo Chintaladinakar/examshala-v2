@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ArrowLeft, Clock, Calendar, CheckCircle2, AlertCircle, PlayCircle, ChevronLeft, ChevronRight, AlertTriangle, ShieldAlert, Maximize, Lock, Eye, Check } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
@@ -91,6 +91,57 @@ export function ExamEngineInteractive({ assignment }: ExamEngineInteractiveProps
   const [isConfirmSubmitOpen, setIsConfirmSubmitOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [scoreData, setScoreData] = useState({ score: 0, maxScore: 50, correctCount: 0 });
+
+  // --- F. MODAL ACCESSIBILITY REFS ---
+  // Ref for the element that opened the modal, so focus can be restored on close.
+  const submitTriggerRef = useRef<HTMLButtonElement>(null);
+  // Ref for the dialog container itself, used by the focus trap.
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Focus trap: keep keyboard focus inside the modal while it is open.
+  const handleModalKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Escape') {
+      setIsConfirmSubmitOpen(false);
+      return;
+    }
+    if (e.key !== 'Tab') return;
+
+    const focusable = modalRef.current?.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusable || focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }, []);
+
+  // Move focus into the modal when it opens; restore it when it closes.
+  useEffect(() => {
+    if (isConfirmSubmitOpen) {
+      // Defer so the DOM has painted the modal before we try to focus.
+      const id = setTimeout(() => {
+        const focusable = modalRef.current?.querySelector<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        focusable?.focus();
+      }, 0);
+      return () => clearTimeout(id);
+    } else {
+      submitTriggerRef.current?.focus();
+    }
+  }, [isConfirmSubmitOpen]);
 
   // Load progress and time from localStorage on mount (Autosave system check)
   useEffect(() => {
@@ -549,8 +600,10 @@ export function ExamEngineInteractive({ assignment }: ExamEngineInteractiveProps
             <span className="text-sm font-mono tracking-wide">{formatTimer(timeLeft)}</span>
           </div>
 
-          <button 
+          <button
+            ref={submitTriggerRef}
             onClick={() => setIsConfirmSubmitOpen(true)}
+            aria-haspopup="dialog"
             className="px-4.5 py-2 bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-xs rounded-xl transition-all shadow-3xs hover:shadow-xs cursor-pointer select-none"
           >
             Submit Assessment
@@ -704,29 +757,42 @@ export function ExamEngineInteractive({ assignment }: ExamEngineInteractiveProps
           </aside>
         </div>
 
-        {/* 6. SUBMISSION REVIEW SUMMARY MODAL */}
+        {/* 6. SUBMISSION REVIEW SUMMARY MODAL — accessible dialog */}
         {isConfirmSubmitOpen && (
-          <div className="fixed inset-0 bg-slate-950/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-3xl border border-slate-200 max-w-md w-full p-6 shadow-2xl space-y-6 select-none animate-in fade-in zoom-in-95 duration-200">
+          // Backdrop: aria-hidden so screen readers focus on the dialog, not the overlay.
+          <div
+            className="fixed inset-0 bg-slate-950/40 backdrop-blur-xs z-50 flex items-center justify-center p-4"
+            aria-hidden="true"
+          >
+            {/* Dialog container */}
+            <div
+              ref={modalRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="submit-dialog-title"
+              aria-describedby="submit-dialog-desc"
+              onKeyDown={handleModalKeyDown}
+              className="bg-white rounded-3xl border border-slate-200 max-w-md w-full p-6 shadow-2xl space-y-6 select-none animate-in fade-in zoom-in-95 duration-200"
+            >
               <div className="text-center space-y-2 border-b pb-4">
-                <ShieldAlert className="w-10 h-10 text-teal-600 mx-auto" />
-                <h3 className="text-lg font-black text-slate-900">Submit Assessment?</h3>
-                <p className="text-xs text-slate-500">Review your responses summary before final evaluation.</p>
+                <ShieldAlert className="w-10 h-10 text-teal-600 mx-auto" aria-hidden="true" />
+                <h3 id="submit-dialog-title" className="text-lg font-black text-slate-900">Submit Assessment?</h3>
+                <p id="submit-dialog-desc" className="text-xs text-slate-500">Review your responses summary before final evaluation.</p>
               </div>
 
               {/* palette summary details */}
-              <div className="grid grid-cols-3 gap-2.5 text-center text-xs bg-slate-50 p-4 rounded-xl border border-slate-100 font-extrabold">
+              <div className="grid grid-cols-3 gap-2.5 text-center text-xs bg-slate-50 p-4 rounded-xl border border-slate-100 font-extrabold" aria-label="Response summary">
                 <div className="space-y-1">
                   <span className="text-[9px] uppercase font-bold text-slate-400 tracking-wider block">Answered</span>
-                  <span className="text-xl text-emerald-600 font-black tracking-tight block">{answeredCount}</span>
+                  <span className="text-xl text-emerald-600 font-black tracking-tight block" aria-label={`${answeredCount} answered`}>{answeredCount}</span>
                 </div>
                 <div className="space-y-1 border-x border-slate-200/60">
                   <span className="text-[9px] uppercase font-bold text-slate-400 tracking-wider block">Unanswered</span>
-                  <span className="text-xl text-slate-500 font-black tracking-tight block">{unansweredCount}</span>
+                  <span className="text-xl text-slate-500 font-black tracking-tight block" aria-label={`${unansweredCount} unanswered`}>{unansweredCount}</span>
                 </div>
                 <div className="space-y-1">
                   <span className="text-[9px] uppercase font-bold text-slate-400 tracking-wider block">Review</span>
-                  <span className="text-xl text-amber-600 font-black tracking-tight block">{reviewCount}</span>
+                  <span className="text-xl text-amber-600 font-black tracking-tight block" aria-label={`${reviewCount} marked for review`}>{reviewCount}</span>
                 </div>
               </div>
 

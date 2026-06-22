@@ -45,13 +45,14 @@ export default function SignUp() {
         action: 'signup',
       });
 
-      // Store token on successful signin/signup
+      // Extract token from signup response.
+      // NOTE: token is intentionally NOT written to localStorage — XSS scripts can
+      // read localStorage directly. The SameSite=Lax cookie below is the safer
+      // client-side option until the backend issues an HttpOnly cookie.
       const token = getTokenFromSignupResponse(data);
       if (token) {
-        localStorage.setItem('token', token);
-        // Set the session cookie for Next.js middleware protection
         document.cookie = `session_token=${token}; path=/; max-age=86400; SameSite=Lax`;
-        
+
         // Determine correct landing pad and route directly
         const decoded = decodeJwtPayload(token);
         const destination = decoded?.role ? getDashboardPathForRole(decoded.role) : '/';
@@ -68,7 +69,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col md:flex-row font-sans select-none overflow-x-hidden">
+    <div className="min-h-screen bg-slate-950 flex flex-col md:flex-row font-sans overflow-x-hidden">
       {/* Left Column: Form Card */}
       <div className="w-full md:w-[45%] lg:w-[40%] flex flex-col justify-center px-6 py-12 md:px-12 lg:px-16 bg-slate-950 border-r border-slate-900 z-10 relative">
         {/* Background glow decoration */}

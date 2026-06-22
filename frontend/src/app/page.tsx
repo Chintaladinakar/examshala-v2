@@ -1,18 +1,10 @@
-"use client";
-
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import EDUsphereHero from '@/components/EDUsphereHero';
 import EDUsphereFeatures from '@/components/EDUsphereFeatures';
 import Footer from '@/components/Footer';
 
 export default function Home() {
-  // FAQ Accordion State (store active index, null if none is open)
-  const [activeFaq, setActiveFaq] = useState<number | null>(null);
-
-  const toggleFaq = (index: number) => {
-    setActiveFaq(activeFaq === index ? null : index);
-  };
 
   // FAQ Data
   const faqs = [
@@ -145,34 +137,24 @@ export default function Home() {
           </div>
 
           <div className="space-y-4">
-            {faqs.map((faq, index) => {
-              const isOpen = activeFaq === index;
-              return (
-                <div
-                  key={index}
-                  className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden transition-all shadow-[0_4px_20px_rgba(0,0,0,0.01)]"
-                >
-                  <button
-                    onClick={() => toggleFaq(index)}
-                    className="w-full px-6 py-5 flex items-center justify-between text-left font-semibold text-slate-900 hover:text-teal-700 transition-colors focus:outline-none"
-                  >
-                    <span className="text-base md:text-lg">{faq.question}</span>
-                    <span className={`w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center border border-slate-200/50 shrink-0 ml-4 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-teal-50 border-teal-100 text-teal-700' : 'text-slate-500'}`}>
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                    </span>
-                  </button>
-                  <div
-                    className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                      isOpen ? 'max-h-60 border-t border-slate-100' : 'max-h-0'
-                    }`}
-                  >
-                    <p className="px-6 py-5 text-sm md:text-base text-slate-600 leading-relaxed bg-[#FAFAFA]">
-                      {faq.answer}
-                    </p>
-                  </div>
+            {faqs.map((faq, index) => (
+              <details
+                key={index}
+                className="group bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.01)] open:shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
+              >
+                <summary className="flex items-center justify-between px-6 py-5 text-left font-semibold text-slate-900 hover:text-teal-700 transition-colors cursor-pointer list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-2xl">
+                  <span className="text-base md:text-lg">{faq.question}</span>
+                  <span className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center border border-slate-200/50 shrink-0 ml-4 transition-transform duration-300 text-slate-500 group-open:rotate-180 group-open:bg-teal-50 group-open:border-teal-100 group-open:text-teal-700">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  </span>
+                </summary>
+                <div className="border-t border-slate-100">
+                  <p className="px-6 py-5 text-sm md:text-base text-slate-600 leading-relaxed bg-[#FAFAFA]">
+                    {faq.answer}
+                  </p>
                 </div>
-              );
-            })}
+              </details>
+            ))}
           </div>
         </div>
       </section>

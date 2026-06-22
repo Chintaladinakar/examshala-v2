@@ -68,7 +68,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col md:flex-row font-sans select-none overflow-x-hidden">
+    <div className="min-h-screen bg-slate-950 flex flex-col md:flex-row font-sans overflow-x-hidden">
       {/* Left Column: Form Card */}
       <div className="w-full md:w-[45%] lg:w-[40%] flex flex-col justify-center px-6 py-12 md:px-12 lg:px-16 bg-slate-950 border-r border-slate-900 z-10 relative">
         {/* Background glow decoration */}

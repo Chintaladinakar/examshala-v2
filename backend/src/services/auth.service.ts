@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import prisma from '../lib/prisma';
 import { generateToken } from '../lib/jwt';
 import jwt from 'jsonwebtoken';
+import { validatePassword } from '../lib/password-policy';
 
 interface SignupInput {
   name: string;
@@ -18,6 +19,12 @@ interface SigninInput {
 export const signup = async ({ name, email, password, role }: SignupInput) => {
   if (!name || !email || !password) {
     throw { status: 400, code: 'MISSING_FIELDS', message: 'Name, email, and password are required' };
+  }
+
+  // Enforce shared password policy (same rules applied everywhere in auth flows).
+  const pwCheck = validatePassword(password);
+  if (!pwCheck.valid) {
+    throw { status: 400, code: 'INVALID_PASSWORD', message: pwCheck.message };
   }
 
   const validRole = role === 'tutor' ? 'tutor' : 'student';
@@ -182,9 +189,11 @@ export const forgotPassword = async ({ email }: { email: string }) => {
   console.log(`[auth] Dev Reset Link: ${resetLink}`);
   console.log('----------------------------------------\n');
 
+  // NOTE: Send resetLink exclusively via email (Resend). Never return it in the API response.
+  // TODO: await resend.emails.send({ to: user.email, subject: 'Reset your password', html: `<a href="${resetLink}">Reset password</a>` });
+
   return {
     success: true,
-    resetLink, // Returned for dev testing convenience
   };
 };
 
@@ -197,8 +206,10 @@ export const resetPasswordWithToken = async ({ token, password }: any) => {
     throw { status: 400, code: 'MISSING_FIELDS', message: 'Token and new password are required' };
   }
 
-  if (password.length < 6) {
-    throw { status: 400, code: 'INVALID_PASSWORD', message: 'Password must be at least 6 characters long' };
+  // Enforce the same shared password policy used at signup.
+  const pwCheck = validatePassword(password);
+  if (!pwCheck.valid) {
+    throw { status: 400, code: 'INVALID_PASSWORD', message: pwCheck.message };
   }
 
   // 1. Decode token to find email
