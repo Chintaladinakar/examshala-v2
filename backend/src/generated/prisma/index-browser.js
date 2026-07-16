@@ -135,6 +135,18 @@ exports.Prisma.UserScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.OTPScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  code: 'code',
+  type: 'type',
+  attemptCount: 'attemptCount',
+  blockedUntil: 'blockedUntil',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  verifiedAt: 'verifiedAt'
+};
+
 exports.Prisma.WorkspaceScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -416,6 +428,7 @@ exports.Prisma.JsonNullValueFilter = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  OTP: 'OTP',
   Workspace: 'Workspace',
   WorkspaceMembership: 'WorkspaceMembership',
   StudentWorkspaceProfile: 'StudentWorkspaceProfile',

@@ -105,7 +105,7 @@ export default function AdminLayout({
       )}
 
       {/* Sidebar Navigation */}
-      <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-teal-950 text-white flex flex-col justify-between transform transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed inset-y-0 left-0 z-40 w-64 bg-teal-950 text-white flex flex-col justify-between transform transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex flex-col flex-1">
           {/* Logo Brand */}
           <div className="px-6 py-6 border-b border-teal-900 flex items-center justify-between">
@@ -158,24 +158,6 @@ export default function AdminLayout({
                     </svg>
                   ),
                 },
-                {
-                  name: 'Active Workspaces',
-                  path: '/admin/workspaces',
-                  icon: (
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                  ),
-                },
-                {
-                  name: 'Workspace Invitations',
-                  path: '/admin/workspace-invitations',
-                  icon: (
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  ),
-                },
               ].map((item) => {
                 const isActive = pathname === item.path || pathname.startsWith(`${item.path}/`);
                 return (
@@ -192,33 +174,19 @@ export default function AdminLayout({
             </div>
           </nav>
         </div>
-
-        {/* Footer actions inside Sidebar */}
-        <div className="p-4 border-t border-teal-900 bg-teal-950/65">
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm text-rose-300 hover:bg-rose-500/10 hover:text-rose-200 transition-all"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            <span>Sign Out</span>
-          </button>
-        </div>
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 min-h-screen">
+      <div className="flex-1 flex flex-col min-w-0 min-h-screen ml-0 lg:ml-64">
         {/* Header bar */}
-        <header className="h-16 border-b border-slate-200/80 bg-white/70 backdrop-blur px-6 flex items-center justify-between sticky top-0 z-30">
+        <header className="h-16 border-b border-slate-200/80 bg-white/70 backdrop-blur px-6 flex items-center justify-between fixed top-0 left-0 right-0 z-30 lg:left-64">
           <div className="flex items-center gap-4">
-            <button 
+            <button
               onClick={() => setSidebarOpen(true)}
               className="lg:hidden p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
             </button>
-            <h1 className="font-bold text-lg text-slate-800 hidden sm:block">Organization Admin Control Center</h1>
           </div>
           
           {/* User profile dropdown indicator */}
@@ -248,7 +216,7 @@ export default function AdminLayout({
         </header>
 
         {/* Dynamic Route Children container */}
-        <main className="flex-1 overflow-y-auto pb-12">
+        <main className="flex-1 overflow-y-auto pb-12 pt-16">
           <div className="max-w-6xl mx-auto p-6 md:p-8">
             {children}
           </div>

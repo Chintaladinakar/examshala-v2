@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import InputField from '@/components/InputField';
 import { decodeJwtPayload, getDashboardPathForRole } from '@/lib/auth';
 import { fetchJson } from '@/lib/api';
@@ -24,12 +24,23 @@ type SignInResponse = {
 
 export default function SignIn() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [error, setError] = useState<unknown>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const errorParam = searchParams.get('error');
+    if (errorParam === 'unauthorized') {
+      setError({
+        message: 'You need to sign in to continue. If you just reset your password, use your new credentials below.',
+        code: 'UNAUTHORIZED',
+      });
+    }
+  }, [searchParams]);
 
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,19 +56,30 @@ export default function SignIn() {
         action: 'login',
       });
 
-      // Redirect if first login
+      if (!data?.data?.token) {
+        throw new Error('No authentication token received from server');
+      }
+
+      // Redirect if first login (before setting cookie)
       if (data?.data?.user?.firstLogin) {
         router.push(`/reset-password?email=${encodeURIComponent(formData.email)}&temp=${encodeURIComponent(formData.password)}`);
         return;
       }
 
-      // Store token securely as a browser cookie for middleware and server actions
-      document.cookie = `session_token=${data.data.token}; path=/; max-age=86400; SameSite=Lax`;
-      
+      // Store token as a browser cookie for server components to read
+      // Using Secure flag for production, SameSite=Strict for better security
+      const isProduction = process.env.NODE_ENV === 'production';
+      const secureCookie = isProduction ? '; Secure' : '';
+      document.cookie = `session_token=${data.data.token}; path=/; max-age=86400; SameSite=Strict${secureCookie}`;
+
+      // Give browser a moment to set the cookie before navigation
+      await new Promise(resolve => setTimeout(resolve, 100));
+
       // Determine correct landing pad
       const decoded = decodeJwtPayload(data.data.token);
       const destination = decoded?.role ? getDashboardPathForRole(decoded.role) : '/';
-      
+
+      console.log('[signin] Redirecting to:', destination, 'with role:', decoded?.role);
       router.push(destination);
     } catch (err) {
       logDeveloperError(err, { action: 'login', feature: 'signin' });

@@ -30,8 +30,23 @@ function ResetPasswordForm() {
     e.preventDefault();
     if (!newPassword || !confirmPassword) return;
 
-    if (newPassword.length < 6) {
-      showMessage('Password must be at least 6 characters long', 'error');
+    if (newPassword.length < 8) {
+      showMessage('Password must be at least 8 characters long', 'error');
+      return;
+    }
+
+    if (!/[A-Z]/.test(newPassword)) {
+      showMessage('Password must contain at least one uppercase letter', 'error');
+      return;
+    }
+
+    if (!/[a-z]/.test(newPassword)) {
+      showMessage('Password must contain at least one lowercase letter', 'error');
+      return;
+    }
+
+    if (!/[0-9]/.test(newPassword)) {
+      showMessage('Password must contain at least one digit', 'error');
       return;
     }
 

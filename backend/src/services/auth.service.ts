@@ -77,6 +77,7 @@ export const signup = async ({ name, email, password, role }: SignupInput) => {
       email,
       passwordHash,
       role: validRole,
+      isActive: true,
       firstLogin: false,
     },
   });
@@ -145,6 +146,7 @@ export const resetPassword = async ({ email, currentPassword, newPassword }: any
     where: { email },
     data: {
       passwordHash,
+      isActive: true,
       firstLogin: false,
     },
   });
@@ -246,6 +248,7 @@ export const resetPasswordWithToken = async ({ token, password }: any) => {
     where: { id: user.id },
     data: {
       passwordHash,
+      isActive: true, // Activate account during password reset
       firstLogin: false, // Reset password establishes credentials
     },
   });

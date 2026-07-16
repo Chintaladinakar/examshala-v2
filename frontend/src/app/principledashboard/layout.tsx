@@ -14,6 +14,8 @@ export default async function PrincipalDashboardLayout({ children }: { children:
     if (err?.message === 'NO_WORKSPACE') {
       redirect('/workspace/onboarding');
     }
+    // Log the error for debugging
+    console.error('[auth-error]', err?.message || err);
     redirect('/signin?error=unauthorized');
   }
 }

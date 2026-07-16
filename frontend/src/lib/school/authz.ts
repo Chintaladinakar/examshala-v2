@@ -29,18 +29,32 @@ export type AuthContext = {
 
 export async function requireSchoolAuth(): Promise<AuthContext> {
   const token = (await cookies()).get('session_token')?.value;
-  if (!token) throw new Error('UNAUTHORIZED');
+  if (!token) {
+    console.error('[requireSchoolAuth] No session token found in cookies');
+    throw new Error('UNAUTHORIZED');
+  }
 
   const decoded = decodeJwtPayloadNode(token);
   const userId = decoded?.userId;
-  if (!userId) throw new Error('UNAUTHORIZED');
+  if (!userId) {
+    console.error('[requireSchoolAuth] Could not decode userId from token');
+    throw new Error('UNAUTHORIZED');
+  }
 
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: { id: true, role: true, mode: true, workspaceId: true, isActive: true },
   });
 
-  if (!user || !user.isActive) throw new Error('UNAUTHORIZED');
+  if (!user) {
+    console.error('[requireSchoolAuth] User not found in database:', userId);
+    throw new Error('UNAUTHORIZED');
+  }
+
+  if (!user.isActive) {
+    console.error('[requireSchoolAuth] User is not active:', userId);
+    throw new Error('UNAUTHORIZED');
+  }
 
   const role = (user.role || decoded?.role || '').toLowerCase();
   const isGlobalAdmin = role === 'org_admin';

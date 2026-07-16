@@ -31,6 +31,12 @@ export default function UsersManagementPage() {
   const [roleFilter, setRoleFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
 
+  // Multi-select state
+  const [selectedUserIds, setSelectedUserIds] = useState<Set<string>>(new Set());
+  const [bulkAction, setBulkAction] = useState<'delete' | 'activate' | 'deactivate' | 'change-role' | ''>('');
+  const [bulkProcessing, setBulkProcessing] = useState(false);
+  const [bulkChangeRole, setBulkChangeRole] = useState<'ORG_ADMIN' | 'PRINCIPAL' | 'TEACHER' | 'STUDENT'>('TEACHER');
+
   // Modals state
   const [inviteModalOpen, setInviteModalOpen] = useState(false);
   const [inviteEmail, setInviteEmail] = useState('');
@@ -255,6 +261,127 @@ export default function UsersManagementPage() {
     }
   };
 
+  const toggleUserSelection = (userId: string) => {
+    const newSelected = new Set(selectedUserIds);
+    if (newSelected.has(userId)) {
+      newSelected.delete(userId);
+    } else {
+      newSelected.add(userId);
+    }
+    setSelectedUserIds(newSelected);
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedUserIds.size === users.length && users.length > 0) {
+      setSelectedUserIds(new Set());
+    } else {
+      setSelectedUserIds(new Set(users.map(u => u.id)));
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    const count = selectedUserIds.size;
+    const confirmDelete = window.confirm(`Are you sure you want to permanently delete ${count} selected user(s)? This cannot be undone.`);
+    if (!confirmDelete) return;
+
+    try {
+      setBulkProcessing(true);
+      const token = getCookie('session_token');
+
+      await Promise.all(
+        Array.from(selectedUserIds).map(userId =>
+          fetchJson(`/api/admin/users/${userId}`, {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+        )
+      );
+
+      setUsers(prev => prev.filter(u => !selectedUserIds.has(u.id)));
+      setSelectedUserIds(new Set());
+      setBulkAction('');
+      alert(`Successfully deleted ${count} user(s).`);
+    } catch (err: any) {
+      alert(`Failed to delete users: ${err.message || 'Request failed'}`);
+    } finally {
+      setBulkProcessing(false);
+    }
+  };
+
+  const handleBulkStatusChange = async (newStatus: 'ACTIVE' | 'INACTIVE') => {
+    const invitedUsers = users.filter(u => selectedUserIds.has(u.id) && u.status === 'INVITED');
+    if (invitedUsers.length > 0) {
+      alert(`Cannot change status of invited users. ${invitedUsers.length} of your selected users are still invited.`);
+      return;
+    }
+
+    try {
+      setBulkProcessing(true);
+      const token = getCookie('session_token');
+
+      await Promise.all(
+        Array.from(selectedUserIds).map(userId =>
+          fetchJson(`/api/admin/users/${userId}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ status: newStatus }),
+          })
+        )
+      );
+
+      setUsers(prev =>
+        prev.map(u =>
+          selectedUserIds.has(u.id) ? { ...u, status: newStatus, isActive: newStatus === 'ACTIVE' } : u
+        )
+      );
+      setSelectedUserIds(new Set());
+      setBulkAction('');
+      alert(`Successfully updated ${selectedUserIds.size} user(s) to ${newStatus}.`);
+    } catch (err: any) {
+      alert(`Failed to update users: ${err.message || 'Request failed'}`);
+    } finally {
+      setBulkProcessing(false);
+    }
+  };
+
+  const handleBulkRoleChange = async () => {
+    try {
+      setBulkProcessing(true);
+      const token = getCookie('session_token');
+
+      await Promise.all(
+        Array.from(selectedUserIds).map(userId =>
+          fetchJson(`/api/admin/users/${userId}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ role: bulkChangeRole }),
+          })
+        )
+      );
+
+      setUsers(prev =>
+        prev.map(u =>
+          selectedUserIds.has(u.id) ? { ...u, role: bulkChangeRole } : u
+        )
+      );
+      setSelectedUserIds(new Set());
+      setBulkAction('');
+      alert(`Successfully updated ${selectedUserIds.size} user(s) to ${bulkChangeRole} role.`);
+    } catch (err: any) {
+      alert(`Failed to update users: ${err.message || 'Request failed'}`);
+    } finally {
+      setBulkProcessing(false);
+    }
+  };
+
   return (
     <div className="space-y-8">
       {/* Title Header */}
@@ -322,6 +449,70 @@ export default function UsersManagementPage() {
         </div>
       </div>
 
+      {/* Bulk Actions Bar */}
+      {selectedUserIds.size > 0 && (
+        <div className="bg-teal-50 border border-teal-200 rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.01)]">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="text-sm font-semibold text-teal-950">
+              {selectedUserIds.size} user{selectedUserIds.size !== 1 ? 's' : ''} selected
+            </div>
+            <div className="flex flex-wrap gap-2 items-center">
+              <select
+                value={bulkAction}
+                onChange={e => setBulkAction(e.target.value as any)}
+                disabled={bulkProcessing}
+                className="text-sm px-3 py-2 rounded-lg border border-teal-200 bg-white text-teal-950 font-semibold focus:outline-none focus:ring-2 focus:ring-teal-950/20 disabled:opacity-50"
+              >
+                <option value="">Choose action...</option>
+                <option value="activate">Activate Selected</option>
+                <option value="deactivate">Deactivate Selected</option>
+                <option value="change-role">Change Role</option>
+                <option value="delete">Delete Selected</option>
+              </select>
+
+              {bulkAction === 'change-role' && (
+                <select
+                  value={bulkChangeRole}
+                  onChange={e => setBulkChangeRole(e.target.value as any)}
+                  className="text-sm px-3 py-2 rounded-lg border border-teal-200 bg-white text-teal-950 font-semibold focus:outline-none focus:ring-2 focus:ring-teal-950/20"
+                >
+                  <option value="ORG_ADMIN">Organization Admin</option>
+                  <option value="PRINCIPAL">Principal</option>
+                  <option value="TEACHER">Teacher</option>
+                  <option value="STUDENT">Student</option>
+                </select>
+              )}
+
+              {bulkAction && (
+                <button
+                  onClick={() => {
+                    if (bulkAction === 'delete') handleBulkDelete();
+                    else if (bulkAction === 'activate') handleBulkStatusChange('ACTIVE');
+                    else if (bulkAction === 'deactivate') handleBulkStatusChange('INACTIVE');
+                    else if (bulkAction === 'change-role') handleBulkRoleChange();
+                  }}
+                  disabled={bulkProcessing}
+                  className="px-4 py-2 bg-teal-950 hover:bg-teal-900 text-white font-semibold rounded-lg text-sm transition-all disabled:opacity-50"
+                >
+                  {bulkProcessing ? 'Processing...' : 'Apply'}
+                </button>
+              )}
+
+              <button
+                onClick={() => {
+                  setSelectedUserIds(new Set());
+                  setBulkAction('');
+                }}
+                disabled={bulkProcessing}
+                className="px-4 py-2 border border-teal-200 text-teal-950 font-semibold rounded-lg text-sm hover:bg-teal-100/50 transition-all disabled:opacity-50"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Users table */}
       <div className="bg-white rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.01)] overflow-hidden">
         {loading && users.length === 0 ? (
@@ -351,6 +542,15 @@ export default function UsersManagementPage() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-slate-50/50 border-b border-slate-100 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                  <th className="px-4 py-4 w-12">
+                    <input
+                      type="checkbox"
+                      checked={selectedUserIds.size === users.length && users.length > 0}
+                      onChange={toggleSelectAll}
+                      className="rounded text-teal-950 focus:ring-teal-950/20 w-4 h-4 border-slate-300 cursor-pointer"
+                      title="Select all users"
+                    />
+                  </th>
                   <th className="px-6 py-4">User Details</th>
                   <th className="px-6 py-4">Security Role</th>
                   <th className="px-6 py-4">System Status</th>
@@ -385,6 +585,14 @@ export default function UsersManagementPage() {
 
                   return (
                     <tr key={user.id} className="hover:bg-slate-50/40 transition-colors">
+                      <td className="px-4 py-4.5 w-12">
+                        <input
+                          type="checkbox"
+                          checked={selectedUserIds.has(user.id)}
+                          onChange={() => toggleUserSelection(user.id)}
+                          className="rounded text-teal-950 focus:ring-teal-950/20 w-4 h-4 border-slate-300 cursor-pointer"
+                        />
+                      </td>
                       <td className="px-6 py-4.5">
                         <div className="flex items-center gap-3">
                           {/* Mini avatar */}

@@ -37,8 +37,23 @@ function ResetPasswordWithTokenForm() {
 
     if (!newPassword || !confirmPassword) return;
 
-    if (newPassword.length < 6) {
-      showMessage('Password must be at least 6 characters long', 'error');
+    if (newPassword.length < 8) {
+      showMessage('Password must be at least 8 characters long', 'error');
+      return;
+    }
+
+    if (!/[A-Z]/.test(newPassword)) {
+      showMessage('Password must contain at least one uppercase letter', 'error');
+      return;
+    }
+
+    if (!/[a-z]/.test(newPassword)) {
+      showMessage('Password must contain at least one lowercase letter', 'error');
+      return;
+    }
+
+    if (!/[0-9]/.test(newPassword)) {
+      showMessage('Password must contain at least one digit', 'error');
       return;
     }
 
@@ -126,7 +141,7 @@ function ResetPasswordWithTokenForm() {
           <input
             type="password"
             required
-            placeholder="Min. 6 characters"
+            placeholder="Min. 8 chars: 1 uppercase, 1 lowercase, 1 digit"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs font-semibold text-white focus:outline-none focus:ring-1 focus:ring-teal-400/50 placeholder-white/20"

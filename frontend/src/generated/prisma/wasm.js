@@ -426,7 +426,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\chint\\Downloads\\edusphere\\frontend\\src\\generated\\prisma",
+      "value": "C:\\Users\\chint\\Downloads\\examshala\\frontend\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -440,7 +440,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\chint\\Downloads\\edusphere\\frontend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\chint\\Downloads\\examshala\\frontend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

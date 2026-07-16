@@ -15,17 +15,26 @@ const seedAdmin = async () => {
     // Clean up existing seeded users to ensure they get recreated with fancy 8-char IDs
     await prisma.user.deleteMany({
       where: {
-        email: {
-          in: [
-            adminEmail,
-            'principal.smith@edusphere.com',
-            'principal.roy@edusphere.com',
-            'sarah.teacher@edusphere.com',
-            'walter.teacher@edusphere.com',
-            'john.student@edusphere.com',
-            'jane.student@edusphere.com',
-          ],
-        },
+        OR: [
+          {
+            email: {
+              in: [
+                adminEmail,
+                'principal.smith@edusphere.com',
+                'principal.roy@edusphere.com',
+                'sarah.teacher@edusphere.com',
+                'walter.teacher@edusphere.com',
+                'john.student@edusphere.com',
+                'jane.student@edusphere.com',
+              ],
+            },
+          },
+          {
+            id: {
+              in: ['AD-ADMIN', 'PR-SMITH', 'PR-ROYAL', 'TR-SARAH', 'TR-WALT2', 'ST-JOHN1', 'ST-JANE1'],
+            },
+          },
+        ],
       },
     });
 
