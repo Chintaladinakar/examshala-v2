@@ -57,23 +57,13 @@ export default function ProfilePage() {
   const [stats, setStats] = useState<WorkspaceStats | null>(null);
   const [loadingStats, setLoadingStats] = useState(false);
 
-  const getCookie = (name: string) => {
-    if (typeof document === 'undefined') return '';
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift() || '';
-    return '';
-  };
-
   const fetchProfileDetails = async () => {
     try {
       setLoading(true);
-      const token = getCookie('session_token');
-      if (!token) return;
-      
-      const res = await fetch('/api/school/profile', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+
+      // /api/school/profile reads the HttpOnly session cookie server-side; no
+      // client-supplied Authorization header is needed or possible.
+      const res = await fetch('/api/school/profile');
       const body = await res.json();
 
       if (body.success && body.data) {

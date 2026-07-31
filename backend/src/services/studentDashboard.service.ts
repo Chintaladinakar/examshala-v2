@@ -370,3 +370,66 @@ export const getScheduleAggregatedData = async (studentId: string, workspaceIdCo
   };
 };
 
+export const getAttendanceAggregatedData = async (
+  studentId: string,
+  workspaceIdContext?: string,
+  filters?: { classId?: string; from?: string; to?: string }
+) => {
+  const classWhere: any = { students: { some: { studentId } } };
+  if (workspaceIdContext) classWhere.workspaceId = workspaceIdContext;
+  if (filters?.classId) classWhere.id = filters.classId;
+
+  const classes = await prisma.class.findMany({
+    where: classWhere,
+    select: { id: true, name: true },
+  });
+  const classIds = classes.map((c) => c.id);
+
+  const attendanceWhere: any = { studentId, classId: { in: classIds } };
+  if (filters?.from || filters?.to) {
+    attendanceWhere.date = {};
+    if (filters.from) attendanceWhere.date.gte = new Date(filters.from);
+    if (filters.to) attendanceWhere.date.lte = new Date(filters.to);
+  }
+
+  const records = await prisma.attendance.findMany({
+    where: attendanceWhere,
+    orderBy: { date: 'desc' },
+    include: { Class: { select: { id: true, name: true } } },
+  });
+
+  const classMap = new Map(classes.map((c) => [c.id, c.name]));
+
+  const byClass = classIds.map((classId) => {
+    const classRecords = records.filter((r) => r.classId === classId);
+    const presentCount = classRecords.filter((r) => r.status === 'present').length;
+    const total = classRecords.length;
+    return {
+      classId,
+      className: classMap.get(classId) || '',
+      total,
+      presentCount,
+      absentCount: total - presentCount,
+      attendanceRate: total ? Math.round((presentCount / total) * 1000) / 10 : null,
+    };
+  });
+
+  const totalRecords = records.length;
+  const totalPresent = records.filter((r) => r.status === 'present').length;
+
+  return {
+    overallAttendanceRate: totalRecords ? Math.round((totalPresent / totalRecords) * 1000) / 10 : null,
+    totalRecords,
+    totalPresent,
+    totalAbsent: totalRecords - totalPresent,
+    byClass,
+    records: records.map((r) => ({
+      id: r.id,
+      date: r.date,
+      status: r.status,
+      classId: r.classId,
+      className: r.Class.name,
+    })),
+  };
+};
+

@@ -60,20 +60,22 @@ export default function SignIn() {
         throw new Error('No authentication token received from server');
       }
 
-      // Redirect if first login (before setting cookie)
+      // Redirect if first login. The temp password is kept in sessionStorage (never in the
+      // URL) so it doesn't end up in browser history, server access logs, or Referer headers.
       if (data?.data?.user?.firstLogin) {
-        router.push(`/reset-password?email=${encodeURIComponent(formData.email)}&temp=${encodeURIComponent(formData.password)}`);
+        sessionStorage.setItem('temp_password', formData.password);
+        router.push(`/reset-password?email=${encodeURIComponent(formData.email)}`);
         return;
       }
 
-      // Store token as a browser cookie for server components to read
-      // Using Secure flag for production, SameSite=Strict for better security
-      const isProduction = process.env.NODE_ENV === 'production';
-      const secureCookie = isProduction ? '; Secure' : '';
-      document.cookie = `session_token=${data.data.token}; path=/; max-age=86400; SameSite=Strict${secureCookie}`;
-
-      // Give browser a moment to set the cookie before navigation
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // Ask our own Next.js server to set the session cookie (HttpOnly/Secure/SameSite=Strict)
+      // so client-side JS never has direct access to the token. Uses plain fetch (not
+      // fetchJson) because this route lives on the frontend, not the backend API host.
+      await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: data.data.token }),
+      });
 
       // Determine correct landing pad
       const decoded = decodeJwtPayload(data.data.token);

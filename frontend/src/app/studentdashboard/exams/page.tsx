@@ -3,6 +3,7 @@ import nextDynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import { ExamsSkeleton } from '@/components/student/ExamsSkeleton';
+import { LiveExamsList } from '@/components/student/LiveExamsList';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getStudentDashboard } from '@/lib/student/data';
@@ -54,6 +55,8 @@ export default async function StudentExamsPage() {
           View upcoming, live, and practice exams assigned by your organization, track attempts, and review grades.
         </p>
       </div>
+
+      <LiveExamsList />
 
       {/* Dynamic Interactive List Container */}
       <Suspense fallback={<ExamsSkeleton />}>

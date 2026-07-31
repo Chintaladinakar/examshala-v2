@@ -4,12 +4,20 @@ import prisma from '../lib/prisma';
 import crypto from 'crypto';
 
 const seedAdmin = async () => {
+  // Guard against accidentally seeding demo data (with a known/shared password) into a
+  // real deployment. Require an explicit opt-in env var to run outside local development.
+  if (process.env.NODE_ENV === 'production' && process.env.ALLOW_SEED_IN_PRODUCTION !== 'true') {
+    console.error('❌ Refusing to run seed-admin.ts with NODE_ENV=production. Set ALLOW_SEED_IN_PRODUCTION=true to override.');
+    process.exit(1);
+  }
+
   try {
     console.log('Clearing old system logs, invites, and workspaces (selective)...');
-    
+
     // 1. Seed Org Admin
     const adminEmail = 'admin@edusphere.com';
-    const adminPassword = 'Admin@123';
+    // Generate a fresh random password each run instead of a fixed, source-controlled one.
+    const adminPassword = crypto.randomBytes(9).toString('base64').replace(/[^A-Za-z0-9]/g, '') + 'Aa1!';
     const passwordHash = await bcrypt.hash(adminPassword, 12);
 
     // Clean up existing seeded users to ensure they get recreated with fancy 8-char IDs
@@ -46,7 +54,7 @@ const seedAdmin = async () => {
         name: 'Global Org Admin',
         email: adminEmail,
         passwordHash,
-        role: 'ORG_ADMIN',
+        role: 'org_admin',
         status: 'ACTIVE',
         isActive: true,
       },
@@ -68,7 +76,7 @@ const seedAdmin = async () => {
           name: p.name,
           email: p.email,
           passwordHash,
-          role: 'PRINCIPAL',
+          role: 'principal',
           status: 'ACTIVE',
           isActive: true,
         },
@@ -98,16 +106,25 @@ const seedAdmin = async () => {
         },
       });
       workspaces.push(ws);
+
+      // A principal can be the named contact (principalId) on more than one workspace
+      // (there are more workspaces than principals in this seed), but a User only has
+      // one workspaceId — only set it the first time so it points at their primary workspace.
+      const assignedPrincipal = principals[i % principals.length];
+      if (assignedPrincipal && !assignedPrincipal.workspaceId) {
+        await prisma.user.update({ where: { id: assignedPrincipal.id }, data: { workspaceId: ws.id } });
+        assignedPrincipal.workspaceId = ws.id;
+      }
     }
     console.log('✅ Seeded Workspaces with Principals');
 
     // 4. Create Teachers and Students
     // Seed teachers ('TR-XXXXX') and students ('ST-XXXXX') with custom readable 8-character IDs
     const testUsers = [
-      { name: 'Sarah Connor', email: 'sarah.teacher@edusphere.com', role: 'TEACHER', workspaceIdx: 0, id: 'TR-SARAH' },
-      { name: 'Walter White', email: 'walter.teacher@edusphere.com', role: 'TEACHER', workspaceIdx: 1, id: 'TR-WALT2' },
-      { name: 'John Doe', email: 'john.student@edusphere.com', role: 'STUDENT', workspaceIdx: 0, id: 'ST-JOHN1' },
-      { name: 'Jane Doe', email: 'jane.student@edusphere.com', role: 'STUDENT', workspaceIdx: 2, id: 'ST-JANE1' },
+      { name: 'Sarah Connor', email: 'sarah.teacher@edusphere.com', role: 'teacher', workspaceIdx: 0, id: 'TR-SARAH' },
+      { name: 'Walter White', email: 'walter.teacher@edusphere.com', role: 'teacher', workspaceIdx: 1, id: 'TR-WALT2' },
+      { name: 'John Doe', email: 'john.student@edusphere.com', role: 'student', workspaceIdx: 0, id: 'ST-JOHN1' },
+      { name: 'Jane Doe', email: 'jane.student@edusphere.com', role: 'student', workspaceIdx: 2, id: 'ST-JANE1' },
     ];
 
     for (const tu of testUsers) {

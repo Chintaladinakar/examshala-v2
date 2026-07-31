@@ -168,12 +168,9 @@ function ParentsTab({ initialParents }: { initialParents: any[] }) {
     setError(null);
 
     try {
-      // Safely fetch token from cookie for client-side API call
-      const token = document.cookie.split('; ').find(row => row.startsWith('session_token='))?.split('=')[1];
-
-      await fetchJson('/api/student/parents/link-request', {
+      await fetchJson('/api/proxy/api/student/parents/link-request', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: inviteEmail, relation: inviteRelation }),
         action: 'submit',
       });
@@ -191,11 +188,9 @@ function ParentsTab({ initialParents }: { initialParents: any[] }) {
 
   const handleRequestRemoval = async (linkId: string) => {
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('session_token='))?.split('=')[1];
-
-      await fetchJson('/api/student/parents/remove-request', {
+      await fetchJson('/api/proxy/api/student/parents/remove-request', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ linkId }),
         action: 'delete',
       });

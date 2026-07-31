@@ -4,17 +4,39 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Bell, Search, Menu, User, Settings, LogOut, ChevronDown, Sparkles, Building2, Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+interface NotificationItem {
+  id: string;
+  title: string;
+  message: string;
+  isRead: boolean;
+  actionUrl?: string | null;
+  createdAt: string;
+}
+
 interface HeaderInteractiveProps {
   studentName: string;
   unreadCount: number;
+  notifications?: NotificationItem[];
   activeWorkspaceId?: string;
   workspaceName?: string;
   workspaces?: Array<{ id: string; name: string }>;
 }
 
-export function HeaderInteractive({ 
-  studentName, 
+function timeAgo(dateStr: string): string {
+  const diffMs = Date.now() - new Date(dateStr).getTime();
+  const minutes = Math.floor(diffMs / 60000);
+  if (minutes < 1) return 'just now';
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+}
+
+export function HeaderInteractive({
+  studentName,
   unreadCount,
+  notifications = [],
   activeWorkspaceId,
   workspaceName,
   workspaces = []
@@ -54,8 +76,8 @@ export function HeaderInteractive({
     window.dispatchEvent(event);
   };
 
-  const handleLogout = () => {
-    document.cookie = 'session_token=; path=/; max-age=0; SameSite=Lax';
+  const handleLogout = async () => {
+    await fetch('/api/auth/session', { method: 'DELETE' });
     try {
       localStorage.removeItem('token');
     } catch {
@@ -65,12 +87,7 @@ export function HeaderInteractive({
     router.refresh();
   };
 
-  // Mock list of quick notifications
-  const mockNotifications = [
-    { id: 1, title: "New Assignment", desc: "Mathematics homework was uploaded", time: "10m ago", read: false },
-    { id: 2, title: "Exam Scheduled", desc: "Science final is scheduled for Friday", time: "2h ago", read: false },
-    { id: 3, title: "Result Declared", desc: "You scored 92% in English Quiz", time: "1d ago", read: true },
-  ].slice(0, Math.max(1, unreadCount || 2));
+  const recentNotifications = notifications.slice(0, 6);
 
   const handleWorkspaceChange = (id: string) => {
     document.cookie = `workspace_id=${id}; path=/; max-age=31536000; SameSite=Lax`;
@@ -145,18 +162,26 @@ export function HeaderInteractive({
       </div>
 
       {/* 2. Lightweight Search Input */}
-      <div className="relative hidden sm:block w-48 md:w-64">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (searchQuery.trim()) {
+            router.push(`/studentdashboard/search?q=${encodeURIComponent(searchQuery.trim())}`);
+          }
+        }}
+        className="relative hidden sm:block w-48 md:w-64"
+      >
         <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
           <Search className="w-4 h-4 text-slate-400" />
         </span>
-        <input 
+        <input
           type="text"
           placeholder="Search courses, exams..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full bg-slate-50/50 border border-slate-200 rounded-xl py-1.5 pl-9 pr-4 text-xs focus:bg-white focus:outline-hidden focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all text-slate-700"
         />
-      </div>
+      </form>
 
       <div className="flex items-center gap-2">
         {/* 3. Notification Bell */}
@@ -183,16 +208,20 @@ export function HeaderInteractive({
                 <span className="text-[10px] font-semibold text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full">New</span>
               </div>
               <div className="max-h-60 overflow-y-auto py-1">
-                {mockNotifications.map((n) => (
-                  <div key={n.id} className="p-3 hover:bg-slate-50 rounded-xl cursor-pointer transition-colors flex gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-teal-500 mt-1.5 shrink-0" />
-                    <div>
-                      <h4 className="text-xs font-bold text-slate-800">{n.title}</h4>
-                      <p className="text-[10px] text-slate-500 mt-0.5 leading-relaxed">{n.desc}</p>
-                      <span className="text-[9px] text-slate-400 mt-1 block">{n.time}</span>
+                {recentNotifications.length === 0 ? (
+                  <div className="p-4 text-center text-[11px] text-slate-400">No notifications yet</div>
+                ) : (
+                  recentNotifications.map((n) => (
+                    <div key={n.id} className="p-3 hover:bg-slate-50 rounded-xl cursor-pointer transition-colors flex gap-2">
+                      <div className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${n.isRead ? 'bg-slate-300' : 'bg-teal-500'}`} />
+                      <div>
+                        <h4 className="text-xs font-bold text-slate-800">{n.title}</h4>
+                        <p className="text-[10px] text-slate-500 mt-0.5 leading-relaxed">{n.message}</p>
+                        <span className="text-[9px] text-slate-400 mt-1 block">{timeAgo(n.createdAt)}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
               <div className="p-2 text-center">
                 <button 

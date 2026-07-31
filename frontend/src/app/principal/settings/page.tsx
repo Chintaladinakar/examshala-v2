@@ -25,23 +25,26 @@ import {
 type WorkspaceDetails = {
   id: string;
   name: string;
-  institutionType: string;
-  address: string;
-  contactNumber: string;
-  email: string;
+  institutionType: string | null;
+  address: string | null;
+  contactNumber: string | null;
+  contactEmail: string | null;
 };
 
 type AcademicSettings = {
-  academicYear: string;
-  term: string;
-  semester: string;
+  academicYear: string | null;
+  term: string | null;
+  semester: string | null;
 };
+
+type DepartmentLite = { id: string; name: string };
 
 type ClassRow = {
   id: string;
   name: string;
   studentCount: number;
   teacherCount: number;
+  department: DepartmentLite | null;
   status: string;
 };
 
@@ -100,8 +103,10 @@ export default function PrincipalSettingsPage() {
   // Add modals
   const [entityType, setEntityType] = useState<'class' | 'subject'>('class');
   const [entityName, setEntityName] = useState('');
+  const [entityDepartmentId, setEntityDepartmentId] = useState('');
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [submittingEntity, setSubmittingEntity] = useState(false);
+  const [departments, setDepartments] = useState<DepartmentLite[]>([]);
 
   // Archive state
   const [archivingClassId, setArchivingClassId] = useState<string | null>(null);
@@ -113,9 +118,13 @@ export default function PrincipalSettingsPage() {
   async function loadSettings() {
     try {
       setLoading(true);
-      const res = await apiJson<SettingsData>('/api/principal/settings');
+      const [res, departmentsData] = await Promise.all([
+        apiJson<SettingsData>('/api/principal/settings'),
+        apiJson<any[]>('/api/principal/departments'),
+      ]);
       setData(res);
       setInstName(res.workspace.name);
+      setDepartments(departmentsData.map(d => ({ id: d.id, name: d.name })));
     } catch (e: any) {
       showError(e);
     } finally {
@@ -160,11 +169,13 @@ export default function PrincipalSettingsPage() {
         body: JSON.stringify({
           entityType,
           name: entityName,
+          departmentId: entityType === 'class' ? (entityDepartmentId || undefined) : undefined,
         }),
       });
       showMessage(`${entityType === 'class' ? 'Class' : 'Subject'} registered successfully`, 'success');
       setAddModalOpen(false);
       setEntityName('');
+      setEntityDepartmentId('');
       loadSettings();
     } catch (err: any) {
       showError(err);
@@ -325,7 +336,8 @@ export default function PrincipalSettingsPage() {
                             <input
                               type="text"
                               disabled
-                              value={data.workspace.institutionType}
+                              placeholder="Not set"
+                              value={data.workspace.institutionType || ''}
                               className="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs font-semibold text-slate-500 cursor-not-allowed"
                             />
                           </div>
@@ -334,7 +346,8 @@ export default function PrincipalSettingsPage() {
                             <input
                               type="text"
                               disabled
-                              value={data.workspace.email}
+                              placeholder="Not set"
+                              value={data.workspace.contactEmail || ''}
                               className="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs font-semibold text-slate-500 cursor-not-allowed"
                             />
                           </div>
@@ -345,7 +358,8 @@ export default function PrincipalSettingsPage() {
                           <input
                             type="text"
                             disabled
-                            value={data.workspace.address}
+                            placeholder="Not set"
+                            value={data.workspace.address || ''}
                             className="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs font-semibold text-slate-500 cursor-not-allowed"
                           />
                         </div>
@@ -374,15 +388,15 @@ export default function PrincipalSettingsPage() {
                       <div className="space-y-3 bg-slate-50/50 p-4 border rounded-2xl text-xs text-slate-600">
                         <div className="flex justify-between items-center py-1 border-b">
                           <span className="font-semibold text-slate-500">Academic Year</span>
-                          <span className="font-extrabold text-slate-800">{data.academicSettings.academicYear}</span>
+                          <span className="font-extrabold text-slate-800">{data.academicSettings.academicYear || '—'}</span>
                         </div>
                         <div className="flex justify-between items-center py-1 border-b">
                           <span className="font-semibold text-slate-500">Active Term</span>
-                          <span className="font-extrabold text-slate-800">{data.academicSettings.term}</span>
+                          <span className="font-extrabold text-slate-800">{data.academicSettings.term || '—'}</span>
                         </div>
                         <div className="flex justify-between items-center py-1">
                           <span className="font-semibold text-slate-500">Semester Semester</span>
-                          <span className="font-extrabold text-slate-800">{data.academicSettings.semester}</span>
+                          <span className="font-extrabold text-slate-800">{data.academicSettings.semester || '—'}</span>
                         </div>
                       </div>
                     </div>
@@ -418,7 +432,14 @@ export default function PrincipalSettingsPage() {
                         ) : data.classes.map(cls => (
                           <div key={cls.id} className="py-3 flex items-center justify-between text-xs">
                             <div>
-                              <h4 className="font-extrabold text-slate-800">{cls.name}</h4>
+                              <h4 className="font-extrabold text-slate-800">
+                                {cls.name}
+                                {cls.department && (
+                                  <span className="ml-2 px-1.5 py-0.5 rounded bg-teal-50 border border-teal-100 text-teal-800 font-bold text-[9px] uppercase align-middle">
+                                    {cls.department.name}
+                                  </span>
+                                )}
+                              </h4>
                               <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
                                 Students: {cls.studentCount} • Teachers: {cls.teacherCount}
                               </p>
@@ -598,6 +619,20 @@ export default function PrincipalSettingsPage() {
                   className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-teal-700/35"
                 />
               </div>
+
+              {entityType === 'class' && (
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Department</label>
+                  <select
+                    value={entityDepartmentId}
+                    onChange={e => setEntityDepartmentId(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-teal-700/35"
+                  >
+                    <option value="">No Department</option>
+                    {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+                  </select>
+                </div>
+              )}
 
               <div className="flex gap-2 pt-2 border-t">
                 <button

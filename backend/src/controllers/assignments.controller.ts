@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth.middleware';
 import prisma from '../lib/prisma';
+import { createNotification } from '../services/notification.service';
 
 export const getAssignments = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -285,6 +286,21 @@ export const submitAssignment = async (req: AuthRequest, res: Response): Promise
         fileUrl: uploadedFiles?.[0] || '',
       },
     });
+
+    const student = await prisma.user.findUnique({ where: { id: studentId }, select: { name: true, workspaceId: true } });
+    const classroom = await prisma.class.findUnique({ where: { id: assignment.classId }, select: { workspaceId: true } });
+    const teacherLinks = await prisma.classTeacher.findMany({ where: { classId: assignment.classId }, select: { teacherId: true } });
+    const notifyIds = new Set([assignment.createdByUserId, ...teacherLinks.map((t) => t.teacherId)]);
+    for (const teacherId of notifyIds) {
+      await createNotification({
+        userId: teacherId,
+        workspaceId: classroom?.workspaceId,
+        type: 'assignment_submitted',
+        title: 'Assignment submitted',
+        message: `${student?.name || 'A student'} submitted "${assignment.title}"`,
+        actionUrl: '/assignments',
+      });
+    }
 
     res.status(201).json({ success: true, data: submission });
   } catch (error: any) {

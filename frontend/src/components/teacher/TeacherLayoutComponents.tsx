@@ -20,7 +20,8 @@ import {
   ChevronDown,
   LogOut,
   LayoutGrid,
-  ArrowLeftRight
+  ArrowLeftRight,
+  Building2
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { useUser } from '@/context/UserContext';
@@ -45,8 +46,8 @@ export const TeacherSidebar = () => {
 
   const isPrincipal = profile?.role?.toLowerCase() === 'principal';
 
-  const handleSignOut = () => {
-    document.cookie = 'session_token=; path=/; max-age=0; SameSite=Lax';
+  const handleSignOut = async () => {
+    await fetch('/api/auth/session', { method: 'DELETE' });
     try {
       localStorage.removeItem('token');
     } catch {
@@ -138,7 +139,7 @@ export const TeacherHeader = () => {
         {/* Workspace Switcher */}
         <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 cursor-pointer hover:bg-gray-100 transition-colors">
           <div className="w-6 h-6 bg-indigo-100 rounded flex items-center justify-center">
-            <span className="text-indigo-600 font-bold text-xs">🏫</span>
+            <Building2 className="w-3.5 h-3.5 text-indigo-600" />
           </div>
           <div className="flex flex-col">
             <span className="text-xs font-semibold text-gray-900 leading-none">{profile?.workspaceName || 'School'}</span>

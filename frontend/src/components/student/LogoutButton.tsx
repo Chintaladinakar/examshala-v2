@@ -10,8 +10,8 @@ export function LogoutButton() {
   return (
     <button
       type="button"
-      onClick={() => {
-        document.cookie = 'session_token=; path=/; max-age=0; SameSite=Lax';
+      onClick={async () => {
+        await fetch('/api/auth/session', { method: 'DELETE' });
         try {
           localStorage.removeItem('token');
         } catch {

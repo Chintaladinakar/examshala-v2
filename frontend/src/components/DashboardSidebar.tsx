@@ -24,7 +24,9 @@ import {
   ChevronDown,
   Sparkles,
   Menu,
-  X
+  X,
+  MessageSquare,
+  Clock
 } from 'lucide-react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -83,7 +85,7 @@ function buildLinks(role: string, mode: string): NavGroup[] {
   const academicLinks: NavLink[] = [];
   if (inPrincipalMode) {
     academicLinks.push(
-      { href: '/students', label: 'Students', icon: Users },
+      { href: '/principal/students', label: 'Students', icon: Users },
       { href: '/principal/teachers', label: 'Teachers', icon: GraduationCap },
       { href: '/principal/join-requests', label: 'Admission Requests', icon: Users }
     );
@@ -94,6 +96,16 @@ function buildLinks(role: string, mode: string): NavGroup[] {
     { href: '/classes', label: 'Classes', icon: Building2 },
     { href: '/attendance', label: 'Attendance', icon: Calendar }
   );
+  if (inPrincipalMode) {
+    academicLinks.push(
+      { href: '/principal/timetable', label: 'Timetable', icon: Clock },
+      { href: '/principal/subjects', label: 'Subjects', icon: BookOpen },
+      { href: '/principal/departments', label: 'Departments', icon: Building2 }
+    );
+  } else {
+    academicLinks.push({ href: '/assignments', label: 'Assignments', icon: ClipboardList });
+  }
+  academicLinks.push({ href: '/materials', label: 'Study Materials', icon: BookOpen });
   groups.push({
     title: 'Academic',
     links: academicLinks
@@ -108,8 +120,8 @@ function buildLinks(role: string, mode: string): NavGroup[] {
     );
   } else {
     assessmentLinks.push(
-      { href: '/coming-soon?feature=Exams', label: 'Exams', icon: FileText },
-      { href: '/coming-soon?feature=QuestionBank', label: 'Question Bank', icon: ClipboardList },
+      { href: '/exams', label: 'Exams', icon: FileText },
+      { href: '/question-bank', label: 'Question Bank', icon: ClipboardList },
       { href: '/results', label: 'Results', icon: Trophy }
     );
   }
@@ -144,7 +156,8 @@ function buildLinks(role: string, mode: string): NavGroup[] {
     );
   }
   communicationLinks.push(
-    { href: '/coming-soon?feature=Calendar', label: 'Calendar', icon: Calendar }
+    { href: '/messages', label: 'Messages', icon: MessageSquare },
+    { href: '/calendar', label: 'Calendar', icon: Calendar }
   );
   groups.push({
     title: 'Communication',
@@ -158,7 +171,7 @@ function buildLinks(role: string, mode: string): NavGroup[] {
   if (inPrincipalMode) {
     accountLinks.push({ href: '/principal/settings', label: 'Admin Settings', icon: Settings });
   } else {
-    accountLinks.push({ href: '/coming-soon?feature=Settings', label: 'Settings', icon: Settings });
+    accountLinks.push({ href: '/settings', label: 'Settings', icon: Settings });
   }
   groups.push({
     title: 'Account',
@@ -243,8 +256,8 @@ export default function DashboardSidebar() {
 
   // ── Logout ────────────────────────────────────────────────────────────────
 
-  const handleLogout = () => {
-    document.cookie = 'session_token=; path=/; max-age=0; SameSite=Lax';
+  const handleLogout = async () => {
+    await fetch('/api/auth/session', { method: 'DELETE' });
     router.push('/signin');
   };
 
@@ -294,7 +307,7 @@ export default function DashboardSidebar() {
 
         <div className="flex items-center gap-2.5">
           <div className="flex items-center gap-1 px-2.5 py-1 select-none rounded-xl bg-white/5 border border-white/5">
-            <span className="text-[10px] leading-none shrink-0">🏫</span>
+            <Building2 className="w-2.5 h-2.5 shrink-0" />
             <span className="text-[11px] text-teal-300/80 font-bold truncate max-w-[100px] leading-none">
               {profile?.workspaceName || 'Loading…'}
             </span>
@@ -353,7 +366,7 @@ export default function DashboardSidebar() {
               className="w-full flex items-center justify-between gap-1.5 p-2 rounded-xl bg-white/5 border border-white/5 text-left text-teal-100 hover:bg-white/10 hover:text-white transition-all cursor-pointer group"
             >
               <div className="flex items-center gap-1.5 truncate">
-                <span className="text-[10px] leading-none shrink-0">🏫</span>
+                <Building2 className="w-2.5 h-2.5 shrink-0" />
                 <span className="text-[11px] font-bold truncate leading-none">
                   {profile.workspaceName}
                 </span>
@@ -366,7 +379,7 @@ export default function DashboardSidebar() {
             </button>
           ) : (
             <div className="flex items-center gap-1.5 px-2 py-1 select-none">
-              <span className="text-[10px] leading-none shrink-0">🏫</span>
+              <Building2 className="w-2.5 h-2.5 shrink-0" />
               <span className="text-[11px] text-teal-300/80 font-bold truncate leading-none">
                 {profile?.workspaceName || 'Loading workspace…'}
               </span>
@@ -411,7 +424,7 @@ export default function DashboardSidebar() {
 
         {/* Role badge */}
         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-300 border border-emerald-500/25">
-          <span className="text-[8px]">🟢</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
           {role}
         </span>
       </div>

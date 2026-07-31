@@ -47,11 +47,15 @@ export default function SignUp() {
 
       // Extract token from signup response.
       // NOTE: token is intentionally NOT written to localStorage — XSS scripts can
-      // read localStorage directly. The SameSite=Lax cookie below is the safer
-      // client-side option until the backend issues an HttpOnly cookie.
+      // read localStorage directly. The server sets the session cookie itself as
+      // HttpOnly/Secure/SameSite=Strict so client-side JS never touches it.
       const token = getTokenFromSignupResponse(data);
       if (token) {
-        document.cookie = `session_token=${token}; path=/; max-age=86400; SameSite=Lax`;
+        await fetch('/api/auth/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token }),
+        });
 
         // Determine correct landing pad and route directly
         const decoded = decodeJwtPayload(token);

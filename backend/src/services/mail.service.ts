@@ -143,6 +143,49 @@ export async function sendOTPEmail(email: string, otp: string, purpose: 'SIGNUP'
   });
 }
 
+export async function sendPasswordResetEmail(email: string, resetLink: string): Promise<void> {
+  const subject = 'Reset your EDUsphere password';
+  const html = `
+    <div style="font-family:'Segoe UI',Arial,sans-serif;line-height:1.6;color:#1a202c;max-width:640px;margin:0 auto;background:#ffffff;padding:0;">
+      <div style="background:linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);padding:32px 24px;text-align:center;border-radius:8px 8px 0 0;">
+        <h1 style="margin:0;color:#ffffff;font-size:24px;font-weight:600;">EDUsphere</h1>
+        <p style="margin:8px 0 0 0;color:rgba(255,255,255,0.9);font-size:14px;">Password Reset</p>
+      </div>
+      <div style="padding:32px 24px;">
+        <p style="margin:0 0 24px 0;font-size:16px;">Hello,</p>
+        <p style="margin:0 0 24px 0;font-size:15px;">
+          We received a request to reset your EDUsphere account password. Click the button below to choose a new password. This link expires in 1 hour.
+        </p>
+        <div style="text-align:center;margin:32px 0;">
+          <a href="${resetLink}" style="display:inline-block;padding:12px 32px;background:#0f766e;color:#ffffff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">
+            Reset Password
+          </a>
+        </div>
+        <p style="margin:24px 0 0 0;font-size:13px;color:#666;line-height:1.8;">
+          Didn't request this? You can safely ignore this email — your password will not be changed.
+        </p>
+      </div>
+      <div style="background:#f8fafc;padding:24px;text-align:center;border-radius:0 0 8px 8px;border-top:1px solid #e2e8f0;">
+        <p style="margin:0 0 8px 0;font-size:12px;color:#999;">
+          This is an automated message from EDUsphere. Please do not reply to this email.
+        </p>
+        <p style="margin:0;font-size:11px;color:#bbb;">
+          © 2026 EDUsphere. All rights reserved.
+        </p>
+      </div>
+    </div>
+  `;
+  const text = [
+    'EDUsphere Password Reset',
+    'We received a request to reset your account password.',
+    `Reset link (expires in 1 hour): ${resetLink}`,
+    '',
+    "Didn't request this? You can safely ignore this email.",
+  ].join('\n');
+
+  await sendMail({ to: email, subject, html, text });
+}
+
 export async function sendUserInvitationEmail(input: InviteEmailInput): Promise<void> {
   const { replyTo, appUrl } = getMailConfig();
   const roleLabel = input.invitedRole.replace(/_/g, ' ').toLowerCase();

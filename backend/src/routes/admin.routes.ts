@@ -33,6 +33,13 @@ router.get('/invites', adminController.getAllInvites);
 router.post('/invites', adminController.sendInvite);
 
 // -------------------------------------------------------------
+// Parent-Link REST API
+// -------------------------------------------------------------
+router.get('/parent-links', adminController.getParentLinks);
+router.post('/parent-links/:id/approve', adminController.approveParentLink);
+router.post('/parent-links/:id/reject', adminController.rejectParentLink);
+
+// -------------------------------------------------------------
 // Logs REST API
 // -------------------------------------------------------------
 router.get('/logs', adminController.getAllLogs);

@@ -35,25 +35,16 @@ export default function InvitationsTrackerPage() {
   // Resend status simulation state
   const [resendingId, setResendingId] = useState<string | null>(null);
 
-  const getCookie = (name: string) => {
-    if (typeof document === 'undefined') return '';
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift() || '';
-    return '';
-  };
-
   const loadData = async () => {
     try {
       setLoading(true);
       setError(null);
-      const token = getCookie('session_token');
-      const headers = { Authorization: `Bearer ${token}` };
 
-      // Fetch invites and workspaces
+      // Requests go through the authenticated same-origin proxy, which reads the
+      // HttpOnly session cookie server-side and forwards it to the backend.
       const [invitesRes, workspacesRes] = await Promise.all([
-        fetchJson<{ success: boolean; data: Invite[] }>('/api/admin/invites', { headers }),
-        fetchJson<{ success: boolean; data: Workspace[] }>('/api/admin/workspaces', { headers }),
+        fetchJson<{ success: boolean; data: Invite[] }>('/api/proxy/api/admin/invites'),
+        fetchJson<{ success: boolean; data: Workspace[] }>('/api/proxy/api/admin/workspaces'),
       ]);
 
       setInvites(invitesRes.data || []);
@@ -78,7 +69,6 @@ export default function InvitationsTrackerPage() {
       setSubmittingInvite(true);
       setInviteSuccessMsg(null);
       setInviteErrorMsg(null);
-      const token = getCookie('session_token');
 
       const body: any = {
         email: inviteEmail,
@@ -88,12 +78,9 @@ export default function InvitationsTrackerPage() {
         body.workspaceId = inviteWorkspaceId;
       }
 
-      await fetchJson('/api/admin/invites', {
+      await fetchJson('/api/proxy/api/admin/invites', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
 

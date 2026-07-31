@@ -133,7 +133,20 @@ exports.Prisma.UserScalarFieldEnum = {
   workspaceId: 'workspaceId',
   mode: 'mode',
   firstLogin: 'firstLogin',
+  notificationPrefs: 'notificationPrefs',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.OTPScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  code: 'code',
+  type: 'type',
+  attemptCount: 'attemptCount',
+  blockedUntil: 'blockedUntil',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  verifiedAt: 'verifiedAt'
 };
 
 exports.Prisma.WorkspaceScalarFieldEnum = {
@@ -158,6 +171,61 @@ exports.Prisma.StudentWorkspaceProfileScalarFieldEnum = {
   userId: 'userId',
   workspaceId: 'workspaceId',
   metadata: 'metadata'
+};
+
+exports.Prisma.ExamScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  classId: 'classId',
+  createdByUserId: 'createdByUserId',
+  title: 'title',
+  description: 'description',
+  examType: 'examType',
+  subject: 'subject',
+  durationMinutes: 'durationMinutes',
+  passingPercentage: 'passingPercentage',
+  shuffleQuestions: 'shuffleQuestions',
+  shuffleOptions: 'shuffleOptions',
+  status: 'status',
+  scheduledStart: 'scheduledStart',
+  scheduledEnd: 'scheduledEnd',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ExamQuestionScalarFieldEnum = {
+  id: 'id',
+  examId: 'examId',
+  questionId: 'questionId',
+  order: 'order',
+  marks: 'marks',
+  negativeMarks: 'negativeMarks'
+};
+
+exports.Prisma.ExamAttemptScalarFieldEnum = {
+  id: 'id',
+  examId: 'examId',
+  studentId: 'studentId',
+  startedAt: 'startedAt',
+  submittedAt: 'submittedAt',
+  status: 'status',
+  score: 'score',
+  totalMarks: 'totalMarks',
+  percentage: 'percentage',
+  violationCount: 'violationCount',
+  timeRemainingSeconds: 'timeRemainingSeconds',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ExamAnswerScalarFieldEnum = {
+  id: 'id',
+  attemptId: 'attemptId',
+  questionId: 'questionId',
+  selectedAnswer: 'selectedAnswer',
+  isCorrect: 'isCorrect',
+  marksAwarded: 'marksAwarded',
+  markedForReview: 'markedForReview',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.TestScalarFieldEnum = {
@@ -223,6 +291,29 @@ exports.Prisma.AssessmentResultScalarFieldEnum = {
   feedback: 'feedback'
 };
 
+exports.Prisma.ConversationScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  lastMessageAt: 'lastMessageAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ConversationParticipantScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  userId: 'userId',
+  lastReadAt: 'lastReadAt'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  senderId: 'senderId',
+  body: 'body',
+  attachmentUrl: 'attachmentUrl',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.NotificationScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -281,6 +372,30 @@ exports.Prisma.ClassScalarFieldEnum = {
   id: 'id',
   name: 'name',
   workspaceId: 'workspaceId',
+  departmentId: 'departmentId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.DepartmentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  workspaceId: 'workspaceId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.SubjectScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  workspaceId: 'workspaceId',
+  departmentId: 'departmentId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.TeacherSubjectScalarFieldEnum = {
+  id: 'id',
+  teacherId: 'teacherId',
+  subjectId: 'subjectId',
   createdAt: 'createdAt'
 };
 
@@ -327,6 +442,31 @@ exports.Prisma.AssignmentScalarFieldEnum = {
   studentId: 'studentId'
 };
 
+exports.Prisma.RubricScalarFieldEnum = {
+  id: 'id',
+  assignmentId: 'assignmentId',
+  title: 'title',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.RubricCriterionScalarFieldEnum = {
+  id: 'id',
+  rubricId: 'rubricId',
+  title: 'title',
+  maxPoints: 'maxPoints',
+  order: 'order'
+};
+
+exports.Prisma.RubricScoreScalarFieldEnum = {
+  id: 'id',
+  submissionId: 'submissionId',
+  criterionId: 'criterionId',
+  points: 'points',
+  comment: 'comment',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.AssignmentFeedbackScalarFieldEnum = {
   id: 'id',
   assignmentId: 'assignmentId',
@@ -343,7 +483,38 @@ exports.Prisma.AssignmentSubmissionScalarFieldEnum = {
   submittedAt: 'submittedAt',
   updatedAt: 'updatedAt',
   textSubmission: 'textSubmission',
-  uploadedFiles: 'uploadedFiles'
+  uploadedFiles: 'uploadedFiles',
+  marksObtained: 'marksObtained',
+  status: 'status',
+  feedbackComment: 'feedbackComment',
+  reviewedByUserId: 'reviewedByUserId',
+  reviewedAt: 'reviewedAt',
+  plagiarismStatus: 'plagiarismStatus',
+  plagiarismScore: 'plagiarismScore',
+  plagiarismReportUrl: 'plagiarismReportUrl',
+  plagiarismCheckedAt: 'plagiarismCheckedAt'
+};
+
+exports.Prisma.QuestionScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  createdByUserId: 'createdByUserId',
+  type: 'type',
+  difficulty: 'difficulty',
+  subject: 'subject',
+  chapter: 'chapter',
+  topic: 'topic',
+  learningOutcome: 'learningOutcome',
+  bloomLevel: 'bloomLevel',
+  tags: 'tags',
+  questionText: 'questionText',
+  options: 'options',
+  correctAnswer: 'correctAnswer',
+  explanation: 'explanation',
+  version: 'version',
+  isArchived: 'isArchived',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.MaterialScalarFieldEnum = {
@@ -352,7 +523,15 @@ exports.Prisma.MaterialScalarFieldEnum = {
   type: 'type',
   fileUrl: 'fileUrl',
   subject: 'subject',
-  uploadedBy: 'uploadedBy',
+  chapter: 'chapter',
+  topic: 'topic',
+  workspaceId: 'workspaceId',
+  classId: 'classId',
+  uploadedByUserId: 'uploadedByUserId',
+  visibility: 'visibility',
+  scheduledAt: 'scheduledAt',
+  viewCount: 'viewCount',
+  downloadCount: 'downloadCount',
   uploadDate: 'uploadDate'
 };
 
@@ -388,6 +567,21 @@ exports.Prisma.ResultScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.TimetableSlotScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  classId: 'classId',
+  subjectId: 'subjectId',
+  teacherId: 'teacherId',
+  dayOfWeek: 'dayOfWeek',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  room: 'room',
+  meetingUrl: 'meetingUrl',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -403,45 +597,61 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
-};
-
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
   User: 'User',
+  OTP: 'OTP',
   Workspace: 'Workspace',
   WorkspaceMembership: 'WorkspaceMembership',
   StudentWorkspaceProfile: 'StudentWorkspaceProfile',
+  Exam: 'Exam',
+  ExamQuestion: 'ExamQuestion',
+  ExamAttempt: 'ExamAttempt',
+  ExamAnswer: 'ExamAnswer',
   Test: 'Test',
   AssessmentAssignment: 'AssessmentAssignment',
   Student: 'Student',
   Assessment: 'Assessment',
   AssessmentAttempt: 'AssessmentAttempt',
   AssessmentResult: 'AssessmentResult',
+  Conversation: 'Conversation',
+  ConversationParticipant: 'ConversationParticipant',
+  Message: 'Message',
   Notification: 'Notification',
   ParentStudentLink: 'ParentStudentLink',
   AuditLog: 'AuditLog',
   Invite: 'Invite',
   Log: 'Log',
   Class: 'Class',
+  Department: 'Department',
+  Subject: 'Subject',
+  TeacherSubject: 'TeacherSubject',
   ClassTeacher: 'ClassTeacher',
   ClassStudent: 'ClassStudent',
   Attendance: 'Attendance',
   Assignment: 'Assignment',
+  Rubric: 'Rubric',
+  RubricCriterion: 'RubricCriterion',
+  RubricScore: 'RubricScore',
   AssignmentFeedback: 'AssignmentFeedback',
   AssignmentSubmission: 'AssignmentSubmission',
+  Question: 'Question',
   Material: 'Material',
   SchoolLog: 'SchoolLog',
   PlatformSettings: 'PlatformSettings',
-  Result: 'Result'
+  Result: 'Result',
+  TimetableSlot: 'TimetableSlot'
 };
 
 /**

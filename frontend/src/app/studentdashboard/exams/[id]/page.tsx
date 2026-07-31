@@ -57,14 +57,6 @@ export default function StudentExamTakingPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const getCookie = (name: string) => {
-    if (typeof window === 'undefined') return '';
-    return document.cookie
-      .split('; ')
-      .find(row => row.startsWith(`${name}=`))
-      ?.split('=')[1] || '';
-  };
-
   useEffect(() => {
     const loadData = async () => {
       if (MOCK_EXAMS[id]) {
@@ -73,19 +65,18 @@ export default function StudentExamTakingPage() {
         return;
       }
 
-      const token = getCookie('session_token');
-      if (!token) {
-        setError('Session expired. Please log in.');
-        setLoading(false);
-        return;
-      }
-
       try {
         setLoading(true);
-        const examRes = await fetch(`http://localhost:5000/api/student/assignments/${id}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // Goes through the authenticated same-origin proxy, which forwards the HttpOnly
+        // session cookie to the backend server-side.
+        const examRes = await fetch(`/api/proxy/api/student/assignments/${id}`);
         const examPayload = await examRes.json();
+
+        if (examRes.status === 401) {
+          setError('Session expired. Please log in.');
+          setLoading(false);
+          return;
+        }
 
         if (examPayload.success) {
           setExamData(examPayload.data);

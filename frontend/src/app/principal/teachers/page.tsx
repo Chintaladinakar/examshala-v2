@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 
 type ClassLite = { id: string; name: string };
+type SubjectLite = { id: string; name: string };
 type Teacher = {
   id: string;
   name: string;
@@ -32,7 +33,7 @@ type Teacher = {
   phone: string;
   qualification: string;
   experience: string;
-  subjects: string[];
+  subjects: SubjectLite[];
   classes: ClassLite[];
   assignmentsCreated: number;
   examsCreated: number;
@@ -63,6 +64,7 @@ export default function PrincipalTeachersPage() {
 
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [classes, setClasses] = useState<ClassLite[]>([]);
+  const [subjectOptions, setSubjectOptions] = useState<SubjectLite[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -94,8 +96,6 @@ export default function PrincipalTeachersPage() {
   const [subjectSearch, setSubjectSearch] = useState('');
   const [classSearch, setClassSearch] = useState('');
 
-  const defaultSubjects = ['Mathematics', 'Science', 'English', 'Physics', 'Chemistry', 'Biology', 'History', 'Geography', 'Social Studies'];
-
   const filteredTeachers = useMemo(() => {
     return teachers.filter(t => 
       t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -107,12 +107,14 @@ export default function PrincipalTeachersPage() {
   async function loadData() {
     try {
       setLoading(true);
-      const [teachersData, classesData] = await Promise.all([
+      const [teachersData, classesData, subjectsData] = await Promise.all([
         apiJson<Teacher[]>('/api/principal/teachers'),
         apiJson<any[]>('/api/classes'),
+        apiJson<any[]>('/api/principal/subjects'),
       ]);
       setTeachers(teachersData);
       setClasses(classesData.map(c => ({ id: c.id, name: c.name })));
+      setSubjectOptions(subjectsData.map(s => ({ id: s.id, name: s.name })));
     } catch (e: any) {
       showError(e);
     } finally {
@@ -154,7 +156,7 @@ export default function PrincipalTeachersPage() {
             mode: 'associate',
             uniqueId: formUniqueId,
             classIds: formClassIds,
-            subjects: formSubjects
+            subjectIds: formSubjects
           }
         : {
             mode: 'create',
@@ -163,7 +165,7 @@ export default function PrincipalTeachersPage() {
             phone: formPhone,
             qualification: formQualification,
             experience: formExperience,
-            subjects: formSubjects,
+            subjectIds: formSubjects,
             classIds: formClassIds
           };
 
@@ -202,8 +204,7 @@ export default function PrincipalTeachersPage() {
           email: formEmail,
           phone: formPhone,
           qualification: formQualification,
-          experience: formExperience,
-          subjects: formSubjects
+          experience: formExperience
         })
       });
       setTeachers(prev => prev.map(t => t.id === selectedTeacher.id ? { ...t, ...res } : t));
@@ -227,10 +228,10 @@ export default function PrincipalTeachersPage() {
           teacherId: selectedTeacher.id,
           action: 'assign_classes_subjects',
           classIds: formClassIds,
-          subjects: formSubjects
+          subjectIds: formSubjects
         })
       });
-      setTeachers(prev => prev.map(t => t.id === selectedTeacher.id ? { ...t, classes: res.classes, subjects: formSubjects } : t));
+      setTeachers(prev => prev.map(t => t.id === selectedTeacher.id ? { ...t, classes: res.classes, subjects: res.subjects } : t));
       showMessage('Assigned classes and subjects successfully updated', 'success');
       setAssignmentDrawerOpen(false);
       resetForm();
@@ -267,14 +268,14 @@ export default function PrincipalTeachersPage() {
     setFormPhone(teacher.phone);
     setFormQualification(teacher.qualification);
     setFormExperience(teacher.experience);
-    setFormSubjects(teacher.subjects);
+    setFormSubjects(teacher.subjects.map(s => s.id));
     setFormClassIds(teacher.classes.map(c => c.id));
     setEditModalOpen(true);
   };
 
   const openAssignmentDrawer = (teacher: Teacher) => {
     setSelectedTeacher(teacher);
-    setFormSubjects(teacher.subjects);
+    setFormSubjects(teacher.subjects.map(s => s.id));
     setFormClassIds(teacher.classes.map(c => c.id));
     setAssignmentDrawerOpen(true);
   };
@@ -688,20 +689,20 @@ export default function PrincipalTeachersPage() {
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
-                    {defaultSubjects
-                      .filter(s => s.toLowerCase().includes(subjectSearch.toLowerCase()))
+                    {subjectOptions
+                      .filter(s => s.name.toLowerCase().includes(subjectSearch.toLowerCase()))
                       .map(s => (
-                        <label key={s} className="flex items-center gap-2 text-[11px] font-semibold text-slate-700 hover:text-slate-900 cursor-pointer">
+                        <label key={s.id} className="flex items-center gap-2 text-[11px] font-semibold text-slate-700 hover:text-slate-900 cursor-pointer">
                           <input
                             type="checkbox"
-                            checked={formSubjects.includes(s)}
+                            checked={formSubjects.includes(s.id)}
                             onChange={e => {
-                              if (e.target.checked) setFormSubjects(prev => [...prev, s]);
-                              else setFormSubjects(prev => prev.filter(subj => subj !== s));
+                              if (e.target.checked) setFormSubjects(prev => [...prev, s.id]);
+                              else setFormSubjects(prev => prev.filter(subj => subj !== s.id));
                             }}
                             className="w-3.5 h-3.5 border-slate-300 rounded text-teal-700 focus:ring-teal-700"
                           />
-                          {s}
+                          {s.name}
                         </label>
                       ))}
                   </div>
@@ -909,8 +910,8 @@ export default function PrincipalTeachersPage() {
                     <div className="flex flex-wrap gap-1.5">
                       {selectedTeacher.subjects.length > 0 ? (
                         selectedTeacher.subjects.map(s => (
-                          <span key={s} className="px-2.5 py-1 bg-violet-50/70 border border-violet-100/60 rounded-xl text-[10px] font-bold text-violet-900">
-                            📚 {s}
+                          <span key={s.id} className="px-2.5 py-1 bg-violet-50/70 border border-violet-100/60 rounded-xl text-[10px] font-bold text-violet-900">
+                            📚 {s.name}
                           </span>
                         ))
                       ) : (
@@ -994,20 +995,20 @@ export default function PrincipalTeachersPage() {
                   />
                 </div>
                 <div className="border rounded-2xl p-4 bg-slate-50/70 space-y-2.5 max-h-56 overflow-y-auto">
-                  {defaultSubjects
-                    .filter(s => s.toLowerCase().includes(subjectSearch.toLowerCase()))
+                  {subjectOptions
+                    .filter(s => s.name.toLowerCase().includes(subjectSearch.toLowerCase()))
                     .map(s => (
-                      <label key={s} className="flex items-center gap-2 text-xs font-semibold text-slate-700 hover:text-slate-900 cursor-pointer">
+                      <label key={s.id} className="flex items-center gap-2 text-xs font-semibold text-slate-700 hover:text-slate-900 cursor-pointer">
                         <input
                           type="checkbox"
-                          checked={formSubjects.includes(s)}
+                          checked={formSubjects.includes(s.id)}
                           onChange={e => {
-                            if (e.target.checked) setFormSubjects(prev => [...prev, s]);
-                            else setFormSubjects(prev => prev.filter(subj => subj !== s));
+                            if (e.target.checked) setFormSubjects(prev => [...prev, s.id]);
+                            else setFormSubjects(prev => prev.filter(subj => subj !== s.id));
                           }}
                           className="w-4 h-4 border-slate-300 rounded text-teal-700 focus:ring-teal-700"
                         />
-                        📚 {s}
+                        📚 {s.name}
                       </label>
                     ))}
                 </div>

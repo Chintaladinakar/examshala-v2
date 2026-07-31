@@ -15,21 +15,10 @@ export default function AdminLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profile, setProfile] = useState<{ name: string; role: string; email: string } | null>(null);
 
-  const getCookie = (name: string) => {
-    if (typeof document === 'undefined') return '';
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift() || '';
-    return '';
-  };
-
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const token = getCookie('session_token');
-        if (!token) return;
-        const headers = { Authorization: `Bearer ${token}` };
-        const response = await fetchJson<{ success: boolean; data: { name: string; role: string; email: string } }>('/api/admin/profile', { headers });
+        const response = await fetchJson<{ success: boolean; data: { name: string; role: string; email: string } }>('/api/proxy/api/admin/profile');
         if (response.success && response.data) {
           setProfile(response.data);
         }
@@ -40,9 +29,8 @@ export default function AdminLayout({
     loadProfile();
   }, []);
 
-  const handleLogout = () => {
-    // Delete session cookie and bounce
-    document.cookie = 'session_token=; path=/; max-age=0; SameSite=Lax';
+  const handleLogout = async () => {
+    await fetch('/api/auth/session', { method: 'DELETE' });
     router.push('/signin');
   };
 

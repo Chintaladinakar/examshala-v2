@@ -87,10 +87,9 @@ function AccountSettingsTab({ profile }: { profile: any }) {
     setError(null);
 
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('session_token='))?.split('=')[1];
-      await fetchJson('/api/student/profile', {
+      await fetchJson('/api/proxy/api/student/profile', {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fullName, email, mobileNumber }),
         action: 'submit',
       });
@@ -218,10 +217,9 @@ function SecuritySettingsTab({ profile }: { profile: any }) {
     setPhotoError(null);
 
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('session_token='))?.split('=')[1];
-      await fetchJson('/api/student/profile/photo', {
+      await fetchJson('/api/proxy/api/student/profile/photo', {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ profilePhoto: photoPreview || '' }),
         action: 'submit',
       });
@@ -240,10 +238,9 @@ function SecuritySettingsTab({ profile }: { profile: any }) {
     setPhotoError(null);
 
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('session_token='))?.split('=')[1];
-      await fetchJson('/api/student/profile/photo', {
+      await fetchJson('/api/proxy/api/student/profile/photo', {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ profilePhoto: '' }),
         action: 'submit',
       });
@@ -275,10 +272,9 @@ function SecuritySettingsTab({ profile }: { profile: any }) {
     setIsPasswordSaving(true);
 
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('session_token='))?.split('=')[1];
-      await fetchJson('/api/student/change-password', {
+      await fetchJson('/api/proxy/api/student/change-password', {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ currentPassword, newPassword }),
         action: 'submit',
       });
@@ -453,10 +449,9 @@ function NotificationPreferencesTab({ settings }: { settings: any }) {
     setIsSaving(true);
 
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('session_token='))?.split('=')[1];
-      await fetchJson('/api/student/settings/notifications', {
+      await fetchJson('/api/proxy/api/student/settings/notifications', {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           assessmentNotifications: nextAssessment, 
           assignmentNotifications: nextAssignment, 

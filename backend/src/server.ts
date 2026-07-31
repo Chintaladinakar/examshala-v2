@@ -3,12 +3,18 @@ dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes';
 import adminRoutes from './routes/admin.routes';
 import studentRoutes from './routes/student.routes';
 import schoolRoutes from './routes/school.routes';
 import assignmentRoutes from './routes/assignments.routes';
 import materialRoutes from './routes/materials.routes';
+import questionRoutes from './routes/questions.routes';
+import examRoutes from './routes/exams.routes';
+import messageRoutes from './routes/messages.routes';
+import notificationRoutes from './routes/notifications.routes';
+import superadminRoutes from './routes/superadmin.routes';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,14 +30,29 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(cookieParser());
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/student', studentRoutes);
-app.use('/api/school', schoolRoutes);
-app.use('/api/assignments', assignmentRoutes);
-app.use('/api/materials', materialRoutes);
+// Mounted under both the unversioned legacy path (kept for existing frontend clients)
+// and /api/v1 (the path new/external integrations should target going forward).
+const routeMounts: Array<[string, express.Router]> = [
+  ['/auth', authRoutes],
+  ['/admin', adminRoutes],
+  ['/student', studentRoutes],
+  ['/school', schoolRoutes],
+  ['/assignments', assignmentRoutes],
+  ['/materials', materialRoutes],
+  ['/questions', questionRoutes],
+  ['/exams', examRoutes],
+  ['/messages', messageRoutes],
+  ['/notifications', notificationRoutes],
+  ['/superadmin', superadminRoutes],
+];
+
+for (const [path, router] of routeMounts) {
+  app.use(`/api${path}`, router);
+  app.use(`/api/v1${path}`, router);
+}
 
 // Health check
 app.get('/api/health', (_req, res) => {
@@ -39,7 +60,8 @@ app.get('/api/health', (_req, res) => {
 });
 
 import prisma from './lib/prisma';
-import { startLockingScheduler } from './services/scheduler.service';
+import { startLockingScheduler, startLowAttendanceAlertScheduler } from './services/scheduler.service';
+import { startNotificationWorker } from './workers/notification.worker';
 
 // Start server
 const startServer = async () => {
@@ -49,6 +71,9 @@ const startServer = async () => {
     console.log('✅ Database connected successfully');
 
     startLockingScheduler();
+    startLowAttendanceAlertScheduler();
+    // No-op unless REDIS_URL is set; see src/lib/queue.ts
+    startNotificationWorker();
 
     app.listen(PORT, () => {
       console.log(`🚀 Server running on http://localhost:${PORT}`);

@@ -27,8 +27,22 @@ import {
   ArrowLeft,
   ArrowRight,
   TrendingUp,
-  Activity
+  Activity,
+  FileBarChart,
+  CopyPlus
 } from 'lucide-react';
+
+type MonthlyReportRow = {
+  studentId: string;
+  name: string;
+  present: number;
+  absent: number;
+  leave: number;
+  halfDay: number;
+  marked: number;
+  totalDays: number;
+  percentage: number;
+};
 
 type ClassLite = { id: string; name: string; students?: any[]; teachers?: any[] };
 type AttendanceRecord = { id: string; status: 'present' | 'absent'; isLocked: boolean; createdAt: string };
@@ -92,6 +106,17 @@ export default function AttendancePage() {
   // Bulk action loader
   const [bulkActionLoading, setBulkActionLoading] = useState(false);
 
+  // Monthly report modal
+  const [reportModalOpen, setReportModalOpen] = useState(false);
+  const [reportLoading, setReportLoading] = useState(false);
+  const [reportRows, setReportRows] = useState<MonthlyReportRow[]>([]);
+  const now = new Date();
+  const [reportYear, setReportYear] = useState(now.getFullYear());
+  const [reportMonth, setReportMonth] = useState(now.getMonth() + 1);
+
+  // Copy attendance
+  const [copyLoading, setCopyLoading] = useState(false);
+
   // Reset page when roster parameters change
   useEffect(() => {
     setCurrentPage(1);
@@ -144,6 +169,42 @@ export default function AttendancePage() {
       console.error('Failed to load class attendance summaries:', e);
     } finally {
       setLoadingSummaries(false);
+    }
+  }
+
+  async function loadMonthlyReport() {
+    if (!selectedClassId) return;
+    try {
+      setReportLoading(true);
+      const data = await apiJson<{ report: MonthlyReportRow[] }>(
+        `/api/attendance/report?classId=${encodeURIComponent(selectedClassId)}&year=${reportYear}&month=${reportMonth}`,
+        { method: 'GET' }
+      );
+      setReportRows(data.report);
+    } catch (e) {
+      showError(e);
+    } finally {
+      setReportLoading(false);
+    }
+  }
+
+  async function handleCopyFromPreviousDay() {
+    if (!selectedClassId) return;
+    const prev = new Date(date);
+    prev.setDate(prev.getDate() - 1);
+    const fromDate = yyyyMmDd(prev);
+    try {
+      setCopyLoading(true);
+      await apiJson('/api/attendance/copy', {
+        method: 'POST',
+        body: JSON.stringify({ classId: selectedClassId, fromDate, toDate: date }),
+      });
+      showMessage(`Copied attendance from ${fromDate}`, 'success');
+      loadRoster();
+    } catch (e) {
+      showError(e);
+    } finally {
+      setCopyLoading(false);
     }
   }
 
@@ -385,6 +446,24 @@ export default function AttendancePage() {
               >
                 <RefreshCw className="w-3.5 h-3.5" /> Refresh
               </button>
+              {isPrincipalMode && selectedClassId && (
+                <>
+                  <button
+                    onClick={() => { setReportModalOpen(true); loadMonthlyReport(); }}
+                    className="flex items-center justify-center gap-1.5 px-4 py-2 bg-white border hover:bg-slate-100 text-slate-700 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer"
+                  >
+                    <FileBarChart className="w-3.5 h-3.5" /> Monthly Report
+                  </button>
+                  <button
+                    onClick={handleCopyFromPreviousDay}
+                    disabled={copyLoading}
+                    className="flex items-center justify-center gap-1.5 px-4 py-2 bg-white border hover:bg-slate-100 text-slate-700 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer disabled:opacity-50"
+                    title="Copy attendance from the previous day"
+                  >
+                    <CopyPlus className={`w-3.5 h-3.5 ${copyLoading ? 'animate-spin' : ''}`} /> Copy Previous Day
+                  </button>
+                </>
+              )}
             </div>
           </div>
 
@@ -880,6 +959,86 @@ export default function AttendancePage() {
 
         </div>
       </main>
+
+      {reportModalOpen && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-2xs flex items-center justify-center z-50 p-4">
+          <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl p-6 space-y-5 select-none max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b pb-4">
+              <div>
+                <h3 className="text-base font-black text-slate-800 flex items-center gap-1.5">
+                  <FileBarChart className="w-5 h-5 text-teal-800" /> Monthly Attendance Report
+                </h3>
+                <p className="text-[10px] text-slate-400 mt-0.5">{selectedClassName}</p>
+              </div>
+              <button onClick={() => setReportModalOpen(false)} className="text-slate-400 hover:text-slate-800">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <select
+                value={reportMonth}
+                onChange={(e) => setReportMonth(Number(e.target.value))}
+                className="px-3 py-2 border border-slate-200 rounded-xl bg-white text-xs font-semibold focus:outline-none"
+              >
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+                  <option key={m} value={m}>
+                    {new Date(2000, m - 1, 1).toLocaleString('en-US', { month: 'long' })}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="number"
+                value={reportYear}
+                onChange={(e) => setReportYear(Number(e.target.value))}
+                className="w-24 px-3 py-2 border border-slate-200 rounded-xl bg-white text-xs font-semibold focus:outline-none"
+              />
+              <button
+                onClick={loadMonthlyReport}
+                disabled={reportLoading}
+                className="flex items-center gap-1.5 px-3.5 py-2 border hover:bg-slate-50 text-slate-700 font-bold text-xs rounded-xl transition-all disabled:opacity-50"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${reportLoading ? 'animate-spin' : ''}`} /> Generate
+              </button>
+            </div>
+
+            <div className="overflow-x-auto border rounded-2xl">
+              <table className="w-full text-left">
+                <thead className="bg-slate-50 border-b">
+                  <tr>
+                    <th className="px-4 py-2.5 text-[10px] font-black text-slate-500 uppercase tracking-wider">Student</th>
+                    <th className="px-4 py-2.5 text-[10px] font-black text-slate-500 uppercase tracking-wider">Present</th>
+                    <th className="px-4 py-2.5 text-[10px] font-black text-slate-500 uppercase tracking-wider">Absent</th>
+                    <th className="px-4 py-2.5 text-[10px] font-black text-slate-500 uppercase tracking-wider">Leave</th>
+                    <th className="px-4 py-2.5 text-[10px] font-black text-slate-500 uppercase tracking-wider">Half Day</th>
+                    <th className="px-4 py-2.5 text-[10px] font-black text-slate-500 uppercase tracking-wider">%</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  {reportLoading && (
+                    <tr><td colSpan={6} className="px-4 py-8 text-center text-xs text-slate-400 font-semibold">Loading report…</td></tr>
+                  )}
+                  {!reportLoading && reportRows.length === 0 && (
+                    <tr><td colSpan={6} className="px-4 py-8 text-center text-xs text-slate-400 font-semibold">No data for this period</td></tr>
+                  )}
+                  {!reportLoading && reportRows.map((r) => (
+                    <tr key={r.studentId} className="hover:bg-slate-50/60">
+                      <td className="px-4 py-2.5 text-xs font-black text-slate-800">{r.name}</td>
+                      <td className="px-4 py-2.5 text-xs font-bold text-emerald-600">{r.present}</td>
+                      <td className="px-4 py-2.5 text-xs font-bold text-rose-600">{r.absent}</td>
+                      <td className="px-4 py-2.5 text-xs font-bold text-amber-600">{r.leave}</td>
+                      <td className="px-4 py-2.5 text-xs font-bold text-slate-500">{r.halfDay}</td>
+                      <td className={`px-4 py-2.5 text-xs font-black ${r.percentage >= 75 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                        {r.percentage}%
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

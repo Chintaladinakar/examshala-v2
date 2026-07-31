@@ -80,3 +80,76 @@ export const requestLinkRemoval = async (studentId: string, linkId: string) => {
 
   return updated;
 };
+
+export const approveLink = async (linkId: string, approvedByUserId: string) => {
+  const link = await prisma.parentStudentLink.findUnique({ where: { id: linkId } });
+  if (!link) {
+    throw new Error('Parent link not found.');
+  }
+  if (!['pending', 'removal_requested'].includes(link.status)) {
+    throw new Error(`Cannot approve a link with status "${link.status}".`);
+  }
+
+  // Approving a new-link request activates it; approving a removal request completes it.
+  if (link.status === 'removal_requested') {
+    await prisma.auditLog.create({
+      data: {
+        userId: approvedByUserId,
+        action: 'APPROVED_PARENT_REMOVAL',
+        entityType: 'ParentStudentLink',
+        entityId: linkId,
+      },
+    });
+    return prisma.parentStudentLink.delete({ where: { id: linkId } });
+  }
+
+  const updated = await prisma.parentStudentLink.update({
+    where: { id: linkId },
+    data: {
+      status: 'active',
+      linkedAt: new Date(),
+      approvalMetadata: { approvedBy: approvedByUserId, approvedAt: new Date().toISOString() },
+    },
+  });
+
+  await prisma.auditLog.create({
+    data: {
+      userId: approvedByUserId,
+      action: 'APPROVED_PARENT_LINK',
+      entityType: 'ParentStudentLink',
+      entityId: link.id,
+    },
+  });
+
+  return updated;
+};
+
+export const rejectLink = async (linkId: string, rejectedByUserId: string) => {
+  const link = await prisma.parentStudentLink.findUnique({ where: { id: linkId } });
+  if (!link) {
+    throw new Error('Parent link not found.');
+  }
+  if (!['pending', 'removal_requested'].includes(link.status)) {
+    throw new Error(`Cannot reject a link with status "${link.status}".`);
+  }
+
+  // A rejected removal request reverts the link to active; a rejected new
+  // link request is deleted outright since it was never established.
+  const result = link.status === 'removal_requested'
+    ? await prisma.parentStudentLink.update({
+        where: { id: linkId },
+        data: { status: 'active', removalRequestedBy: null },
+      })
+    : await prisma.parentStudentLink.delete({ where: { id: linkId } });
+
+  await prisma.auditLog.create({
+    data: {
+      userId: rejectedByUserId,
+      action: 'REJECTED_PARENT_LINK',
+      entityType: 'ParentStudentLink',
+      entityId: linkId,
+    },
+  });
+
+  return result;
+};

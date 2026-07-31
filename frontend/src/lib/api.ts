@@ -34,9 +34,13 @@ export async function fetchJson<T = any>(
   pathOrUrl: string,
   options?: RequestInit & { action?: string }
 ): Promise<T> {
+  // Requests to our own Next.js routes (results endpoints, and the authenticated
+  // /api/proxy/* reverse proxy) must stay same-origin so the browser attaches the
+  // HttpOnly session cookie; everything else goes straight to the backend API host.
+  const isLocalRoute = pathOrUrl.startsWith('/api/results') || pathOrUrl.startsWith('/api/proxy/');
   const url = pathOrUrl.startsWith('http')
     ? pathOrUrl
-    : (pathOrUrl.startsWith('/api/results') || pathOrUrl === '/api/results')
+    : isLocalRoute
       ? pathOrUrl
       : `${API_BASE_URL}${pathOrUrl}`;
 

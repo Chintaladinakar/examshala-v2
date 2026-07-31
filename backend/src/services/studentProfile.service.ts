@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import prisma from '../lib/prisma';
+import { validatePassword } from '../lib/password-policy';
 
 export const getStudentProfile = async (studentId: string, workspaceIdContext?: string) => {
   const user = await prisma.user.findUnique({
@@ -232,8 +233,9 @@ export const changePassword = async (studentId: string, currentPassword: string,
     if (!isPasswordValid) throw new Error('Incorrect current password');
   }
 
-  if (!newPassword || newPassword.length < 6) {
-    throw new Error('New password must be at least 6 characters long');
+  const pwCheck = validatePassword(newPassword);
+  if (!pwCheck.valid) {
+    throw new Error(pwCheck.message);
   }
 
   const passwordHash = await bcrypt.hash(newPassword, 12);

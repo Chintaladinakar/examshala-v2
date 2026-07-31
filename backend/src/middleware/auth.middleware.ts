@@ -13,7 +13,14 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
   try {
     const authHeader = req.headers.authorization;
 
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    let token: string | undefined;
+    if (authHeader?.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1];
+    } else if (req.cookies?.session_token) {
+      token = req.cookies.session_token;
+    }
+
+    if (!token) {
       res.status(401).json({
         success: false,
         code: 'NO_TOKEN',
@@ -22,13 +29,12 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
       return;
     }
 
-    const token = authHeader.split(' ')[1];
     const decoded = verifyToken(token);
 
     // Dynamic check: Verify user still exists and is active
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
-      select: { isActive: true }
+      select: { isActive: true, workspaceId: true, role: true }
     });
 
     if (!user) {
@@ -43,6 +49,21 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
         message: 'Your account has been disabled. Please contact support.',
       });
       return;
+    }
+
+    if (user.role.toLowerCase() !== 'org_admin' && user.workspaceId) {
+      const workspace = await prisma.workspace.findUnique({
+        where: { id: user.workspaceId },
+        select: { status: true },
+      });
+      if (workspace?.status === 'SUSPENDED') {
+        res.status(403).json({
+          success: false,
+          code: 'WORKSPACE_SUSPENDED',
+          message: 'This workspace has been suspended. Please contact the administrator.',
+        });
+        return;
+      }
     }
 
     req.user = decoded;

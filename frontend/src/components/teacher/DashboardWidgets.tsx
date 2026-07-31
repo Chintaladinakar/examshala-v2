@@ -510,12 +510,12 @@ export function CalendarWidget() {
 // ─── Performance Overview Card (lightweight charts) ─────────────────────────
 export function PerformanceOverviewCard({ overview }: {
   overview: {
-    averageScore: number;
-    passPercentage: number;
-    topClass: string;
-    weakestClass: string;
+    averageScore: number | null;
+    passPercentage: number | null;
+    topClass: string | null;
+    weakestClass: string | null;
     subjectPerformanceTrend: { subject: string; score: number }[];
-    classAverageScores: { className: string; average: number }[];
+    classAverageScores: { className: string; average: number | null }[];
   };
 }) {
   return (
@@ -533,22 +533,25 @@ export function PerformanceOverviewCard({ overview }: {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pb-4 border-b border-slate-50 select-none">
         <div className="space-y-1">
           <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Average Score</span>
-          <div className="text-2xl font-black text-indigo-600 tracking-tight">{overview.averageScore}%</div>
+          <div className="text-2xl font-black text-indigo-600 tracking-tight">{overview.averageScore !== null ? `${overview.averageScore}%` : '—'}</div>
         </div>
         <div className="space-y-1">
           <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Pass Percentage</span>
-          <div className="text-2xl font-black text-emerald-600 tracking-tight">{overview.passPercentage}%</div>
+          <div className="text-2xl font-black text-emerald-600 tracking-tight">{overview.passPercentage !== null ? `${overview.passPercentage}%` : '—'}</div>
         </div>
         <div className="space-y-1">
           <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Top Classroom</span>
-          <div className="text-sm font-extrabold text-slate-700 truncate">{overview.topClass}</div>
+          <div className="text-sm font-extrabold text-slate-700 truncate">{overview.topClass || '—'}</div>
         </div>
         <div className="space-y-1">
           <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Weakest Classroom</span>
-          <div className="text-sm font-extrabold text-slate-700 truncate">{overview.weakestClass}</div>
+          <div className="text-sm font-extrabold text-slate-700 truncate">{overview.weakestClass || '—'}</div>
         </div>
       </div>
 
+      {overview.subjectPerformanceTrend.length === 0 && overview.classAverageScores.every((c) => c.average === null) ? (
+        <p className="text-xs text-slate-400 font-semibold py-6 text-center">No results recorded yet for this cohort.</p>
+      ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Subject-wise Bar Chart (custom divs instead of recharts) */}
         <div className="space-y-3.5">
@@ -582,12 +585,12 @@ export function PerformanceOverviewCard({ overview }: {
               <div key={c.className} className="space-y-1.5">
                 <div className="flex justify-between items-center text-xs">
                   <span className="text-slate-600 font-bold">{c.className}</span>
-                  <span className="text-slate-800 font-black">{c.average}%</span>
+                  <span className="text-slate-800 font-black">{c.average !== null ? `${c.average}%` : '—'}</span>
                 </div>
                 <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all duration-1000"
-                    style={{ width: `${c.average}%` }}
+                    style={{ width: `${c.average ?? 0}%` }}
                   />
                 </div>
               </div>
@@ -595,6 +598,7 @@ export function PerformanceOverviewCard({ overview }: {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }

@@ -65,20 +65,10 @@ export default function UsersManagementPage() {
   // Deleting State
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
-  const getCookie = (name: string) => {
-    if (typeof document === 'undefined') return '';
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift() || '';
-    return '';
-  };
-
   const loadData = async () => {
     try {
       setLoading(true);
       setError(null);
-      const token = getCookie('session_token');
-      const headers = { Authorization: `Bearer ${token}` };
 
       // Build query string
       const params = new URLSearchParams();
@@ -88,10 +78,11 @@ export default function UsersManagementPage() {
 
       const queryStr = params.toString() ? `?${params.toString()}` : '';
 
-      // Fetch users and workspaces concurrently
+      // Requests go through the authenticated same-origin proxy, which reads the
+      // HttpOnly session cookie server-side and forwards it to the backend.
       const [usersRes, workspacesRes] = await Promise.all([
-        fetchJson<{ success: boolean; data: User[] }>(`/api/admin/users${queryStr}`, { headers }),
-        fetchJson<{ success: boolean; data: Workspace[] }>('/api/admin/workspaces', { headers }),
+        fetchJson<{ success: boolean; data: User[] }>(`/api/proxy/api/admin/users${queryStr}`),
+        fetchJson<{ success: boolean; data: Workspace[] }>('/api/proxy/api/admin/workspaces'),
       ]);
 
       setUsers(usersRes.data || []);
@@ -121,15 +112,11 @@ export default function UsersManagementPage() {
 
     try {
       setTogglingId(user.id);
-      const token = getCookie('session_token');
       const nextStatus = user.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
 
-      await fetchJson(`/api/admin/users/${user.id}`, {
+      await fetchJson(`/api/proxy/api/admin/users/${user.id}`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: nextStatus }),
       });
 
@@ -152,7 +139,6 @@ export default function UsersManagementPage() {
       setSubmittingInvite(true);
       setInviteSuccessMsg(null);
       setInviteErrorMsg(null);
-      const token = getCookie('session_token');
 
       const body: any = {
         email: inviteEmail,
@@ -160,17 +146,14 @@ export default function UsersManagementPage() {
         workspaceIds: inviteWorkspaceIds,
       };
 
-      const res = await fetchJson<{ success: boolean; data: { password?: string } }>('/api/admin/invites', {
+      const res = await fetchJson<{ success: boolean; data: { password?: string } }>('/api/proxy/api/admin/invites', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
 
-      const tempPassword = res.data?.password || 'EDUsphereInvited@123';
-      setGeneratedPassword(tempPassword);
+      // If the password isn't returned, mail was already sent successfully with it.
+      setGeneratedPassword(res.data?.password || null);
       setInviteSuccessMsg(`Successfully sent invite to ${inviteEmail}!`);
       setInviteEmail('');
       setInviteWorkspaceIds([]);
@@ -205,14 +188,10 @@ export default function UsersManagementPage() {
       setSubmittingEdit(true);
       setEditSuccessMsg(null);
       setEditErrorMsg(null);
-      const token = getCookie('session_token');
 
-      await fetchJson(`/api/admin/users/${editingUser.id}`, {
+      await fetchJson(`/api/proxy/api/admin/users/${editingUser.id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: editName,
           email: editEmail,
@@ -244,13 +223,9 @@ export default function UsersManagementPage() {
 
     try {
       setDeletingId(user.id);
-      const token = getCookie('session_token');
 
-      await fetchJson(`/api/admin/users/${user.id}`, {
+      await fetchJson(`/api/proxy/api/admin/users/${user.id}`, {
         method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       });
 
       setUsers(prev => prev.filter(u => u.id !== user.id));
@@ -286,15 +261,11 @@ export default function UsersManagementPage() {
 
     try {
       setBulkProcessing(true);
-      const token = getCookie('session_token');
 
       await Promise.all(
         Array.from(selectedUserIds).map(userId =>
-          fetchJson(`/api/admin/users/${userId}`, {
+          fetchJson(`/api/proxy/api/admin/users/${userId}`, {
             method: 'DELETE',
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
           })
         )
       );
@@ -319,16 +290,12 @@ export default function UsersManagementPage() {
 
     try {
       setBulkProcessing(true);
-      const token = getCookie('session_token');
 
       await Promise.all(
         Array.from(selectedUserIds).map(userId =>
-          fetchJson(`/api/admin/users/${userId}`, {
+          fetchJson(`/api/proxy/api/admin/users/${userId}`, {
             method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status: newStatus }),
           })
         )
@@ -352,16 +319,12 @@ export default function UsersManagementPage() {
   const handleBulkRoleChange = async () => {
     try {
       setBulkProcessing(true);
-      const token = getCookie('session_token');
 
       await Promise.all(
         Array.from(selectedUserIds).map(userId =>
-          fetchJson(`/api/admin/users/${userId}`, {
+          fetchJson(`/api/proxy/api/admin/users/${userId}`, {
             method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ role: bulkChangeRole }),
           })
         )

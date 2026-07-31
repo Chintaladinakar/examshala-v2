@@ -1,8 +1,10 @@
 import bcrypt from 'bcryptjs';
 import prisma from '../lib/prisma';
-import { generateToken } from '../lib/jwt';
+import { generateToken, JWT_SECRET } from '../lib/jwt';
 import jwt from 'jsonwebtoken';
 import { validatePassword } from '../lib/password-policy';
+import * as otpService from './otp.service';
+import { isMailConfigured, sendPasswordResetEmail } from './mail.service';
 
 interface SignupInput {
   name: string;
@@ -32,6 +34,16 @@ export const signup = async ({ name, email, password, role }: SignupInput) => {
   const existingUser = await prisma.user.findUnique({ where: { email } });
   if (existingUser) {
     throw { status: 409, code: 'EMAIL_EXISTS', message: 'A user with this email already exists' };
+  }
+
+  // Require a verified signup OTP before the account can be created.
+  const otpStatus = await otpService.getOTPStatus(email);
+  if (!otpStatus.isVerified) {
+    throw {
+      status: 403,
+      code: 'EMAIL_NOT_VERIFIED',
+      message: 'Please verify your email with the OTP sent to you before creating an account',
+    };
   }
 
   const passwordHash = await bcrypt.hash(password, 12);
@@ -81,6 +93,8 @@ export const signup = async ({ name, email, password, role }: SignupInput) => {
       firstLogin: false,
     },
   });
+
+  await otpService.deleteOTP(email);
 
   const token = generateToken({ userId: user.id, role: user.role });
 
@@ -140,6 +154,19 @@ export const resetPassword = async ({ email, currentPassword, newPassword }: any
     throw { status: 401, code: 'INVALID_CREDENTIALS', message: 'Invalid current password' };
   }
 
+  // An admin-disabled account (explicitly set to INACTIVE) must stay disabled through a
+  // password change — only accounts still pending first-time activation (INVITED) or
+  // already ACTIVE may be (re)activated here.
+  if (user.status === 'INACTIVE') {
+    throw { status: 403, code: 'ACCOUNT_DISABLED', message: 'Your account has been disabled. Please contact support.' };
+  }
+
+  // Enforce the same shared password policy used everywhere else.
+  const pwCheck = validatePassword(newPassword);
+  if (!pwCheck.valid) {
+    throw { status: 400, code: 'INVALID_PASSWORD', message: pwCheck.message };
+  }
+
   const passwordHash = await bcrypt.hash(newPassword, 12);
 
   const updatedUser = await prisma.user.update({
@@ -147,6 +174,7 @@ export const resetPassword = async ({ email, currentPassword, newPassword }: any
     data: {
       passwordHash,
       isActive: true,
+      status: 'ACTIVE',
       firstLogin: false,
     },
   });
@@ -175,24 +203,25 @@ export const forgotPassword = async ({ email }: { email: string }) => {
     throw { status: 400, code: 'MISSING_FIELDS', message: 'Email is required' };
   }
 
+  // Always return the same generic response regardless of whether the email is registered,
+  // so this endpoint can't be used to enumerate which email addresses have accounts.
   const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
-  if (!user) {
-    throw { status: 404, code: 'USER_NOT_FOUND', message: 'No account exists with this email address' };
+  if (user) {
+    const secret = JWT_SECRET + (user.passwordHash || '');
+    const token = jwt.sign({ email: user.email }, secret, { expiresIn: '1h' });
+
+    const appUrl = process.env.APP_URL || 'http://localhost:3000';
+    const resetLink = `${appUrl.replace(/\/$/, '')}/reset-password-with-token?token=${encodeURIComponent(token)}`;
+
+    if (isMailConfigured()) {
+      await sendPasswordResetEmail(user.email, resetLink);
+    } else if (process.env.NODE_ENV !== 'production') {
+      console.log('\n----------------------------------------');
+      console.log(`[auth] Password reset requested for: ${user.email}`);
+      console.log(`[auth] Mail not configured — Dev Reset Link: ${resetLink}`);
+      console.log('----------------------------------------\n');
+    }
   }
-
-  const JWT_SECRET = process.env.JWT_SECRET || 'edusphere-dev-secret-change-in-production';
-  const secret = JWT_SECRET + (user.passwordHash || '');
-  const token = jwt.sign({ email: user.email }, secret, { expiresIn: '1h' });
-
-  const resetLink = `http://localhost:3000/reset-password-with-token?token=${encodeURIComponent(token)}`;
-  
-  console.log('\n----------------------------------------');
-  console.log(`[auth] Password reset requested for: ${user.email}`);
-  console.log(`[auth] Dev Reset Link: ${resetLink}`);
-  console.log('----------------------------------------\n');
-
-  // NOTE: Send resetLink exclusively via email (Resend). Never return it in the API response.
-  // TODO: await resend.emails.send({ to: user.email, subject: 'Reset your password', html: `<a href="${resetLink}">Reset password</a>` });
 
   return {
     success: true,
@@ -233,7 +262,6 @@ export const resetPasswordWithToken = async ({ token, password }: any) => {
   }
 
   // 3. Verify token with user's dynamic secret
-  const JWT_SECRET = process.env.JWT_SECRET || 'edusphere-dev-secret-change-in-production';
   const secret = JWT_SECRET + (user.passwordHash || '');
 
   try {

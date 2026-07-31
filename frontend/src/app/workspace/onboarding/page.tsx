@@ -8,8 +8,8 @@ import { useRouter } from 'next/navigation';
 export default function WorkspaceOnboardingPage() {
   const router = useRouter();
 
-  const handleLogout = () => {
-    document.cookie = 'session_token=; path=/; max-age=0; SameSite=Lax';
+  const handleLogout = async () => {
+    await fetch('/api/auth/session', { method: 'DELETE' });
     router.push('/signin');
   };
 

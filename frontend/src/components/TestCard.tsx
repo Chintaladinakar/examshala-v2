@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Timer, HelpCircle } from 'lucide-react';
 
 interface TestCardProps {
   id: string;
@@ -12,8 +13,8 @@ export default function TestCard({ id, title, duration, questions }: TestCardPro
     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
       <h3 className="text-xl font-semibold mb-3 text-gray-900">{title}</h3>
       <div className="space-y-2 mb-4 text-gray-600">
-        <p>⏱️ Duration: {duration} minutes</p>
-        <p>❓ Questions: {questions}</p>
+        <p className="flex items-center gap-1.5"><Timer className="w-4 h-4" /> Duration: {duration} minutes</p>
+        <p className="flex items-center gap-1.5"><HelpCircle className="w-4 h-4" /> Questions: {questions}</p>
       </div>
       <Link
         href={`/tests/${id}`}

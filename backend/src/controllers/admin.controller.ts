@@ -3,7 +3,9 @@ import { AuthRequest } from '../middleware/auth.middleware';
 import prisma from '../lib/prisma';
 import { createSystemLog } from '../services/log.service';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import { isMailConfigured, sendUserInvitationEmail } from '../services/mail.service';
+import * as parentLinkService from '../services/parentLink.service';
 
 // -------------------------------------------------------------
 // 1. USER CONTROLLERS
@@ -591,8 +593,10 @@ export const sendInvite = async (req: AuthRequest, res: Response): Promise<void>
       finalWorkspaceIds = [workspaceId];
     }
 
-    // Initialize an INVITED user in inactive state so they can register later
-    const defaultPassword = process.env.INVITE_DEFAULT_PASSWORD || 'EDUsphereInvited@123';
+    // Initialize an INVITED user in inactive state so they can register later.
+    // Each invite gets its own randomly generated temporary password (emailed to the
+    // invitee below) instead of a single shared default password.
+    const defaultPassword = crypto.randomBytes(9).toString('base64').replace(/[^A-Za-z0-9]/g, '') + 'Aa1!';
     const passwordHash = await bcrypt.hash(defaultPassword, 12);
     /**
      * Generates a unique, short, and brand-consistent 8-character User ID.
@@ -704,7 +708,9 @@ export const sendInvite = async (req: AuthRequest, res: Response): Promise<void>
         : 'Invitation created successfully',
       data: {
         ...invite,
-        password: defaultPassword,
+        // Only expose the temporary password when it could not be emailed —
+        // otherwise the admin has no other way to hand it to the invitee.
+        ...(mailStatus !== 'sent' ? { password: defaultPassword } : {}),
         mailStatus,
         ...(mailError ? { mailError } : {}),
       },
@@ -793,9 +799,15 @@ export const assignRoleController = async (req: AuthRequest, res: Response): Pro
       return;
     }
 
+    const validRoles = ['org_admin', 'principal', 'teacher', 'tutor', 'student'];
+    if (!validRoles.includes(String(role).toLowerCase())) {
+      res.status(400).json({ success: false, code: 'INVALID_ROLE', message: `Role must be one of: ${validRoles.join(', ')}` });
+      return;
+    }
+
     const updatedUser = await prisma.user.update({
       where: { email },
-      data: { role },
+      data: { role: String(role).toLowerCase() },
     });
 
     const actorId = req.user?.userId || 'system';
@@ -914,6 +926,53 @@ export const getAdminProfile = async (req: AuthRequest, res: Promise<any> | any)
     res.status(200).json({ success: true, data: user });
   } catch (error: any) {
     res.status(500).json({ success: false, code: 'SERVER_ERROR', message: error.message || 'Internal server error' });
+  }
+};
+
+// -------------------------------------------------------------
+// 5. PARENT-LINK CONTROLLERS
+// -------------------------------------------------------------
+
+export const getParentLinks = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const { status } = req.query;
+    const where: any = {};
+    if (status) where.status = status as string;
+
+    const links = await prisma.parentStudentLink.findMany({
+      where,
+      include: {
+        Student: { select: { id: true, name: true, email: true } },
+        Parent: { select: { id: true, name: true, email: true } },
+      },
+      orderBy: { id: 'desc' },
+    });
+
+    res.status(200).json({ success: true, data: links });
+  } catch (error: any) {
+    res.status(500).json({ success: false, code: 'SERVER_ERROR', message: error.message || 'Internal server error' });
+  }
+};
+
+export const approveParentLink = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const id = req.params.id as string;
+    const actorId = req.user?.userId || 'system';
+    const updated = await parentLinkService.approveLink(id, actorId);
+    res.status(200).json({ success: true, message: 'Parent link approved successfully', data: updated });
+  } catch (error: any) {
+    res.status(400).json({ success: false, code: 'PARENT_LINK_ERROR', message: error.message || 'Internal server error' });
+  }
+};
+
+export const rejectParentLink = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const id = req.params.id as string;
+    const actorId = req.user?.userId || 'system';
+    const result = await parentLinkService.rejectLink(id, actorId);
+    res.status(200).json({ success: true, message: 'Parent link rejected successfully', data: result });
+  } catch (error: any) {
+    res.status(400).json({ success: false, code: 'PARENT_LINK_ERROR', message: error.message || 'Internal server error' });
   }
 };
 

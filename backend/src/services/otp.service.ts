@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import prisma from '../lib/prisma';
 
 const OTP_LENGTH = 6;
@@ -7,11 +8,13 @@ const BLOCK_DURATION_HOURS = 12;
 
 type OTPType = 'SIGNUP_VERIFICATION' | 'PASSWORD_RESET';
 
+// Excludes visually ambiguous characters (0/O, 1/I/L) so a correctly-read code always verifies.
+const OTP_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+
 function generateOTP(): string {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let otp = '';
   for (let i = 0; i < OTP_LENGTH; i++) {
-    otp += chars.charAt(Math.floor(Math.random() * chars.length));
+    otp += OTP_CHARS.charAt(crypto.randomInt(OTP_CHARS.length));
   }
   return otp;
 }

@@ -21,9 +21,12 @@ function ResetPasswordForm() {
 
   useEffect(() => {
     const emailParam = searchParams.get('email') || '';
-    const tempParam = searchParams.get('temp') || '';
+    // Read the temp password from sessionStorage (set by the signin page) rather than the
+    // URL, so it never lands in browser history, server logs, or Referer headers.
+    const tempParam = sessionStorage.getItem('temp_password') || '';
     setEmail(emailParam);
     setTempPass(tempParam);
+    sessionStorage.removeItem('temp_password');
   }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -67,9 +70,13 @@ function ResetPasswordForm() {
         }),
       });
 
-      // Set cookie and redirect
-      document.cookie = `session_token=${res.data.token}; path=/; max-age=86400; SameSite=Lax`;
-      
+      // Ask the server to set the session cookie itself (HttpOnly/Secure/SameSite=Strict).
+      await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: res.data.token }),
+      });
+
       setSuccess(true);
       showMessage('Password updated successfully! Redirecting...', 'success');
 

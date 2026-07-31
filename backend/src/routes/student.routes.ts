@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { protect } from '../middleware/auth.middleware';
 import { studentAccessGuard } from '../middleware/studentGuard';
 import * as controller from '../controllers/student.controller';
+import { getStudentCalendarEvents } from '../controllers/calendar.controller';
 
 const router = Router();
 
@@ -12,6 +13,13 @@ router.use(studentAccessGuard);
 // BFF payload
 router.get('/dashboard', controller.getDashboard);
 router.get('/schedule', controller.getSchedule);
+router.get('/attendance', controller.getAttendance);
+router.get('/calendar', getStudentCalendarEvents);
+router.get('/announcements', controller.getAnnouncements);
+router.get('/search', controller.getGlobalSearch);
+router.get('/leaderboard', controller.getLeaderboard);
+router.get('/subjects', controller.getSubjects);
+router.get('/timetable', controller.getTimetable);
 
 // Assignments
 router.get('/assignments/:assignmentId', controller.getAssignment);

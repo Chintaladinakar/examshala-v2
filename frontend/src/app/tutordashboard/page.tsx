@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
+import NotificationBell from '@/components/NotificationBell';
 import { useToast } from '@/components/ui/ToastProvider';
 import { useUser } from '@/context/UserContext';
 import {
@@ -23,7 +24,6 @@ import {
   GraduationCap,
   ClipboardList,
   AlertCircle,
-  Bell,
   RefreshCw,
   Sparkles
 } from 'lucide-react';
@@ -161,10 +161,7 @@ export default function TutorDashboardPage() {
                 <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
               </button>
 
-              <button className="relative p-2.5 border border-slate-200 hover:bg-slate-100 rounded-xl text-slate-500 transition-all cursor-pointer select-none">
-                <Bell className="w-4 h-4" />
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full border-2 border-white"></span>
-              </button>
+              <NotificationBell />
 
               <div className="h-8 w-px bg-slate-200"></div>
 

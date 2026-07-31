@@ -1,3 +1,5 @@
+import { XCircle, CalendarDays } from 'lucide-react';
+
 interface ResultCardProps {
   testName: string;
   score: number;
@@ -32,8 +34,8 @@ export default function ResultCard({
         </div>
       </div>
       <div className="space-y-2 text-gray-600">
-        <p>❌ Wrong Answers: {wrongAnswers}</p>
-        <p>📅 Attempted: {attemptDate}</p>
+        <p className="flex items-center gap-1.5"><XCircle className="w-4 h-4" /> Wrong Answers: {wrongAnswers}</p>
+        <p className="flex items-center gap-1.5"><CalendarDays className="w-4 h-4" /> Attempted: {attemptDate}</p>
       </div>
     </div>
   );

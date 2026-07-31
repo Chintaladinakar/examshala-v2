@@ -29,23 +29,15 @@ export default function AuditLogsPage() {
   const [actionFilter, setActionFilter] = useState('');
   const [entityFilter, setEntityFilter] = useState('');
 
-  const getCookie = (name: string) => {
-    if (typeof document === 'undefined') return '';
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift() || '';
-    return '';
-  };
-
   const loadLogs = async () => {
     try {
       setLoading(true);
       setError(null);
-      const token = getCookie('session_token');
-      const headers = { Authorization: `Bearer ${token}` };
 
-      // We fetch all recent logs and filter client-side for dynamic reactivity
-      const response = await fetchJson<{ success: boolean; data: Log[] }>('/api/admin/logs', { headers });
+      // We fetch all recent logs and filter client-side for dynamic reactivity. This goes
+      // through the authenticated same-origin proxy, which forwards the HttpOnly session
+      // cookie to the backend server-side.
+      const response = await fetchJson<{ success: boolean; data: Log[] }>('/api/proxy/api/admin/logs');
       setLogs(response.data || []);
     } catch (err: any) {
       console.error('Failed to fetch audit logs:', err);

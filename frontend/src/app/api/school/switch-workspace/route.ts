@@ -114,7 +114,10 @@ export async function POST(req: NextRequest) {
     }));
 
     // 6. Generate and set a new JWT token to update user's session cookie
-    const jwtSecret = process.env.JWT_SECRET || 'edusphere-jwt-secret-change-in-production';
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      return jsonError('SERVER_ERROR', 'Server misconfiguration', 500);
+    }
     const payload = {
       userId: ctx.userId,
       role: targetRole,
@@ -122,11 +125,13 @@ export async function POST(req: NextRequest) {
       exp: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60,
     };
     const token = signJwt(payload, jwtSecret);
-    
+
     (await cookies()).set('session_token', token, {
       path: '/',
       maxAge: 86400,
-      sameSite: 'lax',
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
     });
     
     return jsonOk({
