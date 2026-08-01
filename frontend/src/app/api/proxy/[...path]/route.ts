@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { tryRefreshAccessToken } from '@/lib/auth-session';
+import { fetchWithTimeout } from '@/lib/fetch-with-timeout';
 
 const BACKEND_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000').replace(/\/$/, '');
 
@@ -35,6 +37,11 @@ async function handle(req: NextRequest, path: string[]): Promise<NextResponse> {
     );
   }
 
+  // Correlation ID for tracing a single request across this proxy hop and into the backend's
+  // structured logs (see backend/src/middleware/requestLogger.middleware.ts, which reads this
+  // same header). Reuses an inbound one if a caller already set it, otherwise mints a fresh one.
+  const requestId = req.headers.get('x-request-id') || crypto.randomUUID();
+
   const token = (await cookies()).get('session_token')?.value;
   if (!token) {
     return NextResponse.json(
@@ -47,20 +54,45 @@ async function handle(req: NextRequest, path: string[]): Promise<NextResponse> {
   const search = req.nextUrl.search;
   const body = SAFE_METHODS.has(method) ? undefined : await req.text();
 
-  const backendRes = await fetch(`${BACKEND_BASE_URL}${targetPath}${search}`, {
-    method,
-    headers: {
-      'Content-Type': req.headers.get('content-type') || 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body,
-    cache: 'no-store',
-  });
+  const callBackend = (bearer: string) =>
+    fetchWithTimeout(`${BACKEND_BASE_URL}${targetPath}${search}`, {
+      method,
+      headers: {
+        'Content-Type': req.headers.get('content-type') || 'application/json',
+        Authorization: `Bearer ${bearer}`,
+        'X-Request-Id': requestId,
+      },
+      body,
+      cache: 'no-store',
+    });
+
+  let backendRes: Response;
+  try {
+    backendRes = await callBackend(token);
+
+    // The access token is short-lived by design (15 minutes) — a 401 mid-session most likely
+    // means it just expired, not that the user is unauthenticated. Try one silent refresh via
+    // the refresh_token cookie and replay the exact same request before giving up.
+    if (backendRes.status === 401) {
+      const refreshedToken = await tryRefreshAccessToken();
+      if (refreshedToken) {
+        backendRes = await callBackend(refreshedToken);
+      }
+    }
+  } catch {
+    return NextResponse.json(
+      { success: false, code: 'BACKEND_TIMEOUT', message: 'The server took too long to respond. Please try again.' },
+      { status: 504 }
+    );
+  }
 
   const text = await backendRes.text();
   return new NextResponse(text, {
     status: backendRes.status,
-    headers: { 'Content-Type': backendRes.headers.get('content-type') || 'application/json' },
+    headers: {
+      'Content-Type': backendRes.headers.get('content-type') || 'application/json',
+      'X-Request-Id': requestId,
+    },
   });
 }
 

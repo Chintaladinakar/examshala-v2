@@ -1,6 +1,7 @@
 import { Job } from 'bullmq';
 import prisma from '../lib/prisma';
 import { registerWorker, QUEUE_NAMES } from '../lib/queue';
+import logger from '../lib/logger';
 import type { CreateNotificationParams } from '../services/notification.service';
 
 /**
@@ -24,9 +25,18 @@ export function startNotificationWorker() {
 
   if (worker) {
     worker.on('failed', (job, err) => {
-      console.error(`[notification.worker] Job ${job?.id} failed:`, err.message);
+      const attemptsMade = job?.attemptsMade ?? 0;
+      const maxAttempts = job?.opts.attempts ?? 1;
+      if (attemptsMade >= maxAttempts) {
+        // Retries exhausted — this job is now dead-lettered: BullMQ keeps it (removeOnFail
+        // retains recent failures, see lib/queue.ts) so it stays inspectable/replayable
+        // from Redis instead of silently vanishing.
+        logger.error({ jobId: job?.id, attemptsMade, data: job?.data, err }, '[notification.worker] Job dead-lettered');
+      } else {
+        logger.warn({ jobId: job?.id, attemptsMade, maxAttempts, err }, '[notification.worker] Job failed, will retry');
+      }
     });
-    console.log('[notification.worker] Started (REDIS_URL detected)');
+    logger.info('[notification.worker] Started (REDIS_URL detected)');
   }
 
   return worker;

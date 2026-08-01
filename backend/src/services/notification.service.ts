@@ -1,5 +1,6 @@
 import prisma from '../lib/prisma';
 import { enqueueOrRun, QUEUE_NAMES } from '../lib/queue';
+import logger from '../lib/logger';
 
 export type CreateNotificationParams = {
   userId: string;
@@ -32,6 +33,6 @@ export async function createNotification(params: CreateNotificationParams) {
   try {
     await enqueueOrRun(QUEUE_NAMES.notifications, 'create-notification', params, persistNotification);
   } catch (error) {
-    console.error('Failed to create notification:', error);
+    logger.error({ err: error }, 'Failed to create notification');
   }
 }

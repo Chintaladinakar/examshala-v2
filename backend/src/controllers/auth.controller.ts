@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import * as authService from "../services/auth.service";
 import * as otpService from "../services/otp.service";
 import { sendOTPEmail } from "../services/mail.service";
+import { AuthRequest } from "../middleware/auth.middleware";
+import logger from "../lib/logger";
 
 export const signupController = async (
   req: Request,
@@ -38,9 +40,7 @@ export const signinController = async (
     const loginMethod = password ? "password" : "unknown";
     const result = await authService.signin({ email, password });
 
-    console.log(
-      `[auth] ${result.user.role} signed in: ${result.user.email} via ${loginMethod}`,
-    );
+    logger.info({ role: result.user.role, email: result.user.email, loginMethod }, 'user signed in');
     res.status(200).json({
       success: true,
       message: "Signed in successfully",
@@ -133,6 +133,71 @@ export const resetPasswordWithTokenController = async (
       success: false,
       code,
       message,
+    });
+  }
+};
+
+export const refreshTokenController = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { refreshToken } = req.body;
+    const result = await authService.refreshAccessToken({ refreshToken });
+
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error: any) {
+    const status = error.status || 500;
+    const message = error.message || "Internal server error";
+    const code = error.code || "SERVER_ERROR";
+
+    res.status(status).json({
+      success: false,
+      code,
+      message,
+    });
+  }
+};
+
+export const logoutController = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { refreshToken } = req.body;
+    await authService.revokeRefreshToken({ refreshToken });
+
+    res.status(200).json({
+      success: true,
+      message: "Signed out successfully",
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal server error",
+    });
+  }
+};
+
+export const logoutAllController = async (
+  req: AuthRequest,
+  res: Response,
+): Promise<void> => {
+  try {
+    const userId = req.user!.userId;
+    await authService.revokeAllRefreshTokens({ userId });
+
+    res.status(200).json({
+      success: true,
+      message: "Signed out of all devices",
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal server error",
     });
   }
 };

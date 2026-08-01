@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model RefreshToken
+ * 
+ */
+export type RefreshToken = $Result.DefaultSelection<Prisma.$RefreshTokenPayload>
+/**
  * Model OTP
  * 
  */
@@ -209,6 +214,11 @@ export type Question = $Result.DefaultSelection<Prisma.$QuestionPayload>
  */
 export type Material = $Result.DefaultSelection<Prisma.$MaterialPayload>
 /**
+ * Model UploadedFile
+ * 
+ */
+export type UploadedFile = $Result.DefaultSelection<Prisma.$UploadedFilePayload>
+/**
  * Model SchoolLog
  * 
  */
@@ -364,6 +374,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.refreshToken`: Exposes CRUD operations for the **RefreshToken** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RefreshTokens
+    * const refreshTokens = await prisma.refreshToken.findMany()
+    * ```
+    */
+  get refreshToken(): Prisma.RefreshTokenDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.oTP`: Exposes CRUD operations for the **OTP** model.
@@ -744,6 +764,16 @@ export class PrismaClient<
     * ```
     */
   get material(): Prisma.MaterialDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.uploadedFile`: Exposes CRUD operations for the **UploadedFile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UploadedFiles
+    * const uploadedFiles = await prisma.uploadedFile.findMany()
+    * ```
+    */
+  get uploadedFile(): Prisma.UploadedFileDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.schoolLog`: Exposes CRUD operations for the **SchoolLog** model.
@@ -1229,6 +1259,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    RefreshToken: 'RefreshToken',
     OTP: 'OTP',
     Workspace: 'Workspace',
     WorkspaceMembership: 'WorkspaceMembership',
@@ -1267,6 +1298,7 @@ export namespace Prisma {
     AssignmentSubmission: 'AssignmentSubmission',
     Question: 'Question',
     Material: 'Material',
+    UploadedFile: 'UploadedFile',
     SchoolLog: 'SchoolLog',
     LeaveRequest: 'LeaveRequest',
     PlatformSettings: 'PlatformSettings',
@@ -1287,7 +1319,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "oTP" | "workspace" | "workspaceMembership" | "studentWorkspaceProfile" | "exam" | "examQuestion" | "examAttempt" | "examAnswer" | "test" | "assessmentAssignment" | "student" | "assessment" | "assessmentAttempt" | "assessmentResult" | "conversation" | "conversationParticipant" | "message" | "notification" | "calendarEvent" | "parentStudentLink" | "auditLog" | "invite" | "log" | "class" | "department" | "subject" | "teacherSubject" | "classTeacher" | "classStudent" | "attendance" | "assignment" | "rubric" | "rubricCriterion" | "rubricScore" | "assignmentFeedback" | "assignmentSubmission" | "question" | "material" | "schoolLog" | "leaveRequest" | "platformSettings" | "result" | "timetableSlot"
+      modelProps: "user" | "refreshToken" | "oTP" | "workspace" | "workspaceMembership" | "studentWorkspaceProfile" | "exam" | "examQuestion" | "examAttempt" | "examAnswer" | "test" | "assessmentAssignment" | "student" | "assessment" | "assessmentAttempt" | "assessmentResult" | "conversation" | "conversationParticipant" | "message" | "notification" | "calendarEvent" | "parentStudentLink" | "auditLog" | "invite" | "log" | "class" | "department" | "subject" | "teacherSubject" | "classTeacher" | "classStudent" | "attendance" | "assignment" | "rubric" | "rubricCriterion" | "rubricScore" | "assignmentFeedback" | "assignmentSubmission" | "question" | "material" | "uploadedFile" | "schoolLog" | "leaveRequest" | "platformSettings" | "result" | "timetableSlot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1362,6 +1394,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      RefreshToken: {
+        payload: Prisma.$RefreshTokenPayload<ExtArgs>
+        fields: Prisma.RefreshTokenFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RefreshTokenFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RefreshTokenFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>
+          }
+          findFirst: {
+            args: Prisma.RefreshTokenFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RefreshTokenFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>
+          }
+          findMany: {
+            args: Prisma.RefreshTokenFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>[]
+          }
+          create: {
+            args: Prisma.RefreshTokenCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>
+          }
+          createMany: {
+            args: Prisma.RefreshTokenCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RefreshTokenCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>[]
+          }
+          delete: {
+            args: Prisma.RefreshTokenDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>
+          }
+          update: {
+            args: Prisma.RefreshTokenUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>
+          }
+          deleteMany: {
+            args: Prisma.RefreshTokenDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RefreshTokenUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RefreshTokenUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>[]
+          }
+          upsert: {
+            args: Prisma.RefreshTokenUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>
+          }
+          aggregate: {
+            args: Prisma.RefreshTokenAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRefreshToken>
+          }
+          groupBy: {
+            args: Prisma.RefreshTokenGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RefreshTokenGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RefreshTokenCountArgs<ExtArgs>
+            result: $Utils.Optional<RefreshTokenCountAggregateOutputType> | number
           }
         }
       }
@@ -4177,6 +4283,80 @@ export namespace Prisma {
           }
         }
       }
+      UploadedFile: {
+        payload: Prisma.$UploadedFilePayload<ExtArgs>
+        fields: Prisma.UploadedFileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UploadedFileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadedFilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UploadedFileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadedFilePayload>
+          }
+          findFirst: {
+            args: Prisma.UploadedFileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadedFilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UploadedFileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadedFilePayload>
+          }
+          findMany: {
+            args: Prisma.UploadedFileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadedFilePayload>[]
+          }
+          create: {
+            args: Prisma.UploadedFileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadedFilePayload>
+          }
+          createMany: {
+            args: Prisma.UploadedFileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UploadedFileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadedFilePayload>[]
+          }
+          delete: {
+            args: Prisma.UploadedFileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadedFilePayload>
+          }
+          update: {
+            args: Prisma.UploadedFileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadedFilePayload>
+          }
+          deleteMany: {
+            args: Prisma.UploadedFileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UploadedFileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UploadedFileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadedFilePayload>[]
+          }
+          upsert: {
+            args: Prisma.UploadedFileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadedFilePayload>
+          }
+          aggregate: {
+            args: Prisma.UploadedFileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUploadedFile>
+          }
+          groupBy: {
+            args: Prisma.UploadedFileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UploadedFileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UploadedFileCountArgs<ExtArgs>
+            result: $Utils.Optional<UploadedFileCountAggregateOutputType> | number
+          }
+        }
+      }
       SchoolLog: {
         payload: Prisma.$SchoolLogPayload<ExtArgs>
         fields: Prisma.SchoolLogFieldRefs
@@ -4656,6 +4836,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    refreshToken?: RefreshTokenOmit
     oTP?: OTPOmit
     workspace?: WorkspaceOmit
     workspaceMembership?: WorkspaceMembershipOmit
@@ -4694,6 +4875,7 @@ export namespace Prisma {
     assignmentSubmission?: AssignmentSubmissionOmit
     question?: QuestionOmit
     material?: MaterialOmit
+    uploadedFile?: UploadedFileOmit
     schoolLog?: SchoolLogOmit
     leaveRequest?: LeaveRequestOmit
     platformSettings?: PlatformSettingsOmit
@@ -4807,6 +4989,8 @@ export namespace Prisma {
     leaveRequests: number
     reviewedLeaveRequests: number
     calendarEvents: number
+    refreshTokens: number
+    uploadedFiles: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4838,6 +5022,8 @@ export namespace Prisma {
     leaveRequests?: boolean | UserCountOutputTypeCountLeaveRequestsArgs
     reviewedLeaveRequests?: boolean | UserCountOutputTypeCountReviewedLeaveRequestsArgs
     calendarEvents?: boolean | UserCountOutputTypeCountCalendarEventsArgs
+    refreshTokens?: boolean | UserCountOutputTypeCountRefreshTokensArgs
+    uploadedFiles?: boolean | UserCountOutputTypeCountUploadedFilesArgs
   }
 
   // Custom InputTypes
@@ -5047,6 +5233,20 @@ export namespace Prisma {
     where?: CalendarEventWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountRefreshTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RefreshTokenWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUploadedFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UploadedFileWhereInput
+  }
+
 
   /**
    * Count Type WorkspaceCountOutputType
@@ -5067,6 +5267,8 @@ export namespace Prisma {
     timetableSlots: number
     leaveRequests: number
     calendarEvents: number
+    results: number
+    uploadedFiles: number
   }
 
   export type WorkspaceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5084,6 +5286,8 @@ export namespace Prisma {
     timetableSlots?: boolean | WorkspaceCountOutputTypeCountTimetableSlotsArgs
     leaveRequests?: boolean | WorkspaceCountOutputTypeCountLeaveRequestsArgs
     calendarEvents?: boolean | WorkspaceCountOutputTypeCountCalendarEventsArgs
+    results?: boolean | WorkspaceCountOutputTypeCountResultsArgs
+    uploadedFiles?: boolean | WorkspaceCountOutputTypeCountUploadedFilesArgs
   }
 
   // Custom InputTypes
@@ -5193,6 +5397,20 @@ export namespace Prisma {
    */
   export type WorkspaceCountOutputTypeCountCalendarEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CalendarEventWhereInput
+  }
+
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountResultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResultWhereInput
+  }
+
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountUploadedFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UploadedFileWhereInput
   }
 
 
@@ -5796,6 +6014,7 @@ export namespace Prisma {
     mode: string | null
     firstLogin: boolean | null
     createdAt: Date | null
+    deletedAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -5811,6 +6030,7 @@ export namespace Prisma {
     mode: string | null
     firstLogin: boolean | null
     createdAt: Date | null
+    deletedAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -5827,6 +6047,7 @@ export namespace Prisma {
     firstLogin: number
     notificationPrefs: number
     createdAt: number
+    deletedAt: number
     _all: number
   }
 
@@ -5844,6 +6065,7 @@ export namespace Prisma {
     mode?: true
     firstLogin?: true
     createdAt?: true
+    deletedAt?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -5859,6 +6081,7 @@ export namespace Prisma {
     mode?: true
     firstLogin?: true
     createdAt?: true
+    deletedAt?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -5875,6 +6098,7 @@ export namespace Prisma {
     firstLogin?: true
     notificationPrefs?: true
     createdAt?: true
+    deletedAt?: true
     _all?: true
   }
 
@@ -5964,6 +6188,7 @@ export namespace Prisma {
     firstLogin: boolean
     notificationPrefs: JsonValue | null
     createdAt: Date
+    deletedAt: Date | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -5997,6 +6222,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: boolean
     createdAt?: boolean
+    deletedAt?: boolean
     attempts?: boolean | User$attemptsArgs<ExtArgs>
     student?: boolean | User$studentArgs<ExtArgs>
     memberships?: boolean | User$membershipsArgs<ExtArgs>
@@ -6026,6 +6252,8 @@ export namespace Prisma {
     leaveRequests?: boolean | User$leaveRequestsArgs<ExtArgs>
     reviewedLeaveRequests?: boolean | User$reviewedLeaveRequestsArgs<ExtArgs>
     calendarEvents?: boolean | User$calendarEventsArgs<ExtArgs>
+    refreshTokens?: boolean | User$refreshTokensArgs<ExtArgs>
+    uploadedFiles?: boolean | User$uploadedFilesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -6043,6 +6271,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: boolean
     createdAt?: boolean
+    deletedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6059,6 +6288,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: boolean
     createdAt?: boolean
+    deletedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -6075,9 +6305,10 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: boolean
     createdAt?: boolean
+    deletedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "name" | "email" | "passwordHash" | "role" | "isActive" | "status" | "workspaceId" | "mode" | "firstLogin" | "notificationPrefs" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "name" | "email" | "passwordHash" | "role" | "isActive" | "status" | "workspaceId" | "mode" | "firstLogin" | "notificationPrefs" | "createdAt" | "deletedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     attempts?: boolean | User$attemptsArgs<ExtArgs>
     student?: boolean | User$studentArgs<ExtArgs>
@@ -6108,6 +6339,8 @@ export namespace Prisma {
     leaveRequests?: boolean | User$leaveRequestsArgs<ExtArgs>
     reviewedLeaveRequests?: boolean | User$reviewedLeaveRequestsArgs<ExtArgs>
     calendarEvents?: boolean | User$calendarEventsArgs<ExtArgs>
+    refreshTokens?: boolean | User$refreshTokensArgs<ExtArgs>
+    uploadedFiles?: boolean | User$uploadedFilesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -6145,6 +6378,8 @@ export namespace Prisma {
       leaveRequests: Prisma.$LeaveRequestPayload<ExtArgs>[]
       reviewedLeaveRequests: Prisma.$LeaveRequestPayload<ExtArgs>[]
       calendarEvents: Prisma.$CalendarEventPayload<ExtArgs>[]
+      refreshTokens: Prisma.$RefreshTokenPayload<ExtArgs>[]
+      uploadedFiles: Prisma.$UploadedFilePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6160,6 +6395,7 @@ export namespace Prisma {
       firstLogin: boolean
       notificationPrefs: Prisma.JsonValue | null
       createdAt: Date
+      deletedAt: Date | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -6583,6 +6819,8 @@ export namespace Prisma {
     leaveRequests<T extends User$leaveRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$leaveRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviewedLeaveRequests<T extends User$reviewedLeaveRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewedLeaveRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     calendarEvents<T extends User$calendarEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$calendarEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    refreshTokens<T extends User$refreshTokensArgs<ExtArgs> = {}>(args?: Subset<T, User$refreshTokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    uploadedFiles<T extends User$uploadedFilesArgs<ExtArgs> = {}>(args?: Subset<T, User$uploadedFilesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6625,6 +6863,7 @@ export namespace Prisma {
     readonly firstLogin: FieldRef<"User", 'Boolean'>
     readonly notificationPrefs: FieldRef<"User", 'Json'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly deletedAt: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -7709,6 +7948,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.refreshTokens
+   */
+  export type User$refreshTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenInclude<ExtArgs> | null
+    where?: RefreshTokenWhereInput
+    orderBy?: RefreshTokenOrderByWithRelationInput | RefreshTokenOrderByWithRelationInput[]
+    cursor?: RefreshTokenWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RefreshTokenScalarFieldEnum | RefreshTokenScalarFieldEnum[]
+  }
+
+  /**
+   * User.uploadedFiles
+   */
+  export type User$uploadedFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
+    where?: UploadedFileWhereInput
+    orderBy?: UploadedFileOrderByWithRelationInput | UploadedFileOrderByWithRelationInput[]
+    cursor?: UploadedFileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UploadedFileScalarFieldEnum | UploadedFileScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7724,6 +8011,1095 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model RefreshToken
+   */
+
+  export type AggregateRefreshToken = {
+    _count: RefreshTokenCountAggregateOutputType | null
+    _min: RefreshTokenMinAggregateOutputType | null
+    _max: RefreshTokenMaxAggregateOutputType | null
+  }
+
+  export type RefreshTokenMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tokenHash: string | null
+    expiresAt: Date | null
+    revokedAt: Date | null
+    replacedBy: string | null
+    createdAt: Date | null
+  }
+
+  export type RefreshTokenMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tokenHash: string | null
+    expiresAt: Date | null
+    revokedAt: Date | null
+    replacedBy: string | null
+    createdAt: Date | null
+  }
+
+  export type RefreshTokenCountAggregateOutputType = {
+    id: number
+    userId: number
+    tokenHash: number
+    expiresAt: number
+    revokedAt: number
+    replacedBy: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type RefreshTokenMinAggregateInputType = {
+    id?: true
+    userId?: true
+    tokenHash?: true
+    expiresAt?: true
+    revokedAt?: true
+    replacedBy?: true
+    createdAt?: true
+  }
+
+  export type RefreshTokenMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    tokenHash?: true
+    expiresAt?: true
+    revokedAt?: true
+    replacedBy?: true
+    createdAt?: true
+  }
+
+  export type RefreshTokenCountAggregateInputType = {
+    id?: true
+    userId?: true
+    tokenHash?: true
+    expiresAt?: true
+    revokedAt?: true
+    replacedBy?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type RefreshTokenAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RefreshToken to aggregate.
+     */
+    where?: RefreshTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RefreshTokens to fetch.
+     */
+    orderBy?: RefreshTokenOrderByWithRelationInput | RefreshTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RefreshTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RefreshTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RefreshTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RefreshTokens
+    **/
+    _count?: true | RefreshTokenCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RefreshTokenMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RefreshTokenMaxAggregateInputType
+  }
+
+  export type GetRefreshTokenAggregateType<T extends RefreshTokenAggregateArgs> = {
+        [P in keyof T & keyof AggregateRefreshToken]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRefreshToken[P]>
+      : GetScalarType<T[P], AggregateRefreshToken[P]>
+  }
+
+
+
+
+  export type RefreshTokenGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RefreshTokenWhereInput
+    orderBy?: RefreshTokenOrderByWithAggregationInput | RefreshTokenOrderByWithAggregationInput[]
+    by: RefreshTokenScalarFieldEnum[] | RefreshTokenScalarFieldEnum
+    having?: RefreshTokenScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RefreshTokenCountAggregateInputType | true
+    _min?: RefreshTokenMinAggregateInputType
+    _max?: RefreshTokenMaxAggregateInputType
+  }
+
+  export type RefreshTokenGroupByOutputType = {
+    id: string
+    userId: string
+    tokenHash: string
+    expiresAt: Date
+    revokedAt: Date | null
+    replacedBy: string | null
+    createdAt: Date
+    _count: RefreshTokenCountAggregateOutputType | null
+    _min: RefreshTokenMinAggregateOutputType | null
+    _max: RefreshTokenMaxAggregateOutputType | null
+  }
+
+  type GetRefreshTokenGroupByPayload<T extends RefreshTokenGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RefreshTokenGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RefreshTokenGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RefreshTokenGroupByOutputType[P]>
+            : GetScalarType<T[P], RefreshTokenGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RefreshTokenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tokenHash?: boolean
+    expiresAt?: boolean
+    revokedAt?: boolean
+    replacedBy?: boolean
+    createdAt?: boolean
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["refreshToken"]>
+
+  export type RefreshTokenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tokenHash?: boolean
+    expiresAt?: boolean
+    revokedAt?: boolean
+    replacedBy?: boolean
+    createdAt?: boolean
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["refreshToken"]>
+
+  export type RefreshTokenSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tokenHash?: boolean
+    expiresAt?: boolean
+    revokedAt?: boolean
+    replacedBy?: boolean
+    createdAt?: boolean
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["refreshToken"]>
+
+  export type RefreshTokenSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    tokenHash?: boolean
+    expiresAt?: boolean
+    revokedAt?: boolean
+    replacedBy?: boolean
+    createdAt?: boolean
+  }
+
+  export type RefreshTokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "tokenHash" | "expiresAt" | "revokedAt" | "replacedBy" | "createdAt", ExtArgs["result"]["refreshToken"]>
+  export type RefreshTokenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type RefreshTokenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type RefreshTokenIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $RefreshTokenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RefreshToken"
+    objects: {
+      User: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      tokenHash: string
+      expiresAt: Date
+      revokedAt: Date | null
+      replacedBy: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["refreshToken"]>
+    composites: {}
+  }
+
+  type RefreshTokenGetPayload<S extends boolean | null | undefined | RefreshTokenDefaultArgs> = $Result.GetResult<Prisma.$RefreshTokenPayload, S>
+
+  type RefreshTokenCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RefreshTokenFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RefreshTokenCountAggregateInputType | true
+    }
+
+  export interface RefreshTokenDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RefreshToken'], meta: { name: 'RefreshToken' } }
+    /**
+     * Find zero or one RefreshToken that matches the filter.
+     * @param {RefreshTokenFindUniqueArgs} args - Arguments to find a RefreshToken
+     * @example
+     * // Get one RefreshToken
+     * const refreshToken = await prisma.refreshToken.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RefreshTokenFindUniqueArgs>(args: SelectSubset<T, RefreshTokenFindUniqueArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one RefreshToken that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RefreshTokenFindUniqueOrThrowArgs} args - Arguments to find a RefreshToken
+     * @example
+     * // Get one RefreshToken
+     * const refreshToken = await prisma.refreshToken.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RefreshTokenFindUniqueOrThrowArgs>(args: SelectSubset<T, RefreshTokenFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RefreshToken that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RefreshTokenFindFirstArgs} args - Arguments to find a RefreshToken
+     * @example
+     * // Get one RefreshToken
+     * const refreshToken = await prisma.refreshToken.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RefreshTokenFindFirstArgs>(args?: SelectSubset<T, RefreshTokenFindFirstArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RefreshToken that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RefreshTokenFindFirstOrThrowArgs} args - Arguments to find a RefreshToken
+     * @example
+     * // Get one RefreshToken
+     * const refreshToken = await prisma.refreshToken.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RefreshTokenFindFirstOrThrowArgs>(args?: SelectSubset<T, RefreshTokenFindFirstOrThrowArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more RefreshTokens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RefreshTokenFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RefreshTokens
+     * const refreshTokens = await prisma.refreshToken.findMany()
+     * 
+     * // Get first 10 RefreshTokens
+     * const refreshTokens = await prisma.refreshToken.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const refreshTokenWithIdOnly = await prisma.refreshToken.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RefreshTokenFindManyArgs>(args?: SelectSubset<T, RefreshTokenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a RefreshToken.
+     * @param {RefreshTokenCreateArgs} args - Arguments to create a RefreshToken.
+     * @example
+     * // Create one RefreshToken
+     * const RefreshToken = await prisma.refreshToken.create({
+     *   data: {
+     *     // ... data to create a RefreshToken
+     *   }
+     * })
+     * 
+     */
+    create<T extends RefreshTokenCreateArgs>(args: SelectSubset<T, RefreshTokenCreateArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many RefreshTokens.
+     * @param {RefreshTokenCreateManyArgs} args - Arguments to create many RefreshTokens.
+     * @example
+     * // Create many RefreshTokens
+     * const refreshToken = await prisma.refreshToken.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RefreshTokenCreateManyArgs>(args?: SelectSubset<T, RefreshTokenCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many RefreshTokens and returns the data saved in the database.
+     * @param {RefreshTokenCreateManyAndReturnArgs} args - Arguments to create many RefreshTokens.
+     * @example
+     * // Create many RefreshTokens
+     * const refreshToken = await prisma.refreshToken.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many RefreshTokens and only return the `id`
+     * const refreshTokenWithIdOnly = await prisma.refreshToken.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RefreshTokenCreateManyAndReturnArgs>(args?: SelectSubset<T, RefreshTokenCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a RefreshToken.
+     * @param {RefreshTokenDeleteArgs} args - Arguments to delete one RefreshToken.
+     * @example
+     * // Delete one RefreshToken
+     * const RefreshToken = await prisma.refreshToken.delete({
+     *   where: {
+     *     // ... filter to delete one RefreshToken
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RefreshTokenDeleteArgs>(args: SelectSubset<T, RefreshTokenDeleteArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one RefreshToken.
+     * @param {RefreshTokenUpdateArgs} args - Arguments to update one RefreshToken.
+     * @example
+     * // Update one RefreshToken
+     * const refreshToken = await prisma.refreshToken.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RefreshTokenUpdateArgs>(args: SelectSubset<T, RefreshTokenUpdateArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more RefreshTokens.
+     * @param {RefreshTokenDeleteManyArgs} args - Arguments to filter RefreshTokens to delete.
+     * @example
+     * // Delete a few RefreshTokens
+     * const { count } = await prisma.refreshToken.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RefreshTokenDeleteManyArgs>(args?: SelectSubset<T, RefreshTokenDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RefreshTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RefreshTokenUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RefreshTokens
+     * const refreshToken = await prisma.refreshToken.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RefreshTokenUpdateManyArgs>(args: SelectSubset<T, RefreshTokenUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RefreshTokens and returns the data updated in the database.
+     * @param {RefreshTokenUpdateManyAndReturnArgs} args - Arguments to update many RefreshTokens.
+     * @example
+     * // Update many RefreshTokens
+     * const refreshToken = await prisma.refreshToken.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more RefreshTokens and only return the `id`
+     * const refreshTokenWithIdOnly = await prisma.refreshToken.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RefreshTokenUpdateManyAndReturnArgs>(args: SelectSubset<T, RefreshTokenUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one RefreshToken.
+     * @param {RefreshTokenUpsertArgs} args - Arguments to update or create a RefreshToken.
+     * @example
+     * // Update or create a RefreshToken
+     * const refreshToken = await prisma.refreshToken.upsert({
+     *   create: {
+     *     // ... data to create a RefreshToken
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RefreshToken we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RefreshTokenUpsertArgs>(args: SelectSubset<T, RefreshTokenUpsertArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of RefreshTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RefreshTokenCountArgs} args - Arguments to filter RefreshTokens to count.
+     * @example
+     * // Count the number of RefreshTokens
+     * const count = await prisma.refreshToken.count({
+     *   where: {
+     *     // ... the filter for the RefreshTokens we want to count
+     *   }
+     * })
+    **/
+    count<T extends RefreshTokenCountArgs>(
+      args?: Subset<T, RefreshTokenCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RefreshTokenCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RefreshToken.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RefreshTokenAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RefreshTokenAggregateArgs>(args: Subset<T, RefreshTokenAggregateArgs>): Prisma.PrismaPromise<GetRefreshTokenAggregateType<T>>
+
+    /**
+     * Group by RefreshToken.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RefreshTokenGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RefreshTokenGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RefreshTokenGroupByArgs['orderBy'] }
+        : { orderBy?: RefreshTokenGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RefreshTokenGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRefreshTokenGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the RefreshToken model
+   */
+  readonly fields: RefreshTokenFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RefreshToken.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RefreshTokenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the RefreshToken model
+   */
+  interface RefreshTokenFieldRefs {
+    readonly id: FieldRef<"RefreshToken", 'String'>
+    readonly userId: FieldRef<"RefreshToken", 'String'>
+    readonly tokenHash: FieldRef<"RefreshToken", 'String'>
+    readonly expiresAt: FieldRef<"RefreshToken", 'DateTime'>
+    readonly revokedAt: FieldRef<"RefreshToken", 'DateTime'>
+    readonly replacedBy: FieldRef<"RefreshToken", 'String'>
+    readonly createdAt: FieldRef<"RefreshToken", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * RefreshToken findUnique
+   */
+  export type RefreshTokenFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which RefreshToken to fetch.
+     */
+    where: RefreshTokenWhereUniqueInput
+  }
+
+  /**
+   * RefreshToken findUniqueOrThrow
+   */
+  export type RefreshTokenFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which RefreshToken to fetch.
+     */
+    where: RefreshTokenWhereUniqueInput
+  }
+
+  /**
+   * RefreshToken findFirst
+   */
+  export type RefreshTokenFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which RefreshToken to fetch.
+     */
+    where?: RefreshTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RefreshTokens to fetch.
+     */
+    orderBy?: RefreshTokenOrderByWithRelationInput | RefreshTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RefreshTokens.
+     */
+    cursor?: RefreshTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RefreshTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RefreshTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RefreshTokens.
+     */
+    distinct?: RefreshTokenScalarFieldEnum | RefreshTokenScalarFieldEnum[]
+  }
+
+  /**
+   * RefreshToken findFirstOrThrow
+   */
+  export type RefreshTokenFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which RefreshToken to fetch.
+     */
+    where?: RefreshTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RefreshTokens to fetch.
+     */
+    orderBy?: RefreshTokenOrderByWithRelationInput | RefreshTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RefreshTokens.
+     */
+    cursor?: RefreshTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RefreshTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RefreshTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RefreshTokens.
+     */
+    distinct?: RefreshTokenScalarFieldEnum | RefreshTokenScalarFieldEnum[]
+  }
+
+  /**
+   * RefreshToken findMany
+   */
+  export type RefreshTokenFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which RefreshTokens to fetch.
+     */
+    where?: RefreshTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RefreshTokens to fetch.
+     */
+    orderBy?: RefreshTokenOrderByWithRelationInput | RefreshTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RefreshTokens.
+     */
+    cursor?: RefreshTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RefreshTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RefreshTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RefreshTokens.
+     */
+    distinct?: RefreshTokenScalarFieldEnum | RefreshTokenScalarFieldEnum[]
+  }
+
+  /**
+   * RefreshToken create
+   */
+  export type RefreshTokenCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenInclude<ExtArgs> | null
+    /**
+     * The data needed to create a RefreshToken.
+     */
+    data: XOR<RefreshTokenCreateInput, RefreshTokenUncheckedCreateInput>
+  }
+
+  /**
+   * RefreshToken createMany
+   */
+  export type RefreshTokenCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RefreshTokens.
+     */
+    data: RefreshTokenCreateManyInput | RefreshTokenCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RefreshToken createManyAndReturn
+   */
+  export type RefreshTokenCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * The data used to create many RefreshTokens.
+     */
+    data: RefreshTokenCreateManyInput | RefreshTokenCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * RefreshToken update
+   */
+  export type RefreshTokenUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenInclude<ExtArgs> | null
+    /**
+     * The data needed to update a RefreshToken.
+     */
+    data: XOR<RefreshTokenUpdateInput, RefreshTokenUncheckedUpdateInput>
+    /**
+     * Choose, which RefreshToken to update.
+     */
+    where: RefreshTokenWhereUniqueInput
+  }
+
+  /**
+   * RefreshToken updateMany
+   */
+  export type RefreshTokenUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update RefreshTokens.
+     */
+    data: XOR<RefreshTokenUpdateManyMutationInput, RefreshTokenUncheckedUpdateManyInput>
+    /**
+     * Filter which RefreshTokens to update
+     */
+    where?: RefreshTokenWhereInput
+    /**
+     * Limit how many RefreshTokens to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RefreshToken updateManyAndReturn
+   */
+  export type RefreshTokenUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * The data used to update RefreshTokens.
+     */
+    data: XOR<RefreshTokenUpdateManyMutationInput, RefreshTokenUncheckedUpdateManyInput>
+    /**
+     * Filter which RefreshTokens to update
+     */
+    where?: RefreshTokenWhereInput
+    /**
+     * Limit how many RefreshTokens to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * RefreshToken upsert
+   */
+  export type RefreshTokenUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenInclude<ExtArgs> | null
+    /**
+     * The filter to search for the RefreshToken to update in case it exists.
+     */
+    where: RefreshTokenWhereUniqueInput
+    /**
+     * In case the RefreshToken found by the `where` argument doesn't exist, create a new RefreshToken with this data.
+     */
+    create: XOR<RefreshTokenCreateInput, RefreshTokenUncheckedCreateInput>
+    /**
+     * In case the RefreshToken was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RefreshTokenUpdateInput, RefreshTokenUncheckedUpdateInput>
+  }
+
+  /**
+   * RefreshToken delete
+   */
+  export type RefreshTokenDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenInclude<ExtArgs> | null
+    /**
+     * Filter which RefreshToken to delete.
+     */
+    where: RefreshTokenWhereUniqueInput
+  }
+
+  /**
+   * RefreshToken deleteMany
+   */
+  export type RefreshTokenDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RefreshTokens to delete
+     */
+    where?: RefreshTokenWhereInput
+    /**
+     * Limit how many RefreshTokens to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * RefreshToken without action
+   */
+  export type RefreshTokenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RefreshToken
+     */
+    select?: RefreshTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RefreshToken
+     */
+    omit?: RefreshTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RefreshTokenInclude<ExtArgs> | null
   }
 
 
@@ -9055,6 +10431,8 @@ export namespace Prisma {
     timetableSlots?: boolean | Workspace$timetableSlotsArgs<ExtArgs>
     leaveRequests?: boolean | Workspace$leaveRequestsArgs<ExtArgs>
     calendarEvents?: boolean | Workspace$calendarEventsArgs<ExtArgs>
+    results?: boolean | Workspace$resultsArgs<ExtArgs>
+    uploadedFiles?: boolean | Workspace$uploadedFilesArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["workspace"]>
 
@@ -9122,6 +10500,8 @@ export namespace Prisma {
     timetableSlots?: boolean | Workspace$timetableSlotsArgs<ExtArgs>
     leaveRequests?: boolean | Workspace$leaveRequestsArgs<ExtArgs>
     calendarEvents?: boolean | Workspace$calendarEventsArgs<ExtArgs>
+    results?: boolean | Workspace$resultsArgs<ExtArgs>
+    uploadedFiles?: boolean | Workspace$uploadedFilesArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type WorkspaceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -9144,6 +10524,8 @@ export namespace Prisma {
       timetableSlots: Prisma.$TimetableSlotPayload<ExtArgs>[]
       leaveRequests: Prisma.$LeaveRequestPayload<ExtArgs>[]
       calendarEvents: Prisma.$CalendarEventPayload<ExtArgs>[]
+      results: Prisma.$ResultPayload<ExtArgs>[]
+      uploadedFiles: Prisma.$UploadedFilePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9567,6 +10949,8 @@ export namespace Prisma {
     timetableSlots<T extends Workspace$timetableSlotsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$timetableSlotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimetableSlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     leaveRequests<T extends Workspace$leaveRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$leaveRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     calendarEvents<T extends Workspace$calendarEventsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$calendarEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    results<T extends Workspace$resultsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$resultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    uploadedFiles<T extends Workspace$uploadedFilesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$uploadedFilesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10335,6 +11719,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CalendarEventScalarFieldEnum | CalendarEventScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.results
+   */
+  export type Workspace$resultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Result
+     */
+    select?: ResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Result
+     */
+    omit?: ResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultInclude<ExtArgs> | null
+    where?: ResultWhereInput
+    orderBy?: ResultOrderByWithRelationInput | ResultOrderByWithRelationInput[]
+    cursor?: ResultWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResultScalarFieldEnum | ResultScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.uploadedFiles
+   */
+  export type Workspace$uploadedFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
+    where?: UploadedFileWhereInput
+    orderBy?: UploadedFileOrderByWithRelationInput | UploadedFileOrderByWithRelationInput[]
+    cursor?: UploadedFileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UploadedFileScalarFieldEnum | UploadedFileScalarFieldEnum[]
   }
 
   /**
@@ -50280,6 +51712,7 @@ export namespace Prisma {
     title: string | null
     type: string | null
     fileUrl: string | null
+    uploadedFileId: string | null
     subject: string | null
     chapter: string | null
     topic: string | null
@@ -50298,6 +51731,7 @@ export namespace Prisma {
     title: string | null
     type: string | null
     fileUrl: string | null
+    uploadedFileId: string | null
     subject: string | null
     chapter: string | null
     topic: string | null
@@ -50316,6 +51750,7 @@ export namespace Prisma {
     title: number
     type: number
     fileUrl: number
+    uploadedFileId: number
     subject: number
     chapter: number
     topic: number
@@ -50346,6 +51781,7 @@ export namespace Prisma {
     title?: true
     type?: true
     fileUrl?: true
+    uploadedFileId?: true
     subject?: true
     chapter?: true
     topic?: true
@@ -50364,6 +51800,7 @@ export namespace Prisma {
     title?: true
     type?: true
     fileUrl?: true
+    uploadedFileId?: true
     subject?: true
     chapter?: true
     topic?: true
@@ -50382,6 +51819,7 @@ export namespace Prisma {
     title?: true
     type?: true
     fileUrl?: true
+    uploadedFileId?: true
     subject?: true
     chapter?: true
     topic?: true
@@ -50487,6 +51925,7 @@ export namespace Prisma {
     title: string
     type: string
     fileUrl: string
+    uploadedFileId: string | null
     subject: string
     chapter: string | null
     topic: string | null
@@ -50524,6 +51963,7 @@ export namespace Prisma {
     title?: boolean
     type?: boolean
     fileUrl?: boolean
+    uploadedFileId?: boolean
     subject?: boolean
     chapter?: boolean
     topic?: boolean
@@ -50538,6 +51978,7 @@ export namespace Prisma {
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     Class?: boolean | Material$ClassArgs<ExtArgs>
     UploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    UploadedFile?: boolean | Material$UploadedFileArgs<ExtArgs>
   }, ExtArgs["result"]["material"]>
 
   export type MaterialSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -50545,6 +51986,7 @@ export namespace Prisma {
     title?: boolean
     type?: boolean
     fileUrl?: boolean
+    uploadedFileId?: boolean
     subject?: boolean
     chapter?: boolean
     topic?: boolean
@@ -50559,6 +52001,7 @@ export namespace Prisma {
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     Class?: boolean | Material$ClassArgs<ExtArgs>
     UploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    UploadedFile?: boolean | Material$UploadedFileArgs<ExtArgs>
   }, ExtArgs["result"]["material"]>
 
   export type MaterialSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -50566,6 +52009,7 @@ export namespace Prisma {
     title?: boolean
     type?: boolean
     fileUrl?: boolean
+    uploadedFileId?: boolean
     subject?: boolean
     chapter?: boolean
     topic?: boolean
@@ -50580,6 +52024,7 @@ export namespace Prisma {
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     Class?: boolean | Material$ClassArgs<ExtArgs>
     UploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    UploadedFile?: boolean | Material$UploadedFileArgs<ExtArgs>
   }, ExtArgs["result"]["material"]>
 
   export type MaterialSelectScalar = {
@@ -50587,6 +52032,7 @@ export namespace Prisma {
     title?: boolean
     type?: boolean
     fileUrl?: boolean
+    uploadedFileId?: boolean
     subject?: boolean
     chapter?: boolean
     topic?: boolean
@@ -50600,21 +52046,24 @@ export namespace Prisma {
     uploadDate?: boolean
   }
 
-  export type MaterialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "fileUrl" | "subject" | "chapter" | "topic" | "workspaceId" | "classId" | "uploadedByUserId" | "visibility" | "scheduledAt" | "viewCount" | "downloadCount" | "uploadDate", ExtArgs["result"]["material"]>
+  export type MaterialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "fileUrl" | "uploadedFileId" | "subject" | "chapter" | "topic" | "workspaceId" | "classId" | "uploadedByUserId" | "visibility" | "scheduledAt" | "viewCount" | "downloadCount" | "uploadDate", ExtArgs["result"]["material"]>
   export type MaterialInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     Class?: boolean | Material$ClassArgs<ExtArgs>
     UploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    UploadedFile?: boolean | Material$UploadedFileArgs<ExtArgs>
   }
   export type MaterialIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     Class?: boolean | Material$ClassArgs<ExtArgs>
     UploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    UploadedFile?: boolean | Material$UploadedFileArgs<ExtArgs>
   }
   export type MaterialIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     Class?: boolean | Material$ClassArgs<ExtArgs>
     UploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    UploadedFile?: boolean | Material$UploadedFileArgs<ExtArgs>
   }
 
   export type $MaterialPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -50623,12 +52072,14 @@ export namespace Prisma {
       Workspace: Prisma.$WorkspacePayload<ExtArgs>
       Class: Prisma.$ClassPayload<ExtArgs> | null
       UploadedBy: Prisma.$UserPayload<ExtArgs>
+      UploadedFile: Prisma.$UploadedFilePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
       type: string
       fileUrl: string
+      uploadedFileId: string | null
       subject: string
       chapter: string | null
       topic: string | null
@@ -51037,6 +52488,7 @@ export namespace Prisma {
     Workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     Class<T extends Material$ClassArgs<ExtArgs> = {}>(args?: Subset<T, Material$ClassArgs<ExtArgs>>): Prisma__ClassClient<$Result.GetResult<Prisma.$ClassPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     UploadedBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    UploadedFile<T extends Material$UploadedFileArgs<ExtArgs> = {}>(args?: Subset<T, Material$UploadedFileArgs<ExtArgs>>): Prisma__UploadedFileClient<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -51070,6 +52522,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Material", 'String'>
     readonly type: FieldRef<"Material", 'String'>
     readonly fileUrl: FieldRef<"Material", 'String'>
+    readonly uploadedFileId: FieldRef<"Material", 'String'>
     readonly subject: FieldRef<"Material", 'String'>
     readonly chapter: FieldRef<"Material", 'String'>
     readonly topic: FieldRef<"Material", 'String'>
@@ -51501,6 +52954,25 @@ export namespace Prisma {
   }
 
   /**
+   * Material.UploadedFile
+   */
+  export type Material$UploadedFileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
+    where?: UploadedFileWhereInput
+  }
+
+  /**
    * Material without action
    */
   export type MaterialDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -51516,6 +52988,1173 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: MaterialInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UploadedFile
+   */
+
+  export type AggregateUploadedFile = {
+    _count: UploadedFileCountAggregateOutputType | null
+    _avg: UploadedFileAvgAggregateOutputType | null
+    _sum: UploadedFileSumAggregateOutputType | null
+    _min: UploadedFileMinAggregateOutputType | null
+    _max: UploadedFileMaxAggregateOutputType | null
+  }
+
+  export type UploadedFileAvgAggregateOutputType = {
+    sizeBytes: number | null
+  }
+
+  export type UploadedFileSumAggregateOutputType = {
+    sizeBytes: number | null
+  }
+
+  export type UploadedFileMinAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    uploadedByUserId: string | null
+    originalName: string | null
+    mimeType: string | null
+    sizeBytes: number | null
+    storageKey: string | null
+    createdAt: Date | null
+  }
+
+  export type UploadedFileMaxAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    uploadedByUserId: string | null
+    originalName: string | null
+    mimeType: string | null
+    sizeBytes: number | null
+    storageKey: string | null
+    createdAt: Date | null
+  }
+
+  export type UploadedFileCountAggregateOutputType = {
+    id: number
+    workspaceId: number
+    uploadedByUserId: number
+    originalName: number
+    mimeType: number
+    sizeBytes: number
+    storageKey: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type UploadedFileAvgAggregateInputType = {
+    sizeBytes?: true
+  }
+
+  export type UploadedFileSumAggregateInputType = {
+    sizeBytes?: true
+  }
+
+  export type UploadedFileMinAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    uploadedByUserId?: true
+    originalName?: true
+    mimeType?: true
+    sizeBytes?: true
+    storageKey?: true
+    createdAt?: true
+  }
+
+  export type UploadedFileMaxAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    uploadedByUserId?: true
+    originalName?: true
+    mimeType?: true
+    sizeBytes?: true
+    storageKey?: true
+    createdAt?: true
+  }
+
+  export type UploadedFileCountAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    uploadedByUserId?: true
+    originalName?: true
+    mimeType?: true
+    sizeBytes?: true
+    storageKey?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type UploadedFileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UploadedFile to aggregate.
+     */
+    where?: UploadedFileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UploadedFiles to fetch.
+     */
+    orderBy?: UploadedFileOrderByWithRelationInput | UploadedFileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UploadedFileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UploadedFiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UploadedFiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UploadedFiles
+    **/
+    _count?: true | UploadedFileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UploadedFileAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UploadedFileSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UploadedFileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UploadedFileMaxAggregateInputType
+  }
+
+  export type GetUploadedFileAggregateType<T extends UploadedFileAggregateArgs> = {
+        [P in keyof T & keyof AggregateUploadedFile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUploadedFile[P]>
+      : GetScalarType<T[P], AggregateUploadedFile[P]>
+  }
+
+
+
+
+  export type UploadedFileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UploadedFileWhereInput
+    orderBy?: UploadedFileOrderByWithAggregationInput | UploadedFileOrderByWithAggregationInput[]
+    by: UploadedFileScalarFieldEnum[] | UploadedFileScalarFieldEnum
+    having?: UploadedFileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UploadedFileCountAggregateInputType | true
+    _avg?: UploadedFileAvgAggregateInputType
+    _sum?: UploadedFileSumAggregateInputType
+    _min?: UploadedFileMinAggregateInputType
+    _max?: UploadedFileMaxAggregateInputType
+  }
+
+  export type UploadedFileGroupByOutputType = {
+    id: string
+    workspaceId: string
+    uploadedByUserId: string
+    originalName: string
+    mimeType: string
+    sizeBytes: number
+    storageKey: string
+    createdAt: Date
+    _count: UploadedFileCountAggregateOutputType | null
+    _avg: UploadedFileAvgAggregateOutputType | null
+    _sum: UploadedFileSumAggregateOutputType | null
+    _min: UploadedFileMinAggregateOutputType | null
+    _max: UploadedFileMaxAggregateOutputType | null
+  }
+
+  type GetUploadedFileGroupByPayload<T extends UploadedFileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UploadedFileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UploadedFileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UploadedFileGroupByOutputType[P]>
+            : GetScalarType<T[P], UploadedFileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UploadedFileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    uploadedByUserId?: boolean
+    originalName?: boolean
+    mimeType?: boolean
+    sizeBytes?: boolean
+    storageKey?: boolean
+    createdAt?: boolean
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    UploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    Material?: boolean | UploadedFile$MaterialArgs<ExtArgs>
+  }, ExtArgs["result"]["uploadedFile"]>
+
+  export type UploadedFileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    uploadedByUserId?: boolean
+    originalName?: boolean
+    mimeType?: boolean
+    sizeBytes?: boolean
+    storageKey?: boolean
+    createdAt?: boolean
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    UploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["uploadedFile"]>
+
+  export type UploadedFileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    uploadedByUserId?: boolean
+    originalName?: boolean
+    mimeType?: boolean
+    sizeBytes?: boolean
+    storageKey?: boolean
+    createdAt?: boolean
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    UploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["uploadedFile"]>
+
+  export type UploadedFileSelectScalar = {
+    id?: boolean
+    workspaceId?: boolean
+    uploadedByUserId?: boolean
+    originalName?: boolean
+    mimeType?: boolean
+    sizeBytes?: boolean
+    storageKey?: boolean
+    createdAt?: boolean
+  }
+
+  export type UploadedFileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "uploadedByUserId" | "originalName" | "mimeType" | "sizeBytes" | "storageKey" | "createdAt", ExtArgs["result"]["uploadedFile"]>
+  export type UploadedFileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    UploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    Material?: boolean | UploadedFile$MaterialArgs<ExtArgs>
+  }
+  export type UploadedFileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    UploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UploadedFileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    UploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UploadedFilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UploadedFile"
+    objects: {
+      Workspace: Prisma.$WorkspacePayload<ExtArgs>
+      UploadedBy: Prisma.$UserPayload<ExtArgs>
+      Material: Prisma.$MaterialPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workspaceId: string
+      uploadedByUserId: string
+      originalName: string
+      mimeType: string
+      sizeBytes: number
+      storageKey: string
+      createdAt: Date
+    }, ExtArgs["result"]["uploadedFile"]>
+    composites: {}
+  }
+
+  type UploadedFileGetPayload<S extends boolean | null | undefined | UploadedFileDefaultArgs> = $Result.GetResult<Prisma.$UploadedFilePayload, S>
+
+  type UploadedFileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UploadedFileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UploadedFileCountAggregateInputType | true
+    }
+
+  export interface UploadedFileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UploadedFile'], meta: { name: 'UploadedFile' } }
+    /**
+     * Find zero or one UploadedFile that matches the filter.
+     * @param {UploadedFileFindUniqueArgs} args - Arguments to find a UploadedFile
+     * @example
+     * // Get one UploadedFile
+     * const uploadedFile = await prisma.uploadedFile.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UploadedFileFindUniqueArgs>(args: SelectSubset<T, UploadedFileFindUniqueArgs<ExtArgs>>): Prisma__UploadedFileClient<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UploadedFile that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UploadedFileFindUniqueOrThrowArgs} args - Arguments to find a UploadedFile
+     * @example
+     * // Get one UploadedFile
+     * const uploadedFile = await prisma.uploadedFile.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UploadedFileFindUniqueOrThrowArgs>(args: SelectSubset<T, UploadedFileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UploadedFileClient<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UploadedFile that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadedFileFindFirstArgs} args - Arguments to find a UploadedFile
+     * @example
+     * // Get one UploadedFile
+     * const uploadedFile = await prisma.uploadedFile.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UploadedFileFindFirstArgs>(args?: SelectSubset<T, UploadedFileFindFirstArgs<ExtArgs>>): Prisma__UploadedFileClient<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UploadedFile that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadedFileFindFirstOrThrowArgs} args - Arguments to find a UploadedFile
+     * @example
+     * // Get one UploadedFile
+     * const uploadedFile = await prisma.uploadedFile.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UploadedFileFindFirstOrThrowArgs>(args?: SelectSubset<T, UploadedFileFindFirstOrThrowArgs<ExtArgs>>): Prisma__UploadedFileClient<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UploadedFiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadedFileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UploadedFiles
+     * const uploadedFiles = await prisma.uploadedFile.findMany()
+     * 
+     * // Get first 10 UploadedFiles
+     * const uploadedFiles = await prisma.uploadedFile.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const uploadedFileWithIdOnly = await prisma.uploadedFile.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UploadedFileFindManyArgs>(args?: SelectSubset<T, UploadedFileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UploadedFile.
+     * @param {UploadedFileCreateArgs} args - Arguments to create a UploadedFile.
+     * @example
+     * // Create one UploadedFile
+     * const UploadedFile = await prisma.uploadedFile.create({
+     *   data: {
+     *     // ... data to create a UploadedFile
+     *   }
+     * })
+     * 
+     */
+    create<T extends UploadedFileCreateArgs>(args: SelectSubset<T, UploadedFileCreateArgs<ExtArgs>>): Prisma__UploadedFileClient<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UploadedFiles.
+     * @param {UploadedFileCreateManyArgs} args - Arguments to create many UploadedFiles.
+     * @example
+     * // Create many UploadedFiles
+     * const uploadedFile = await prisma.uploadedFile.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UploadedFileCreateManyArgs>(args?: SelectSubset<T, UploadedFileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UploadedFiles and returns the data saved in the database.
+     * @param {UploadedFileCreateManyAndReturnArgs} args - Arguments to create many UploadedFiles.
+     * @example
+     * // Create many UploadedFiles
+     * const uploadedFile = await prisma.uploadedFile.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UploadedFiles and only return the `id`
+     * const uploadedFileWithIdOnly = await prisma.uploadedFile.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UploadedFileCreateManyAndReturnArgs>(args?: SelectSubset<T, UploadedFileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UploadedFile.
+     * @param {UploadedFileDeleteArgs} args - Arguments to delete one UploadedFile.
+     * @example
+     * // Delete one UploadedFile
+     * const UploadedFile = await prisma.uploadedFile.delete({
+     *   where: {
+     *     // ... filter to delete one UploadedFile
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UploadedFileDeleteArgs>(args: SelectSubset<T, UploadedFileDeleteArgs<ExtArgs>>): Prisma__UploadedFileClient<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UploadedFile.
+     * @param {UploadedFileUpdateArgs} args - Arguments to update one UploadedFile.
+     * @example
+     * // Update one UploadedFile
+     * const uploadedFile = await prisma.uploadedFile.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UploadedFileUpdateArgs>(args: SelectSubset<T, UploadedFileUpdateArgs<ExtArgs>>): Prisma__UploadedFileClient<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UploadedFiles.
+     * @param {UploadedFileDeleteManyArgs} args - Arguments to filter UploadedFiles to delete.
+     * @example
+     * // Delete a few UploadedFiles
+     * const { count } = await prisma.uploadedFile.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UploadedFileDeleteManyArgs>(args?: SelectSubset<T, UploadedFileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UploadedFiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadedFileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UploadedFiles
+     * const uploadedFile = await prisma.uploadedFile.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UploadedFileUpdateManyArgs>(args: SelectSubset<T, UploadedFileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UploadedFiles and returns the data updated in the database.
+     * @param {UploadedFileUpdateManyAndReturnArgs} args - Arguments to update many UploadedFiles.
+     * @example
+     * // Update many UploadedFiles
+     * const uploadedFile = await prisma.uploadedFile.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UploadedFiles and only return the `id`
+     * const uploadedFileWithIdOnly = await prisma.uploadedFile.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UploadedFileUpdateManyAndReturnArgs>(args: SelectSubset<T, UploadedFileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UploadedFile.
+     * @param {UploadedFileUpsertArgs} args - Arguments to update or create a UploadedFile.
+     * @example
+     * // Update or create a UploadedFile
+     * const uploadedFile = await prisma.uploadedFile.upsert({
+     *   create: {
+     *     // ... data to create a UploadedFile
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UploadedFile we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UploadedFileUpsertArgs>(args: SelectSubset<T, UploadedFileUpsertArgs<ExtArgs>>): Prisma__UploadedFileClient<$Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UploadedFiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadedFileCountArgs} args - Arguments to filter UploadedFiles to count.
+     * @example
+     * // Count the number of UploadedFiles
+     * const count = await prisma.uploadedFile.count({
+     *   where: {
+     *     // ... the filter for the UploadedFiles we want to count
+     *   }
+     * })
+    **/
+    count<T extends UploadedFileCountArgs>(
+      args?: Subset<T, UploadedFileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UploadedFileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UploadedFile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadedFileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UploadedFileAggregateArgs>(args: Subset<T, UploadedFileAggregateArgs>): Prisma.PrismaPromise<GetUploadedFileAggregateType<T>>
+
+    /**
+     * Group by UploadedFile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadedFileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UploadedFileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UploadedFileGroupByArgs['orderBy'] }
+        : { orderBy?: UploadedFileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UploadedFileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUploadedFileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UploadedFile model
+   */
+  readonly fields: UploadedFileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UploadedFile.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UploadedFileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    UploadedBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    Material<T extends UploadedFile$MaterialArgs<ExtArgs> = {}>(args?: Subset<T, UploadedFile$MaterialArgs<ExtArgs>>): Prisma__MaterialClient<$Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UploadedFile model
+   */
+  interface UploadedFileFieldRefs {
+    readonly id: FieldRef<"UploadedFile", 'String'>
+    readonly workspaceId: FieldRef<"UploadedFile", 'String'>
+    readonly uploadedByUserId: FieldRef<"UploadedFile", 'String'>
+    readonly originalName: FieldRef<"UploadedFile", 'String'>
+    readonly mimeType: FieldRef<"UploadedFile", 'String'>
+    readonly sizeBytes: FieldRef<"UploadedFile", 'Int'>
+    readonly storageKey: FieldRef<"UploadedFile", 'String'>
+    readonly createdAt: FieldRef<"UploadedFile", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UploadedFile findUnique
+   */
+  export type UploadedFileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
+    /**
+     * Filter, which UploadedFile to fetch.
+     */
+    where: UploadedFileWhereUniqueInput
+  }
+
+  /**
+   * UploadedFile findUniqueOrThrow
+   */
+  export type UploadedFileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
+    /**
+     * Filter, which UploadedFile to fetch.
+     */
+    where: UploadedFileWhereUniqueInput
+  }
+
+  /**
+   * UploadedFile findFirst
+   */
+  export type UploadedFileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
+    /**
+     * Filter, which UploadedFile to fetch.
+     */
+    where?: UploadedFileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UploadedFiles to fetch.
+     */
+    orderBy?: UploadedFileOrderByWithRelationInput | UploadedFileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UploadedFiles.
+     */
+    cursor?: UploadedFileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UploadedFiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UploadedFiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UploadedFiles.
+     */
+    distinct?: UploadedFileScalarFieldEnum | UploadedFileScalarFieldEnum[]
+  }
+
+  /**
+   * UploadedFile findFirstOrThrow
+   */
+  export type UploadedFileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
+    /**
+     * Filter, which UploadedFile to fetch.
+     */
+    where?: UploadedFileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UploadedFiles to fetch.
+     */
+    orderBy?: UploadedFileOrderByWithRelationInput | UploadedFileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UploadedFiles.
+     */
+    cursor?: UploadedFileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UploadedFiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UploadedFiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UploadedFiles.
+     */
+    distinct?: UploadedFileScalarFieldEnum | UploadedFileScalarFieldEnum[]
+  }
+
+  /**
+   * UploadedFile findMany
+   */
+  export type UploadedFileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
+    /**
+     * Filter, which UploadedFiles to fetch.
+     */
+    where?: UploadedFileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UploadedFiles to fetch.
+     */
+    orderBy?: UploadedFileOrderByWithRelationInput | UploadedFileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UploadedFiles.
+     */
+    cursor?: UploadedFileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UploadedFiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UploadedFiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UploadedFiles.
+     */
+    distinct?: UploadedFileScalarFieldEnum | UploadedFileScalarFieldEnum[]
+  }
+
+  /**
+   * UploadedFile create
+   */
+  export type UploadedFileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UploadedFile.
+     */
+    data: XOR<UploadedFileCreateInput, UploadedFileUncheckedCreateInput>
+  }
+
+  /**
+   * UploadedFile createMany
+   */
+  export type UploadedFileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UploadedFiles.
+     */
+    data: UploadedFileCreateManyInput | UploadedFileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UploadedFile createManyAndReturn
+   */
+  export type UploadedFileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * The data used to create many UploadedFiles.
+     */
+    data: UploadedFileCreateManyInput | UploadedFileCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UploadedFile update
+   */
+  export type UploadedFileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UploadedFile.
+     */
+    data: XOR<UploadedFileUpdateInput, UploadedFileUncheckedUpdateInput>
+    /**
+     * Choose, which UploadedFile to update.
+     */
+    where: UploadedFileWhereUniqueInput
+  }
+
+  /**
+   * UploadedFile updateMany
+   */
+  export type UploadedFileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UploadedFiles.
+     */
+    data: XOR<UploadedFileUpdateManyMutationInput, UploadedFileUncheckedUpdateManyInput>
+    /**
+     * Filter which UploadedFiles to update
+     */
+    where?: UploadedFileWhereInput
+    /**
+     * Limit how many UploadedFiles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UploadedFile updateManyAndReturn
+   */
+  export type UploadedFileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * The data used to update UploadedFiles.
+     */
+    data: XOR<UploadedFileUpdateManyMutationInput, UploadedFileUncheckedUpdateManyInput>
+    /**
+     * Filter which UploadedFiles to update
+     */
+    where?: UploadedFileWhereInput
+    /**
+     * Limit how many UploadedFiles to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UploadedFile upsert
+   */
+  export type UploadedFileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UploadedFile to update in case it exists.
+     */
+    where: UploadedFileWhereUniqueInput
+    /**
+     * In case the UploadedFile found by the `where` argument doesn't exist, create a new UploadedFile with this data.
+     */
+    create: XOR<UploadedFileCreateInput, UploadedFileUncheckedCreateInput>
+    /**
+     * In case the UploadedFile was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UploadedFileUpdateInput, UploadedFileUncheckedUpdateInput>
+  }
+
+  /**
+   * UploadedFile delete
+   */
+  export type UploadedFileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
+    /**
+     * Filter which UploadedFile to delete.
+     */
+    where: UploadedFileWhereUniqueInput
+  }
+
+  /**
+   * UploadedFile deleteMany
+   */
+  export type UploadedFileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UploadedFiles to delete
+     */
+    where?: UploadedFileWhereInput
+    /**
+     * Limit how many UploadedFiles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UploadedFile.Material
+   */
+  export type UploadedFile$MaterialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material
+     */
+    select?: MaterialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Material
+     */
+    omit?: MaterialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MaterialInclude<ExtArgs> | null
+    where?: MaterialWhereInput
+  }
+
+  /**
+   * UploadedFile without action
+   */
+  export type UploadedFileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadedFile
+     */
+    select?: UploadedFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UploadedFile
+     */
+    omit?: UploadedFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadedFileInclude<ExtArgs> | null
   }
 
 
@@ -54801,6 +57440,7 @@ export namespace Prisma {
 
   export type ResultMinAggregateOutputType = {
     id: string | null
+    workspaceId: string | null
     studentId: string | null
     examId: string | null
     subject: string | null
@@ -54817,6 +57457,7 @@ export namespace Prisma {
 
   export type ResultMaxAggregateOutputType = {
     id: string | null
+    workspaceId: string | null
     studentId: string | null
     examId: string | null
     subject: string | null
@@ -54833,6 +57474,7 @@ export namespace Prisma {
 
   export type ResultCountAggregateOutputType = {
     id: number
+    workspaceId: number
     studentId: number
     examId: number
     subject: number
@@ -54867,6 +57509,7 @@ export namespace Prisma {
 
   export type ResultMinAggregateInputType = {
     id?: true
+    workspaceId?: true
     studentId?: true
     examId?: true
     subject?: true
@@ -54883,6 +57526,7 @@ export namespace Prisma {
 
   export type ResultMaxAggregateInputType = {
     id?: true
+    workspaceId?: true
     studentId?: true
     examId?: true
     subject?: true
@@ -54899,6 +57543,7 @@ export namespace Prisma {
 
   export type ResultCountAggregateInputType = {
     id?: true
+    workspaceId?: true
     studentId?: true
     examId?: true
     subject?: true
@@ -55002,6 +57647,7 @@ export namespace Prisma {
 
   export type ResultGroupByOutputType = {
     id: string
+    workspaceId: string | null
     studentId: string
     examId: string
     subject: string
@@ -55037,6 +57683,7 @@ export namespace Prisma {
 
   export type ResultSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    workspaceId?: boolean
     studentId?: boolean
     examId?: boolean
     subject?: boolean
@@ -55050,10 +57697,12 @@ export namespace Prisma {
     timeTaken?: boolean
     createdAt?: boolean
     student?: boolean | UserDefaultArgs<ExtArgs>
+    Workspace?: boolean | Result$WorkspaceArgs<ExtArgs>
   }, ExtArgs["result"]["result"]>
 
   export type ResultSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    workspaceId?: boolean
     studentId?: boolean
     examId?: boolean
     subject?: boolean
@@ -55067,10 +57716,12 @@ export namespace Prisma {
     timeTaken?: boolean
     createdAt?: boolean
     student?: boolean | UserDefaultArgs<ExtArgs>
+    Workspace?: boolean | Result$WorkspaceArgs<ExtArgs>
   }, ExtArgs["result"]["result"]>
 
   export type ResultSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    workspaceId?: boolean
     studentId?: boolean
     examId?: boolean
     subject?: boolean
@@ -55084,10 +57735,12 @@ export namespace Prisma {
     timeTaken?: boolean
     createdAt?: boolean
     student?: boolean | UserDefaultArgs<ExtArgs>
+    Workspace?: boolean | Result$WorkspaceArgs<ExtArgs>
   }, ExtArgs["result"]["result"]>
 
   export type ResultSelectScalar = {
     id?: boolean
+    workspaceId?: boolean
     studentId?: boolean
     examId?: boolean
     subject?: boolean
@@ -55102,24 +57755,29 @@ export namespace Prisma {
     createdAt?: boolean
   }
 
-  export type ResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "examId" | "subject" | "score" | "totalMarks" | "percentage" | "grade" | "rank" | "status" | "feedback" | "timeTaken" | "createdAt", ExtArgs["result"]["result"]>
+  export type ResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "studentId" | "examId" | "subject" | "score" | "totalMarks" | "percentage" | "grade" | "rank" | "status" | "feedback" | "timeTaken" | "createdAt", ExtArgs["result"]["result"]>
   export type ResultInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     student?: boolean | UserDefaultArgs<ExtArgs>
+    Workspace?: boolean | Result$WorkspaceArgs<ExtArgs>
   }
   export type ResultIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     student?: boolean | UserDefaultArgs<ExtArgs>
+    Workspace?: boolean | Result$WorkspaceArgs<ExtArgs>
   }
   export type ResultIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     student?: boolean | UserDefaultArgs<ExtArgs>
+    Workspace?: boolean | Result$WorkspaceArgs<ExtArgs>
   }
 
   export type $ResultPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Result"
     objects: {
       student: Prisma.$UserPayload<ExtArgs>
+      Workspace: Prisma.$WorkspacePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      workspaceId: string | null
       studentId: string
       examId: string
       subject: string
@@ -55527,6 +58185,7 @@ export namespace Prisma {
   export interface Prisma__ResultClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    Workspace<T extends Result$WorkspaceArgs<ExtArgs> = {}>(args?: Subset<T, Result$WorkspaceArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -55557,6 +58216,7 @@ export namespace Prisma {
    */
   interface ResultFieldRefs {
     readonly id: FieldRef<"Result", 'String'>
+    readonly workspaceId: FieldRef<"Result", 'String'>
     readonly studentId: FieldRef<"Result", 'String'>
     readonly examId: FieldRef<"Result", 'String'>
     readonly subject: FieldRef<"Result", 'String'>
@@ -55967,6 +58627,25 @@ export namespace Prisma {
      * Limit how many Results to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Result.Workspace
+   */
+  export type Result$WorkspaceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Workspace
+     */
+    select?: WorkspaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Workspace
+     */
+    omit?: WorkspaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkspaceInclude<ExtArgs> | null
+    where?: WorkspaceWhereInput
   }
 
   /**
@@ -57265,10 +59944,24 @@ export namespace Prisma {
     mode: 'mode',
     firstLogin: 'firstLogin',
     notificationPrefs: 'notificationPrefs',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    deletedAt: 'deletedAt'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const RefreshTokenScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    tokenHash: 'tokenHash',
+    expiresAt: 'expiresAt',
+    revokedAt: 'revokedAt',
+    replacedBy: 'replacedBy',
+    createdAt: 'createdAt'
+  };
+
+  export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
 
 
   export const OTPScalarFieldEnum: {
@@ -57790,6 +60483,7 @@ export namespace Prisma {
     title: 'title',
     type: 'type',
     fileUrl: 'fileUrl',
+    uploadedFileId: 'uploadedFileId',
     subject: 'subject',
     chapter: 'chapter',
     topic: 'topic',
@@ -57804,6 +60498,20 @@ export namespace Prisma {
   };
 
   export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
+
+
+  export const UploadedFileScalarFieldEnum: {
+    id: 'id',
+    workspaceId: 'workspaceId',
+    uploadedByUserId: 'uploadedByUserId',
+    originalName: 'originalName',
+    mimeType: 'mimeType',
+    sizeBytes: 'sizeBytes',
+    storageKey: 'storageKey',
+    createdAt: 'createdAt'
+  };
+
+  export type UploadedFileScalarFieldEnum = (typeof UploadedFileScalarFieldEnum)[keyof typeof UploadedFileScalarFieldEnum]
 
 
   export const SchoolLogScalarFieldEnum: {
@@ -57848,6 +60556,7 @@ export namespace Prisma {
 
   export const ResultScalarFieldEnum: {
     id: 'id',
+    workspaceId: 'workspaceId',
     studentId: 'studentId',
     examId: 'examId',
     subject: 'subject',
@@ -58026,6 +60735,7 @@ export namespace Prisma {
     firstLogin?: BoolFilter<"User"> | boolean
     notificationPrefs?: JsonNullableFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     attempts?: AssessmentAttemptListRelationFilter
     student?: XOR<StudentNullableScalarRelationFilter, StudentWhereInput> | null
     memberships?: WorkspaceMembershipListRelationFilter
@@ -58055,6 +60765,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestListRelationFilter
     reviewedLeaveRequests?: LeaveRequestListRelationFilter
     calendarEvents?: CalendarEventListRelationFilter
+    refreshTokens?: RefreshTokenListRelationFilter
+    uploadedFiles?: UploadedFileListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -58071,6 +60783,7 @@ export namespace Prisma {
     firstLogin?: SortOrder
     notificationPrefs?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
     attempts?: AssessmentAttemptOrderByRelationAggregateInput
     student?: StudentOrderByWithRelationInput
     memberships?: WorkspaceMembershipOrderByRelationAggregateInput
@@ -58100,6 +60813,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestOrderByRelationAggregateInput
     reviewedLeaveRequests?: LeaveRequestOrderByRelationAggregateInput
     calendarEvents?: CalendarEventOrderByRelationAggregateInput
+    refreshTokens?: RefreshTokenOrderByRelationAggregateInput
+    uploadedFiles?: UploadedFileOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -58119,6 +60834,7 @@ export namespace Prisma {
     firstLogin?: BoolFilter<"User"> | boolean
     notificationPrefs?: JsonNullableFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     attempts?: AssessmentAttemptListRelationFilter
     student?: XOR<StudentNullableScalarRelationFilter, StudentWhereInput> | null
     memberships?: WorkspaceMembershipListRelationFilter
@@ -58148,6 +60864,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestListRelationFilter
     reviewedLeaveRequests?: LeaveRequestListRelationFilter
     calendarEvents?: CalendarEventListRelationFilter
+    refreshTokens?: RefreshTokenListRelationFilter
+    uploadedFiles?: UploadedFileListRelationFilter
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -58164,6 +60882,7 @@ export namespace Prisma {
     firstLogin?: SortOrder
     notificationPrefs?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -58186,6 +60905,72 @@ export namespace Prisma {
     firstLogin?: BoolWithAggregatesFilter<"User"> | boolean
     notificationPrefs?: JsonNullableWithAggregatesFilter<"User">
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  }
+
+  export type RefreshTokenWhereInput = {
+    AND?: RefreshTokenWhereInput | RefreshTokenWhereInput[]
+    OR?: RefreshTokenWhereInput[]
+    NOT?: RefreshTokenWhereInput | RefreshTokenWhereInput[]
+    id?: StringFilter<"RefreshToken"> | string
+    userId?: StringFilter<"RefreshToken"> | string
+    tokenHash?: StringFilter<"RefreshToken"> | string
+    expiresAt?: DateTimeFilter<"RefreshToken"> | Date | string
+    revokedAt?: DateTimeNullableFilter<"RefreshToken"> | Date | string | null
+    replacedBy?: StringNullableFilter<"RefreshToken"> | string | null
+    createdAt?: DateTimeFilter<"RefreshToken"> | Date | string
+    User?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type RefreshTokenOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tokenHash?: SortOrder
+    expiresAt?: SortOrder
+    revokedAt?: SortOrderInput | SortOrder
+    replacedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    User?: UserOrderByWithRelationInput
+  }
+
+  export type RefreshTokenWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tokenHash?: string
+    AND?: RefreshTokenWhereInput | RefreshTokenWhereInput[]
+    OR?: RefreshTokenWhereInput[]
+    NOT?: RefreshTokenWhereInput | RefreshTokenWhereInput[]
+    userId?: StringFilter<"RefreshToken"> | string
+    expiresAt?: DateTimeFilter<"RefreshToken"> | Date | string
+    revokedAt?: DateTimeNullableFilter<"RefreshToken"> | Date | string | null
+    replacedBy?: StringNullableFilter<"RefreshToken"> | string | null
+    createdAt?: DateTimeFilter<"RefreshToken"> | Date | string
+    User?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "tokenHash">
+
+  export type RefreshTokenOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tokenHash?: SortOrder
+    expiresAt?: SortOrder
+    revokedAt?: SortOrderInput | SortOrder
+    replacedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: RefreshTokenCountOrderByAggregateInput
+    _max?: RefreshTokenMaxOrderByAggregateInput
+    _min?: RefreshTokenMinOrderByAggregateInput
+  }
+
+  export type RefreshTokenScalarWhereWithAggregatesInput = {
+    AND?: RefreshTokenScalarWhereWithAggregatesInput | RefreshTokenScalarWhereWithAggregatesInput[]
+    OR?: RefreshTokenScalarWhereWithAggregatesInput[]
+    NOT?: RefreshTokenScalarWhereWithAggregatesInput | RefreshTokenScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"RefreshToken"> | string
+    userId?: StringWithAggregatesFilter<"RefreshToken"> | string
+    tokenHash?: StringWithAggregatesFilter<"RefreshToken"> | string
+    expiresAt?: DateTimeWithAggregatesFilter<"RefreshToken"> | Date | string
+    revokedAt?: DateTimeNullableWithAggregatesFilter<"RefreshToken"> | Date | string | null
+    replacedBy?: StringNullableWithAggregatesFilter<"RefreshToken"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"RefreshToken"> | Date | string
   }
 
   export type OTPWhereInput = {
@@ -58293,6 +61078,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotListRelationFilter
     leaveRequests?: LeaveRequestListRelationFilter
     calendarEvents?: CalendarEventListRelationFilter
+    results?: ResultListRelationFilter
+    uploadedFiles?: UploadedFileListRelationFilter
   }
 
   export type WorkspaceOrderByWithRelationInput = {
@@ -58323,6 +61110,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotOrderByRelationAggregateInput
     leaveRequests?: LeaveRequestOrderByRelationAggregateInput
     calendarEvents?: CalendarEventOrderByRelationAggregateInput
+    results?: ResultOrderByRelationAggregateInput
+    uploadedFiles?: UploadedFileOrderByRelationAggregateInput
   }
 
   export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
@@ -58356,6 +61145,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotListRelationFilter
     leaveRequests?: LeaveRequestListRelationFilter
     calendarEvents?: CalendarEventListRelationFilter
+    results?: ResultListRelationFilter
+    uploadedFiles?: UploadedFileListRelationFilter
   }, "id">
 
   export type WorkspaceOrderByWithAggregationInput = {
@@ -61005,6 +63796,7 @@ export namespace Prisma {
     title?: StringFilter<"Material"> | string
     type?: StringFilter<"Material"> | string
     fileUrl?: StringFilter<"Material"> | string
+    uploadedFileId?: StringNullableFilter<"Material"> | string | null
     subject?: StringFilter<"Material"> | string
     chapter?: StringNullableFilter<"Material"> | string | null
     topic?: StringNullableFilter<"Material"> | string | null
@@ -61019,6 +63811,7 @@ export namespace Prisma {
     Workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
     Class?: XOR<ClassNullableScalarRelationFilter, ClassWhereInput> | null
     UploadedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    UploadedFile?: XOR<UploadedFileNullableScalarRelationFilter, UploadedFileWhereInput> | null
   }
 
   export type MaterialOrderByWithRelationInput = {
@@ -61026,6 +63819,7 @@ export namespace Prisma {
     title?: SortOrder
     type?: SortOrder
     fileUrl?: SortOrder
+    uploadedFileId?: SortOrderInput | SortOrder
     subject?: SortOrder
     chapter?: SortOrderInput | SortOrder
     topic?: SortOrderInput | SortOrder
@@ -61040,10 +63834,12 @@ export namespace Prisma {
     Workspace?: WorkspaceOrderByWithRelationInput
     Class?: ClassOrderByWithRelationInput
     UploadedBy?: UserOrderByWithRelationInput
+    UploadedFile?: UploadedFileOrderByWithRelationInput
   }
 
   export type MaterialWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    uploadedFileId?: string
     AND?: MaterialWhereInput | MaterialWhereInput[]
     OR?: MaterialWhereInput[]
     NOT?: MaterialWhereInput | MaterialWhereInput[]
@@ -61064,13 +63860,15 @@ export namespace Prisma {
     Workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
     Class?: XOR<ClassNullableScalarRelationFilter, ClassWhereInput> | null
     UploadedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+    UploadedFile?: XOR<UploadedFileNullableScalarRelationFilter, UploadedFileWhereInput> | null
+  }, "id" | "uploadedFileId">
 
   export type MaterialOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
     type?: SortOrder
     fileUrl?: SortOrder
+    uploadedFileId?: SortOrderInput | SortOrder
     subject?: SortOrder
     chapter?: SortOrderInput | SortOrder
     topic?: SortOrderInput | SortOrder
@@ -61097,6 +63895,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Material"> | string
     type?: StringWithAggregatesFilter<"Material"> | string
     fileUrl?: StringWithAggregatesFilter<"Material"> | string
+    uploadedFileId?: StringNullableWithAggregatesFilter<"Material"> | string | null
     subject?: StringWithAggregatesFilter<"Material"> | string
     chapter?: StringNullableWithAggregatesFilter<"Material"> | string | null
     topic?: StringNullableWithAggregatesFilter<"Material"> | string | null
@@ -61108,6 +63907,84 @@ export namespace Prisma {
     viewCount?: IntWithAggregatesFilter<"Material"> | number
     downloadCount?: IntWithAggregatesFilter<"Material"> | number
     uploadDate?: DateTimeWithAggregatesFilter<"Material"> | Date | string
+  }
+
+  export type UploadedFileWhereInput = {
+    AND?: UploadedFileWhereInput | UploadedFileWhereInput[]
+    OR?: UploadedFileWhereInput[]
+    NOT?: UploadedFileWhereInput | UploadedFileWhereInput[]
+    id?: StringFilter<"UploadedFile"> | string
+    workspaceId?: StringFilter<"UploadedFile"> | string
+    uploadedByUserId?: StringFilter<"UploadedFile"> | string
+    originalName?: StringFilter<"UploadedFile"> | string
+    mimeType?: StringFilter<"UploadedFile"> | string
+    sizeBytes?: IntFilter<"UploadedFile"> | number
+    storageKey?: StringFilter<"UploadedFile"> | string
+    createdAt?: DateTimeFilter<"UploadedFile"> | Date | string
+    Workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+    UploadedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    Material?: XOR<MaterialNullableScalarRelationFilter, MaterialWhereInput> | null
+  }
+
+  export type UploadedFileOrderByWithRelationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    uploadedByUserId?: SortOrder
+    originalName?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    storageKey?: SortOrder
+    createdAt?: SortOrder
+    Workspace?: WorkspaceOrderByWithRelationInput
+    UploadedBy?: UserOrderByWithRelationInput
+    Material?: MaterialOrderByWithRelationInput
+  }
+
+  export type UploadedFileWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    storageKey?: string
+    AND?: UploadedFileWhereInput | UploadedFileWhereInput[]
+    OR?: UploadedFileWhereInput[]
+    NOT?: UploadedFileWhereInput | UploadedFileWhereInput[]
+    workspaceId?: StringFilter<"UploadedFile"> | string
+    uploadedByUserId?: StringFilter<"UploadedFile"> | string
+    originalName?: StringFilter<"UploadedFile"> | string
+    mimeType?: StringFilter<"UploadedFile"> | string
+    sizeBytes?: IntFilter<"UploadedFile"> | number
+    createdAt?: DateTimeFilter<"UploadedFile"> | Date | string
+    Workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+    UploadedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    Material?: XOR<MaterialNullableScalarRelationFilter, MaterialWhereInput> | null
+  }, "id" | "storageKey">
+
+  export type UploadedFileOrderByWithAggregationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    uploadedByUserId?: SortOrder
+    originalName?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    storageKey?: SortOrder
+    createdAt?: SortOrder
+    _count?: UploadedFileCountOrderByAggregateInput
+    _avg?: UploadedFileAvgOrderByAggregateInput
+    _max?: UploadedFileMaxOrderByAggregateInput
+    _min?: UploadedFileMinOrderByAggregateInput
+    _sum?: UploadedFileSumOrderByAggregateInput
+  }
+
+  export type UploadedFileScalarWhereWithAggregatesInput = {
+    AND?: UploadedFileScalarWhereWithAggregatesInput | UploadedFileScalarWhereWithAggregatesInput[]
+    OR?: UploadedFileScalarWhereWithAggregatesInput[]
+    NOT?: UploadedFileScalarWhereWithAggregatesInput | UploadedFileScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UploadedFile"> | string
+    workspaceId?: StringWithAggregatesFilter<"UploadedFile"> | string
+    uploadedByUserId?: StringWithAggregatesFilter<"UploadedFile"> | string
+    originalName?: StringWithAggregatesFilter<"UploadedFile"> | string
+    mimeType?: StringWithAggregatesFilter<"UploadedFile"> | string
+    sizeBytes?: IntWithAggregatesFilter<"UploadedFile"> | number
+    storageKey?: StringWithAggregatesFilter<"UploadedFile"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"UploadedFile"> | Date | string
   }
 
   export type SchoolLogWhereInput = {
@@ -61318,6 +64195,7 @@ export namespace Prisma {
     OR?: ResultWhereInput[]
     NOT?: ResultWhereInput | ResultWhereInput[]
     id?: StringFilter<"Result"> | string
+    workspaceId?: StringNullableFilter<"Result"> | string | null
     studentId?: StringFilter<"Result"> | string
     examId?: StringFilter<"Result"> | string
     subject?: StringFilter<"Result"> | string
@@ -61331,10 +64209,12 @@ export namespace Prisma {
     timeTaken?: IntNullableFilter<"Result"> | number | null
     createdAt?: DateTimeFilter<"Result"> | Date | string
     student?: XOR<UserScalarRelationFilter, UserWhereInput>
+    Workspace?: XOR<WorkspaceNullableScalarRelationFilter, WorkspaceWhereInput> | null
   }
 
   export type ResultOrderByWithRelationInput = {
     id?: SortOrder
+    workspaceId?: SortOrderInput | SortOrder
     studentId?: SortOrder
     examId?: SortOrder
     subject?: SortOrder
@@ -61348,6 +64228,7 @@ export namespace Prisma {
     timeTaken?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     student?: UserOrderByWithRelationInput
+    Workspace?: WorkspaceOrderByWithRelationInput
   }
 
   export type ResultWhereUniqueInput = Prisma.AtLeast<{
@@ -61355,6 +64236,7 @@ export namespace Prisma {
     AND?: ResultWhereInput | ResultWhereInput[]
     OR?: ResultWhereInput[]
     NOT?: ResultWhereInput | ResultWhereInput[]
+    workspaceId?: StringNullableFilter<"Result"> | string | null
     studentId?: StringFilter<"Result"> | string
     examId?: StringFilter<"Result"> | string
     subject?: StringFilter<"Result"> | string
@@ -61368,10 +64250,12 @@ export namespace Prisma {
     timeTaken?: IntNullableFilter<"Result"> | number | null
     createdAt?: DateTimeFilter<"Result"> | Date | string
     student?: XOR<UserScalarRelationFilter, UserWhereInput>
+    Workspace?: XOR<WorkspaceNullableScalarRelationFilter, WorkspaceWhereInput> | null
   }, "id">
 
   export type ResultOrderByWithAggregationInput = {
     id?: SortOrder
+    workspaceId?: SortOrderInput | SortOrder
     studentId?: SortOrder
     examId?: SortOrder
     subject?: SortOrder
@@ -61396,6 +64280,7 @@ export namespace Prisma {
     OR?: ResultScalarWhereWithAggregatesInput[]
     NOT?: ResultScalarWhereWithAggregatesInput | ResultScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Result"> | string
+    workspaceId?: StringNullableWithAggregatesFilter<"Result"> | string | null
     studentId?: StringWithAggregatesFilter<"Result"> | string
     examId?: StringWithAggregatesFilter<"Result"> | string
     subject?: StringWithAggregatesFilter<"Result"> | string
@@ -61526,6 +64411,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -61555,6 +64441,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -61571,6 +64459,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -61600,6 +64489,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUpdateInput = {
@@ -61616,6 +64507,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -61645,6 +64537,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -61661,6 +64555,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -61690,6 +64585,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -61706,6 +64603,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -61722,6 +64620,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -61737,6 +64636,76 @@ export namespace Prisma {
     mode?: NullableStringFieldUpdateOperationsInput | string | null
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type RefreshTokenCreateInput = {
+    id?: string
+    tokenHash: string
+    expiresAt: Date | string
+    revokedAt?: Date | string | null
+    replacedBy?: string | null
+    createdAt?: Date | string
+    User: UserCreateNestedOneWithoutRefreshTokensInput
+  }
+
+  export type RefreshTokenUncheckedCreateInput = {
+    id?: string
+    userId: string
+    tokenHash: string
+    expiresAt: Date | string
+    revokedAt?: Date | string | null
+    replacedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RefreshTokenUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    replacedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    User?: UserUpdateOneRequiredWithoutRefreshTokensNestedInput
+  }
+
+  export type RefreshTokenUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    replacedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RefreshTokenCreateManyInput = {
+    id?: string
+    userId: string
+    tokenHash: string
+    expiresAt: Date | string
+    revokedAt?: Date | string | null
+    replacedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RefreshTokenUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    replacedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RefreshTokenUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    replacedBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -61852,6 +64821,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateInput = {
@@ -61882,6 +64853,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUpdateInput = {
@@ -61912,6 +64885,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateInput = {
@@ -61942,6 +64917,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateManyInput = {
@@ -64689,6 +67666,7 @@ export namespace Prisma {
     Workspace: WorkspaceCreateNestedOneWithoutMaterialsInput
     Class?: ClassCreateNestedOneWithoutMaterialsInput
     UploadedBy: UserCreateNestedOneWithoutMaterialsInput
+    UploadedFile?: UploadedFileCreateNestedOneWithoutMaterialInput
   }
 
   export type MaterialUncheckedCreateInput = {
@@ -64696,6 +67674,7 @@ export namespace Prisma {
     title: string
     type: string
     fileUrl: string
+    uploadedFileId?: string | null
     subject: string
     chapter?: string | null
     topic?: string | null
@@ -64725,6 +67704,7 @@ export namespace Prisma {
     Workspace?: WorkspaceUpdateOneRequiredWithoutMaterialsNestedInput
     Class?: ClassUpdateOneWithoutMaterialsNestedInput
     UploadedBy?: UserUpdateOneRequiredWithoutMaterialsNestedInput
+    UploadedFile?: UploadedFileUpdateOneWithoutMaterialNestedInput
   }
 
   export type MaterialUncheckedUpdateInput = {
@@ -64732,6 +67712,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
+    uploadedFileId?: NullableStringFieldUpdateOperationsInput | string | null
     subject?: StringFieldUpdateOperationsInput | string
     chapter?: NullableStringFieldUpdateOperationsInput | string | null
     topic?: NullableStringFieldUpdateOperationsInput | string | null
@@ -64750,6 +67731,7 @@ export namespace Prisma {
     title: string
     type: string
     fileUrl: string
+    uploadedFileId?: string | null
     subject: string
     chapter?: string | null
     topic?: string | null
@@ -64783,6 +67765,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
+    uploadedFileId?: NullableStringFieldUpdateOperationsInput | string | null
     subject?: StringFieldUpdateOperationsInput | string
     chapter?: NullableStringFieldUpdateOperationsInput | string | null
     topic?: NullableStringFieldUpdateOperationsInput | string | null
@@ -64794,6 +67777,85 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     downloadCount?: IntFieldUpdateOperationsInput | number
     uploadDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UploadedFileCreateInput = {
+    id?: string
+    originalName: string
+    mimeType: string
+    sizeBytes: number
+    storageKey: string
+    createdAt?: Date | string
+    Workspace: WorkspaceCreateNestedOneWithoutUploadedFilesInput
+    UploadedBy: UserCreateNestedOneWithoutUploadedFilesInput
+    Material?: MaterialCreateNestedOneWithoutUploadedFileInput
+  }
+
+  export type UploadedFileUncheckedCreateInput = {
+    id?: string
+    workspaceId: string
+    uploadedByUserId: string
+    originalName: string
+    mimeType: string
+    sizeBytes: number
+    storageKey: string
+    createdAt?: Date | string
+    Material?: MaterialUncheckedCreateNestedOneWithoutUploadedFileInput
+  }
+
+  export type UploadedFileUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    storageKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Workspace?: WorkspaceUpdateOneRequiredWithoutUploadedFilesNestedInput
+    UploadedBy?: UserUpdateOneRequiredWithoutUploadedFilesNestedInput
+    Material?: MaterialUpdateOneWithoutUploadedFileNestedInput
+  }
+
+  export type UploadedFileUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    uploadedByUserId?: StringFieldUpdateOperationsInput | string
+    originalName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    storageKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Material?: MaterialUncheckedUpdateOneWithoutUploadedFileNestedInput
+  }
+
+  export type UploadedFileCreateManyInput = {
+    id?: string
+    workspaceId: string
+    uploadedByUserId: string
+    originalName: string
+    mimeType: string
+    sizeBytes: number
+    storageKey: string
+    createdAt?: Date | string
+  }
+
+  export type UploadedFileUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    storageKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UploadedFileUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    uploadedByUserId?: StringFieldUpdateOperationsInput | string
+    originalName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    storageKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SchoolLogCreateInput = {
@@ -65023,10 +68085,12 @@ export namespace Prisma {
     timeTaken?: number | null
     createdAt?: Date | string
     student: UserCreateNestedOneWithoutResultsInput
+    Workspace?: WorkspaceCreateNestedOneWithoutResultsInput
   }
 
   export type ResultUncheckedCreateInput = {
     id?: string
+    workspaceId?: string | null
     studentId: string
     examId: string
     subject: string
@@ -65055,10 +68119,12 @@ export namespace Prisma {
     timeTaken?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     student?: UserUpdateOneRequiredWithoutResultsNestedInput
+    Workspace?: WorkspaceUpdateOneWithoutResultsNestedInput
   }
 
   export type ResultUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     studentId?: StringFieldUpdateOperationsInput | string
     examId?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
@@ -65075,6 +68141,7 @@ export namespace Prisma {
 
   export type ResultCreateManyInput = {
     id?: string
+    workspaceId?: string | null
     studentId: string
     examId: string
     subject: string
@@ -65106,6 +68173,7 @@ export namespace Prisma {
 
   export type ResultUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     studentId?: StringFieldUpdateOperationsInput | string
     examId?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
@@ -65290,6 +68358,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type AssessmentAttemptListRelationFilter = {
     every?: AssessmentAttemptWhereInput
     some?: AssessmentAttemptWhereInput
@@ -65433,6 +68512,18 @@ export namespace Prisma {
     none?: CalendarEventWhereInput
   }
 
+  export type RefreshTokenListRelationFilter = {
+    every?: RefreshTokenWhereInput
+    some?: RefreshTokenWhereInput
+    none?: RefreshTokenWhereInput
+  }
+
+  export type UploadedFileListRelationFilter = {
+    every?: UploadedFileWhereInput
+    some?: UploadedFileWhereInput
+    none?: UploadedFileWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -65530,6 +68621,14 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type RefreshTokenOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UploadedFileOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     username?: SortOrder
@@ -65544,6 +68643,7 @@ export namespace Prisma {
     firstLogin?: SortOrder
     notificationPrefs?: SortOrder
     createdAt?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -65559,6 +68659,7 @@ export namespace Prisma {
     mode?: SortOrder
     firstLogin?: SortOrder
     createdAt?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -65574,6 +68675,7 @@ export namespace Prisma {
     mode?: SortOrder
     firstLogin?: SortOrder
     createdAt?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -65660,6 +68762,55 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type RefreshTokenCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tokenHash?: SortOrder
+    expiresAt?: SortOrder
+    revokedAt?: SortOrder
+    replacedBy?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type RefreshTokenMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tokenHash?: SortOrder
+    expiresAt?: SortOrder
+    revokedAt?: SortOrder
+    replacedBy?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type RefreshTokenMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tokenHash?: SortOrder
+    expiresAt?: SortOrder
+    revokedAt?: SortOrder
+    replacedBy?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -65669,17 +68820,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type OTPCountOrderByAggregateInput = {
@@ -65740,20 +68880,6 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type AssessmentAssignmentListRelationFilter = {
@@ -65862,11 +68988,6 @@ export namespace Prisma {
     term?: SortOrder
     semester?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type WorkspaceScalarRelationFilter = {
@@ -67419,11 +70540,17 @@ export namespace Prisma {
     isNot?: ClassWhereInput | null
   }
 
+  export type UploadedFileNullableScalarRelationFilter = {
+    is?: UploadedFileWhereInput | null
+    isNot?: UploadedFileWhereInput | null
+  }
+
   export type MaterialCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     type?: SortOrder
     fileUrl?: SortOrder
+    uploadedFileId?: SortOrder
     subject?: SortOrder
     chapter?: SortOrder
     topic?: SortOrder
@@ -67447,6 +70574,7 @@ export namespace Prisma {
     title?: SortOrder
     type?: SortOrder
     fileUrl?: SortOrder
+    uploadedFileId?: SortOrder
     subject?: SortOrder
     chapter?: SortOrder
     topic?: SortOrder
@@ -67465,6 +70593,7 @@ export namespace Prisma {
     title?: SortOrder
     type?: SortOrder
     fileUrl?: SortOrder
+    uploadedFileId?: SortOrder
     subject?: SortOrder
     chapter?: SortOrder
     topic?: SortOrder
@@ -67481,6 +70610,52 @@ export namespace Prisma {
   export type MaterialSumOrderByAggregateInput = {
     viewCount?: SortOrder
     downloadCount?: SortOrder
+  }
+
+  export type MaterialNullableScalarRelationFilter = {
+    is?: MaterialWhereInput | null
+    isNot?: MaterialWhereInput | null
+  }
+
+  export type UploadedFileCountOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    uploadedByUserId?: SortOrder
+    originalName?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    storageKey?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UploadedFileAvgOrderByAggregateInput = {
+    sizeBytes?: SortOrder
+  }
+
+  export type UploadedFileMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    uploadedByUserId?: SortOrder
+    originalName?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    storageKey?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UploadedFileMinOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    uploadedByUserId?: SortOrder
+    originalName?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    storageKey?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UploadedFileSumOrderByAggregateInput = {
+    sizeBytes?: SortOrder
   }
 
   export type SchoolLogCountOrderByAggregateInput = {
@@ -67578,6 +70753,7 @@ export namespace Prisma {
 
   export type ResultCountOrderByAggregateInput = {
     id?: SortOrder
+    workspaceId?: SortOrder
     studentId?: SortOrder
     examId?: SortOrder
     subject?: SortOrder
@@ -67602,6 +70778,7 @@ export namespace Prisma {
 
   export type ResultMaxOrderByAggregateInput = {
     id?: SortOrder
+    workspaceId?: SortOrder
     studentId?: SortOrder
     examId?: SortOrder
     subject?: SortOrder
@@ -67618,6 +70795,7 @@ export namespace Prisma {
 
   export type ResultMinOrderByAggregateInput = {
     id?: SortOrder
+    workspaceId?: SortOrder
     studentId?: SortOrder
     examId?: SortOrder
     subject?: SortOrder
@@ -67906,6 +71084,20 @@ export namespace Prisma {
     connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
   }
 
+  export type RefreshTokenCreateNestedManyWithoutUserInput = {
+    create?: XOR<RefreshTokenCreateWithoutUserInput, RefreshTokenUncheckedCreateWithoutUserInput> | RefreshTokenCreateWithoutUserInput[] | RefreshTokenUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RefreshTokenCreateOrConnectWithoutUserInput | RefreshTokenCreateOrConnectWithoutUserInput[]
+    createMany?: RefreshTokenCreateManyUserInputEnvelope
+    connect?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[]
+  }
+
+  export type UploadedFileCreateNestedManyWithoutUploadedByInput = {
+    create?: XOR<UploadedFileCreateWithoutUploadedByInput, UploadedFileUncheckedCreateWithoutUploadedByInput> | UploadedFileCreateWithoutUploadedByInput[] | UploadedFileUncheckedCreateWithoutUploadedByInput[]
+    connectOrCreate?: UploadedFileCreateOrConnectWithoutUploadedByInput | UploadedFileCreateOrConnectWithoutUploadedByInput[]
+    createMany?: UploadedFileCreateManyUploadedByInputEnvelope
+    connect?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+  }
+
   export type AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AssessmentAttemptCreateWithoutUserInput, AssessmentAttemptUncheckedCreateWithoutUserInput> | AssessmentAttemptCreateWithoutUserInput[] | AssessmentAttemptUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutUserInput | AssessmentAttemptCreateOrConnectWithoutUserInput[]
@@ -68108,6 +71300,20 @@ export namespace Prisma {
     connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
   }
 
+  export type RefreshTokenUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<RefreshTokenCreateWithoutUserInput, RefreshTokenUncheckedCreateWithoutUserInput> | RefreshTokenCreateWithoutUserInput[] | RefreshTokenUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RefreshTokenCreateOrConnectWithoutUserInput | RefreshTokenCreateOrConnectWithoutUserInput[]
+    createMany?: RefreshTokenCreateManyUserInputEnvelope
+    connect?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[]
+  }
+
+  export type UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput = {
+    create?: XOR<UploadedFileCreateWithoutUploadedByInput, UploadedFileUncheckedCreateWithoutUploadedByInput> | UploadedFileCreateWithoutUploadedByInput[] | UploadedFileUncheckedCreateWithoutUploadedByInput[]
+    connectOrCreate?: UploadedFileCreateOrConnectWithoutUploadedByInput | UploadedFileCreateOrConnectWithoutUploadedByInput[]
+    createMany?: UploadedFileCreateManyUploadedByInputEnvelope
+    connect?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -68122,6 +71328,10 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type AssessmentAttemptUpdateManyWithoutUserNestedInput = {
@@ -68526,6 +71736,34 @@ export namespace Prisma {
     deleteMany?: CalendarEventScalarWhereInput | CalendarEventScalarWhereInput[]
   }
 
+  export type RefreshTokenUpdateManyWithoutUserNestedInput = {
+    create?: XOR<RefreshTokenCreateWithoutUserInput, RefreshTokenUncheckedCreateWithoutUserInput> | RefreshTokenCreateWithoutUserInput[] | RefreshTokenUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RefreshTokenCreateOrConnectWithoutUserInput | RefreshTokenCreateOrConnectWithoutUserInput[]
+    upsert?: RefreshTokenUpsertWithWhereUniqueWithoutUserInput | RefreshTokenUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: RefreshTokenCreateManyUserInputEnvelope
+    set?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[]
+    disconnect?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[]
+    delete?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[]
+    connect?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[]
+    update?: RefreshTokenUpdateWithWhereUniqueWithoutUserInput | RefreshTokenUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: RefreshTokenUpdateManyWithWhereWithoutUserInput | RefreshTokenUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: RefreshTokenScalarWhereInput | RefreshTokenScalarWhereInput[]
+  }
+
+  export type UploadedFileUpdateManyWithoutUploadedByNestedInput = {
+    create?: XOR<UploadedFileCreateWithoutUploadedByInput, UploadedFileUncheckedCreateWithoutUploadedByInput> | UploadedFileCreateWithoutUploadedByInput[] | UploadedFileUncheckedCreateWithoutUploadedByInput[]
+    connectOrCreate?: UploadedFileCreateOrConnectWithoutUploadedByInput | UploadedFileCreateOrConnectWithoutUploadedByInput[]
+    upsert?: UploadedFileUpsertWithWhereUniqueWithoutUploadedByInput | UploadedFileUpsertWithWhereUniqueWithoutUploadedByInput[]
+    createMany?: UploadedFileCreateManyUploadedByInputEnvelope
+    set?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    disconnect?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    delete?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    connect?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    update?: UploadedFileUpdateWithWhereUniqueWithoutUploadedByInput | UploadedFileUpdateWithWhereUniqueWithoutUploadedByInput[]
+    updateMany?: UploadedFileUpdateManyWithWhereWithoutUploadedByInput | UploadedFileUpdateManyWithWhereWithoutUploadedByInput[]
+    deleteMany?: UploadedFileScalarWhereInput | UploadedFileScalarWhereInput[]
+  }
+
   export type AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AssessmentAttemptCreateWithoutUserInput, AssessmentAttemptUncheckedCreateWithoutUserInput> | AssessmentAttemptCreateWithoutUserInput[] | AssessmentAttemptUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutUserInput | AssessmentAttemptCreateOrConnectWithoutUserInput[]
@@ -68928,16 +72166,54 @@ export namespace Prisma {
     deleteMany?: CalendarEventScalarWhereInput | CalendarEventScalarWhereInput[]
   }
 
+  export type RefreshTokenUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<RefreshTokenCreateWithoutUserInput, RefreshTokenUncheckedCreateWithoutUserInput> | RefreshTokenCreateWithoutUserInput[] | RefreshTokenUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RefreshTokenCreateOrConnectWithoutUserInput | RefreshTokenCreateOrConnectWithoutUserInput[]
+    upsert?: RefreshTokenUpsertWithWhereUniqueWithoutUserInput | RefreshTokenUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: RefreshTokenCreateManyUserInputEnvelope
+    set?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[]
+    disconnect?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[]
+    delete?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[]
+    connect?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[]
+    update?: RefreshTokenUpdateWithWhereUniqueWithoutUserInput | RefreshTokenUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: RefreshTokenUpdateManyWithWhereWithoutUserInput | RefreshTokenUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: RefreshTokenScalarWhereInput | RefreshTokenScalarWhereInput[]
+  }
+
+  export type UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput = {
+    create?: XOR<UploadedFileCreateWithoutUploadedByInput, UploadedFileUncheckedCreateWithoutUploadedByInput> | UploadedFileCreateWithoutUploadedByInput[] | UploadedFileUncheckedCreateWithoutUploadedByInput[]
+    connectOrCreate?: UploadedFileCreateOrConnectWithoutUploadedByInput | UploadedFileCreateOrConnectWithoutUploadedByInput[]
+    upsert?: UploadedFileUpsertWithWhereUniqueWithoutUploadedByInput | UploadedFileUpsertWithWhereUniqueWithoutUploadedByInput[]
+    createMany?: UploadedFileCreateManyUploadedByInputEnvelope
+    set?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    disconnect?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    delete?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    connect?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    update?: UploadedFileUpdateWithWhereUniqueWithoutUploadedByInput | UploadedFileUpdateWithWhereUniqueWithoutUploadedByInput[]
+    updateMany?: UploadedFileUpdateManyWithWhereWithoutUploadedByInput | UploadedFileUpdateManyWithWhereWithoutUploadedByInput[]
+    deleteMany?: UploadedFileScalarWhereInput | UploadedFileScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutRefreshTokensInput = {
+    create?: XOR<UserCreateWithoutRefreshTokensInput, UserUncheckedCreateWithoutRefreshTokensInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRefreshTokensInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutRefreshTokensNestedInput = {
+    create?: XOR<UserCreateWithoutRefreshTokensInput, UserUncheckedCreateWithoutRefreshTokensInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRefreshTokensInput
+    upsert?: UserUpsertWithoutRefreshTokensInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRefreshTokensInput, UserUpdateWithoutRefreshTokensInput>, UserUncheckedUpdateWithoutRefreshTokensInput>
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput = {
@@ -69038,6 +72314,20 @@ export namespace Prisma {
     connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
   }
 
+  export type ResultCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<ResultCreateWithoutWorkspaceInput, ResultUncheckedCreateWithoutWorkspaceInput> | ResultCreateWithoutWorkspaceInput[] | ResultUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: ResultCreateOrConnectWithoutWorkspaceInput | ResultCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: ResultCreateManyWorkspaceInputEnvelope
+    connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+  }
+
+  export type UploadedFileCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<UploadedFileCreateWithoutWorkspaceInput, UploadedFileUncheckedCreateWithoutWorkspaceInput> | UploadedFileCreateWithoutWorkspaceInput[] | UploadedFileUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: UploadedFileCreateOrConnectWithoutWorkspaceInput | UploadedFileCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: UploadedFileCreateManyWorkspaceInputEnvelope
+    connect?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+  }
+
   export type WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput = {
     create?: XOR<WorkspaceMembershipCreateWithoutWorkspaceInput, WorkspaceMembershipUncheckedCreateWithoutWorkspaceInput> | WorkspaceMembershipCreateWithoutWorkspaceInput[] | WorkspaceMembershipUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMembershipCreateOrConnectWithoutWorkspaceInput | WorkspaceMembershipCreateOrConnectWithoutWorkspaceInput[]
@@ -69134,6 +72424,20 @@ export namespace Prisma {
     connectOrCreate?: CalendarEventCreateOrConnectWithoutWorkspaceInput | CalendarEventCreateOrConnectWithoutWorkspaceInput[]
     createMany?: CalendarEventCreateManyWorkspaceInputEnvelope
     connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+  }
+
+  export type ResultUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<ResultCreateWithoutWorkspaceInput, ResultUncheckedCreateWithoutWorkspaceInput> | ResultCreateWithoutWorkspaceInput[] | ResultUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: ResultCreateOrConnectWithoutWorkspaceInput | ResultCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: ResultCreateManyWorkspaceInputEnvelope
+    connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+  }
+
+  export type UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<UploadedFileCreateWithoutWorkspaceInput, UploadedFileUncheckedCreateWithoutWorkspaceInput> | UploadedFileCreateWithoutWorkspaceInput[] | UploadedFileUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: UploadedFileCreateOrConnectWithoutWorkspaceInput | UploadedFileCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: UploadedFileCreateManyWorkspaceInputEnvelope
+    connect?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
   }
 
   export type WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput = {
@@ -69332,6 +72636,34 @@ export namespace Prisma {
     deleteMany?: CalendarEventScalarWhereInput | CalendarEventScalarWhereInput[]
   }
 
+  export type ResultUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<ResultCreateWithoutWorkspaceInput, ResultUncheckedCreateWithoutWorkspaceInput> | ResultCreateWithoutWorkspaceInput[] | ResultUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: ResultCreateOrConnectWithoutWorkspaceInput | ResultCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: ResultUpsertWithWhereUniqueWithoutWorkspaceInput | ResultUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: ResultCreateManyWorkspaceInputEnvelope
+    set?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    disconnect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    delete?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    update?: ResultUpdateWithWhereUniqueWithoutWorkspaceInput | ResultUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: ResultUpdateManyWithWhereWithoutWorkspaceInput | ResultUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: ResultScalarWhereInput | ResultScalarWhereInput[]
+  }
+
+  export type UploadedFileUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<UploadedFileCreateWithoutWorkspaceInput, UploadedFileUncheckedCreateWithoutWorkspaceInput> | UploadedFileCreateWithoutWorkspaceInput[] | UploadedFileUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: UploadedFileCreateOrConnectWithoutWorkspaceInput | UploadedFileCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: UploadedFileUpsertWithWhereUniqueWithoutWorkspaceInput | UploadedFileUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: UploadedFileCreateManyWorkspaceInputEnvelope
+    set?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    disconnect?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    delete?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    connect?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    update?: UploadedFileUpdateWithWhereUniqueWithoutWorkspaceInput | UploadedFileUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: UploadedFileUpdateManyWithWhereWithoutWorkspaceInput | UploadedFileUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: UploadedFileScalarWhereInput | UploadedFileScalarWhereInput[]
+  }
+
   export type WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput = {
     create?: XOR<WorkspaceMembershipCreateWithoutWorkspaceInput, WorkspaceMembershipUncheckedCreateWithoutWorkspaceInput> | WorkspaceMembershipCreateWithoutWorkspaceInput[] | WorkspaceMembershipUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMembershipCreateOrConnectWithoutWorkspaceInput | WorkspaceMembershipCreateOrConnectWithoutWorkspaceInput[]
@@ -69526,6 +72858,34 @@ export namespace Prisma {
     update?: CalendarEventUpdateWithWhereUniqueWithoutWorkspaceInput | CalendarEventUpdateWithWhereUniqueWithoutWorkspaceInput[]
     updateMany?: CalendarEventUpdateManyWithWhereWithoutWorkspaceInput | CalendarEventUpdateManyWithWhereWithoutWorkspaceInput[]
     deleteMany?: CalendarEventScalarWhereInput | CalendarEventScalarWhereInput[]
+  }
+
+  export type ResultUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<ResultCreateWithoutWorkspaceInput, ResultUncheckedCreateWithoutWorkspaceInput> | ResultCreateWithoutWorkspaceInput[] | ResultUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: ResultCreateOrConnectWithoutWorkspaceInput | ResultCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: ResultUpsertWithWhereUniqueWithoutWorkspaceInput | ResultUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: ResultCreateManyWorkspaceInputEnvelope
+    set?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    disconnect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    delete?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    update?: ResultUpdateWithWhereUniqueWithoutWorkspaceInput | ResultUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: ResultUpdateManyWithWhereWithoutWorkspaceInput | ResultUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: ResultScalarWhereInput | ResultScalarWhereInput[]
+  }
+
+  export type UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<UploadedFileCreateWithoutWorkspaceInput, UploadedFileUncheckedCreateWithoutWorkspaceInput> | UploadedFileCreateWithoutWorkspaceInput[] | UploadedFileUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: UploadedFileCreateOrConnectWithoutWorkspaceInput | UploadedFileCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: UploadedFileUpsertWithWhereUniqueWithoutWorkspaceInput | UploadedFileUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: UploadedFileCreateManyWorkspaceInputEnvelope
+    set?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    disconnect?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    delete?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    connect?: UploadedFileWhereUniqueInput | UploadedFileWhereUniqueInput[]
+    update?: UploadedFileUpdateWithWhereUniqueWithoutWorkspaceInput | UploadedFileUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: UploadedFileUpdateManyWithWhereWithoutWorkspaceInput | UploadedFileUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: UploadedFileScalarWhereInput | UploadedFileScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutMembershipsInput = {
@@ -71655,6 +75015,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type UploadedFileCreateNestedOneWithoutMaterialInput = {
+    create?: XOR<UploadedFileCreateWithoutMaterialInput, UploadedFileUncheckedCreateWithoutMaterialInput>
+    connectOrCreate?: UploadedFileCreateOrConnectWithoutMaterialInput
+    connect?: UploadedFileWhereUniqueInput
+  }
+
   export type WorkspaceUpdateOneRequiredWithoutMaterialsNestedInput = {
     create?: XOR<WorkspaceCreateWithoutMaterialsInput, WorkspaceUncheckedCreateWithoutMaterialsInput>
     connectOrCreate?: WorkspaceCreateOrConnectWithoutMaterialsInput
@@ -71679,6 +75045,76 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutMaterialsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMaterialsInput, UserUpdateWithoutMaterialsInput>, UserUncheckedUpdateWithoutMaterialsInput>
+  }
+
+  export type UploadedFileUpdateOneWithoutMaterialNestedInput = {
+    create?: XOR<UploadedFileCreateWithoutMaterialInput, UploadedFileUncheckedCreateWithoutMaterialInput>
+    connectOrCreate?: UploadedFileCreateOrConnectWithoutMaterialInput
+    upsert?: UploadedFileUpsertWithoutMaterialInput
+    disconnect?: UploadedFileWhereInput | boolean
+    delete?: UploadedFileWhereInput | boolean
+    connect?: UploadedFileWhereUniqueInput
+    update?: XOR<XOR<UploadedFileUpdateToOneWithWhereWithoutMaterialInput, UploadedFileUpdateWithoutMaterialInput>, UploadedFileUncheckedUpdateWithoutMaterialInput>
+  }
+
+  export type WorkspaceCreateNestedOneWithoutUploadedFilesInput = {
+    create?: XOR<WorkspaceCreateWithoutUploadedFilesInput, WorkspaceUncheckedCreateWithoutUploadedFilesInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutUploadedFilesInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutUploadedFilesInput = {
+    create?: XOR<UserCreateWithoutUploadedFilesInput, UserUncheckedCreateWithoutUploadedFilesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUploadedFilesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type MaterialCreateNestedOneWithoutUploadedFileInput = {
+    create?: XOR<MaterialCreateWithoutUploadedFileInput, MaterialUncheckedCreateWithoutUploadedFileInput>
+    connectOrCreate?: MaterialCreateOrConnectWithoutUploadedFileInput
+    connect?: MaterialWhereUniqueInput
+  }
+
+  export type MaterialUncheckedCreateNestedOneWithoutUploadedFileInput = {
+    create?: XOR<MaterialCreateWithoutUploadedFileInput, MaterialUncheckedCreateWithoutUploadedFileInput>
+    connectOrCreate?: MaterialCreateOrConnectWithoutUploadedFileInput
+    connect?: MaterialWhereUniqueInput
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutUploadedFilesNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutUploadedFilesInput, WorkspaceUncheckedCreateWithoutUploadedFilesInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutUploadedFilesInput
+    upsert?: WorkspaceUpsertWithoutUploadedFilesInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutUploadedFilesInput, WorkspaceUpdateWithoutUploadedFilesInput>, WorkspaceUncheckedUpdateWithoutUploadedFilesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutUploadedFilesNestedInput = {
+    create?: XOR<UserCreateWithoutUploadedFilesInput, UserUncheckedCreateWithoutUploadedFilesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUploadedFilesInput
+    upsert?: UserUpsertWithoutUploadedFilesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUploadedFilesInput, UserUpdateWithoutUploadedFilesInput>, UserUncheckedUpdateWithoutUploadedFilesInput>
+  }
+
+  export type MaterialUpdateOneWithoutUploadedFileNestedInput = {
+    create?: XOR<MaterialCreateWithoutUploadedFileInput, MaterialUncheckedCreateWithoutUploadedFileInput>
+    connectOrCreate?: MaterialCreateOrConnectWithoutUploadedFileInput
+    upsert?: MaterialUpsertWithoutUploadedFileInput
+    disconnect?: MaterialWhereInput | boolean
+    delete?: MaterialWhereInput | boolean
+    connect?: MaterialWhereUniqueInput
+    update?: XOR<XOR<MaterialUpdateToOneWithWhereWithoutUploadedFileInput, MaterialUpdateWithoutUploadedFileInput>, MaterialUncheckedUpdateWithoutUploadedFileInput>
+  }
+
+  export type MaterialUncheckedUpdateOneWithoutUploadedFileNestedInput = {
+    create?: XOR<MaterialCreateWithoutUploadedFileInput, MaterialUncheckedCreateWithoutUploadedFileInput>
+    connectOrCreate?: MaterialCreateOrConnectWithoutUploadedFileInput
+    upsert?: MaterialUpsertWithoutUploadedFileInput
+    disconnect?: MaterialWhereInput | boolean
+    delete?: MaterialWhereInput | boolean
+    connect?: MaterialWhereUniqueInput
+    update?: XOR<XOR<MaterialUpdateToOneWithWhereWithoutUploadedFileInput, MaterialUpdateWithoutUploadedFileInput>, MaterialUncheckedUpdateWithoutUploadedFileInput>
   }
 
   export type UserCreateNestedOneWithoutSchoolLogsInput = {
@@ -71745,12 +75181,28 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type WorkspaceCreateNestedOneWithoutResultsInput = {
+    create?: XOR<WorkspaceCreateWithoutResultsInput, WorkspaceUncheckedCreateWithoutResultsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutResultsInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
   export type UserUpdateOneRequiredWithoutResultsNestedInput = {
     create?: XOR<UserCreateWithoutResultsInput, UserUncheckedCreateWithoutResultsInput>
     connectOrCreate?: UserCreateOrConnectWithoutResultsInput
     upsert?: UserUpsertWithoutResultsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResultsInput, UserUpdateWithoutResultsInput>, UserUncheckedUpdateWithoutResultsInput>
+  }
+
+  export type WorkspaceUpdateOneWithoutResultsNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutResultsInput, WorkspaceUncheckedCreateWithoutResultsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutResultsInput
+    upsert?: WorkspaceUpsertWithoutResultsInput
+    disconnect?: WorkspaceWhereInput | boolean
+    delete?: WorkspaceWhereInput | boolean
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutResultsInput, WorkspaceUpdateWithoutResultsInput>, WorkspaceUncheckedUpdateWithoutResultsInput>
   }
 
   export type WorkspaceCreateNestedOneWithoutTimetableSlotsInput = {
@@ -71857,6 +75309,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -71958,7 +75421,7 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
     notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -71966,7 +75429,10 @@ export namespace Prisma {
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -71994,20 +75460,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -72610,6 +76062,7 @@ export namespace Prisma {
     uploadDate?: Date | string
     Workspace: WorkspaceCreateNestedOneWithoutMaterialsInput
     Class?: ClassCreateNestedOneWithoutMaterialsInput
+    UploadedFile?: UploadedFileCreateNestedOneWithoutMaterialInput
   }
 
   export type MaterialUncheckedCreateWithoutUploadedByInput = {
@@ -72617,6 +76070,7 @@ export namespace Prisma {
     title: string
     type: string
     fileUrl: string
+    uploadedFileId?: string | null
     subject: string
     chapter?: string | null
     topic?: string | null
@@ -72882,10 +76336,12 @@ export namespace Prisma {
     feedback?: string | null
     timeTaken?: number | null
     createdAt?: Date | string
+    Workspace?: WorkspaceCreateNestedOneWithoutResultsInput
   }
 
   export type ResultUncheckedCreateWithoutStudentInput = {
     id?: string
+    workspaceId?: string | null
     examId: string
     subject: string
     score: number
@@ -73074,6 +76530,66 @@ export namespace Prisma {
 
   export type CalendarEventCreateManyCreatedByInputEnvelope = {
     data: CalendarEventCreateManyCreatedByInput | CalendarEventCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RefreshTokenCreateWithoutUserInput = {
+    id?: string
+    tokenHash: string
+    expiresAt: Date | string
+    revokedAt?: Date | string | null
+    replacedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RefreshTokenUncheckedCreateWithoutUserInput = {
+    id?: string
+    tokenHash: string
+    expiresAt: Date | string
+    revokedAt?: Date | string | null
+    replacedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RefreshTokenCreateOrConnectWithoutUserInput = {
+    where: RefreshTokenWhereUniqueInput
+    create: XOR<RefreshTokenCreateWithoutUserInput, RefreshTokenUncheckedCreateWithoutUserInput>
+  }
+
+  export type RefreshTokenCreateManyUserInputEnvelope = {
+    data: RefreshTokenCreateManyUserInput | RefreshTokenCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UploadedFileCreateWithoutUploadedByInput = {
+    id?: string
+    originalName: string
+    mimeType: string
+    sizeBytes: number
+    storageKey: string
+    createdAt?: Date | string
+    Workspace: WorkspaceCreateNestedOneWithoutUploadedFilesInput
+    Material?: MaterialCreateNestedOneWithoutUploadedFileInput
+  }
+
+  export type UploadedFileUncheckedCreateWithoutUploadedByInput = {
+    id?: string
+    workspaceId: string
+    originalName: string
+    mimeType: string
+    sizeBytes: number
+    storageKey: string
+    createdAt?: Date | string
+    Material?: MaterialUncheckedCreateNestedOneWithoutUploadedFileInput
+  }
+
+  export type UploadedFileCreateOrConnectWithoutUploadedByInput = {
+    where: UploadedFileWhereUniqueInput
+    create: XOR<UploadedFileCreateWithoutUploadedByInput, UploadedFileUncheckedCreateWithoutUploadedByInput>
+  }
+
+  export type UploadedFileCreateManyUploadedByInputEnvelope = {
+    data: UploadedFileCreateManyUploadedByInput | UploadedFileCreateManyUploadedByInput[]
     skipDuplicates?: boolean
   }
 
@@ -73521,6 +77037,7 @@ export namespace Prisma {
     title?: StringFilter<"Material"> | string
     type?: StringFilter<"Material"> | string
     fileUrl?: StringFilter<"Material"> | string
+    uploadedFileId?: StringNullableFilter<"Material"> | string | null
     subject?: StringFilter<"Material"> | string
     chapter?: StringNullableFilter<"Material"> | string | null
     topic?: StringNullableFilter<"Material"> | string | null
@@ -73755,6 +77272,7 @@ export namespace Prisma {
     OR?: ResultScalarWhereInput[]
     NOT?: ResultScalarWhereInput | ResultScalarWhereInput[]
     id?: StringFilter<"Result"> | string
+    workspaceId?: StringNullableFilter<"Result"> | string | null
     studentId?: StringFilter<"Result"> | string
     examId?: StringFilter<"Result"> | string
     subject?: StringFilter<"Result"> | string
@@ -73908,6 +77426,269 @@ export namespace Prisma {
     endDate?: DateTimeNullableFilter<"CalendarEvent"> | Date | string | null
     createdByUserId?: StringFilter<"CalendarEvent"> | string
     createdAt?: DateTimeFilter<"CalendarEvent"> | Date | string
+  }
+
+  export type RefreshTokenUpsertWithWhereUniqueWithoutUserInput = {
+    where: RefreshTokenWhereUniqueInput
+    update: XOR<RefreshTokenUpdateWithoutUserInput, RefreshTokenUncheckedUpdateWithoutUserInput>
+    create: XOR<RefreshTokenCreateWithoutUserInput, RefreshTokenUncheckedCreateWithoutUserInput>
+  }
+
+  export type RefreshTokenUpdateWithWhereUniqueWithoutUserInput = {
+    where: RefreshTokenWhereUniqueInput
+    data: XOR<RefreshTokenUpdateWithoutUserInput, RefreshTokenUncheckedUpdateWithoutUserInput>
+  }
+
+  export type RefreshTokenUpdateManyWithWhereWithoutUserInput = {
+    where: RefreshTokenScalarWhereInput
+    data: XOR<RefreshTokenUpdateManyMutationInput, RefreshTokenUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type RefreshTokenScalarWhereInput = {
+    AND?: RefreshTokenScalarWhereInput | RefreshTokenScalarWhereInput[]
+    OR?: RefreshTokenScalarWhereInput[]
+    NOT?: RefreshTokenScalarWhereInput | RefreshTokenScalarWhereInput[]
+    id?: StringFilter<"RefreshToken"> | string
+    userId?: StringFilter<"RefreshToken"> | string
+    tokenHash?: StringFilter<"RefreshToken"> | string
+    expiresAt?: DateTimeFilter<"RefreshToken"> | Date | string
+    revokedAt?: DateTimeNullableFilter<"RefreshToken"> | Date | string | null
+    replacedBy?: StringNullableFilter<"RefreshToken"> | string | null
+    createdAt?: DateTimeFilter<"RefreshToken"> | Date | string
+  }
+
+  export type UploadedFileUpsertWithWhereUniqueWithoutUploadedByInput = {
+    where: UploadedFileWhereUniqueInput
+    update: XOR<UploadedFileUpdateWithoutUploadedByInput, UploadedFileUncheckedUpdateWithoutUploadedByInput>
+    create: XOR<UploadedFileCreateWithoutUploadedByInput, UploadedFileUncheckedCreateWithoutUploadedByInput>
+  }
+
+  export type UploadedFileUpdateWithWhereUniqueWithoutUploadedByInput = {
+    where: UploadedFileWhereUniqueInput
+    data: XOR<UploadedFileUpdateWithoutUploadedByInput, UploadedFileUncheckedUpdateWithoutUploadedByInput>
+  }
+
+  export type UploadedFileUpdateManyWithWhereWithoutUploadedByInput = {
+    where: UploadedFileScalarWhereInput
+    data: XOR<UploadedFileUpdateManyMutationInput, UploadedFileUncheckedUpdateManyWithoutUploadedByInput>
+  }
+
+  export type UploadedFileScalarWhereInput = {
+    AND?: UploadedFileScalarWhereInput | UploadedFileScalarWhereInput[]
+    OR?: UploadedFileScalarWhereInput[]
+    NOT?: UploadedFileScalarWhereInput | UploadedFileScalarWhereInput[]
+    id?: StringFilter<"UploadedFile"> | string
+    workspaceId?: StringFilter<"UploadedFile"> | string
+    uploadedByUserId?: StringFilter<"UploadedFile"> | string
+    originalName?: StringFilter<"UploadedFile"> | string
+    mimeType?: StringFilter<"UploadedFile"> | string
+    sizeBytes?: IntFilter<"UploadedFile"> | number
+    storageKey?: StringFilter<"UploadedFile"> | string
+    createdAt?: DateTimeFilter<"UploadedFile"> | Date | string
+  }
+
+  export type UserCreateWithoutRefreshTokensInput = {
+    id: string
+    username?: string | null
+    name: string
+    email: string
+    passwordHash?: string | null
+    role?: string
+    isActive?: boolean
+    status?: string
+    workspaceId?: string | null
+    mode?: string | null
+    firstLogin?: boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    deletedAt?: Date | string | null
+    attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
+    memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
+    studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
+    parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
+    studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutUserInput
+    classTeachers?: ClassTeacherCreateNestedManyWithoutTeacherInput
+    classStudents?: ClassStudentCreateNestedManyWithoutStudentInput
+    attendances?: AttendanceCreateNestedManyWithoutStudentInput
+    markedAttendances?: AttendanceCreateNestedManyWithoutMarkedByInput
+    updatedAttendances?: AttendanceCreateNestedManyWithoutUpdatedByInput
+    schoolAssignments?: AssignmentCreateNestedManyWithoutCreatorInput
+    feedbacks?: AssignmentFeedbackCreateNestedManyWithoutCreatorInput
+    submissions?: AssignmentSubmissionCreateNestedManyWithoutStudentInput
+    reviewedSubmissions?: AssignmentSubmissionCreateNestedManyWithoutReviewedByInput
+    rubrics?: RubricCreateNestedManyWithoutCreatedByInput
+    materials?: MaterialCreateNestedManyWithoutUploadedByInput
+    questions?: QuestionCreateNestedManyWithoutCreatedByInput
+    exams?: ExamCreateNestedManyWithoutCreatedByInput
+    examAttempts?: ExamAttemptCreateNestedManyWithoutStudentInput
+    conversationLinks?: ConversationParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    schoolLogs?: SchoolLogCreateNestedManyWithoutUserInput
+    results?: ResultCreateNestedManyWithoutStudentInput
+    teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
+    timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
+  }
+
+  export type UserUncheckedCreateWithoutRefreshTokensInput = {
+    id: string
+    username?: string | null
+    name: string
+    email: string
+    passwordHash?: string | null
+    role?: string
+    isActive?: boolean
+    status?: string
+    workspaceId?: string | null
+    mode?: string | null
+    firstLogin?: boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    deletedAt?: Date | string | null
+    attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
+    memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
+    studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
+    parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutUserInput
+    classTeachers?: ClassTeacherUncheckedCreateNestedManyWithoutTeacherInput
+    classStudents?: ClassStudentUncheckedCreateNestedManyWithoutStudentInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutStudentInput
+    markedAttendances?: AttendanceUncheckedCreateNestedManyWithoutMarkedByInput
+    updatedAttendances?: AttendanceUncheckedCreateNestedManyWithoutUpdatedByInput
+    schoolAssignments?: AssignmentUncheckedCreateNestedManyWithoutCreatorInput
+    feedbacks?: AssignmentFeedbackUncheckedCreateNestedManyWithoutCreatorInput
+    submissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+    reviewedSubmissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+    rubrics?: RubricUncheckedCreateNestedManyWithoutCreatedByInput
+    materials?: MaterialUncheckedCreateNestedManyWithoutUploadedByInput
+    questions?: QuestionUncheckedCreateNestedManyWithoutCreatedByInput
+    exams?: ExamUncheckedCreateNestedManyWithoutCreatedByInput
+    examAttempts?: ExamAttemptUncheckedCreateNestedManyWithoutStudentInput
+    conversationLinks?: ConversationParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    schoolLogs?: SchoolLogUncheckedCreateNestedManyWithoutUserInput
+    results?: ResultUncheckedCreateNestedManyWithoutStudentInput
+    teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
+    timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
+  }
+
+  export type UserCreateOrConnectWithoutRefreshTokensInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRefreshTokensInput, UserUncheckedCreateWithoutRefreshTokensInput>
+  }
+
+  export type UserUpsertWithoutRefreshTokensInput = {
+    update: XOR<UserUpdateWithoutRefreshTokensInput, UserUncheckedUpdateWithoutRefreshTokensInput>
+    create: XOR<UserCreateWithoutRefreshTokensInput, UserUncheckedCreateWithoutRefreshTokensInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutRefreshTokensInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRefreshTokensInput, UserUncheckedUpdateWithoutRefreshTokensInput>
+  }
+
+  export type UserUpdateWithoutRefreshTokensInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
+    memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
+    studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
+    parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
+    studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutUserNestedInput
+    classTeachers?: ClassTeacherUpdateManyWithoutTeacherNestedInput
+    classStudents?: ClassStudentUpdateManyWithoutStudentNestedInput
+    attendances?: AttendanceUpdateManyWithoutStudentNestedInput
+    markedAttendances?: AttendanceUpdateManyWithoutMarkedByNestedInput
+    updatedAttendances?: AttendanceUpdateManyWithoutUpdatedByNestedInput
+    schoolAssignments?: AssignmentUpdateManyWithoutCreatorNestedInput
+    feedbacks?: AssignmentFeedbackUpdateManyWithoutCreatorNestedInput
+    submissions?: AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+    reviewedSubmissions?: AssignmentSubmissionUpdateManyWithoutReviewedByNestedInput
+    rubrics?: RubricUpdateManyWithoutCreatedByNestedInput
+    materials?: MaterialUpdateManyWithoutUploadedByNestedInput
+    questions?: QuestionUpdateManyWithoutCreatedByNestedInput
+    exams?: ExamUpdateManyWithoutCreatedByNestedInput
+    examAttempts?: ExamAttemptUpdateManyWithoutStudentNestedInput
+    conversationLinks?: ConversationParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    schoolLogs?: SchoolLogUpdateManyWithoutUserNestedInput
+    results?: ResultUpdateManyWithoutStudentNestedInput
+    teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
+    timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutRefreshTokensInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
+    memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
+    studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
+    parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutUserNestedInput
+    classTeachers?: ClassTeacherUncheckedUpdateManyWithoutTeacherNestedInput
+    classStudents?: ClassStudentUncheckedUpdateManyWithoutStudentNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+    markedAttendances?: AttendanceUncheckedUpdateManyWithoutMarkedByNestedInput
+    updatedAttendances?: AttendanceUncheckedUpdateManyWithoutUpdatedByNestedInput
+    schoolAssignments?: AssignmentUncheckedUpdateManyWithoutCreatorNestedInput
+    feedbacks?: AssignmentFeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+    submissions?: AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    reviewedSubmissions?: AssignmentSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+    rubrics?: RubricUncheckedUpdateManyWithoutCreatedByNestedInput
+    materials?: MaterialUncheckedUpdateManyWithoutUploadedByNestedInput
+    questions?: QuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    exams?: ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+    examAttempts?: ExamAttemptUncheckedUpdateManyWithoutStudentNestedInput
+    conversationLinks?: ConversationParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    schoolLogs?: SchoolLogUncheckedUpdateManyWithoutUserNestedInput
+    results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
+    teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
+    timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type WorkspaceMembershipCreateWithoutWorkspaceInput = {
@@ -74079,6 +77860,7 @@ export namespace Prisma {
     uploadDate?: Date | string
     Class?: ClassCreateNestedOneWithoutMaterialsInput
     UploadedBy: UserCreateNestedOneWithoutMaterialsInput
+    UploadedFile?: UploadedFileCreateNestedOneWithoutMaterialInput
   }
 
   export type MaterialUncheckedCreateWithoutWorkspaceInput = {
@@ -74086,6 +77868,7 @@ export namespace Prisma {
     title: string
     type: string
     fileUrl: string
+    uploadedFileId?: string | null
     subject: string
     chapter?: string | null
     topic?: string | null
@@ -74414,6 +78197,80 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ResultCreateWithoutWorkspaceInput = {
+    id?: string
+    examId: string
+    subject: string
+    score: number
+    totalMarks: number
+    percentage: number
+    grade: string
+    rank?: number | null
+    status: string
+    feedback?: string | null
+    timeTaken?: number | null
+    createdAt?: Date | string
+    student: UserCreateNestedOneWithoutResultsInput
+  }
+
+  export type ResultUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    studentId: string
+    examId: string
+    subject: string
+    score: number
+    totalMarks: number
+    percentage: number
+    grade: string
+    rank?: number | null
+    status: string
+    feedback?: string | null
+    timeTaken?: number | null
+    createdAt?: Date | string
+  }
+
+  export type ResultCreateOrConnectWithoutWorkspaceInput = {
+    where: ResultWhereUniqueInput
+    create: XOR<ResultCreateWithoutWorkspaceInput, ResultUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type ResultCreateManyWorkspaceInputEnvelope = {
+    data: ResultCreateManyWorkspaceInput | ResultCreateManyWorkspaceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UploadedFileCreateWithoutWorkspaceInput = {
+    id?: string
+    originalName: string
+    mimeType: string
+    sizeBytes: number
+    storageKey: string
+    createdAt?: Date | string
+    UploadedBy: UserCreateNestedOneWithoutUploadedFilesInput
+    Material?: MaterialCreateNestedOneWithoutUploadedFileInput
+  }
+
+  export type UploadedFileUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    uploadedByUserId: string
+    originalName: string
+    mimeType: string
+    sizeBytes: number
+    storageKey: string
+    createdAt?: Date | string
+    Material?: MaterialUncheckedCreateNestedOneWithoutUploadedFileInput
+  }
+
+  export type UploadedFileCreateOrConnectWithoutWorkspaceInput = {
+    where: UploadedFileWhereUniqueInput
+    create: XOR<UploadedFileCreateWithoutWorkspaceInput, UploadedFileUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type UploadedFileCreateManyWorkspaceInputEnvelope = {
+    data: UploadedFileCreateManyWorkspaceInput | UploadedFileCreateManyWorkspaceInput[]
+    skipDuplicates?: boolean
+  }
+
   export type WorkspaceMembershipUpsertWithWhereUniqueWithoutWorkspaceInput = {
     where: WorkspaceMembershipWhereUniqueInput
     update: XOR<WorkspaceMembershipUpdateWithoutWorkspaceInput, WorkspaceMembershipUncheckedUpdateWithoutWorkspaceInput>
@@ -74713,6 +78570,38 @@ export namespace Prisma {
     data: XOR<CalendarEventUpdateManyMutationInput, CalendarEventUncheckedUpdateManyWithoutWorkspaceInput>
   }
 
+  export type ResultUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: ResultWhereUniqueInput
+    update: XOR<ResultUpdateWithoutWorkspaceInput, ResultUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<ResultCreateWithoutWorkspaceInput, ResultUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type ResultUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: ResultWhereUniqueInput
+    data: XOR<ResultUpdateWithoutWorkspaceInput, ResultUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type ResultUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: ResultScalarWhereInput
+    data: XOR<ResultUpdateManyMutationInput, ResultUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
+  export type UploadedFileUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: UploadedFileWhereUniqueInput
+    update: XOR<UploadedFileUpdateWithoutWorkspaceInput, UploadedFileUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<UploadedFileCreateWithoutWorkspaceInput, UploadedFileUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type UploadedFileUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: UploadedFileWhereUniqueInput
+    data: XOR<UploadedFileUpdateWithoutWorkspaceInput, UploadedFileUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type UploadedFileUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: UploadedFileScalarWhereInput
+    data: XOR<UploadedFileUpdateManyMutationInput, UploadedFileUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
   export type UserCreateWithoutMembershipsInput = {
     id: string
     username?: string | null
@@ -74727,6 +78616,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
@@ -74755,6 +78645,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -74771,6 +78663,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
@@ -74799,6 +78692,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -74833,6 +78728,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutMembershipsInput = {
@@ -74862,6 +78759,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutMembershipsInput = {
@@ -74894,6 +78793,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
@@ -74922,6 +78822,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -74938,6 +78840,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
@@ -74966,6 +78869,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type WorkspaceUpsertWithoutMembershipsInput = {
@@ -75006,6 +78911,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutMembershipsInput = {
@@ -75035,6 +78942,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserCreateWithoutStudentProfilesInput = {
@@ -75051,6 +78960,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -75079,6 +78989,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutStudentProfilesInput = {
@@ -75095,6 +79007,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -75123,6 +79036,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutStudentProfilesInput = {
@@ -75157,6 +79072,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutStudentProfilesInput = {
@@ -75186,6 +79103,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutStudentProfilesInput = {
@@ -75218,6 +79137,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -75246,6 +79166,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStudentProfilesInput = {
@@ -75262,6 +79184,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -75290,6 +79213,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type WorkspaceUpsertWithoutStudentProfilesInput = {
@@ -75330,6 +79255,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutStudentProfilesInput = {
@@ -75359,6 +79286,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateWithoutExamsInput = {
@@ -75388,6 +79317,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutExamsInput = {
@@ -75417,6 +79348,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutExamsInput = {
@@ -75471,6 +79404,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -75499,6 +79433,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutExamsInput = {
@@ -75515,6 +79451,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -75543,6 +79480,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutExamsInput = {
@@ -75654,6 +79593,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutExamsInput = {
@@ -75683,6 +79624,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ClassUpsertWithoutExamsInput = {
@@ -75749,6 +79692,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -75777,6 +79721,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutExamsInput = {
@@ -75793,6 +79739,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -75821,6 +79768,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type ExamQuestionUpsertWithWhereUniqueWithoutExamInput = {
@@ -76156,6 +80105,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -76184,6 +80134,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutExamAttemptsInput = {
@@ -76200,6 +80152,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -76228,6 +80181,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutExamAttemptsInput = {
@@ -76347,6 +80302,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -76375,6 +80331,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutExamAttemptsInput = {
@@ -76391,6 +80349,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -76419,6 +80378,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type ExamAnswerUpsertWithWhereUniqueWithoutAttemptInput = {
@@ -76747,6 +80708,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutAssignmentsInput = {
@@ -76776,6 +80739,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutAssignmentsInput = {
@@ -76894,6 +80859,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutAssignmentsInput = {
@@ -76923,6 +80890,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type AssessmentAttemptUpsertWithWhereUniqueWithoutAssignmentInput = {
@@ -76955,6 +80924,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
@@ -76983,6 +80953,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutStudentInput = {
@@ -76999,6 +80971,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
@@ -77027,6 +81000,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutStudentInput = {
@@ -77103,6 +81078,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
@@ -77131,6 +81107,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStudentInput = {
@@ -77147,6 +81125,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
@@ -77175,6 +81154,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type AssessmentAttemptUpsertWithWhereUniqueWithoutStudentInput = {
@@ -77267,6 +81248,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
@@ -77295,6 +81277,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutAttemptsInput = {
@@ -77311,6 +81295,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
     studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
@@ -77339,6 +81324,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutAttemptsInput = {
@@ -77463,6 +81450,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
@@ -77491,6 +81479,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttemptsInput = {
@@ -77507,6 +81497,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
     studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
@@ -77535,6 +81526,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type AssessmentAssignmentUpsertWithoutAttemptsInput = {
@@ -77764,6 +81757,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutConversationsInput = {
@@ -77793,6 +81788,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutConversationsInput = {
@@ -77886,6 +81883,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutConversationsInput = {
@@ -77915,6 +81914,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ConversationParticipantUpsertWithWhereUniqueWithoutConversationInput = {
@@ -77984,6 +81985,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -78012,6 +82014,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutConversationLinksInput = {
@@ -78028,6 +82032,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -78056,6 +82061,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutConversationLinksInput = {
@@ -78115,6 +82122,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -78143,6 +82151,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutConversationLinksInput = {
@@ -78159,6 +82169,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -78187,6 +82198,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type ConversationCreateWithoutMessagesInput = {
@@ -78224,6 +82237,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -78252,6 +82266,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -78268,6 +82284,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -78296,6 +82313,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -78355,6 +82374,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -78383,6 +82403,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -78399,6 +82421,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -78427,6 +82450,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type WorkspaceCreateWithoutNotificationsInput = {
@@ -78456,6 +82481,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutNotificationsInput = {
@@ -78485,6 +82512,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutNotificationsInput = {
@@ -78530,6 +82559,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutNotificationsInput = {
@@ -78559,6 +82590,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateWithoutCalendarEventsInput = {
@@ -78588,6 +82621,8 @@ export namespace Prisma {
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutCalendarEventsInput = {
@@ -78617,6 +82652,8 @@ export namespace Prisma {
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutCalendarEventsInput = {
@@ -78638,6 +82675,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -78666,6 +82704,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutCalendarEventsInput = {
@@ -78682,6 +82722,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -78710,6 +82751,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutCalendarEventsInput = {
@@ -78755,6 +82798,8 @@ export namespace Prisma {
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutCalendarEventsInput = {
@@ -78784,6 +82829,8 @@ export namespace Prisma {
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserUpsertWithoutCalendarEventsInput = {
@@ -78811,6 +82858,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -78839,6 +82887,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCalendarEventsInput = {
@@ -78855,6 +82905,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -78883,6 +82934,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserCreateWithoutStudentLinksInput = {
@@ -78899,6 +82952,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -78927,6 +82981,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutStudentLinksInput = {
@@ -78943,6 +82999,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -78971,6 +83028,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutStudentLinksInput = {
@@ -78992,6 +83051,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -79020,6 +83080,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutParentLinksInput = {
@@ -79036,6 +83098,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -79064,6 +83127,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutParentLinksInput = {
@@ -79096,6 +83161,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -79124,6 +83190,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStudentLinksInput = {
@@ -79140,6 +83208,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -79168,6 +83237,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUpsertWithoutParentLinksInput = {
@@ -79195,6 +83266,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -79223,6 +83295,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutParentLinksInput = {
@@ -79239,6 +83313,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -79267,6 +83342,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type WorkspaceCreateWithoutClassesInput = {
@@ -79296,6 +83373,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutClassesInput = {
@@ -79325,6 +83404,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutClassesInput = {
@@ -79492,6 +83573,7 @@ export namespace Prisma {
     uploadDate?: Date | string
     Workspace: WorkspaceCreateNestedOneWithoutMaterialsInput
     UploadedBy: UserCreateNestedOneWithoutMaterialsInput
+    UploadedFile?: UploadedFileCreateNestedOneWithoutMaterialInput
   }
 
   export type MaterialUncheckedCreateWithoutClassInput = {
@@ -79499,6 +83581,7 @@ export namespace Prisma {
     title: string
     type: string
     fileUrl: string
+    uploadedFileId?: string | null
     subject: string
     chapter?: string | null
     topic?: string | null
@@ -79653,6 +83736,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutClassesInput = {
@@ -79682,6 +83767,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type DepartmentUpsertWithoutClassesInput = {
@@ -79850,6 +83937,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutDepartmentsInput = {
@@ -79879,6 +83968,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutDepartmentsInput = {
@@ -79992,6 +84083,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutDepartmentsInput = {
@@ -80021,6 +84114,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ClassUpsertWithWhereUniqueWithoutDepartmentInput = {
@@ -80082,6 +84177,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutSubjectsInput = {
@@ -80111,6 +84208,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutSubjectsInput = {
@@ -80237,6 +84336,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutSubjectsInput = {
@@ -80266,6 +84367,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type DepartmentUpsertWithoutSubjectsInput = {
@@ -80341,6 +84444,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -80369,6 +84473,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutTeacherSubjectsInput = {
@@ -80385,6 +84491,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -80413,6 +84520,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutTeacherSubjectsInput = {
@@ -80470,6 +84579,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -80498,6 +84608,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTeacherSubjectsInput = {
@@ -80514,6 +84626,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -80542,6 +84655,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type SubjectUpsertWithoutTeachersInput = {
@@ -80622,6 +84737,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -80650,6 +84766,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutClassTeachersInput = {
@@ -80666,6 +84784,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -80694,6 +84813,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutClassTeachersInput = {
@@ -80765,6 +84886,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -80793,6 +84915,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutClassTeachersInput = {
@@ -80809,6 +84933,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -80837,6 +84962,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type ClassCreateWithoutStudentsInput = {
@@ -80886,6 +85013,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -80914,6 +85042,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutClassStudentsInput = {
@@ -80930,6 +85060,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -80958,6 +85089,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutClassStudentsInput = {
@@ -81029,6 +85162,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -81057,6 +85191,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutClassStudentsInput = {
@@ -81073,6 +85209,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -81101,6 +85238,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type ClassCreateWithoutAttendancesInput = {
@@ -81150,6 +85289,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -81178,6 +85318,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutAttendancesInput = {
@@ -81194,6 +85336,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -81222,6 +85365,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutAttendancesInput = {
@@ -81243,6 +85388,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -81271,6 +85417,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
@@ -81287,6 +85435,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -81315,6 +85464,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutMarkedAttendancesInput = {
@@ -81336,6 +85487,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -81364,6 +85516,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutUpdatedAttendancesInput = {
@@ -81380,6 +85534,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -81408,6 +85563,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutUpdatedAttendancesInput = {
@@ -81479,6 +85636,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -81507,6 +85665,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttendancesInput = {
@@ -81523,6 +85683,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -81551,6 +85712,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUpsertWithoutMarkedAttendancesInput = {
@@ -81578,6 +85741,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -81606,6 +85770,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
@@ -81622,6 +85788,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -81650,6 +85817,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUpsertWithoutUpdatedAttendancesInput = {
@@ -81677,6 +85846,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -81705,6 +85875,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdatedAttendancesInput = {
@@ -81721,6 +85893,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -81749,6 +85922,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type ClassCreateWithoutAssignmentsInput = {
@@ -81798,6 +85973,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -81826,6 +86002,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutSchoolAssignmentsInput = {
@@ -81842,6 +86020,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -81870,6 +86049,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutSchoolAssignmentsInput = {
@@ -82036,6 +86217,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -82064,6 +86246,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSchoolAssignmentsInput = {
@@ -82080,6 +86264,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -82108,6 +86293,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type AssignmentFeedbackUpsertWithWhereUniqueWithoutAssignmentInput = {
@@ -82226,6 +86413,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -82254,6 +86442,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutRubricsInput = {
@@ -82270,6 +86460,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -82298,6 +86489,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutRubricsInput = {
@@ -82405,6 +86598,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -82433,6 +86627,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRubricsInput = {
@@ -82449,6 +86645,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -82477,6 +86674,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type RubricCriterionUpsertWithWhereUniqueWithoutRubricInput = {
@@ -82809,6 +87008,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -82837,6 +87037,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutFeedbacksInput = {
@@ -82853,6 +87055,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -82881,6 +87084,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutFeedbacksInput = {
@@ -82962,6 +87167,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -82990,6 +87196,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFeedbacksInput = {
@@ -83006,6 +87214,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -83034,6 +87243,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type AssignmentCreateWithoutSubmissionsInput = {
@@ -83093,6 +87304,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -83121,6 +87333,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutSubmissionsInput = {
@@ -83137,6 +87351,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -83165,6 +87380,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutSubmissionsInput = {
@@ -83186,6 +87403,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -83214,6 +87432,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutReviewedSubmissionsInput = {
@@ -83230,6 +87450,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -83258,6 +87479,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutReviewedSubmissionsInput = {
@@ -83365,6 +87588,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -83393,6 +87617,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSubmissionsInput = {
@@ -83409,6 +87635,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -83437,6 +87664,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUpsertWithoutReviewedSubmissionsInput = {
@@ -83464,6 +87693,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -83492,6 +87722,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedSubmissionsInput = {
@@ -83508,6 +87740,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -83536,6 +87769,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type RubricScoreUpsertWithWhereUniqueWithoutSubmissionInput = {
@@ -83581,6 +87816,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutQuestionsInput = {
@@ -83610,6 +87847,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutQuestionsInput = {
@@ -83631,6 +87870,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -83659,6 +87899,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutQuestionsInput = {
@@ -83675,6 +87917,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -83703,6 +87946,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutQuestionsInput = {
@@ -83804,6 +88049,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutQuestionsInput = {
@@ -83833,6 +88080,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserUpsertWithoutQuestionsInput = {
@@ -83860,6 +88109,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -83888,6 +88138,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuestionsInput = {
@@ -83904,6 +88156,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -83932,6 +88185,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type ExamQuestionUpsertWithWhereUniqueWithoutQuestionInput = {
@@ -83993,6 +88248,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutMaterialsInput = {
@@ -84022,6 +88279,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutMaterialsInput = {
@@ -84076,6 +88335,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -84104,6 +88364,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutMaterialsInput = {
@@ -84120,6 +88382,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -84148,11 +88411,40 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutMaterialsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutMaterialsInput, UserUncheckedCreateWithoutMaterialsInput>
+  }
+
+  export type UploadedFileCreateWithoutMaterialInput = {
+    id?: string
+    originalName: string
+    mimeType: string
+    sizeBytes: number
+    storageKey: string
+    createdAt?: Date | string
+    Workspace: WorkspaceCreateNestedOneWithoutUploadedFilesInput
+    UploadedBy: UserCreateNestedOneWithoutUploadedFilesInput
+  }
+
+  export type UploadedFileUncheckedCreateWithoutMaterialInput = {
+    id?: string
+    workspaceId: string
+    uploadedByUserId: string
+    originalName: string
+    mimeType: string
+    sizeBytes: number
+    storageKey: string
+    createdAt?: Date | string
+  }
+
+  export type UploadedFileCreateOrConnectWithoutMaterialInput = {
+    where: UploadedFileWhereUniqueInput
+    create: XOR<UploadedFileCreateWithoutMaterialInput, UploadedFileUncheckedCreateWithoutMaterialInput>
   }
 
   export type WorkspaceUpsertWithoutMaterialsInput = {
@@ -84193,6 +88485,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutMaterialsInput = {
@@ -84222,6 +88516,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ClassUpsertWithoutMaterialsInput = {
@@ -84288,6 +88584,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -84316,6 +88613,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMaterialsInput = {
@@ -84332,6 +88631,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -84360,6 +88660,473 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
+  }
+
+  export type UploadedFileUpsertWithoutMaterialInput = {
+    update: XOR<UploadedFileUpdateWithoutMaterialInput, UploadedFileUncheckedUpdateWithoutMaterialInput>
+    create: XOR<UploadedFileCreateWithoutMaterialInput, UploadedFileUncheckedCreateWithoutMaterialInput>
+    where?: UploadedFileWhereInput
+  }
+
+  export type UploadedFileUpdateToOneWithWhereWithoutMaterialInput = {
+    where?: UploadedFileWhereInput
+    data: XOR<UploadedFileUpdateWithoutMaterialInput, UploadedFileUncheckedUpdateWithoutMaterialInput>
+  }
+
+  export type UploadedFileUpdateWithoutMaterialInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    storageKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Workspace?: WorkspaceUpdateOneRequiredWithoutUploadedFilesNestedInput
+    UploadedBy?: UserUpdateOneRequiredWithoutUploadedFilesNestedInput
+  }
+
+  export type UploadedFileUncheckedUpdateWithoutMaterialInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    uploadedByUserId?: StringFieldUpdateOperationsInput | string
+    originalName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    storageKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkspaceCreateWithoutUploadedFilesInput = {
+    id: string
+    name: string
+    createdBy?: string | null
+    principalId?: string | null
+    status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
+    createdAt?: Date | string
+    memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
+    studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
+    assignments?: AssessmentAssignmentCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
+    classes?: ClassCreateNestedManyWithoutWorkspaceInput
+    materials?: MaterialCreateNestedManyWithoutWorkspaceInput
+    questions?: QuestionCreateNestedManyWithoutWorkspaceInput
+    exams?: ExamCreateNestedManyWithoutWorkspaceInput
+    conversations?: ConversationCreateNestedManyWithoutWorkspaceInput
+    departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
+    subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
+    timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutUploadedFilesInput = {
+    id: string
+    name: string
+    createdBy?: string | null
+    principalId?: string | null
+    status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
+    createdAt?: Date | string
+    memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
+    assignments?: AssessmentAssignmentUncheckedCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
+    classes?: ClassUncheckedCreateNestedManyWithoutWorkspaceInput
+    materials?: MaterialUncheckedCreateNestedManyWithoutWorkspaceInput
+    questions?: QuestionUncheckedCreateNestedManyWithoutWorkspaceInput
+    exams?: ExamUncheckedCreateNestedManyWithoutWorkspaceInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutWorkspaceInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
+    subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
+    timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutUploadedFilesInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutUploadedFilesInput, WorkspaceUncheckedCreateWithoutUploadedFilesInput>
+  }
+
+  export type UserCreateWithoutUploadedFilesInput = {
+    id: string
+    username?: string | null
+    name: string
+    email: string
+    passwordHash?: string | null
+    role?: string
+    isActive?: boolean
+    status?: string
+    workspaceId?: string | null
+    mode?: string | null
+    firstLogin?: boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    deletedAt?: Date | string | null
+    attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
+    memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
+    studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
+    parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
+    studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutUserInput
+    classTeachers?: ClassTeacherCreateNestedManyWithoutTeacherInput
+    classStudents?: ClassStudentCreateNestedManyWithoutStudentInput
+    attendances?: AttendanceCreateNestedManyWithoutStudentInput
+    markedAttendances?: AttendanceCreateNestedManyWithoutMarkedByInput
+    updatedAttendances?: AttendanceCreateNestedManyWithoutUpdatedByInput
+    schoolAssignments?: AssignmentCreateNestedManyWithoutCreatorInput
+    feedbacks?: AssignmentFeedbackCreateNestedManyWithoutCreatorInput
+    submissions?: AssignmentSubmissionCreateNestedManyWithoutStudentInput
+    reviewedSubmissions?: AssignmentSubmissionCreateNestedManyWithoutReviewedByInput
+    rubrics?: RubricCreateNestedManyWithoutCreatedByInput
+    materials?: MaterialCreateNestedManyWithoutUploadedByInput
+    questions?: QuestionCreateNestedManyWithoutCreatedByInput
+    exams?: ExamCreateNestedManyWithoutCreatedByInput
+    examAttempts?: ExamAttemptCreateNestedManyWithoutStudentInput
+    conversationLinks?: ConversationParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    schoolLogs?: SchoolLogCreateNestedManyWithoutUserInput
+    results?: ResultCreateNestedManyWithoutStudentInput
+    teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
+    timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUploadedFilesInput = {
+    id: string
+    username?: string | null
+    name: string
+    email: string
+    passwordHash?: string | null
+    role?: string
+    isActive?: boolean
+    status?: string
+    workspaceId?: string | null
+    mode?: string | null
+    firstLogin?: boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    deletedAt?: Date | string | null
+    attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
+    memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
+    studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
+    parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutUserInput
+    classTeachers?: ClassTeacherUncheckedCreateNestedManyWithoutTeacherInput
+    classStudents?: ClassStudentUncheckedCreateNestedManyWithoutStudentInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutStudentInput
+    markedAttendances?: AttendanceUncheckedCreateNestedManyWithoutMarkedByInput
+    updatedAttendances?: AttendanceUncheckedCreateNestedManyWithoutUpdatedByInput
+    schoolAssignments?: AssignmentUncheckedCreateNestedManyWithoutCreatorInput
+    feedbacks?: AssignmentFeedbackUncheckedCreateNestedManyWithoutCreatorInput
+    submissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+    reviewedSubmissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+    rubrics?: RubricUncheckedCreateNestedManyWithoutCreatedByInput
+    materials?: MaterialUncheckedCreateNestedManyWithoutUploadedByInput
+    questions?: QuestionUncheckedCreateNestedManyWithoutCreatedByInput
+    exams?: ExamUncheckedCreateNestedManyWithoutCreatedByInput
+    examAttempts?: ExamAttemptUncheckedCreateNestedManyWithoutStudentInput
+    conversationLinks?: ConversationParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    schoolLogs?: SchoolLogUncheckedCreateNestedManyWithoutUserInput
+    results?: ResultUncheckedCreateNestedManyWithoutStudentInput
+    teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
+    timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUploadedFilesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUploadedFilesInput, UserUncheckedCreateWithoutUploadedFilesInput>
+  }
+
+  export type MaterialCreateWithoutUploadedFileInput = {
+    id?: string
+    title: string
+    type: string
+    fileUrl: string
+    subject: string
+    chapter?: string | null
+    topic?: string | null
+    visibility?: string
+    scheduledAt?: Date | string | null
+    viewCount?: number
+    downloadCount?: number
+    uploadDate?: Date | string
+    Workspace: WorkspaceCreateNestedOneWithoutMaterialsInput
+    Class?: ClassCreateNestedOneWithoutMaterialsInput
+    UploadedBy: UserCreateNestedOneWithoutMaterialsInput
+  }
+
+  export type MaterialUncheckedCreateWithoutUploadedFileInput = {
+    id?: string
+    title: string
+    type: string
+    fileUrl: string
+    subject: string
+    chapter?: string | null
+    topic?: string | null
+    workspaceId: string
+    classId?: string | null
+    uploadedByUserId: string
+    visibility?: string
+    scheduledAt?: Date | string | null
+    viewCount?: number
+    downloadCount?: number
+    uploadDate?: Date | string
+  }
+
+  export type MaterialCreateOrConnectWithoutUploadedFileInput = {
+    where: MaterialWhereUniqueInput
+    create: XOR<MaterialCreateWithoutUploadedFileInput, MaterialUncheckedCreateWithoutUploadedFileInput>
+  }
+
+  export type WorkspaceUpsertWithoutUploadedFilesInput = {
+    update: XOR<WorkspaceUpdateWithoutUploadedFilesInput, WorkspaceUncheckedUpdateWithoutUploadedFilesInput>
+    create: XOR<WorkspaceCreateWithoutUploadedFilesInput, WorkspaceUncheckedCreateWithoutUploadedFilesInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutUploadedFilesInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutUploadedFilesInput, WorkspaceUncheckedUpdateWithoutUploadedFilesInput>
+  }
+
+  export type WorkspaceUpdateWithoutUploadedFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    principalId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
+    studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
+    assignments?: AssessmentAssignmentUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
+    classes?: ClassUpdateManyWithoutWorkspaceNestedInput
+    materials?: MaterialUpdateManyWithoutWorkspaceNestedInput
+    questions?: QuestionUpdateManyWithoutWorkspaceNestedInput
+    exams?: ExamUpdateManyWithoutWorkspaceNestedInput
+    conversations?: ConversationUpdateManyWithoutWorkspaceNestedInput
+    departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
+    subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
+    timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutUploadedFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    principalId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
+    assignments?: AssessmentAssignmentUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    classes?: ClassUncheckedUpdateManyWithoutWorkspaceNestedInput
+    materials?: MaterialUncheckedUpdateManyWithoutWorkspaceNestedInput
+    questions?: QuestionUncheckedUpdateManyWithoutWorkspaceNestedInput
+    exams?: ExamUncheckedUpdateManyWithoutWorkspaceNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
+    subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type UserUpsertWithoutUploadedFilesInput = {
+    update: XOR<UserUpdateWithoutUploadedFilesInput, UserUncheckedUpdateWithoutUploadedFilesInput>
+    create: XOR<UserCreateWithoutUploadedFilesInput, UserUncheckedCreateWithoutUploadedFilesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUploadedFilesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUploadedFilesInput, UserUncheckedUpdateWithoutUploadedFilesInput>
+  }
+
+  export type UserUpdateWithoutUploadedFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
+    memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
+    studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
+    parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
+    studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutUserNestedInput
+    classTeachers?: ClassTeacherUpdateManyWithoutTeacherNestedInput
+    classStudents?: ClassStudentUpdateManyWithoutStudentNestedInput
+    attendances?: AttendanceUpdateManyWithoutStudentNestedInput
+    markedAttendances?: AttendanceUpdateManyWithoutMarkedByNestedInput
+    updatedAttendances?: AttendanceUpdateManyWithoutUpdatedByNestedInput
+    schoolAssignments?: AssignmentUpdateManyWithoutCreatorNestedInput
+    feedbacks?: AssignmentFeedbackUpdateManyWithoutCreatorNestedInput
+    submissions?: AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+    reviewedSubmissions?: AssignmentSubmissionUpdateManyWithoutReviewedByNestedInput
+    rubrics?: RubricUpdateManyWithoutCreatedByNestedInput
+    materials?: MaterialUpdateManyWithoutUploadedByNestedInput
+    questions?: QuestionUpdateManyWithoutCreatedByNestedInput
+    exams?: ExamUpdateManyWithoutCreatedByNestedInput
+    examAttempts?: ExamAttemptUpdateManyWithoutStudentNestedInput
+    conversationLinks?: ConversationParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    schoolLogs?: SchoolLogUpdateManyWithoutUserNestedInput
+    results?: ResultUpdateManyWithoutStudentNestedInput
+    teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
+    timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUploadedFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
+    memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
+    studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
+    parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutUserNestedInput
+    classTeachers?: ClassTeacherUncheckedUpdateManyWithoutTeacherNestedInput
+    classStudents?: ClassStudentUncheckedUpdateManyWithoutStudentNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+    markedAttendances?: AttendanceUncheckedUpdateManyWithoutMarkedByNestedInput
+    updatedAttendances?: AttendanceUncheckedUpdateManyWithoutUpdatedByNestedInput
+    schoolAssignments?: AssignmentUncheckedUpdateManyWithoutCreatorNestedInput
+    feedbacks?: AssignmentFeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+    submissions?: AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    reviewedSubmissions?: AssignmentSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+    rubrics?: RubricUncheckedUpdateManyWithoutCreatedByNestedInput
+    materials?: MaterialUncheckedUpdateManyWithoutUploadedByNestedInput
+    questions?: QuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    exams?: ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+    examAttempts?: ExamAttemptUncheckedUpdateManyWithoutStudentNestedInput
+    conversationLinks?: ConversationParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    schoolLogs?: SchoolLogUncheckedUpdateManyWithoutUserNestedInput
+    results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
+    teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
+    timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type MaterialUpsertWithoutUploadedFileInput = {
+    update: XOR<MaterialUpdateWithoutUploadedFileInput, MaterialUncheckedUpdateWithoutUploadedFileInput>
+    create: XOR<MaterialCreateWithoutUploadedFileInput, MaterialUncheckedCreateWithoutUploadedFileInput>
+    where?: MaterialWhereInput
+  }
+
+  export type MaterialUpdateToOneWithWhereWithoutUploadedFileInput = {
+    where?: MaterialWhereInput
+    data: XOR<MaterialUpdateWithoutUploadedFileInput, MaterialUncheckedUpdateWithoutUploadedFileInput>
+  }
+
+  export type MaterialUpdateWithoutUploadedFileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    chapter?: NullableStringFieldUpdateOperationsInput | string | null
+    topic?: NullableStringFieldUpdateOperationsInput | string | null
+    visibility?: StringFieldUpdateOperationsInput | string
+    scheduledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    downloadCount?: IntFieldUpdateOperationsInput | number
+    uploadDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    Workspace?: WorkspaceUpdateOneRequiredWithoutMaterialsNestedInput
+    Class?: ClassUpdateOneWithoutMaterialsNestedInput
+    UploadedBy?: UserUpdateOneRequiredWithoutMaterialsNestedInput
+  }
+
+  export type MaterialUncheckedUpdateWithoutUploadedFileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    chapter?: NullableStringFieldUpdateOperationsInput | string | null
+    topic?: NullableStringFieldUpdateOperationsInput | string | null
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    classId?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedByUserId?: StringFieldUpdateOperationsInput | string
+    visibility?: StringFieldUpdateOperationsInput | string
+    scheduledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    downloadCount?: IntFieldUpdateOperationsInput | number
+    uploadDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateWithoutSchoolLogsInput = {
@@ -84376,6 +89143,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -84404,6 +89172,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutSchoolLogsInput = {
@@ -84420,6 +89190,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -84448,6 +89219,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutSchoolLogsInput = {
@@ -84480,6 +89253,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -84508,6 +89282,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSchoolLogsInput = {
@@ -84524,6 +89300,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -84552,6 +89329,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type WorkspaceCreateWithoutLeaveRequestsInput = {
@@ -84581,6 +89360,8 @@ export namespace Prisma {
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutLeaveRequestsInput = {
@@ -84610,6 +89391,8 @@ export namespace Prisma {
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutLeaveRequestsInput = {
@@ -84631,6 +89414,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -84659,6 +89443,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutLeaveRequestsInput = {
@@ -84675,6 +89461,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -84703,6 +89490,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutLeaveRequestsInput = {
@@ -84724,6 +89513,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -84752,6 +89542,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutReviewedLeaveRequestsInput = {
@@ -84768,6 +89560,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -84796,6 +89589,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutReviewedLeaveRequestsInput = {
@@ -84841,6 +89636,8 @@ export namespace Prisma {
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutLeaveRequestsInput = {
@@ -84870,6 +89667,8 @@ export namespace Prisma {
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserUpsertWithoutLeaveRequestsInput = {
@@ -84897,6 +89696,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -84925,6 +89725,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLeaveRequestsInput = {
@@ -84941,6 +89743,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -84969,6 +89772,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUpsertWithoutReviewedLeaveRequestsInput = {
@@ -84996,6 +89801,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -85024,6 +89830,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedLeaveRequestsInput = {
@@ -85040,6 +89848,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -85068,6 +89877,8 @@ export namespace Prisma {
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserCreateWithoutResultsInput = {
@@ -85084,6 +89895,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -85112,6 +89924,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutResultsInput = {
@@ -85128,6 +89942,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -85156,11 +89971,80 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutResultsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutResultsInput, UserUncheckedCreateWithoutResultsInput>
+  }
+
+  export type WorkspaceCreateWithoutResultsInput = {
+    id: string
+    name: string
+    createdBy?: string | null
+    principalId?: string | null
+    status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
+    createdAt?: Date | string
+    memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
+    studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
+    assignments?: AssessmentAssignmentCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
+    classes?: ClassCreateNestedManyWithoutWorkspaceInput
+    materials?: MaterialCreateNestedManyWithoutWorkspaceInput
+    questions?: QuestionCreateNestedManyWithoutWorkspaceInput
+    exams?: ExamCreateNestedManyWithoutWorkspaceInput
+    conversations?: ConversationCreateNestedManyWithoutWorkspaceInput
+    departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
+    subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
+    timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutResultsInput = {
+    id: string
+    name: string
+    createdBy?: string | null
+    principalId?: string | null
+    status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
+    createdAt?: Date | string
+    memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
+    assignments?: AssessmentAssignmentUncheckedCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
+    classes?: ClassUncheckedCreateNestedManyWithoutWorkspaceInput
+    materials?: MaterialUncheckedCreateNestedManyWithoutWorkspaceInput
+    questions?: QuestionUncheckedCreateNestedManyWithoutWorkspaceInput
+    exams?: ExamUncheckedCreateNestedManyWithoutWorkspaceInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutWorkspaceInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
+    subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
+    timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutResultsInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutResultsInput, WorkspaceUncheckedCreateWithoutResultsInput>
   }
 
   export type UserUpsertWithoutResultsInput = {
@@ -85188,6 +90072,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -85216,6 +90101,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutResultsInput = {
@@ -85232,6 +90119,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -85260,6 +90148,81 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
+  }
+
+  export type WorkspaceUpsertWithoutResultsInput = {
+    update: XOR<WorkspaceUpdateWithoutResultsInput, WorkspaceUncheckedUpdateWithoutResultsInput>
+    create: XOR<WorkspaceCreateWithoutResultsInput, WorkspaceUncheckedCreateWithoutResultsInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutResultsInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutResultsInput, WorkspaceUncheckedUpdateWithoutResultsInput>
+  }
+
+  export type WorkspaceUpdateWithoutResultsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    principalId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
+    studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
+    assignments?: AssessmentAssignmentUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
+    classes?: ClassUpdateManyWithoutWorkspaceNestedInput
+    materials?: MaterialUpdateManyWithoutWorkspaceNestedInput
+    questions?: QuestionUpdateManyWithoutWorkspaceNestedInput
+    exams?: ExamUpdateManyWithoutWorkspaceNestedInput
+    conversations?: ConversationUpdateManyWithoutWorkspaceNestedInput
+    departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
+    subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
+    timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutResultsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    principalId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
+    assignments?: AssessmentAssignmentUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    classes?: ClassUncheckedUpdateManyWithoutWorkspaceNestedInput
+    materials?: MaterialUncheckedUpdateManyWithoutWorkspaceNestedInput
+    questions?: QuestionUncheckedUpdateManyWithoutWorkspaceNestedInput
+    exams?: ExamUncheckedUpdateManyWithoutWorkspaceNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
+    subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateWithoutTimetableSlotsInput = {
@@ -85289,6 +90252,8 @@ export namespace Prisma {
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+    results?: ResultCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutTimetableSlotsInput = {
@@ -85318,6 +90283,8 @@ export namespace Prisma {
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+    results?: ResultUncheckedCreateNestedManyWithoutWorkspaceInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutTimetableSlotsInput = {
@@ -85397,6 +90364,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
     student?: StudentCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
@@ -85425,6 +90393,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserUncheckedCreateWithoutTimetableSlotsInput = {
@@ -85441,6 +90411,7 @@ export namespace Prisma {
     firstLogin?: boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deletedAt?: Date | string | null
     attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
     student?: StudentUncheckedCreateNestedOneWithoutUserInput
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
@@ -85469,6 +90440,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
     reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   }
 
   export type UserCreateOrConnectWithoutTimetableSlotsInput = {
@@ -85514,6 +90487,8 @@ export namespace Prisma {
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutTimetableSlotsInput = {
@@ -85543,6 +90518,8 @@ export namespace Prisma {
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+    results?: ResultUncheckedUpdateManyWithoutWorkspaceNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ClassUpsertWithoutTimetableSlotsInput = {
@@ -85640,6 +90617,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
     student?: StudentUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
@@ -85668,6 +90646,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUpdateManyWithoutUploadedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTimetableSlotsInput = {
@@ -85684,6 +90664,7 @@ export namespace Prisma {
     firstLogin?: BoolFieldUpdateOperationsInput | boolean
     notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
     student?: StudentUncheckedUpdateOneWithoutUserNestedInput
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
@@ -85712,6 +90693,8 @@ export namespace Prisma {
     leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
     reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type AssessmentAttemptCreateManyUserInput = {
@@ -85885,6 +90868,7 @@ export namespace Prisma {
     title: string
     type: string
     fileUrl: string
+    uploadedFileId?: string | null
     subject: string
     chapter?: string | null
     topic?: string | null
@@ -85979,6 +90963,7 @@ export namespace Prisma {
 
   export type ResultCreateManyStudentInput = {
     id?: string
+    workspaceId?: string | null
     examId: string
     subject: string
     score: number
@@ -86048,6 +91033,25 @@ export namespace Prisma {
     eventType: string
     startDate: Date | string
     endDate?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type RefreshTokenCreateManyUserInput = {
+    id?: string
+    tokenHash: string
+    expiresAt: Date | string
+    revokedAt?: Date | string | null
+    replacedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type UploadedFileCreateManyUploadedByInput = {
+    id?: string
+    workspaceId: string
+    originalName: string
+    mimeType: string
+    sizeBytes: number
+    storageKey: string
     createdAt?: Date | string
   }
 
@@ -86578,6 +91582,7 @@ export namespace Prisma {
     uploadDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Workspace?: WorkspaceUpdateOneRequiredWithoutMaterialsNestedInput
     Class?: ClassUpdateOneWithoutMaterialsNestedInput
+    UploadedFile?: UploadedFileUpdateOneWithoutMaterialNestedInput
   }
 
   export type MaterialUncheckedUpdateWithoutUploadedByInput = {
@@ -86585,6 +91590,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
+    uploadedFileId?: NullableStringFieldUpdateOperationsInput | string | null
     subject?: StringFieldUpdateOperationsInput | string
     chapter?: NullableStringFieldUpdateOperationsInput | string | null
     topic?: NullableStringFieldUpdateOperationsInput | string | null
@@ -86602,6 +91608,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
+    uploadedFileId?: NullableStringFieldUpdateOperationsInput | string | null
     subject?: StringFieldUpdateOperationsInput | string
     chapter?: NullableStringFieldUpdateOperationsInput | string | null
     topic?: NullableStringFieldUpdateOperationsInput | string | null
@@ -86877,10 +91884,12 @@ export namespace Prisma {
     feedback?: NullableStringFieldUpdateOperationsInput | string | null
     timeTaken?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Workspace?: WorkspaceUpdateOneWithoutResultsNestedInput
   }
 
   export type ResultUncheckedUpdateWithoutStudentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     examId?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     score?: IntFieldUpdateOperationsInput | number
@@ -86896,6 +91905,7 @@ export namespace Prisma {
 
   export type ResultUncheckedUpdateManyWithoutStudentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
     examId?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     score?: IntFieldUpdateOperationsInput | number
@@ -87086,6 +92096,65 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type RefreshTokenUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    replacedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RefreshTokenUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    replacedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RefreshTokenUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    replacedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UploadedFileUpdateWithoutUploadedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    storageKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Workspace?: WorkspaceUpdateOneRequiredWithoutUploadedFilesNestedInput
+    Material?: MaterialUpdateOneWithoutUploadedFileNestedInput
+  }
+
+  export type UploadedFileUncheckedUpdateWithoutUploadedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    originalName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    storageKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Material?: MaterialUncheckedUpdateOneWithoutUploadedFileNestedInput
+  }
+
+  export type UploadedFileUncheckedUpdateManyWithoutUploadedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    originalName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    storageKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type WorkspaceMembershipCreateManyWorkspaceInput = {
     id?: string
     userId: string
@@ -87135,6 +92204,7 @@ export namespace Prisma {
     title: string
     type: string
     fileUrl: string
+    uploadedFileId?: string | null
     subject: string
     chapter?: string | null
     topic?: string | null
@@ -87247,6 +92317,32 @@ export namespace Prisma {
     startDate: Date | string
     endDate?: Date | string | null
     createdByUserId: string
+    createdAt?: Date | string
+  }
+
+  export type ResultCreateManyWorkspaceInput = {
+    id?: string
+    studentId: string
+    examId: string
+    subject: string
+    score: number
+    totalMarks: number
+    percentage: number
+    grade: string
+    rank?: number | null
+    status: string
+    feedback?: string | null
+    timeTaken?: number | null
+    createdAt?: Date | string
+  }
+
+  export type UploadedFileCreateManyWorkspaceInput = {
+    id?: string
+    uploadedByUserId: string
+    originalName: string
+    mimeType: string
+    sizeBytes: number
+    storageKey: string
     createdAt?: Date | string
   }
 
@@ -87413,6 +92509,7 @@ export namespace Prisma {
     uploadDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Class?: ClassUpdateOneWithoutMaterialsNestedInput
     UploadedBy?: UserUpdateOneRequiredWithoutMaterialsNestedInput
+    UploadedFile?: UploadedFileUpdateOneWithoutMaterialNestedInput
   }
 
   export type MaterialUncheckedUpdateWithoutWorkspaceInput = {
@@ -87420,6 +92517,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
+    uploadedFileId?: NullableStringFieldUpdateOperationsInput | string | null
     subject?: StringFieldUpdateOperationsInput | string
     chapter?: NullableStringFieldUpdateOperationsInput | string | null
     topic?: NullableStringFieldUpdateOperationsInput | string | null
@@ -87437,6 +92535,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
+    uploadedFileId?: NullableStringFieldUpdateOperationsInput | string | null
     subject?: StringFieldUpdateOperationsInput | string
     chapter?: NullableStringFieldUpdateOperationsInput | string | null
     topic?: NullableStringFieldUpdateOperationsInput | string | null
@@ -87775,6 +92874,86 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdByUserId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResultUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    examId?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    totalMarks?: IntFieldUpdateOperationsInput | number
+    percentage?: FloatFieldUpdateOperationsInput | number
+    grade?: StringFieldUpdateOperationsInput | string
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    feedback?: NullableStringFieldUpdateOperationsInput | string | null
+    timeTaken?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: UserUpdateOneRequiredWithoutResultsNestedInput
+  }
+
+  export type ResultUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    examId?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    totalMarks?: IntFieldUpdateOperationsInput | number
+    percentage?: FloatFieldUpdateOperationsInput | number
+    grade?: StringFieldUpdateOperationsInput | string
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    feedback?: NullableStringFieldUpdateOperationsInput | string | null
+    timeTaken?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResultUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    examId?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    totalMarks?: IntFieldUpdateOperationsInput | number
+    percentage?: FloatFieldUpdateOperationsInput | number
+    grade?: StringFieldUpdateOperationsInput | string
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    feedback?: NullableStringFieldUpdateOperationsInput | string | null
+    timeTaken?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UploadedFileUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    storageKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UploadedBy?: UserUpdateOneRequiredWithoutUploadedFilesNestedInput
+    Material?: MaterialUpdateOneWithoutUploadedFileNestedInput
+  }
+
+  export type UploadedFileUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadedByUserId?: StringFieldUpdateOperationsInput | string
+    originalName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    storageKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Material?: MaterialUncheckedUpdateOneWithoutUploadedFileNestedInput
+  }
+
+  export type UploadedFileUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadedByUserId?: StringFieldUpdateOperationsInput | string
+    originalName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    storageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -88260,6 +93439,7 @@ export namespace Prisma {
     title: string
     type: string
     fileUrl: string
+    uploadedFileId?: string | null
     subject: string
     chapter?: string | null
     topic?: string | null
@@ -88445,6 +93625,7 @@ export namespace Prisma {
     uploadDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Workspace?: WorkspaceUpdateOneRequiredWithoutMaterialsNestedInput
     UploadedBy?: UserUpdateOneRequiredWithoutMaterialsNestedInput
+    UploadedFile?: UploadedFileUpdateOneWithoutMaterialNestedInput
   }
 
   export type MaterialUncheckedUpdateWithoutClassInput = {
@@ -88452,6 +93633,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
+    uploadedFileId?: NullableStringFieldUpdateOperationsInput | string | null
     subject?: StringFieldUpdateOperationsInput | string
     chapter?: NullableStringFieldUpdateOperationsInput | string | null
     topic?: NullableStringFieldUpdateOperationsInput | string | null
@@ -88469,6 +93651,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     fileUrl?: StringFieldUpdateOperationsInput | string
+    uploadedFileId?: NullableStringFieldUpdateOperationsInput | string | null
     subject?: StringFieldUpdateOperationsInput | string
     chapter?: NullableStringFieldUpdateOperationsInput | string | null
     topic?: NullableStringFieldUpdateOperationsInput | string | null

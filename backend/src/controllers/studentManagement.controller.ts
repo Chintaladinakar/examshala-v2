@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { AuthRequest } from '../middleware/auth.middleware';
 import prisma from '../lib/prisma';
 import { isMailConfigured, sendUserInvitationEmail } from '../services/mail.service';
+import logger from '../lib/logger';
 
 async function loadTeacherOrPrincipal(req: AuthRequest, res: Response) {
   const userId = req.user?.userId;
@@ -169,7 +170,7 @@ export const createOrAssociateStudent = async (req: AuthRequest, res: Response):
         });
         credentialDelivery = 'email';
       } catch (mailError) {
-        console.error('Failed to send student invitation email, falling back to returning the password:', mailError);
+        logger.error({ err: mailError }, 'Failed to send student invitation email, falling back to returning the password');
       }
     }
 

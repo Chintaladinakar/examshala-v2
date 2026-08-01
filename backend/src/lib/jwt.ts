@@ -4,7 +4,10 @@ const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
   throw new Error('JWT_SECRET environment variable must be set');
 }
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+// Short-lived on purpose: a leaked access token now self-expires quickly instead of staying
+// valid for up to a week with no way to revoke it. Long-lived sessions are handled by the
+// separate, server-revocable refresh token (see src/lib/refreshToken.ts).
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '15m';
 
 export { JWT_SECRET };
 

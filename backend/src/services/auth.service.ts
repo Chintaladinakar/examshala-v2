@@ -1,10 +1,25 @@
 import bcrypt from 'bcryptjs';
 import prisma from '../lib/prisma';
 import { generateToken, JWT_SECRET } from '../lib/jwt';
+import { generateRefreshToken, hashRefreshToken, REFRESH_TOKEN_TTL_MS } from '../lib/refreshToken';
 import jwt from 'jsonwebtoken';
 import { validatePassword } from '../lib/password-policy';
 import * as otpService from './otp.service';
 import { isMailConfigured, sendPasswordResetEmail } from './mail.service';
+
+// Issues and persists a new refresh token for a user. Only the hash is stored — the raw token
+// is returned once, to be delivered to the client (e.g. as an HttpOnly cookie) and never again.
+async function issueRefreshToken(userId: string): Promise<string> {
+  const refreshToken = generateRefreshToken();
+  await prisma.refreshToken.create({
+    data: {
+      userId,
+      tokenHash: hashRefreshToken(refreshToken),
+      expiresAt: new Date(Date.now() + REFRESH_TOKEN_TTL_MS),
+    },
+  });
+  return refreshToken;
+}
 
 interface SignupInput {
   name: string;
@@ -97,9 +112,11 @@ export const signup = async ({ name, email, password, role }: SignupInput) => {
   await otpService.deleteOTP(email);
 
   const token = generateToken({ userId: user.id, role: user.role });
+  const refreshToken = await issueRefreshToken(user.id);
 
   return {
     token,
+    refreshToken,
     user: {
       id: user.id,
       name: user.name,
@@ -126,9 +143,11 @@ export const signin = async ({ email, password }: SigninInput) => {
   }
 
   const token = generateToken({ userId: user.id, role: user.role });
+  const refreshToken = await issueRefreshToken(user.id);
 
   return {
     token,
+    refreshToken,
     user: {
       id: user.id,
       name: user.name,
@@ -179,10 +198,15 @@ export const resetPassword = async ({ email, currentPassword, newPassword }: any
     },
   });
 
+  // A password change should end every other session; only the one making this request gets
+  // a fresh refresh token.
+  await revokeAllRefreshTokens({ userId: updatedUser.id });
   const token = generateToken({ userId: updatedUser.id, role: updatedUser.role });
+  const refreshToken = await issueRefreshToken(updatedUser.id);
 
   return {
     token,
+    refreshToken,
     user: {
       id: updatedUser.id,
       name: updatedUser.name,
@@ -281,7 +305,79 @@ export const resetPasswordWithToken = async ({ token, password }: any) => {
     },
   });
 
+  // A password reset is a credential change — kill every existing session so a device that
+  // still has the old credentials (or a stolen refresh token) can't keep riding it.
+  await revokeAllRefreshTokens({ userId: user.id });
+
   return {
     success: true,
   };
+};
+
+/**
+ * Exchanges a valid, unexpired refresh token for a new access token, rotating the refresh
+ * token in the process (the old one is revoked and can never be replayed, even if it leaks).
+ */
+export const refreshAccessToken = async ({ refreshToken }: { refreshToken?: string }) => {
+  if (!refreshToken) {
+    throw { status: 400, code: 'MISSING_REFRESH_TOKEN', message: 'Refresh token is required' };
+  }
+
+  const tokenHash = hashRefreshToken(refreshToken);
+  const record = await prisma.refreshToken.findUnique({ where: { tokenHash } });
+
+  if (!record || record.revokedAt || record.expiresAt < new Date()) {
+    throw { status: 401, code: 'INVALID_REFRESH_TOKEN', message: 'Refresh token is invalid or expired' };
+  }
+
+  const user = await prisma.user.findUnique({ where: { id: record.userId } });
+  if (!user || !user.isActive) {
+    throw { status: 401, code: 'INVALID_REFRESH_TOKEN', message: 'Refresh token is invalid or expired' };
+  }
+
+  const newRefreshToken = generateRefreshToken();
+  const newHash = hashRefreshToken(newRefreshToken);
+
+  await prisma.$transaction([
+    prisma.refreshToken.update({
+      where: { id: record.id },
+      data: { revokedAt: new Date(), replacedBy: newHash },
+    }),
+    prisma.refreshToken.create({
+      data: { userId: user.id, tokenHash: newHash, expiresAt: new Date(Date.now() + REFRESH_TOKEN_TTL_MS) },
+    }),
+  ]);
+
+  const token = generateToken({ userId: user.id, role: user.role });
+
+  return {
+    token,
+    refreshToken: newRefreshToken,
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      firstLogin: user.firstLogin,
+    },
+  };
+};
+
+/** Revokes a single refresh token — used for a normal "sign out on this device". */
+export const revokeRefreshToken = async ({ refreshToken }: { refreshToken?: string }) => {
+  if (!refreshToken) return { success: true };
+  await prisma.refreshToken.updateMany({
+    where: { tokenHash: hashRefreshToken(refreshToken), revokedAt: null },
+    data: { revokedAt: new Date() },
+  });
+  return { success: true };
+};
+
+/** Revokes every active refresh token for a user — "sign out everywhere" / compromised-device kill switch. */
+export const revokeAllRefreshTokens = async ({ userId }: { userId: string }) => {
+  await prisma.refreshToken.updateMany({
+    where: { userId, revokedAt: null },
+    data: { revokedAt: new Date() },
+  });
+  return { success: true };
 };

@@ -1,10 +1,11 @@
 import prisma from '../lib/prisma';
+import logger from '../lib/logger';
 
 const LOW_ATTENDANCE_THRESHOLD_PERCENT = 75;
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
 export const startLockingScheduler = () => {
-  console.log('⏰ Attendance Locking Scheduler Initialized.');
+  logger.info('Attendance locking scheduler initialized');
 
   // Run immediately on start
   lockPastAttendance();
@@ -16,7 +17,7 @@ export const startLockingScheduler = () => {
 };
 
 export const startLowAttendanceAlertScheduler = () => {
-  console.log('📉 Low Attendance Alert Scheduler Initialized.');
+  logger.info('Low attendance alert scheduler initialized');
 
   // Run immediately on start
   checkLowAttendance();
@@ -44,10 +45,10 @@ const lockPastAttendance = async () => {
     });
 
     if (result.count > 0) {
-      console.log(`🔒 Auto-locked ${result.count} past attendance sheets.`);
+      logger.info({ count: result.count }, 'Auto-locked past attendance sheets');
     }
   } catch (error) {
-    console.error('❌ Failed to run auto-locking batch job:', error);
+    logger.error({ err: error }, 'Failed to run auto-locking batch job');
   }
 };
 
@@ -125,6 +126,6 @@ const checkLowAttendance = async () => {
       }
     }
   } catch (error) {
-    console.error('❌ Failed to run low-attendance alert job:', error);
+    logger.error({ err: error }, 'Failed to run low-attendance alert job');
   }
 };

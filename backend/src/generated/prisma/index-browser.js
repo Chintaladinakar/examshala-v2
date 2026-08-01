@@ -133,6 +133,17 @@ exports.Prisma.UserScalarFieldEnum = {
   mode: 'mode',
   firstLogin: 'firstLogin',
   notificationPrefs: 'notificationPrefs',
+  createdAt: 'createdAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.RefreshTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  revokedAt: 'revokedAt',
+  replacedBy: 'replacedBy',
   createdAt: 'createdAt'
 };
 
@@ -544,6 +555,7 @@ exports.Prisma.MaterialScalarFieldEnum = {
   title: 'title',
   type: 'type',
   fileUrl: 'fileUrl',
+  uploadedFileId: 'uploadedFileId',
   subject: 'subject',
   chapter: 'chapter',
   topic: 'topic',
@@ -555,6 +567,17 @@ exports.Prisma.MaterialScalarFieldEnum = {
   viewCount: 'viewCount',
   downloadCount: 'downloadCount',
   uploadDate: 'uploadDate'
+};
+
+exports.Prisma.UploadedFileScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  uploadedByUserId: 'uploadedByUserId',
+  originalName: 'originalName',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  storageKey: 'storageKey',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SchoolLogScalarFieldEnum = {
@@ -590,6 +613,7 @@ exports.Prisma.PlatformSettingsScalarFieldEnum = {
 
 exports.Prisma.ResultScalarFieldEnum = {
   id: 'id',
+  workspaceId: 'workspaceId',
   studentId: 'studentId',
   examId: 'examId',
   subject: 'subject',
@@ -648,6 +672,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  RefreshToken: 'RefreshToken',
   OTP: 'OTP',
   Workspace: 'Workspace',
   WorkspaceMembership: 'WorkspaceMembership',
@@ -686,6 +711,7 @@ exports.Prisma.ModelName = {
   AssignmentSubmission: 'AssignmentSubmission',
   Question: 'Question',
   Material: 'Material',
+  UploadedFile: 'UploadedFile',
   SchoolLog: 'SchoolLog',
   LeaveRequest: 'LeaveRequest',
   PlatformSettings: 'PlatformSettings',

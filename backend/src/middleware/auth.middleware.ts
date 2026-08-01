@@ -1,12 +1,48 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../lib/jwt';
 import prisma from '../lib/prisma';
+import { cached } from '../lib/redis';
+import { tenantContext } from '../lib/tenantContext';
 
 export interface AuthRequest extends Request {
   user?: {
     userId: string;
     role: string;
   };
+}
+
+interface AuthState {
+  isActive: boolean;
+  workspaceId: string | null;
+  role: string;
+  workspaceStatus: string | null;
+}
+
+// This runs on every authenticated request, so it's the single hottest DB round-trip in the
+// app — under real concurrency it's two SELECTs (user, then workspace) per request purely to
+// check "is this account/workspace still allowed to be here". An 8s cache trades a small
+// window of staleness (an admin disabling an account can take up to ~8s to take effect instead
+// of being instant) for cutting that off the request's critical path almost entirely; degrades
+// to hitting the DB directly (today's behavior) whenever Redis isn't configured/reachable.
+async function loadAuthState(userId: string): Promise<AuthState | null> {
+  return cached<AuthState | null>(`auth:state:${userId}`, 8, async () => {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { isActive: true, workspaceId: true, role: true },
+    });
+    if (!user) return null;
+
+    let workspaceStatus: string | null = null;
+    if (user.role.toLowerCase() !== 'org_admin' && user.workspaceId) {
+      const workspace = await prisma.workspace.findUnique({
+        where: { id: user.workspaceId },
+        select: { status: true },
+      });
+      workspaceStatus = workspace?.status ?? null;
+    }
+
+    return { isActive: user.isActive, workspaceId: user.workspaceId, role: user.role, workspaceStatus };
+  });
 }
 
 export const protect = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
@@ -31,11 +67,8 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
 
     const decoded = verifyToken(token);
 
-    // Dynamic check: Verify user still exists and is active
-    const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
-      select: { isActive: true, workspaceId: true, role: true }
-    });
+    // Dynamic check: Verify user still exists and is active (Redis-cached — see loadAuthState).
+    const user = await loadAuthState(decoded.userId);
 
     if (!user) {
       res.status(401).json({ success: false, code: 'USER_NOT_FOUND', message: 'User no longer exists.' });
@@ -51,23 +84,20 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
       return;
     }
 
-    if (user.role.toLowerCase() !== 'org_admin' && user.workspaceId) {
-      const workspace = await prisma.workspace.findUnique({
-        where: { id: user.workspaceId },
-        select: { status: true },
+    if (user.workspaceStatus === 'SUSPENDED') {
+      res.status(403).json({
+        success: false,
+        code: 'WORKSPACE_SUSPENDED',
+        message: 'This workspace has been suspended. Please contact the administrator.',
       });
-      if (workspace?.status === 'SUSPENDED') {
-        res.status(403).json({
-          success: false,
-          code: 'WORKSPACE_SUSPENDED',
-          message: 'This workspace has been suspended. Please contact the administrator.',
-        });
-        return;
-      }
+      return;
     }
 
     req.user = decoded;
-    next();
+    // Scopes every Prisma query made for the rest of this request to the caller's workspace
+    // (see lib/tenantContext.ts + the Prisma extension in lib/prisma.ts) as a defense-in-depth
+    // backstop on top of each controller's own explicit workspace checks.
+    tenantContext.run({ workspaceId: user.workspaceId }, () => next());
   } catch (error) {
     res.status(401).json({
       success: false,

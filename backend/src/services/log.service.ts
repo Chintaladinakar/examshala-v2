@@ -1,4 +1,5 @@
 import prisma from '../lib/prisma';
+import logger from '../lib/logger';
 
 interface LogParams {
   userId: string;
@@ -10,7 +11,7 @@ interface LogParams {
 
 export const createSystemLog = async (params: LogParams) => {
   try {
-    console.log(`[audit log] ${params.action} on ${params.entity}:${params.entityId} by user ${params.userId}`);
+    logger.info({ action: params.action, entity: params.entity, entityId: params.entityId, userId: params.userId }, 'audit log');
     return await prisma.log.create({
       data: {
         userId: params.userId,
@@ -21,6 +22,6 @@ export const createSystemLog = async (params: LogParams) => {
       },
     });
   } catch (error) {
-    console.error('Failed to create system audit log:', error);
+    logger.error({ err: error }, 'Failed to create system audit log');
   }
 };

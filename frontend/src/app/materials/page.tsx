@@ -64,12 +64,15 @@ export default function MaterialsPage() {
     title: '',
     type: 'PDF',
     fileUrl: '',
+    fileId: '',
+    fileName: '',
     subject: '',
     chapter: '',
     topic: '',
     classId: '',
     visibility: 'published',
   });
+  const [uploading, setUploading] = useState(false);
 
   async function loadClasses() {
     try {
@@ -109,8 +112,33 @@ export default function MaterialsPage() {
 
   const filtered = useMemo(() => materials, [materials]);
 
+  async function handleFileSelect(file: File | null) {
+    if (!file) return;
+    setUploading(true);
+    try {
+      const body = new FormData();
+      body.append('file', file);
+      body.append('materialType', form.type);
+      const res = await fetch('/api/uploads', { method: 'POST', body });
+      const payload = await res.json().catch(() => null);
+      if (!res.ok || !payload?.success) {
+        throw new Error(payload?.message || 'Upload failed');
+      }
+      setForm((f) => ({ ...f, fileId: payload.data.id, fileName: payload.data.originalName }));
+      showMessage('File uploaded', 'success');
+    } catch (e) {
+      showError(e);
+    } finally {
+      setUploading(false);
+    }
+  }
+
   async function createMaterial(e: React.FormEvent) {
     e.preventDefault();
+    if (form.type !== 'LINK' && !form.fileId) {
+      showError(new Error('Please upload a file before saving.'));
+      return;
+    }
     setSaving(true);
     try {
       await apiJson('/api/materials', {
@@ -118,7 +146,7 @@ export default function MaterialsPage() {
         body: JSON.stringify({
           title: form.title,
           type: form.type,
-          fileUrl: form.fileUrl,
+          ...(form.type === 'LINK' ? { fileUrl: form.fileUrl } : { fileId: form.fileId }),
           subject: form.subject,
           chapter: form.chapter || undefined,
           topic: form.topic || undefined,
@@ -128,7 +156,7 @@ export default function MaterialsPage() {
       });
       showMessage('Material uploaded', 'success');
       setShowCreate(false);
-      setForm({ title: '', type: 'PDF', fileUrl: '', subject: '', chapter: '', topic: '', classId: '', visibility: 'published' });
+      setForm({ title: '', type: 'PDF', fileUrl: '', fileId: '', fileName: '', subject: '', chapter: '', topic: '', classId: '', visibility: 'published' });
       await loadMaterials();
     } catch (e) {
       showError(e);
@@ -328,23 +356,38 @@ export default function MaterialsPage() {
                   className="w-full mt-1 px-3 py-2 border rounded-xl text-sm"
                 />
               </div>
-              <div>
-                <label className="text-xs font-bold text-slate-600">File / Link URL</label>
-                <input
-                  required
-                  type="url"
-                  placeholder="https://..."
-                  value={form.fileUrl}
-                  onChange={(e) => setForm({ ...form, fileUrl: e.target.value })}
-                  className="w-full mt-1 px-3 py-2 border rounded-xl text-sm"
-                />
-              </div>
+              {form.type === 'LINK' ? (
+                <div>
+                  <label className="text-xs font-bold text-slate-600">Link URL</label>
+                  <input
+                    required
+                    type="url"
+                    placeholder="https://..."
+                    value={form.fileUrl}
+                    onChange={(e) => setForm({ ...form, fileUrl: e.target.value })}
+                    className="w-full mt-1 px-3 py-2 border rounded-xl text-sm"
+                  />
+                </div>
+              ) : (
+                <div>
+                  <label className="text-xs font-bold text-slate-600">File</label>
+                  <input
+                    type="file"
+                    onChange={(e) => handleFileSelect(e.target.files?.[0] || null)}
+                    className="w-full mt-1 text-sm"
+                  />
+                  {uploading && <p className="text-xs text-slate-500 mt-1">Uploading…</p>}
+                  {!uploading && form.fileName && (
+                    <p className="text-xs text-emerald-600 font-semibold mt-1">Uploaded: {form.fileName}</p>
+                  )}
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="text-xs font-bold text-slate-600">Type</label>
                   <select
                     value={form.type}
-                    onChange={(e) => setForm({ ...form, type: e.target.value })}
+                    onChange={(e) => setForm({ ...form, type: e.target.value, fileId: '', fileName: '' })}
                     className="w-full mt-1 px-3 py-2 border rounded-xl text-sm"
                   >
                     {TYPES.map((t) => (
@@ -423,10 +466,10 @@ export default function MaterialsPage() {
                 </button>
                 <button
                   type="submit"
-                  disabled={saving}
+                  disabled={saving || uploading}
                   className="px-4 py-2 bg-teal-900 hover:bg-teal-800 text-white rounded-xl text-xs font-bold disabled:opacity-50"
                 >
-                  {saving ? 'Uploading...' : 'Upload Material'}
+                  {saving ? 'Saving...' : 'Upload Material'}
                 </button>
               </div>
             </form>

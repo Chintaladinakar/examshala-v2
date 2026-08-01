@@ -21,6 +21,18 @@ function getTokenFromSignupResponse(body: unknown): string | null {
   return null;
 }
 
+function getRefreshTokenFromSignupResponse(body: unknown): string | null {
+  if (!body || typeof body !== 'object') return null;
+  const rec = body as Record<string, unknown>;
+  if (typeof rec.refreshToken === 'string') return rec.refreshToken;
+  const data = rec.data;
+  if (data && typeof data === 'object') {
+    const refreshToken = (data as Record<string, unknown>).refreshToken;
+    if (typeof refreshToken === 'string') return refreshToken;
+  }
+  return null;
+}
+
 export default function SignUp() {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -50,11 +62,12 @@ export default function SignUp() {
       // read localStorage directly. The server sets the session cookie itself as
       // HttpOnly/Secure/SameSite=Strict so client-side JS never touches it.
       const token = getTokenFromSignupResponse(data);
-      if (token) {
+      const refreshToken = getRefreshTokenFromSignupResponse(data);
+      if (token && refreshToken) {
         await fetch('/api/auth/session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token }),
+          body: JSON.stringify({ token, refreshToken }),
         });
 
         // Determine correct landing pad and route directly

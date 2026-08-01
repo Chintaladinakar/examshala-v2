@@ -1,6 +1,7 @@
 import { Response, NextFunction } from 'express';
 import { AuthRequest } from './auth.middleware';
 import prisma from '../lib/prisma';
+import logger from '../lib/logger';
 
 export const studentAccessGuard = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   // Assume `protect` and `authorizeRoles('student')` have already run before this
@@ -36,7 +37,7 @@ export const studentAccessGuard = async (req: AuthRequest, res: Response, next: 
         return;
       }
     } catch (error) {
-      console.error('Error validating workspace membership:', error);
+      logger.error({ err: error }, 'Error validating workspace membership');
       res.status(500).json({
         success: false,
         message: 'Internal server error while validating access.',

@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth.middleware';
 import prisma from '../lib/prisma';
+import { Prisma } from '../generated/prisma';
 import { createNotification } from '../services/notification.service';
 
 const EXAM_TYPES = ['quiz', 'class_test', 'unit_test', 'practice', 'mock', 'final'];
@@ -432,6 +433,18 @@ export const getExamResults = async (req: AuthRequest, res: Response): Promise<v
 // STUDENT: EXAM ATTEMPTS
 // -------------------------------------------------------------
 
+// Array.sort(() => Math.random() - 0.5) is a statistically biased shuffle (comparator-based
+// sorts don't produce uniform permutations) — some orderings come up far more often than
+// others. Fisher-Yates is the standard unbiased in-place shuffle.
+function shuffle<T>(items: T[]): T[] {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
 function scoreAnswer(question: { type: string; correctAnswer: any }, selectedAnswer: any): boolean | null {
   if (question.type === 'mcq' || question.type === 'true_false' || question.type === 'numerical') {
     if (question.correctAnswer === undefined || question.correctAnswer === null) return null;
@@ -516,7 +529,7 @@ export const startAttempt = async (req: AuthRequest, res: Response): Promise<voi
       });
     }
 
-    const questions = exam.shuffleQuestions ? [...exam.examQuestions].sort(() => Math.random() - 0.5) : exam.examQuestions;
+    const questions = exam.shuffleQuestions ? shuffle(exam.examQuestions) : exam.examQuestions;
 
     const existingAnswers = await prisma.examAnswer.findMany({ where: { attemptId: attempt.id } });
     const answerMap = new Map(existingAnswers.map((a) => [a.questionId, a]));
@@ -537,7 +550,7 @@ export const startAttempt = async (req: AuthRequest, res: Response): Promise<voi
           type: eq.Question.type,
           questionText: eq.Question.questionText,
           options: exam.shuffleOptions && Array.isArray(eq.Question.options)
-            ? [...(eq.Question.options as any[])].sort(() => Math.random() - 0.5)
+            ? shuffle(eq.Question.options as any[])
             : eq.Question.options,
           selectedAnswer: answerMap.get(eq.questionId)?.selectedAnswer ?? null,
           markedForReview: answerMap.get(eq.questionId)?.markedForReview ?? false,
@@ -567,6 +580,13 @@ export const autosaveAnswer = async (req: AuthRequest, res: Response): Promise<v
     }
     if (attempt.status !== 'in_progress') {
       res.status(403).json({ success: false, message: 'This attempt has already been submitted.' });
+      return;
+    }
+
+    // Re-verify tenant scoping on the parent exam rather than trusting studentId alone.
+    const parentExam = await prisma.exam.findUnique({ where: { id: attempt.examId }, select: { workspaceId: true } });
+    if (!parentExam || parentExam.workspaceId !== user.workspaceId) {
+      res.status(404).json({ success: false, message: 'Attempt not found.' });
       return;
     }
 
@@ -609,6 +629,17 @@ export const submitAttempt = async (req: AuthRequest, res: Response): Promise<vo
       return;
     }
 
+    // Re-verify tenant scoping on the parent exam — attempt.studentId alone doesn't
+    // guarantee the exam still belongs to the student's workspace.
+    const examInfo = await prisma.exam.findUnique({
+      where: { id: attempt.examId },
+      select: { title: true, workspaceId: true, classId: true, createdByUserId: true },
+    });
+    if (!examInfo || examInfo.workspaceId !== user.workspaceId) {
+      res.status(404).json({ success: false, message: 'Attempt not found.' });
+      return;
+    }
+
     const [examQuestions, answers] = await Promise.all([
       prisma.examQuestion.findMany({ where: { examId: attempt.examId }, include: { Question: true } }),
       prisma.examAnswer.findMany({ where: { attemptId: attemptId as string } }),
@@ -617,6 +648,7 @@ export const submitAttempt = async (req: AuthRequest, res: Response): Promise<vo
 
     let score = 0;
     let hasUngraded = false;
+    const gradedAnswers: { id: string; isCorrect: boolean | null; marksAwarded: number | null }[] = [];
     for (const eq of examQuestions) {
       const answer = answerMap.get(eq.questionId);
       const isCorrect = answer ? scoreAnswer(eq.Question, answer.selectedAnswer) : null;
@@ -625,30 +657,47 @@ export const submitAttempt = async (req: AuthRequest, res: Response): Promise<vo
       else if (isCorrect === false) marksAwarded = -eq.negativeMarks;
       else hasUngraded = true;
 
-      if (answer) {
-        await prisma.examAnswer.update({
-          where: { id: answer.id },
-          data: { isCorrect: isCorrect ?? undefined, marksAwarded: marksAwarded ?? undefined },
-        });
-      }
+      if (answer) gradedAnswers.push({ id: answer.id, isCorrect, marksAwarded });
       score += marksAwarded ?? 0;
     }
 
     const totalMarks = examQuestions.reduce((s, q) => s + q.marks, 0);
     const percentage = totalMarks > 0 ? Math.round((score / totalMarks) * 1000) / 10 : 0;
+    const finalStatus = hasUngraded ? (autoSubmitted ? 'auto_submitted' : 'submitted') : 'evaluated';
 
-    const updated = await prisma.examAttempt.update({
-      where: { id: attemptId as string },
-      data: {
-        status: hasUngraded ? (autoSubmitted ? 'auto_submitted' : 'submitted') : 'evaluated',
-        submittedAt: new Date(),
-        score,
-        totalMarks,
-        percentage,
-      },
+    // Grading + finalize run as one atomic unit: either every answer gets its marks and the
+    // attempt gets finalized, or neither happens. The finalize step is a single guarded UPDATE
+    // (status = 'in_progress' -> anything else) so a concurrent double-submit is resolved by the
+    // database — the loser gets 0 rows back instead of re-running/overwriting the grade.
+    const updated = await prisma.$transaction(async (tx) => {
+      if (gradedAnswers.length > 0) {
+        const valueRows = gradedAnswers.map(
+          (a) => Prisma.sql`(${a.id}::text, ${a.isCorrect}::boolean, ${a.marksAwarded}::double precision)`
+        );
+        await tx.$executeRaw`
+          UPDATE "ExamAnswer" AS ea
+          SET "isCorrect" = v.is_correct, "marksAwarded" = v.marks_awarded
+          FROM (VALUES ${Prisma.join(valueRows)}) AS v(id, is_correct, marks_awarded)
+          WHERE ea.id = v.id
+        `;
+      }
+
+      const finalized = await tx.$queryRaw<{ id: string }[]>`
+        UPDATE "ExamAttempt"
+        SET status = ${finalStatus}, "submittedAt" = NOW(), score = ${score}, "totalMarks" = ${totalMarks}, percentage = ${percentage}
+        WHERE id = ${attemptId} AND status = 'in_progress'
+        RETURNING id
+      `;
+      if (finalized.length === 0) return null;
+
+      return tx.examAttempt.findUniqueOrThrow({ where: { id: attemptId as string } });
     });
 
-    const examInfo = await prisma.exam.findUnique({ where: { id: attempt.examId }, select: { title: true, workspaceId: true, classId: true, createdByUserId: true } });
+    if (!updated) {
+      res.json({ success: true, message: 'Already submitted.' });
+      return;
+    }
+
     if (examInfo) {
       const teacherLinks = await prisma.classTeacher.findMany({ where: { classId: examInfo.classId }, select: { teacherId: true } });
       const notifyIds = new Set([examInfo.createdByUserId, ...teacherLinks.map((t) => t.teacherId)]);

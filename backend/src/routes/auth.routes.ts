@@ -5,12 +5,16 @@ import {
   resetPasswordController,
   forgotPasswordController,
   resetPasswordWithTokenController,
+  refreshTokenController,
+  logoutController,
+  logoutAllController,
   requestSignupOTPController,
   verifySignupOTPController,
   requestPasswordResetOTPController,
   verifyPasswordResetOTPController
 } from '../controllers/auth.controller';
 import { authRateLimiter, otpRequestRateLimiter } from '../middleware/rateLimit.middleware';
+import { protect } from '../middleware/auth.middleware';
 
 const router = Router();
 
@@ -19,6 +23,9 @@ router.post('/signin', authRateLimiter, signinController);
 router.post('/reset-password', authRateLimiter, resetPasswordController);
 router.post('/forgot-password', authRateLimiter, forgotPasswordController);
 router.post('/reset-password-with-token', authRateLimiter, resetPasswordWithTokenController);
+router.post('/refresh', authRateLimiter, refreshTokenController);
+router.post('/logout', logoutController);
+router.post('/logout-all', protect, logoutAllController);
 
 // OTP routes
 router.post('/request-signup-otp', otpRequestRateLimiter, requestSignupOTPController);

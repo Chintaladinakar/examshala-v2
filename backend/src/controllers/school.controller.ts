@@ -3,6 +3,7 @@ import { AuthRequest } from '../middleware/auth.middleware';
 import prisma from '../lib/prisma';
 import bcrypt from 'bcryptjs';
 import * as profileService from '../services/studentProfile.service';
+import logger from '../lib/logger';
 
 export const ATTENDANCE_STATUSES = ['present', 'absent', 'late', 'half_day', 'leave'] as const;
 type AttendanceStatus = (typeof ATTENDANCE_STATUSES)[number];
@@ -21,7 +22,7 @@ const createSchoolLog = async (userId: string, role: string, actionType: string,
       },
     });
   } catch (error) {
-    console.error('Failed to write SchoolLog audit entry:', error);
+    logger.error({ err: error }, 'Failed to write SchoolLog audit entry');
   }
 };
 

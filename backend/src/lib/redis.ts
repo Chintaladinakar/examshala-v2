@@ -1,4 +1,5 @@
 import Redis from 'ioredis';
+import logger from './logger';
 
 const REDIS_URL = process.env.REDIS_URL;
 
@@ -18,7 +19,7 @@ export async function ensureRedisConnected(): Promise<Redis | null> {
     try {
       await redis.connect();
     } catch (error) {
-      console.error('[redis] Failed to connect, caching/queues disabled:', (error as Error).message);
+      logger.error({ err: error }, '[redis] Failed to connect, caching/queues disabled');
     }
   }
   return redis.status === 'ready' ? redis : null;

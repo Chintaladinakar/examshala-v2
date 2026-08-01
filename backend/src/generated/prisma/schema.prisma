@@ -8,19 +8,20 @@ datasource db {
 }
 
 model User {
-  id                String   @id
-  username          String?  @unique
+  id                String    @id
+  username          String?   @unique
   name              String
-  email             String   @unique
+  email             String    @unique
   passwordHash      String?
-  role              String   @default("student")
-  isActive          Boolean  @default(true)
-  status            String   @default("ACTIVE") // ACTIVE, INACTIVE, INVITED
+  role              String    @default("student")
+  isActive          Boolean   @default(true)
+  status            String    @default("ACTIVE") // ACTIVE, INACTIVE, INVITED
   workspaceId       String?
   mode              String? // principal | teacher
-  firstLogin        Boolean  @default(true)
+  firstLogin        Boolean   @default(true)
   notificationPrefs Json?
-  createdAt         DateTime @default(now())
+  createdAt         DateTime  @default(now())
+  deletedAt         DateTime? // set by admin "delete user" (soft-delete — see controllers/admin.controller.ts deleteUser)
 
   // Relations
   attempts        AssessmentAttempt[]
@@ -54,6 +55,24 @@ model User {
   leaveRequests         LeaveRequest[]            @relation("LeaveRequester")
   reviewedLeaveRequests LeaveRequest[]            @relation("LeaveReviewer")
   calendarEvents        CalendarEvent[]
+  refreshTokens         RefreshToken[]
+  uploadedFiles         UploadedFile[]
+
+  @@index([workspaceId])
+}
+
+model RefreshToken {
+  id         String    @id @default(uuid())
+  userId     String
+  tokenHash  String    @unique
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  replacedBy String? // tokenHash of the rotated replacement, for audit/debugging reuse
+  createdAt  DateTime  @default(now())
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model OTP {
@@ -97,6 +116,8 @@ model Workspace {
   timetableSlots  TimetableSlot[]
   leaveRequests   LeaveRequest[]
   calendarEvents  CalendarEvent[]
+  results         Result[]
+  uploadedFiles   UploadedFile[]
 }
 
 model WorkspaceMembership {
@@ -147,7 +168,7 @@ model Exam {
 
   Workspace     Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   Class         Class          @relation(fields: [classId], references: [id], onDelete: Cascade)
-  CreatedBy     User           @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+  CreatedBy     User           @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
   examQuestions ExamQuestion[]
   attempts      ExamAttempt[]
 
@@ -186,7 +207,7 @@ model ExamAttempt {
   createdAt            DateTime  @default(now())
 
   Exam    Exam         @relation(fields: [examId], references: [id], onDelete: Cascade)
-  Student User         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  Student User         @relation(fields: [studentId], references: [id], onDelete: Restrict)
   answers ExamAnswer[]
 
   @@unique([examId, studentId])
@@ -359,6 +380,8 @@ model Notification {
   createdAt   DateTime @default(now())
 
   Workspace Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
 }
 
 model CalendarEvent {
@@ -403,6 +426,9 @@ model AuditLog {
   entityId   String
   details    Json?
   createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@index([createdAt])
 }
 
 model Invite {
@@ -523,7 +549,7 @@ model Attendance {
   createdAt      DateTime @default(now())
 
   Class     Class @relation(fields: [classId], references: [id], onDelete: Cascade)
-  Student   User  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  Student   User  @relation(fields: [studentId], references: [id], onDelete: Restrict)
   MarkedBy  User  @relation("MarkedBy", fields: [markedByUserId], references: [id])
   UpdatedBy User  @relation("UpdatedBy", fields: [lastUpdatedBy], references: [id])
 
@@ -549,7 +575,7 @@ model Assignment {
   studentId   String?
 
   Class       Class                  @relation(fields: [classId], references: [id], onDelete: Cascade)
-  Creator     User                   @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+  Creator     User                   @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
   feedbacks   AssignmentFeedback[]
   submissions AssignmentSubmission[]
   rubric      Rubric?
@@ -567,7 +593,7 @@ model Rubric {
   createdAt       DateTime @default(now())
 
   Assignment Assignment        @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
-  CreatedBy  User              @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+  CreatedBy  User              @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
   criteria   RubricCriterion[]
 }
 
@@ -606,7 +632,7 @@ model AssignmentFeedback {
   createdAt       DateTime @default(now())
 
   Assignment Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
-  Creator    User       @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+  Creator    User       @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
 }
 
 model AssignmentSubmission {
@@ -636,7 +662,7 @@ model AssignmentSubmission {
   plagiarismCheckedAt DateTime?
 
   Assignment   Assignment    @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
-  Student      User          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  Student      User          @relation(fields: [studentId], references: [id], onDelete: Restrict)
   ReviewedBy   User?         @relation("SubmissionReviewer", fields: [reviewedByUserId], references: [id])
   rubricScores RubricScore[]
 
@@ -668,7 +694,7 @@ model Question {
   updatedAt       DateTime @updatedAt
 
   Workspace     Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  CreatedBy     User           @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+  CreatedBy     User           @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
   examQuestions ExamQuestion[]
   examAnswers   ExamAnswer[]
 
@@ -683,7 +709,8 @@ model Material {
   id               String    @id @default(uuid())
   title            String
   type             String // PDF, DOC, PPT, LINK, NOTES
-  fileUrl          String
+  fileUrl          String // for type=LINK: a validated external http(s) URL; otherwise an internal /api/materials/file/:id path backed by UploadedFile
+  uploadedFileId   String?   @unique
   subject          String
   chapter          String?
   topic            String?
@@ -696,13 +723,32 @@ model Material {
   downloadCount    Int       @default(0)
   uploadDate       DateTime  @default(now())
 
-  Workspace  Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  Class      Class?    @relation(fields: [classId], references: [id], onDelete: SetNull)
-  UploadedBy User      @relation(fields: [uploadedByUserId], references: [id], onDelete: Cascade)
+  Workspace    Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  Class        Class?        @relation(fields: [classId], references: [id], onDelete: SetNull)
+  UploadedBy   User          @relation(fields: [uploadedByUserId], references: [id], onDelete: Restrict)
+  UploadedFile UploadedFile? @relation(fields: [uploadedFileId], references: [id], onDelete: SetNull)
 
   @@index([workspaceId])
   @@index([classId])
   @@index([subject])
+}
+
+model UploadedFile {
+  id               String   @id @default(uuid())
+  workspaceId      String
+  uploadedByUserId String
+  originalName     String
+  mimeType         String
+  sizeBytes        Int
+  storageKey       String   @unique // relative path under the private, non-web-served uploads root
+  createdAt        DateTime @default(now())
+
+  Workspace  Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  UploadedBy User      @relation(fields: [uploadedByUserId], references: [id], onDelete: Restrict)
+  Material   Material?
+
+  @@index([workspaceId])
+  @@index([uploadedByUserId])
 }
 
 model SchoolLog {
@@ -713,7 +759,7 @@ model SchoolLog {
   entityId   String
   timestamp  DateTime @default(now())
 
-  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User User @relation(fields: [userId], references: [id], onDelete: Restrict)
 }
 
 model LeaveRequest {
@@ -731,7 +777,7 @@ model LeaveRequest {
   createdAt        DateTime  @default(now())
 
   Workspace  Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  Requester  User      @relation("LeaveRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+  Requester  User      @relation("LeaveRequester", fields: [requesterId], references: [id], onDelete: Restrict)
   ReviewedBy User?     @relation("LeaveReviewer", fields: [reviewedByUserId], references: [id])
 
   @@index([workspaceId])
@@ -747,21 +793,27 @@ model PlatformSettings {
 }
 
 model Result {
-  id         String   @id @default(cuid())
-  studentId  String
-  examId     String
-  subject    String
-  score      Int
-  totalMarks Int
-  percentage Float
-  grade      String
-  rank       Int?
-  status     String
-  feedback   String?
-  timeTaken  Int?
-  createdAt  DateTime @default(now())
+  id          String   @id @default(cuid())
+  workspaceId String?
+  studentId   String
+  examId      String
+  subject     String
+  score       Int
+  totalMarks  Int
+  percentage  Float
+  grade       String
+  rank        Int?
+  status      String
+  feedback    String?
+  timeTaken   Int?
+  createdAt   DateTime @default(now())
 
-  student User @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  student   User       @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  Workspace Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@index([studentId])
+  @@index([examId])
 }
 
 model TimetableSlot {

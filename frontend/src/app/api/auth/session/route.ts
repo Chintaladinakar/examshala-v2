@@ -2,8 +2,9 @@ import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import crypto from 'crypto';
 import { jsonOk, jsonError } from '@/lib/school/http';
+import { setAuthCookies, clearAuthCookies } from '@/lib/auth-session';
 
-const SESSION_COOKIE_MAX_AGE = 86400; // 24h, matches backend JWT usage elsewhere in the app
+const BACKEND_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000').replace(/\/$/, '');
 
 function base64UrlDecode(input: string): Buffer {
   const padded = input.replace(/-/g, '+').replace(/_/g, '/').padEnd(input.length + ((4 - (input.length % 4)) % 4), '=');
@@ -38,9 +39,10 @@ function isValidJwtSignature(token: string, secret: string): boolean {
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
   const token = typeof body?.token === 'string' ? body.token : null;
+  const refreshToken = typeof body?.refreshToken === 'string' ? body.refreshToken : null;
 
-  if (!token) {
-    return jsonError('MISSING_TOKEN', 'A token is required', 400);
+  if (!token || !refreshToken) {
+    return jsonError('MISSING_TOKEN', 'A token and refreshToken are required', 400);
   }
 
   const jwtSecret = process.env.JWT_SECRET;
@@ -48,25 +50,31 @@ export async function POST(req: NextRequest) {
     return jsonError('INVALID_TOKEN', 'Invalid session token', 401);
   }
 
-  (await cookies()).set('session_token', token, {
-    path: '/',
-    maxAge: SESSION_COOKIE_MAX_AGE,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-  });
+  // The refresh token is opaque (not a JWT) — we can't verify it locally, only trust it because
+  // it's paired with an access token whose signature we just checked, both minted together by
+  // the same signin/signup/refresh response.
+  await setAuthCookies(token, refreshToken);
 
   return jsonOk({ success: true });
 }
 
 export async function DELETE() {
-  (await cookies()).set('session_token', '', {
-    path: '/',
-    maxAge: 0,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-  });
+  // Revoke server-side so the refresh token can't be replayed after logout, not just forgotten
+  // client-side. Best-effort: if the backend call fails, the cookies are cleared regardless.
+  try {
+    const refreshToken = (await cookies()).get('refresh_token')?.value || null;
+    if (refreshToken) {
+      await fetch(`${BACKEND_BASE_URL}/api/auth/logout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refreshToken }),
+        cache: 'no-store',
+      });
+    }
+  } catch {
+    // Ignore — cookies are cleared below regardless of whether server-side revocation succeeded.
+  }
 
+  await clearAuthCookies();
   return jsonOk({ success: true });
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import InputField from '@/components/InputField';
@@ -12,6 +12,7 @@ import { logDeveloperError } from '@/lib/error-handler';
 type SignInResponse = {
   data: {
     token: string;
+    refreshToken: string;
     user?: {
       id: string;
       name: string;
@@ -22,7 +23,7 @@ type SignInResponse = {
   };
 };
 
-export default function SignIn() {
+function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
@@ -74,7 +75,7 @@ export default function SignIn() {
       await fetch('/api/auth/session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: data.data.token }),
+        body: JSON.stringify({ token: data.data.token, refreshToken: data.data.refreshToken }),
       });
 
       // Determine correct landing pad
@@ -168,5 +169,13 @@ export default function SignIn() {
         />
       </div>
     </div>
+  );
+}
+
+export default function SignIn() {
+  return (
+    <Suspense fallback={null}>
+      <SignInForm />
+    </Suspense>
   );
 }

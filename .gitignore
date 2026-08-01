@@ -46,3 +46,6 @@ frontend/.env
 next-env.d.ts
 # prisma generated client
 **/src/generated/prisma
+
+# local disk storage for uploaded material files (see backend/src/lib/storage.ts)
+backend/uploads/

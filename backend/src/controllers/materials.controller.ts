@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth.middleware';
 import prisma from '../lib/prisma';
+import { resolveStoragePath, deleteFile } from '../lib/storage';
 
 const MATERIAL_TYPES = ['PDF', 'DOC', 'PPT', 'EXCEL', 'IMAGE', 'VIDEO', 'ZIP', 'LINK', 'NOTES'];
 const VISIBILITIES = ['draft', 'scheduled', 'published', 'hidden'];
@@ -118,10 +119,10 @@ export const createMaterial = async (req: AuthRequest, res: Response): Promise<v
       return;
     }
 
-    const { title, type, fileUrl, subject, chapter, topic, classId, visibility, scheduledAt } = req.body;
+    const { title, type, fileUrl, fileId, subject, chapter, topic, classId, visibility, scheduledAt } = req.body;
 
-    if (!title || !type || !fileUrl || !subject) {
-      res.status(400).json({ success: false, message: 'title, type, fileUrl, and subject are required.' });
+    if (!title || !type || !subject) {
+      res.status(400).json({ success: false, message: 'title, type, and subject are required.' });
       return;
     }
 
@@ -131,13 +132,42 @@ export const createMaterial = async (req: AuthRequest, res: Response): Promise<v
       return;
     }
 
-    try {
-      // Reject anything that isn't a well-formed http(s) URL to avoid storing arbitrary payloads.
-      const parsed = new URL(fileUrl);
-      if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('bad protocol');
-    } catch {
-      res.status(400).json({ success: false, message: 'fileUrl must be a valid http(s) URL.' });
-      return;
+    // LINK materials are an explicit external-URL feature (e.g. pointing at a YouTube video);
+    // every other type must reference a file this user already uploaded through POST /api/uploads
+    // — we never again accept and store an arbitrary client-supplied URL as "the file".
+    let resolvedFileUrl: string;
+    let uploadedFileId: string | undefined;
+
+    if (normalizedType === 'LINK') {
+      if (!fileUrl) {
+        res.status(400).json({ success: false, message: 'fileUrl is required for LINK materials.' });
+        return;
+      }
+      try {
+        const parsed = new URL(fileUrl);
+        if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('bad protocol');
+      } catch {
+        res.status(400).json({ success: false, message: 'fileUrl must be a valid http(s) URL.' });
+        return;
+      }
+      resolvedFileUrl = fileUrl;
+    } else {
+      if (!fileId) {
+        res.status(400).json({ success: false, message: 'fileId is required — upload the file via POST /api/uploads first.' });
+        return;
+      }
+      const uploadedFile = await prisma.uploadedFile.findUnique({ where: { id: fileId } });
+      if (!uploadedFile || uploadedFile.workspaceId !== user.workspaceId || uploadedFile.uploadedByUserId !== user.id) {
+        res.status(400).json({ success: false, message: 'fileId does not reference a file you uploaded.' });
+        return;
+      }
+      const alreadyAttached = await prisma.material.findUnique({ where: { uploadedFileId: fileId } });
+      if (alreadyAttached) {
+        res.status(400).json({ success: false, message: 'This uploaded file is already attached to another material.' });
+        return;
+      }
+      uploadedFileId = uploadedFile.id;
+      resolvedFileUrl = `/api/materials/file/${uploadedFile.id}`;
     }
 
     const normalizedVisibility = visibility && VISIBILITIES.includes(visibility) ? visibility : 'published';
@@ -161,7 +191,8 @@ export const createMaterial = async (req: AuthRequest, res: Response): Promise<v
       data: {
         title,
         type: normalizedType,
-        fileUrl,
+        fileUrl: resolvedFileUrl,
+        uploadedFileId,
         subject,
         chapter: chapter || undefined,
         topic: topic || undefined,
@@ -246,6 +277,14 @@ export const deleteMaterial = async (req: AuthRequest, res: Response): Promise<v
 
     await prisma.material.delete({ where: { id: id as string } });
 
+    if (material.uploadedFileId) {
+      const uploadedFile = await prisma.uploadedFile.findUnique({ where: { id: material.uploadedFileId } });
+      if (uploadedFile) {
+        await deleteFile(uploadedFile.storageKey);
+        await prisma.uploadedFile.delete({ where: { id: uploadedFile.id } }).catch(() => {});
+      }
+    }
+
     res.json({ success: true, message: 'Material deleted successfully.' });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
@@ -275,5 +314,37 @@ export const trackDownload = async (req: AuthRequest, res: Response): Promise<vo
     res.json({ success: true, data: { downloadCount: material.downloadCount } });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// Serves an uploaded material file from private disk storage. Never a raw filesystem path —
+// the client only ever sees the UploadedFile id, and every request is gated on the requester
+// sharing a workspace with the file (the same bar getMaterialDetails already enforces).
+export const streamMaterialFile = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const user = await loadRequestingUser(req);
+    if (!user || !user.workspaceId) {
+      res.status(400).json({ success: false, code: 'MISSING_WORKSPACE', message: 'Workspace mapping not found.' });
+      return;
+    }
+
+    const { fileId } = req.params;
+    const file = await prisma.uploadedFile.findUnique({ where: { id: fileId as string } });
+    if (!file || file.workspaceId !== user.workspaceId) {
+      res.status(404).json({ success: false, message: 'File not found.' });
+      return;
+    }
+
+    res.setHeader('Content-Type', file.mimeType);
+    res.setHeader('Content-Disposition', `inline; filename="${encodeURIComponent(file.originalName)}"`);
+    res.sendFile(resolveStoragePath(file.storageKey), (err) => {
+      if (err && !res.headersSent) {
+        res.status(404).json({ success: false, message: 'File not found on disk.' });
+      }
+    });
+  } catch (error: any) {
+    if (!res.headersSent) {
+      res.status(500).json({ success: false, message: error.message });
+    }
   }
 };

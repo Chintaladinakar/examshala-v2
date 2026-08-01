@@ -74,7 +74,7 @@ function ResetPasswordForm() {
       await fetch('/api/auth/session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: res.data.token }),
+        body: JSON.stringify({ token: res.data.token, refreshToken: res.data.refreshToken }),
       });
 
       setSuccess(true);

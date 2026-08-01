@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { isMailConfigured, sendUserInvitationEmail } from '../services/mail.service';
 import * as parentLinkService from '../services/parentLink.service';
+import logger from '../lib/logger';
 
 // -------------------------------------------------------------
 // 1. USER CONTROLLERS
@@ -271,8 +272,16 @@ export const deleteUser = async (req: AuthRequest, res: Response): Promise<void>
       where: { parentUserId: id },
     });
 
-    await prisma.user.delete({
+    // Soft-delete rather than hard-delete: a real DELETE here would cascade through every
+    // FK still pointed at Cascade (sessions, memberships) and hit a hard Restrict wall on every
+    // FK guarding an academic/audit record (exams they authored, attempts they took, grades,
+    // logs) — by design, since that history must outlive the account that produced it. Reusing
+    // isActive/status (already respected by auth.middleware's login/session checks) means a
+    // "deleted" account is immediately unable to authenticate, same as before, without erasing
+    // the record.
+    await prisma.user.update({
       where: { id },
+      data: { isActive: false, status: 'INACTIVE', deletedAt: new Date() },
     });
 
     const actorId = req.user?.userId || 'system';
@@ -697,7 +706,7 @@ export const sendInvite = async (req: AuthRequest, res: Response): Promise<void>
       } catch (error: any) {
         mailStatus = 'failed';
         mailError = error?.message || 'Unknown mail error';
-        console.error('[mail] Failed to send invitation email:', mailError);
+        logger.error({ err: mailError }, '[mail] Failed to send invitation email');
       }
     }
 
