@@ -12,6 +12,7 @@ import assignmentRoutes from './routes/assignments.routes';
 import materialRoutes from './routes/materials.routes';
 import questionRoutes from './routes/questions.routes';
 import examRoutes from './routes/exams.routes';
+import leaveRoutes from './routes/leave.routes';
 import messageRoutes from './routes/messages.routes';
 import notificationRoutes from './routes/notifications.routes';
 import superadminRoutes from './routes/superadmin.routes';
@@ -44,6 +45,7 @@ const routeMounts: Array<[string, express.Router]> = [
   ['/materials', materialRoutes],
   ['/questions', questionRoutes],
   ['/exams', examRoutes],
+  ['/leave', leaveRoutes],
   ['/messages', messageRoutes],
   ['/notifications', notificationRoutes],
   ['/superadmin', superadminRoutes],

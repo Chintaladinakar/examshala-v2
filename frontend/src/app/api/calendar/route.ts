@@ -7,3 +7,8 @@ export async function GET(req: NextRequest) {
   const month = searchParams.get('month') || String(new Date().getMonth() + 1);
   return proxyToBackend(req, `/api/school/calendar?year=${encodeURIComponent(year)}&month=${encodeURIComponent(month)}`, { method: 'GET' });
 }
+
+export async function POST(req: NextRequest) {
+  const body = await req.json().catch(() => ({}));
+  return proxyToBackend(req, '/api/school/calendar', { method: 'POST', body });
+}

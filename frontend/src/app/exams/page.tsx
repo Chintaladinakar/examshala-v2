@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { useToast } from '@/components/ui/ToastProvider';
+import { useUser } from '@/context/UserContext';
 import {
   FileText,
   Plus,
@@ -14,6 +15,8 @@ import {
   Archive,
   Trophy,
   X,
+  Check,
+  Ban,
 } from 'lucide-react';
 
 type ClassLite = { id: string; name: string };
@@ -23,9 +26,17 @@ type Exam = {
   title: string;
   examType: string;
   status: string;
+  reviewStatus: 'pending' | 'approved' | 'rejected';
+  reviewNote?: string | null;
   durationMinutes: number;
   Class: { id: string; name: string };
   _count: { examQuestions: number; attempts: number };
+};
+
+const REVIEW_STATUS_COLOR: Record<string, string> = {
+  pending: 'bg-amber-50 border-amber-200 text-amber-700',
+  approved: 'bg-emerald-50 border-emerald-200 text-emerald-700',
+  rejected: 'bg-rose-50 border-rose-200 text-rose-700',
 };
 type LeaderboardRow = { rank: number; studentId: string; name: string; score: number | null; totalMarks: number | null; percentage: number | null };
 
@@ -45,6 +56,8 @@ async function apiJson<T>(input: RequestInfo | URL, init?: RequestInit): Promise
 
 export default function ExamsPage() {
   const { showError, showMessage } = useToast();
+  const { user } = useUser();
+  const isPrincipal = user?.role === 'principal';
 
   const [classes, setClasses] = useState<ClassLite[]>([]);
   const [exams, setExams] = useState<Exam[]>([]);
@@ -53,6 +66,7 @@ export default function ExamsPage() {
   const [saving, setSaving] = useState(false);
   const [bankQuestions, setBankQuestions] = useState<Question[]>([]);
   const [selectedQuestionIds, setSelectedQuestionIds] = useState<string[]>([]);
+  const [reviewingId, setReviewingId] = useState<string | null>(null);
 
   const [form, setForm] = useState({
     title: '', description: '', classId: '', examType: 'quiz', subject: '', durationMinutes: '30', passingPercentage: '40',
@@ -146,6 +160,23 @@ export default function ExamsPage() {
       await loadExams();
     } catch (e) {
       showError(e);
+    }
+  }
+
+  async function reviewExam(exam: Exam, action: 'approve' | 'reject') {
+    let reviewNote: string | undefined;
+    if (action === 'reject') {
+      reviewNote = window.prompt('Optional note for the author on why this was rejected:') || undefined;
+    }
+    setReviewingId(exam.id);
+    try {
+      await apiJson(`/api/exams/${exam.id}/review`, { method: 'PATCH', body: JSON.stringify({ action, reviewNote }) });
+      showMessage(action === 'approve' ? 'Exam approved' : 'Exam rejected', 'success');
+      await loadExams();
+    } catch (e) {
+      showError(e);
+    } finally {
+      setReviewingId(null);
     }
   }
 
@@ -249,12 +280,40 @@ export default function ExamsPage() {
                             >
                               {ex.status}
                             </span>
+                            {ex.reviewStatus !== 'approved' && (
+                              <span
+                                className={`ml-1.5 px-2 py-0.5 rounded-full border text-[9px] font-extrabold uppercase ${REVIEW_STATUS_COLOR[ex.reviewStatus]}`}
+                                title={ex.reviewStatus === 'rejected' && ex.reviewNote ? ex.reviewNote : undefined}
+                              >
+                                {ex.reviewStatus}
+                              </span>
+                            )}
                           </td>
                           <td className="px-6 py-4">
                             {ex._count.examQuestions} questions · {ex._count.attempts} attempts
                           </td>
                           <td className="px-6 py-4 text-right">
                             <div className="inline-flex items-center gap-1.5">
+                              {isPrincipal && ex.reviewStatus === 'pending' && (
+                                <>
+                                  <button
+                                    onClick={() => reviewExam(ex, 'approve')}
+                                    disabled={reviewingId === ex.id}
+                                    className="p-2 border rounded-lg hover:bg-emerald-50 text-emerald-600 disabled:opacity-50"
+                                    title="Approve"
+                                  >
+                                    <Check className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={() => reviewExam(ex, 'reject')}
+                                    disabled={reviewingId === ex.id}
+                                    className="p-2 border rounded-lg hover:bg-rose-50 text-rose-600 disabled:opacity-50"
+                                    title="Reject"
+                                  >
+                                    <Ban className="w-3.5 h-3.5" />
+                                  </button>
+                                </>
+                              )}
                               {ex.status === 'draft' && (
                                 <button
                                   onClick={() => setStatus(ex, 'published')}

@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { useToast } from '@/components/ui/ToastProvider';
+import { useUser } from '@/context/UserContext';
 import {
   ClipboardList,
   Plus,
@@ -11,6 +12,8 @@ import {
   FolderOpen,
   Trash2,
   X,
+  Check,
+  Ban,
 } from 'lucide-react';
 
 type Question = {
@@ -25,7 +28,15 @@ type Question = {
   options?: string[] | null;
   correctAnswer?: any;
   explanation?: string | null;
+  reviewStatus: 'pending' | 'approved' | 'rejected';
+  reviewNote?: string | null;
   CreatedBy?: { id: string; name: string };
+};
+
+const REVIEW_STATUS_COLOR: Record<string, string> = {
+  pending: 'bg-amber-50 border-amber-200 text-amber-700',
+  approved: 'bg-emerald-50 border-emerald-200 text-emerald-700',
+  rejected: 'bg-rose-50 border-rose-200 text-rose-700',
 };
 
 const TYPES = ['mcq', 'true_false', 'short_answer', 'long_answer', 'coding', 'case_study', 'numerical', 'match', 'ordering'];
@@ -52,15 +63,19 @@ async function apiJson<T>(input: RequestInfo | URL, init?: RequestInit): Promise
 
 export default function QuestionBankPage() {
   const { showError, showMessage } = useToast();
+  const { user } = useUser();
+  const isPrincipal = user?.role === 'principal';
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [typeFilter, setTypeFilter] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState('');
   const [subjectFilter, setSubjectFilter] = useState('');
+  const [reviewStatusFilter, setReviewStatusFilter] = useState('');
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [reviewingId, setReviewingId] = useState<string | null>(null);
 
   const [form, setForm] = useState({
     type: 'mcq',
@@ -84,6 +99,7 @@ export default function QuestionBankPage() {
       if (difficultyFilter) params.set('difficulty', difficultyFilter);
       if (subjectFilter) params.set('subject', subjectFilter);
       if (search) params.set('search', search);
+      if (reviewStatusFilter) params.set('reviewStatus', reviewStatusFilter);
       const data = await apiJson<Question[]>(`/api/questions?${params.toString()}`);
       setQuestions(data);
     } catch (e) {
@@ -97,7 +113,7 @@ export default function QuestionBankPage() {
     const t = setTimeout(loadQuestions, 250);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [typeFilter, difficultyFilter, subjectFilter, search]);
+  }, [typeFilter, difficultyFilter, subjectFilter, reviewStatusFilter, search]);
 
   const filtered = useMemo(() => questions, [questions]);
 
@@ -143,6 +159,26 @@ export default function QuestionBankPage() {
       await loadQuestions();
     } catch (e) {
       showError(e);
+    }
+  }
+
+  async function reviewQuestion(id: string, action: 'approve' | 'reject') {
+    let reviewNote: string | undefined;
+    if (action === 'reject') {
+      reviewNote = window.prompt('Optional note for the author on why this was rejected:') || undefined;
+    }
+    setReviewingId(id);
+    try {
+      await apiJson(`/api/questions/${id}/review`, {
+        method: 'PATCH',
+        body: JSON.stringify({ action, reviewNote }),
+      });
+      showMessage(action === 'approve' ? 'Question approved' : 'Question rejected', 'success');
+      await loadQuestions();
+    } catch (e) {
+      showError(e);
+    } finally {
+      setReviewingId(null);
     }
   }
 
@@ -219,6 +255,18 @@ export default function QuestionBankPage() {
                 </option>
               ))}
             </select>
+            {isPrincipal && (
+              <select
+                value={reviewStatusFilter}
+                onChange={(e) => setReviewStatusFilter(e.target.value)}
+                className="px-3 py-2 border border-slate-200 rounded-xl bg-white text-xs font-semibold text-slate-700"
+              >
+                <option value="">All Review Statuses</option>
+                <option value="pending">Pending Review</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            )}
           </div>
 
           <div className="bg-white border rounded-3xl shadow-xs overflow-hidden">
@@ -245,8 +293,16 @@ export default function QuestionBankPage() {
                           {q.type.replace('_', ' ')}
                         </span>
                         <span className="text-[10px] text-slate-400 font-bold">{q.subject}{q.chapter ? ` · ${q.chapter}` : ''}</span>
+                        {q.reviewStatus !== 'approved' && (
+                          <span className={`px-2 py-0.5 rounded-full border text-[9px] font-extrabold uppercase ${REVIEW_STATUS_COLOR[q.reviewStatus]}`}>
+                            {q.reviewStatus}
+                          </span>
+                        )}
                       </div>
                       <p className="text-sm text-slate-800 font-semibold">{q.questionText}</p>
+                      {q.reviewStatus === 'rejected' && q.reviewNote && (
+                        <p className="text-xs text-rose-600 font-semibold mt-1">Rejection note: {q.reviewNote}</p>
+                      )}
                       {q.options && q.options.length > 0 && (
                         <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-slate-600">
                           {q.options.map((o, i) => (
@@ -266,13 +322,35 @@ export default function QuestionBankPage() {
                         </div>
                       )}
                     </div>
-                    <button
-                      onClick={() => archiveQuestion(q.id)}
-                      className="p-2 border rounded-lg hover:bg-rose-50 text-rose-600 shrink-0"
-                      title="Archive"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      {isPrincipal && q.reviewStatus === 'pending' && (
+                        <>
+                          <button
+                            onClick={() => reviewQuestion(q.id, 'approve')}
+                            disabled={reviewingId === q.id}
+                            className="p-2 border rounded-lg hover:bg-emerald-50 text-emerald-600 disabled:opacity-50"
+                            title="Approve"
+                          >
+                            <Check className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => reviewQuestion(q.id, 'reject')}
+                            disabled={reviewingId === q.id}
+                            className="p-2 border rounded-lg hover:bg-rose-50 text-rose-600 disabled:opacity-50"
+                            title="Reject"
+                          >
+                            <Ban className="w-3.5 h-3.5" />
+                          </button>
+                        </>
+                      )}
+                      <button
+                        onClick={() => archiveQuestion(q.id)}
+                        className="p-2 border rounded-lg hover:bg-rose-50 text-rose-600"
+                        title="Archive"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>

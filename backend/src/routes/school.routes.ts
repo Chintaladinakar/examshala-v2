@@ -3,11 +3,12 @@ import { protect } from '../middleware/auth.middleware';
 import { requirePermission } from '../middleware/requirePermission';
 import * as schoolController from '../controllers/school.controller';
 import { getTutorDashboard } from '../controllers/dashboard.controller';
-import { getCalendarEvents } from '../controllers/calendar.controller';
+import { getCalendarEvents, createCalendarEvent, deleteCalendarEvent } from '../controllers/calendar.controller';
 import { getReports } from '../controllers/reports.controller';
 import * as departmentsController from '../controllers/departments.controller';
 import * as subjectsController from '../controllers/subjects.controller';
 import * as teacherManagementController from '../controllers/teacherManagement.controller';
+import * as studentManagementController from '../controllers/studentManagement.controller';
 
 const router = Router();
 
@@ -16,6 +17,8 @@ router.use(protect);
 
 router.get('/dashboard', getTutorDashboard);
 router.get('/calendar', getCalendarEvents);
+router.post('/calendar', requirePermission('calendar.manage'), createCalendarEvent);
+router.delete('/calendar/:id', requirePermission('calendar.manage'), deleteCalendarEvent);
 router.get('/reports', getReports);
 
 router.post('/students/add', schoolController.addStudent);
@@ -43,6 +46,9 @@ router.post('/teachers-directory', teacherManagementController.createOrAssociate
 router.patch('/teachers-directory/:id/status', teacherManagementController.updateTeacherStatus);
 router.patch('/teachers-directory/:id/profile', teacherManagementController.updateTeacherProfile);
 router.patch('/teachers-directory/:id/assignments', teacherManagementController.assignTeacherClassesSubjects);
+
+router.get('/students-directory', studentManagementController.listStudentsDetailed);
+router.post('/students-directory', studentManagementController.createOrAssociateStudent);
 
 router.get('/settings', schoolController.getPrincipalSettings);
 router.patch('/settings/workspace', schoolController.updateWorkspaceProfile);

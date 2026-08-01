@@ -68,6 +68,8 @@ export const createExam = async (req: AuthRequest, res: Response): Promise<void>
       }
     }
 
+    const isPrincipalCreator = user.role.toLowerCase() === 'principal';
+
     const exam = await prisma.exam.create({
       data: {
         workspaceId: user.workspaceId,
@@ -81,6 +83,7 @@ export const createExam = async (req: AuthRequest, res: Response): Promise<void>
         passingPercentage: passingPercentage || undefined,
         shuffleQuestions: !!shuffleQuestions,
         shuffleOptions: !!shuffleOptions,
+        reviewStatus: isPrincipalCreator ? 'approved' : 'pending',
         examQuestions: {
           create: questions.map((q, i) => ({
             questionId: q.questionId,
@@ -173,16 +176,26 @@ export const updateExamStatus = async (req: AuthRequest, res: Response): Promise
       return;
     }
 
-    const { error } = await assertExamOwnership(id as string, user);
+    const { exam: existingExam, error } = await assertExamOwnership(id as string, user);
     if (error) {
       res.status(error.status).json({ success: false, message: error.message });
       return;
     }
 
+    const isPrincipal = user.role.toLowerCase() === 'principal';
+
     if (status === 'published') {
       const questionCount = await prisma.examQuestion.count({ where: { examId: id as string } });
       if (questionCount === 0) {
         res.status(400).json({ success: false, message: 'Cannot publish an exam with no questions.' });
+        return;
+      }
+      if (!isPrincipal && existingExam!.reviewStatus !== 'approved') {
+        res.status(400).json({
+          success: false,
+          code: 'AWAITING_APPROVAL',
+          message: 'This exam is awaiting principal approval before it can be published.',
+        });
         return;
       }
     }
@@ -191,12 +204,156 @@ export const updateExamStatus = async (req: AuthRequest, res: Response): Promise
       where: { id: id as string },
       data: {
         status,
+        // Principal publishing implicitly approves the exam if it wasn't already.
+        ...(status === 'published' && isPrincipal && existingExam!.reviewStatus !== 'approved'
+          ? { reviewStatus: 'approved' }
+          : {}),
         ...(scheduledStart !== undefined ? { scheduledStart: scheduledStart ? new Date(scheduledStart) : null } : {}),
         ...(scheduledEnd !== undefined ? { scheduledEnd: scheduledEnd ? new Date(scheduledEnd) : null } : {}),
       },
     });
 
     res.json({ success: true, data: updated });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const reviewExam = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const user = await loadRequestingUser(req);
+    if (!user || !user.workspaceId) {
+      res.status(400).json({ success: false, message: 'Workspace mapping not found.' });
+      return;
+    }
+    if (user.role.toLowerCase() !== 'principal') {
+      res.status(403).json({ success: false, message: 'Only principals can review exams.' });
+      return;
+    }
+
+    const { id } = req.params;
+    const { action, reviewNote } = req.body;
+    if (!['approve', 'reject'].includes(action)) {
+      res.status(400).json({ success: false, message: "action must be 'approve' or 'reject'." });
+      return;
+    }
+
+    const exam = await prisma.exam.findUnique({ where: { id: id as string } });
+    if (!exam || exam.workspaceId !== user.workspaceId) {
+      res.status(404).json({ success: false, message: 'Exam not found.' });
+      return;
+    }
+
+    const updated = await prisma.exam.update({
+      where: { id: id as string },
+      data: { reviewStatus: action === 'approve' ? 'approved' : 'rejected', reviewNote: reviewNote || null },
+    });
+
+    await createNotification({
+      userId: exam.createdByUserId,
+      workspaceId: user.workspaceId,
+      type: action === 'approve' ? 'exam_approved' : 'exam_rejected',
+      title: action === 'approve' ? 'Exam approved' : 'Exam needs changes',
+      message: action === 'approve'
+        ? `Your exam "${exam.title}" was approved and can now be published.`
+        : `Your exam "${exam.title}" was rejected.${reviewNote ? ` Note: ${reviewNote}` : ''}`,
+      actionUrl: '/exams',
+    });
+
+    res.json({ success: true, data: updated });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const getInstitutionExamSummary = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const user = await loadRequestingUser(req);
+    if (!user || !user.workspaceId) {
+      res.status(400).json({ success: false, message: 'Workspace mapping not found.' });
+      return;
+    }
+    if (user.role.toLowerCase() !== 'principal') {
+      res.status(403).json({ success: false, message: 'Only principals can view institution-wide exam analytics.' });
+      return;
+    }
+
+    const exams = await prisma.exam.findMany({
+      where: { workspaceId: user.workspaceId },
+      select: { id: true, status: true, reviewStatus: true, subject: true, classId: true, passingPercentage: true, Class: { select: { name: true } } },
+    });
+
+    const statusCounts: Record<string, number> = {};
+    let pendingReviewCount = 0;
+    for (const e of exams) {
+      statusCounts[e.status] = (statusCounts[e.status] || 0) + 1;
+      if (e.reviewStatus === 'pending') pendingReviewCount++;
+    }
+
+    const examIds = exams.map((e) => e.id);
+    const examById = new Map(exams.map((e) => [e.id, e]));
+
+    const attempts = await prisma.examAttempt.findMany({
+      where: { examId: { in: examIds }, percentage: { not: null } },
+      select: { examId: true, studentId: true, percentage: true, Student: { select: { name: true } } },
+    });
+
+    let totalPercentage = 0;
+    let passCount = 0;
+    const byClass = new Map<string, { name: string; total: number; count: number }>();
+    const bySubject = new Map<string, { total: number; count: number }>();
+
+    for (const a of attempts) {
+      const exam = examById.get(a.examId);
+      if (!exam || a.percentage === null) continue;
+      totalPercentage += a.percentage;
+      if (exam.passingPercentage != null && a.percentage >= exam.passingPercentage) passCount++;
+
+      const classEntry = byClass.get(exam.classId) || { name: exam.Class?.name || 'Unknown', total: 0, count: 0 };
+      classEntry.total += a.percentage;
+      classEntry.count += 1;
+      byClass.set(exam.classId, classEntry);
+
+      const subjectKey = exam.subject || 'General';
+      const subjectEntry = bySubject.get(subjectKey) || { total: 0, count: 0 };
+      subjectEntry.total += a.percentage;
+      subjectEntry.count += 1;
+      bySubject.set(subjectKey, subjectEntry);
+    }
+
+    const classAverages = Array.from(byClass.entries()).map(([classId, v]) => ({
+      classId,
+      className: v.name,
+      averagePercentage: Math.round((v.total / v.count) * 10) / 10,
+      attempts: v.count,
+    })).sort((a, b) => b.averagePercentage - a.averagePercentage);
+
+    const subjectAverages = Array.from(bySubject.entries()).map(([subject, v]) => ({
+      subject,
+      averagePercentage: Math.round((v.total / v.count) * 10) / 10,
+      attempts: v.count,
+    })).sort((a, b) => b.averagePercentage - a.averagePercentage);
+
+    const topPerformers = [...attempts]
+      .filter((a) => a.percentage !== null)
+      .sort((a, b) => (b.percentage as number) - (a.percentage as number))
+      .slice(0, 10)
+      .map((a) => ({ studentId: a.studentId, studentName: a.Student.name, percentage: a.percentage, examId: a.examId }));
+
+    res.json({
+      success: true,
+      data: {
+        totalExams: exams.length,
+        statusCounts,
+        pendingReviewCount,
+        totalAttempts: attempts.length,
+        averagePercentage: attempts.length > 0 ? Math.round((totalPercentage / attempts.length) * 10) / 10 : 0,
+        passRate: attempts.length > 0 ? Math.round((passCount / attempts.length) * 1000) / 10 : 0,
+        classAverages,
+        subjectAverages,
+        topPerformers,
+      },
+    });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
   }

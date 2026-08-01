@@ -31,26 +31,29 @@ model User {
   studentProfiles StudentWorkspaceProfile[]
 
   // School SaaS SaaS Relations
-  classTeachers       ClassTeacher[]
-  classStudents       ClassStudent[]
-  attendances         Attendance[]
-  markedAttendances   Attendance[]              @relation("MarkedBy")
-  updatedAttendances  Attendance[]              @relation("UpdatedBy")
-  schoolAssignments   Assignment[]
-  feedbacks           AssignmentFeedback[]
-  submissions         AssignmentSubmission[]
-  reviewedSubmissions AssignmentSubmission[]    @relation("SubmissionReviewer")
-  rubrics             Rubric[]
-  materials           Material[]
-  questions           Question[]
-  exams               Exam[]
-  examAttempts        ExamAttempt[]
-  conversationLinks   ConversationParticipant[]
-  sentMessages        Message[]
-  schoolLogs          SchoolLog[]
-  results             Result[]
-  teacherSubjects     TeacherSubject[]
-  timetableSlots      TimetableSlot[]
+  classTeachers         ClassTeacher[]
+  classStudents         ClassStudent[]
+  attendances           Attendance[]
+  markedAttendances     Attendance[]              @relation("MarkedBy")
+  updatedAttendances    Attendance[]              @relation("UpdatedBy")
+  schoolAssignments     Assignment[]
+  feedbacks             AssignmentFeedback[]
+  submissions           AssignmentSubmission[]
+  reviewedSubmissions   AssignmentSubmission[]    @relation("SubmissionReviewer")
+  rubrics               Rubric[]
+  materials             Material[]
+  questions             Question[]
+  exams                 Exam[]
+  examAttempts          ExamAttempt[]
+  conversationLinks     ConversationParticipant[]
+  sentMessages          Message[]
+  schoolLogs            SchoolLog[]
+  results               Result[]
+  teacherSubjects       TeacherSubject[]
+  timetableSlots        TimetableSlot[]
+  leaveRequests         LeaveRequest[]            @relation("LeaveRequester")
+  reviewedLeaveRequests LeaveRequest[]            @relation("LeaveReviewer")
+  calendarEvents        CalendarEvent[]
 }
 
 model OTP {
@@ -92,6 +95,8 @@ model Workspace {
   departments     Department[]
   subjects        Subject[]
   timetableSlots  TimetableSlot[]
+  leaveRequests   LeaveRequest[]
+  calendarEvents  CalendarEvent[]
 }
 
 model WorkspaceMembership {
@@ -133,6 +138,8 @@ model Exam {
   shuffleQuestions  Boolean   @default(false)
   shuffleOptions    Boolean   @default(false)
   status            String    @default("draft") // draft | published | archived
+  reviewStatus      String    @default("approved") // pending | approved | rejected
+  reviewNote        String?
   scheduledStart    DateTime?
   scheduledEnd      DateTime?
   createdAt         DateTime  @default(now())
@@ -147,6 +154,7 @@ model Exam {
   @@index([workspaceId])
   @@index([classId])
   @@index([status])
+  @@index([reviewStatus])
 }
 
 model ExamQuestion {
@@ -351,6 +359,24 @@ model Notification {
   createdAt   DateTime @default(now())
 
   Workspace Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+model CalendarEvent {
+  id              String    @id @default(uuid())
+  workspaceId     String
+  title           String
+  description     String?
+  eventType       String // holiday | meeting | ptm | workshop | sports | other
+  startDate       DateTime
+  endDate         DateTime?
+  createdByUserId String
+  createdAt       DateTime  @default(now())
+
+  Workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  CreatedBy User      @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@index([startDate])
 }
 
 model ParentStudentLink {
@@ -636,6 +662,8 @@ model Question {
   explanation     String?
   version         Int      @default(1)
   isArchived      Boolean  @default(false)
+  reviewStatus    String   @default("approved") // pending | approved | rejected
+  reviewNote      String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -647,6 +675,7 @@ model Question {
   @@index([workspaceId])
   @@index([subject])
   @@index([type])
+  @@index([reviewStatus])
   @@index([difficulty])
 }
 
@@ -685,6 +714,29 @@ model SchoolLog {
   timestamp  DateTime @default(now())
 
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model LeaveRequest {
+  id               String    @id @default(uuid())
+  workspaceId      String
+  requesterId      String
+  requesterRole    String // "student" | "teacher"
+  startDate        DateTime
+  endDate          DateTime
+  reason           String
+  status           String    @default("pending") // pending | approved | rejected
+  reviewedByUserId String?
+  reviewNote       String?
+  reviewedAt       DateTime?
+  createdAt        DateTime  @default(now())
+
+  Workspace  Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  Requester  User      @relation("LeaveRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+  ReviewedBy User?     @relation("LeaveReviewer", fields: [reviewedByUserId], references: [id])
+
+  @@index([workspaceId])
+  @@index([requesterId])
+  @@index([status])
 }
 
 model PlatformSettings {

@@ -155,6 +155,13 @@ exports.Prisma.WorkspaceScalarFieldEnum = {
   createdBy: 'createdBy',
   principalId: 'principalId',
   status: 'status',
+  institutionType: 'institutionType',
+  address: 'address',
+  contactNumber: 'contactNumber',
+  contactEmail: 'contactEmail',
+  academicYear: 'academicYear',
+  term: 'term',
+  semester: 'semester',
   createdAt: 'createdAt'
 };
 
@@ -187,6 +194,8 @@ exports.Prisma.ExamScalarFieldEnum = {
   shuffleQuestions: 'shuffleQuestions',
   shuffleOptions: 'shuffleOptions',
   status: 'status',
+  reviewStatus: 'reviewStatus',
+  reviewNote: 'reviewNote',
   scheduledStart: 'scheduledStart',
   scheduledEnd: 'scheduledEnd',
   createdAt: 'createdAt',
@@ -513,6 +522,8 @@ exports.Prisma.QuestionScalarFieldEnum = {
   explanation: 'explanation',
   version: 'version',
   isArchived: 'isArchived',
+  reviewStatus: 'reviewStatus',
+  reviewNote: 'reviewNote',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

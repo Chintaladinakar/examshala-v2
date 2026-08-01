@@ -2,6 +2,7 @@ import { Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { AuthRequest } from '../middleware/auth.middleware';
 import prisma from '../lib/prisma';
+import { isMailConfigured, sendUserInvitationEmail } from '../services/mail.service';
 
 async function loadPrincipal(req: AuthRequest, res: Response) {
   const userId = req.user?.userId;
@@ -211,11 +212,33 @@ export const createOrAssociateTeacher = async (req: AuthRequest, res: Response):
 
     await prisma.schoolLog.create({ data: { actionType: 'teacher_created', entityId: teacher.id, role: user.role, userId: user.id } });
 
+    // Prefer emailing the temporary credential over returning it in the API response.
+    // The password only goes back to the caller as a fallback when mail isn't configured
+    // or delivery fails, so it doesn't sit in plaintext in frontend state / network logs
+    // by default.
+    let credentialDelivery: 'email' | 'manual' = 'manual';
+    if (generatedPassword && isMailConfigured()) {
+      try {
+        const workspace = await prisma.workspace.findUnique({ where: { id: user.workspaceId! }, select: { name: true } });
+        await sendUserInvitationEmail({
+          to: teacher.email,
+          invitedRole: 'teacher',
+          invitedByName: user.name,
+          workspaceName: workspace?.name,
+          temporaryPassword: generatedPassword,
+        });
+        credentialDelivery = 'email';
+      } catch (mailError) {
+        console.error('Failed to send teacher invitation email, falling back to returning the password:', mailError);
+      }
+    }
+
     res.status(201).json({
       success: true,
       data: {
         ...teacher,
-        generatedPassword: generatedPassword || undefined,
+        generatedPassword: credentialDelivery === 'manual' ? generatedPassword || undefined : undefined,
+        credentialDelivery,
         subjects: linkedSubjects,
         classes: await prisma.class.findMany({ where: { id: { in: classIds } }, select: { id: true, name: true } }),
         assignmentsCreated: 0,

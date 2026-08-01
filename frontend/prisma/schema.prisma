@@ -68,12 +68,19 @@ model OTP {
 }
 
 model Workspace {
-  id          String    @id
-  name        String
-  createdBy   String?   // Org Admin ID
-  principalId String?   // Principal ID
-  status      String?   @default("ACTIVE")
-  createdAt   DateTime  @default(now())
+  id             String    @id
+  name           String
+  createdBy      String?   // Org Admin ID
+  principalId    String?   // Principal ID
+  status         String?   @default("ACTIVE")
+  institutionType String?
+  address        String?
+  contactNumber  String?
+  contactEmail   String?
+  academicYear   String?
+  term           String?
+  semester       String?
+  createdAt      DateTime  @default(now())
 
   memberships       WorkspaceMembership[]
   studentProfiles   StudentWorkspaceProfile[]
@@ -128,6 +135,8 @@ model Exam {
   shuffleQuestions    Boolean   @default(false)
   shuffleOptions      Boolean   @default(false)
   status              String    @default("draft") // draft | published | archived
+  reviewStatus        String    @default("approved") // pending | approved | rejected
+  reviewNote          String?
   scheduledStart      DateTime?
   scheduledEnd        DateTime?
   createdAt           DateTime  @default(now())
@@ -142,6 +151,7 @@ model Exam {
   @@index([workspaceId])
   @@index([classId])
   @@index([status])
+  @@index([reviewStatus])
 }
 
 model ExamQuestion {
@@ -631,6 +641,8 @@ model Question {
   explanation       String?
   version           Int       @default(1)
   isArchived        Boolean   @default(false)
+  reviewStatus      String    @default("approved") // pending | approved | rejected
+  reviewNote        String?
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 
@@ -642,6 +654,7 @@ model Question {
   @@index([workspaceId])
   @@index([subject])
   @@index([type])
+  @@index([reviewStatus])
   @@index([difficulty])
 }
 

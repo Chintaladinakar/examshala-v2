@@ -109,6 +109,11 @@ export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
  */
 export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
 /**
+ * Model CalendarEvent
+ * 
+ */
+export type CalendarEvent = $Result.DefaultSelection<Prisma.$CalendarEventPayload>
+/**
  * Model ParentStudentLink
  * 
  */
@@ -208,6 +213,11 @@ export type Material = $Result.DefaultSelection<Prisma.$MaterialPayload>
  * 
  */
 export type SchoolLog = $Result.DefaultSelection<Prisma.$SchoolLogPayload>
+/**
+ * Model LeaveRequest
+ * 
+ */
+export type LeaveRequest = $Result.DefaultSelection<Prisma.$LeaveRequestPayload>
 /**
  * Model PlatformSettings
  * 
@@ -536,6 +546,16 @@ export class PrismaClient<
   get notification(): Prisma.NotificationDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.calendarEvent`: Exposes CRUD operations for the **CalendarEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CalendarEvents
+    * const calendarEvents = await prisma.calendarEvent.findMany()
+    * ```
+    */
+  get calendarEvent(): Prisma.CalendarEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.parentStudentLink`: Exposes CRUD operations for the **ParentStudentLink** model.
     * Example usage:
     * ```ts
@@ -734,6 +754,16 @@ export class PrismaClient<
     * ```
     */
   get schoolLog(): Prisma.SchoolLogDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.leaveRequest`: Exposes CRUD operations for the **LeaveRequest** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LeaveRequests
+    * const leaveRequests = await prisma.leaveRequest.findMany()
+    * ```
+    */
+  get leaveRequest(): Prisma.LeaveRequestDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.platformSettings`: Exposes CRUD operations for the **PlatformSettings** model.
@@ -1217,6 +1247,7 @@ export namespace Prisma {
     ConversationParticipant: 'ConversationParticipant',
     Message: 'Message',
     Notification: 'Notification',
+    CalendarEvent: 'CalendarEvent',
     ParentStudentLink: 'ParentStudentLink',
     AuditLog: 'AuditLog',
     Invite: 'Invite',
@@ -1237,6 +1268,7 @@ export namespace Prisma {
     Question: 'Question',
     Material: 'Material',
     SchoolLog: 'SchoolLog',
+    LeaveRequest: 'LeaveRequest',
     PlatformSettings: 'PlatformSettings',
     Result: 'Result',
     TimetableSlot: 'TimetableSlot'
@@ -1255,7 +1287,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "oTP" | "workspace" | "workspaceMembership" | "studentWorkspaceProfile" | "exam" | "examQuestion" | "examAttempt" | "examAnswer" | "test" | "assessmentAssignment" | "student" | "assessment" | "assessmentAttempt" | "assessmentResult" | "conversation" | "conversationParticipant" | "message" | "notification" | "parentStudentLink" | "auditLog" | "invite" | "log" | "class" | "department" | "subject" | "teacherSubject" | "classTeacher" | "classStudent" | "attendance" | "assignment" | "rubric" | "rubricCriterion" | "rubricScore" | "assignmentFeedback" | "assignmentSubmission" | "question" | "material" | "schoolLog" | "platformSettings" | "result" | "timetableSlot"
+      modelProps: "user" | "oTP" | "workspace" | "workspaceMembership" | "studentWorkspaceProfile" | "exam" | "examQuestion" | "examAttempt" | "examAnswer" | "test" | "assessmentAssignment" | "student" | "assessment" | "assessmentAttempt" | "assessmentResult" | "conversation" | "conversationParticipant" | "message" | "notification" | "calendarEvent" | "parentStudentLink" | "auditLog" | "invite" | "log" | "class" | "department" | "subject" | "teacherSubject" | "classTeacher" | "classStudent" | "attendance" | "assignment" | "rubric" | "rubricCriterion" | "rubricScore" | "assignmentFeedback" | "assignmentSubmission" | "question" | "material" | "schoolLog" | "leaveRequest" | "platformSettings" | "result" | "timetableSlot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2662,6 +2694,80 @@ export namespace Prisma {
           count: {
             args: Prisma.NotificationCountArgs<ExtArgs>
             result: $Utils.Optional<NotificationCountAggregateOutputType> | number
+          }
+        }
+      }
+      CalendarEvent: {
+        payload: Prisma.$CalendarEventPayload<ExtArgs>
+        fields: Prisma.CalendarEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CalendarEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CalendarEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarEventPayload>
+          }
+          findFirst: {
+            args: Prisma.CalendarEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CalendarEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarEventPayload>
+          }
+          findMany: {
+            args: Prisma.CalendarEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarEventPayload>[]
+          }
+          create: {
+            args: Prisma.CalendarEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarEventPayload>
+          }
+          createMany: {
+            args: Prisma.CalendarEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CalendarEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarEventPayload>[]
+          }
+          delete: {
+            args: Prisma.CalendarEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarEventPayload>
+          }
+          update: {
+            args: Prisma.CalendarEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.CalendarEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CalendarEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CalendarEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.CalendarEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarEventPayload>
+          }
+          aggregate: {
+            args: Prisma.CalendarEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCalendarEvent>
+          }
+          groupBy: {
+            args: Prisma.CalendarEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CalendarEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CalendarEventCountArgs<ExtArgs>
+            result: $Utils.Optional<CalendarEventCountAggregateOutputType> | number
           }
         }
       }
@@ -4145,6 +4251,80 @@ export namespace Prisma {
           }
         }
       }
+      LeaveRequest: {
+        payload: Prisma.$LeaveRequestPayload<ExtArgs>
+        fields: Prisma.LeaveRequestFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LeaveRequestFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaveRequestPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LeaveRequestFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaveRequestPayload>
+          }
+          findFirst: {
+            args: Prisma.LeaveRequestFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaveRequestPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LeaveRequestFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaveRequestPayload>
+          }
+          findMany: {
+            args: Prisma.LeaveRequestFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaveRequestPayload>[]
+          }
+          create: {
+            args: Prisma.LeaveRequestCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaveRequestPayload>
+          }
+          createMany: {
+            args: Prisma.LeaveRequestCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LeaveRequestCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaveRequestPayload>[]
+          }
+          delete: {
+            args: Prisma.LeaveRequestDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaveRequestPayload>
+          }
+          update: {
+            args: Prisma.LeaveRequestUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaveRequestPayload>
+          }
+          deleteMany: {
+            args: Prisma.LeaveRequestDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LeaveRequestUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LeaveRequestUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaveRequestPayload>[]
+          }
+          upsert: {
+            args: Prisma.LeaveRequestUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaveRequestPayload>
+          }
+          aggregate: {
+            args: Prisma.LeaveRequestAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLeaveRequest>
+          }
+          groupBy: {
+            args: Prisma.LeaveRequestGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LeaveRequestGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LeaveRequestCountArgs<ExtArgs>
+            result: $Utils.Optional<LeaveRequestCountAggregateOutputType> | number
+          }
+        }
+      }
       PlatformSettings: {
         payload: Prisma.$PlatformSettingsPayload<ExtArgs>
         fields: Prisma.PlatformSettingsFieldRefs
@@ -4494,6 +4674,7 @@ export namespace Prisma {
     conversationParticipant?: ConversationParticipantOmit
     message?: MessageOmit
     notification?: NotificationOmit
+    calendarEvent?: CalendarEventOmit
     parentStudentLink?: ParentStudentLinkOmit
     auditLog?: AuditLogOmit
     invite?: InviteOmit
@@ -4514,6 +4695,7 @@ export namespace Prisma {
     question?: QuestionOmit
     material?: MaterialOmit
     schoolLog?: SchoolLogOmit
+    leaveRequest?: LeaveRequestOmit
     platformSettings?: PlatformSettingsOmit
     result?: ResultOmit
     timetableSlot?: TimetableSlotOmit
@@ -4622,6 +4804,9 @@ export namespace Prisma {
     results: number
     teacherSubjects: number
     timetableSlots: number
+    leaveRequests: number
+    reviewedLeaveRequests: number
+    calendarEvents: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4650,6 +4835,9 @@ export namespace Prisma {
     results?: boolean | UserCountOutputTypeCountResultsArgs
     teacherSubjects?: boolean | UserCountOutputTypeCountTeacherSubjectsArgs
     timetableSlots?: boolean | UserCountOutputTypeCountTimetableSlotsArgs
+    leaveRequests?: boolean | UserCountOutputTypeCountLeaveRequestsArgs
+    reviewedLeaveRequests?: boolean | UserCountOutputTypeCountReviewedLeaveRequestsArgs
+    calendarEvents?: boolean | UserCountOutputTypeCountCalendarEventsArgs
   }
 
   // Custom InputTypes
@@ -4838,6 +5026,27 @@ export namespace Prisma {
     where?: TimetableSlotWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountLeaveRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LeaveRequestWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReviewedLeaveRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LeaveRequestWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCalendarEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CalendarEventWhereInput
+  }
+
 
   /**
    * Count Type WorkspaceCountOutputType
@@ -4856,6 +5065,8 @@ export namespace Prisma {
     departments: number
     subjects: number
     timetableSlots: number
+    leaveRequests: number
+    calendarEvents: number
   }
 
   export type WorkspaceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4871,6 +5082,8 @@ export namespace Prisma {
     departments?: boolean | WorkspaceCountOutputTypeCountDepartmentsArgs
     subjects?: boolean | WorkspaceCountOutputTypeCountSubjectsArgs
     timetableSlots?: boolean | WorkspaceCountOutputTypeCountTimetableSlotsArgs
+    leaveRequests?: boolean | WorkspaceCountOutputTypeCountLeaveRequestsArgs
+    calendarEvents?: boolean | WorkspaceCountOutputTypeCountCalendarEventsArgs
   }
 
   // Custom InputTypes
@@ -4966,6 +5179,20 @@ export namespace Prisma {
    */
   export type WorkspaceCountOutputTypeCountTimetableSlotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TimetableSlotWhereInput
+  }
+
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountLeaveRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LeaveRequestWhereInput
+  }
+
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountCalendarEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CalendarEventWhereInput
   }
 
 
@@ -5796,6 +6023,9 @@ export namespace Prisma {
     results?: boolean | User$resultsArgs<ExtArgs>
     teacherSubjects?: boolean | User$teacherSubjectsArgs<ExtArgs>
     timetableSlots?: boolean | User$timetableSlotsArgs<ExtArgs>
+    leaveRequests?: boolean | User$leaveRequestsArgs<ExtArgs>
+    reviewedLeaveRequests?: boolean | User$reviewedLeaveRequestsArgs<ExtArgs>
+    calendarEvents?: boolean | User$calendarEventsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -5875,6 +6105,9 @@ export namespace Prisma {
     results?: boolean | User$resultsArgs<ExtArgs>
     teacherSubjects?: boolean | User$teacherSubjectsArgs<ExtArgs>
     timetableSlots?: boolean | User$timetableSlotsArgs<ExtArgs>
+    leaveRequests?: boolean | User$leaveRequestsArgs<ExtArgs>
+    reviewedLeaveRequests?: boolean | User$reviewedLeaveRequestsArgs<ExtArgs>
+    calendarEvents?: boolean | User$calendarEventsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5909,6 +6142,9 @@ export namespace Prisma {
       results: Prisma.$ResultPayload<ExtArgs>[]
       teacherSubjects: Prisma.$TeacherSubjectPayload<ExtArgs>[]
       timetableSlots: Prisma.$TimetableSlotPayload<ExtArgs>[]
+      leaveRequests: Prisma.$LeaveRequestPayload<ExtArgs>[]
+      reviewedLeaveRequests: Prisma.$LeaveRequestPayload<ExtArgs>[]
+      calendarEvents: Prisma.$CalendarEventPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6344,6 +6580,9 @@ export namespace Prisma {
     results<T extends User$resultsArgs<ExtArgs> = {}>(args?: Subset<T, User$resultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     teacherSubjects<T extends User$teacherSubjectsArgs<ExtArgs> = {}>(args?: Subset<T, User$teacherSubjectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TeacherSubjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     timetableSlots<T extends User$timetableSlotsArgs<ExtArgs> = {}>(args?: Subset<T, User$timetableSlotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimetableSlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    leaveRequests<T extends User$leaveRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$leaveRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reviewedLeaveRequests<T extends User$reviewedLeaveRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewedLeaveRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    calendarEvents<T extends User$calendarEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$calendarEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7395,6 +7634,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TimetableSlotScalarFieldEnum | TimetableSlotScalarFieldEnum[]
+  }
+
+  /**
+   * User.leaveRequests
+   */
+  export type User$leaveRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
+    where?: LeaveRequestWhereInput
+    orderBy?: LeaveRequestOrderByWithRelationInput | LeaveRequestOrderByWithRelationInput[]
+    cursor?: LeaveRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LeaveRequestScalarFieldEnum | LeaveRequestScalarFieldEnum[]
+  }
+
+  /**
+   * User.reviewedLeaveRequests
+   */
+  export type User$reviewedLeaveRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
+    where?: LeaveRequestWhereInput
+    orderBy?: LeaveRequestOrderByWithRelationInput | LeaveRequestOrderByWithRelationInput[]
+    cursor?: LeaveRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LeaveRequestScalarFieldEnum | LeaveRequestScalarFieldEnum[]
+  }
+
+  /**
+   * User.calendarEvents
+   */
+  export type User$calendarEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventInclude<ExtArgs> | null
+    where?: CalendarEventWhereInput
+    orderBy?: CalendarEventOrderByWithRelationInput | CalendarEventOrderByWithRelationInput[]
+    cursor?: CalendarEventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CalendarEventScalarFieldEnum | CalendarEventScalarFieldEnum[]
   }
 
   /**
@@ -8742,6 +9053,8 @@ export namespace Prisma {
     departments?: boolean | Workspace$departmentsArgs<ExtArgs>
     subjects?: boolean | Workspace$subjectsArgs<ExtArgs>
     timetableSlots?: boolean | Workspace$timetableSlotsArgs<ExtArgs>
+    leaveRequests?: boolean | Workspace$leaveRequestsArgs<ExtArgs>
+    calendarEvents?: boolean | Workspace$calendarEventsArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["workspace"]>
 
@@ -8807,6 +9120,8 @@ export namespace Prisma {
     departments?: boolean | Workspace$departmentsArgs<ExtArgs>
     subjects?: boolean | Workspace$subjectsArgs<ExtArgs>
     timetableSlots?: boolean | Workspace$timetableSlotsArgs<ExtArgs>
+    leaveRequests?: boolean | Workspace$leaveRequestsArgs<ExtArgs>
+    calendarEvents?: boolean | Workspace$calendarEventsArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type WorkspaceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -8827,6 +9142,8 @@ export namespace Prisma {
       departments: Prisma.$DepartmentPayload<ExtArgs>[]
       subjects: Prisma.$SubjectPayload<ExtArgs>[]
       timetableSlots: Prisma.$TimetableSlotPayload<ExtArgs>[]
+      leaveRequests: Prisma.$LeaveRequestPayload<ExtArgs>[]
+      calendarEvents: Prisma.$CalendarEventPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9248,6 +9565,8 @@ export namespace Prisma {
     departments<T extends Workspace$departmentsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$departmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     subjects<T extends Workspace$subjectsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$subjectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     timetableSlots<T extends Workspace$timetableSlotsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$timetableSlotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimetableSlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    leaveRequests<T extends Workspace$leaveRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$leaveRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    calendarEvents<T extends Workspace$calendarEventsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$calendarEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9968,6 +10287,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TimetableSlotScalarFieldEnum | TimetableSlotScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.leaveRequests
+   */
+  export type Workspace$leaveRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
+    where?: LeaveRequestWhereInput
+    orderBy?: LeaveRequestOrderByWithRelationInput | LeaveRequestOrderByWithRelationInput[]
+    cursor?: LeaveRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LeaveRequestScalarFieldEnum | LeaveRequestScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.calendarEvents
+   */
+  export type Workspace$calendarEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventInclude<ExtArgs> | null
+    where?: CalendarEventWhereInput
+    orderBy?: CalendarEventOrderByWithRelationInput | CalendarEventOrderByWithRelationInput[]
+    cursor?: CalendarEventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CalendarEventScalarFieldEnum | CalendarEventScalarFieldEnum[]
   }
 
   /**
@@ -12150,6 +12517,8 @@ export namespace Prisma {
     shuffleQuestions: boolean | null
     shuffleOptions: boolean | null
     status: string | null
+    reviewStatus: string | null
+    reviewNote: string | null
     scheduledStart: Date | null
     scheduledEnd: Date | null
     createdAt: Date | null
@@ -12170,6 +12539,8 @@ export namespace Prisma {
     shuffleQuestions: boolean | null
     shuffleOptions: boolean | null
     status: string | null
+    reviewStatus: string | null
+    reviewNote: string | null
     scheduledStart: Date | null
     scheduledEnd: Date | null
     createdAt: Date | null
@@ -12190,6 +12561,8 @@ export namespace Prisma {
     shuffleQuestions: number
     shuffleOptions: number
     status: number
+    reviewStatus: number
+    reviewNote: number
     scheduledStart: number
     scheduledEnd: number
     createdAt: number
@@ -12222,6 +12595,8 @@ export namespace Prisma {
     shuffleQuestions?: true
     shuffleOptions?: true
     status?: true
+    reviewStatus?: true
+    reviewNote?: true
     scheduledStart?: true
     scheduledEnd?: true
     createdAt?: true
@@ -12242,6 +12617,8 @@ export namespace Prisma {
     shuffleQuestions?: true
     shuffleOptions?: true
     status?: true
+    reviewStatus?: true
+    reviewNote?: true
     scheduledStart?: true
     scheduledEnd?: true
     createdAt?: true
@@ -12262,6 +12639,8 @@ export namespace Prisma {
     shuffleQuestions?: true
     shuffleOptions?: true
     status?: true
+    reviewStatus?: true
+    reviewNote?: true
     scheduledStart?: true
     scheduledEnd?: true
     createdAt?: true
@@ -12369,6 +12748,8 @@ export namespace Prisma {
     shuffleQuestions: boolean
     shuffleOptions: boolean
     status: string
+    reviewStatus: string
+    reviewNote: string | null
     scheduledStart: Date | null
     scheduledEnd: Date | null
     createdAt: Date
@@ -12408,6 +12789,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     scheduledStart?: boolean
     scheduledEnd?: boolean
     createdAt?: boolean
@@ -12434,6 +12817,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     scheduledStart?: boolean
     scheduledEnd?: boolean
     createdAt?: boolean
@@ -12457,6 +12842,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     scheduledStart?: boolean
     scheduledEnd?: boolean
     createdAt?: boolean
@@ -12480,13 +12867,15 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     scheduledStart?: boolean
     scheduledEnd?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ExamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "classId" | "createdByUserId" | "title" | "description" | "examType" | "subject" | "durationMinutes" | "passingPercentage" | "shuffleQuestions" | "shuffleOptions" | "status" | "scheduledStart" | "scheduledEnd" | "createdAt" | "updatedAt", ExtArgs["result"]["exam"]>
+  export type ExamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "classId" | "createdByUserId" | "title" | "description" | "examType" | "subject" | "durationMinutes" | "passingPercentage" | "shuffleQuestions" | "shuffleOptions" | "status" | "reviewStatus" | "reviewNote" | "scheduledStart" | "scheduledEnd" | "createdAt" | "updatedAt", ExtArgs["result"]["exam"]>
   export type ExamInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     Class?: boolean | ClassDefaultArgs<ExtArgs>
@@ -12529,6 +12918,8 @@ export namespace Prisma {
       shuffleQuestions: boolean
       shuffleOptions: boolean
       status: string
+      reviewStatus: string
+      reviewNote: string | null
       scheduledStart: Date | null
       scheduledEnd: Date | null
       createdAt: Date
@@ -12974,6 +13365,8 @@ export namespace Prisma {
     readonly shuffleQuestions: FieldRef<"Exam", 'Boolean'>
     readonly shuffleOptions: FieldRef<"Exam", 'Boolean'>
     readonly status: FieldRef<"Exam", 'String'>
+    readonly reviewStatus: FieldRef<"Exam", 'String'>
+    readonly reviewNote: FieldRef<"Exam", 'String'>
     readonly scheduledStart: FieldRef<"Exam", 'DateTime'>
     readonly scheduledEnd: FieldRef<"Exam", 'DateTime'>
     readonly createdAt: FieldRef<"Exam", 'DateTime'>
@@ -28259,6 +28652,1129 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: NotificationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CalendarEvent
+   */
+
+  export type AggregateCalendarEvent = {
+    _count: CalendarEventCountAggregateOutputType | null
+    _min: CalendarEventMinAggregateOutputType | null
+    _max: CalendarEventMaxAggregateOutputType | null
+  }
+
+  export type CalendarEventMinAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    title: string | null
+    description: string | null
+    eventType: string | null
+    startDate: Date | null
+    endDate: Date | null
+    createdByUserId: string | null
+    createdAt: Date | null
+  }
+
+  export type CalendarEventMaxAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    title: string | null
+    description: string | null
+    eventType: string | null
+    startDate: Date | null
+    endDate: Date | null
+    createdByUserId: string | null
+    createdAt: Date | null
+  }
+
+  export type CalendarEventCountAggregateOutputType = {
+    id: number
+    workspaceId: number
+    title: number
+    description: number
+    eventType: number
+    startDate: number
+    endDate: number
+    createdByUserId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type CalendarEventMinAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    title?: true
+    description?: true
+    eventType?: true
+    startDate?: true
+    endDate?: true
+    createdByUserId?: true
+    createdAt?: true
+  }
+
+  export type CalendarEventMaxAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    title?: true
+    description?: true
+    eventType?: true
+    startDate?: true
+    endDate?: true
+    createdByUserId?: true
+    createdAt?: true
+  }
+
+  export type CalendarEventCountAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    title?: true
+    description?: true
+    eventType?: true
+    startDate?: true
+    endDate?: true
+    createdByUserId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type CalendarEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CalendarEvent to aggregate.
+     */
+    where?: CalendarEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CalendarEvents to fetch.
+     */
+    orderBy?: CalendarEventOrderByWithRelationInput | CalendarEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CalendarEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CalendarEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CalendarEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CalendarEvents
+    **/
+    _count?: true | CalendarEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CalendarEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CalendarEventMaxAggregateInputType
+  }
+
+  export type GetCalendarEventAggregateType<T extends CalendarEventAggregateArgs> = {
+        [P in keyof T & keyof AggregateCalendarEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCalendarEvent[P]>
+      : GetScalarType<T[P], AggregateCalendarEvent[P]>
+  }
+
+
+
+
+  export type CalendarEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CalendarEventWhereInput
+    orderBy?: CalendarEventOrderByWithAggregationInput | CalendarEventOrderByWithAggregationInput[]
+    by: CalendarEventScalarFieldEnum[] | CalendarEventScalarFieldEnum
+    having?: CalendarEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CalendarEventCountAggregateInputType | true
+    _min?: CalendarEventMinAggregateInputType
+    _max?: CalendarEventMaxAggregateInputType
+  }
+
+  export type CalendarEventGroupByOutputType = {
+    id: string
+    workspaceId: string
+    title: string
+    description: string | null
+    eventType: string
+    startDate: Date
+    endDate: Date | null
+    createdByUserId: string
+    createdAt: Date
+    _count: CalendarEventCountAggregateOutputType | null
+    _min: CalendarEventMinAggregateOutputType | null
+    _max: CalendarEventMaxAggregateOutputType | null
+  }
+
+  type GetCalendarEventGroupByPayload<T extends CalendarEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CalendarEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CalendarEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CalendarEventGroupByOutputType[P]>
+            : GetScalarType<T[P], CalendarEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CalendarEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    title?: boolean
+    description?: boolean
+    eventType?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    createdByUserId?: boolean
+    createdAt?: boolean
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    CreatedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["calendarEvent"]>
+
+  export type CalendarEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    title?: boolean
+    description?: boolean
+    eventType?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    createdByUserId?: boolean
+    createdAt?: boolean
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    CreatedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["calendarEvent"]>
+
+  export type CalendarEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    title?: boolean
+    description?: boolean
+    eventType?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    createdByUserId?: boolean
+    createdAt?: boolean
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    CreatedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["calendarEvent"]>
+
+  export type CalendarEventSelectScalar = {
+    id?: boolean
+    workspaceId?: boolean
+    title?: boolean
+    description?: boolean
+    eventType?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    createdByUserId?: boolean
+    createdAt?: boolean
+  }
+
+  export type CalendarEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "title" | "description" | "eventType" | "startDate" | "endDate" | "createdByUserId" | "createdAt", ExtArgs["result"]["calendarEvent"]>
+  export type CalendarEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    CreatedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CalendarEventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    CreatedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CalendarEventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    CreatedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CalendarEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CalendarEvent"
+    objects: {
+      Workspace: Prisma.$WorkspacePayload<ExtArgs>
+      CreatedBy: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workspaceId: string
+      title: string
+      description: string | null
+      eventType: string
+      startDate: Date
+      endDate: Date | null
+      createdByUserId: string
+      createdAt: Date
+    }, ExtArgs["result"]["calendarEvent"]>
+    composites: {}
+  }
+
+  type CalendarEventGetPayload<S extends boolean | null | undefined | CalendarEventDefaultArgs> = $Result.GetResult<Prisma.$CalendarEventPayload, S>
+
+  type CalendarEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CalendarEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CalendarEventCountAggregateInputType | true
+    }
+
+  export interface CalendarEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CalendarEvent'], meta: { name: 'CalendarEvent' } }
+    /**
+     * Find zero or one CalendarEvent that matches the filter.
+     * @param {CalendarEventFindUniqueArgs} args - Arguments to find a CalendarEvent
+     * @example
+     * // Get one CalendarEvent
+     * const calendarEvent = await prisma.calendarEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CalendarEventFindUniqueArgs>(args: SelectSubset<T, CalendarEventFindUniqueArgs<ExtArgs>>): Prisma__CalendarEventClient<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CalendarEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CalendarEventFindUniqueOrThrowArgs} args - Arguments to find a CalendarEvent
+     * @example
+     * // Get one CalendarEvent
+     * const calendarEvent = await prisma.calendarEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CalendarEventFindUniqueOrThrowArgs>(args: SelectSubset<T, CalendarEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CalendarEventClient<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CalendarEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarEventFindFirstArgs} args - Arguments to find a CalendarEvent
+     * @example
+     * // Get one CalendarEvent
+     * const calendarEvent = await prisma.calendarEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CalendarEventFindFirstArgs>(args?: SelectSubset<T, CalendarEventFindFirstArgs<ExtArgs>>): Prisma__CalendarEventClient<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CalendarEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarEventFindFirstOrThrowArgs} args - Arguments to find a CalendarEvent
+     * @example
+     * // Get one CalendarEvent
+     * const calendarEvent = await prisma.calendarEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CalendarEventFindFirstOrThrowArgs>(args?: SelectSubset<T, CalendarEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__CalendarEventClient<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CalendarEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CalendarEvents
+     * const calendarEvents = await prisma.calendarEvent.findMany()
+     * 
+     * // Get first 10 CalendarEvents
+     * const calendarEvents = await prisma.calendarEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const calendarEventWithIdOnly = await prisma.calendarEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CalendarEventFindManyArgs>(args?: SelectSubset<T, CalendarEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CalendarEvent.
+     * @param {CalendarEventCreateArgs} args - Arguments to create a CalendarEvent.
+     * @example
+     * // Create one CalendarEvent
+     * const CalendarEvent = await prisma.calendarEvent.create({
+     *   data: {
+     *     // ... data to create a CalendarEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends CalendarEventCreateArgs>(args: SelectSubset<T, CalendarEventCreateArgs<ExtArgs>>): Prisma__CalendarEventClient<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CalendarEvents.
+     * @param {CalendarEventCreateManyArgs} args - Arguments to create many CalendarEvents.
+     * @example
+     * // Create many CalendarEvents
+     * const calendarEvent = await prisma.calendarEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CalendarEventCreateManyArgs>(args?: SelectSubset<T, CalendarEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CalendarEvents and returns the data saved in the database.
+     * @param {CalendarEventCreateManyAndReturnArgs} args - Arguments to create many CalendarEvents.
+     * @example
+     * // Create many CalendarEvents
+     * const calendarEvent = await prisma.calendarEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CalendarEvents and only return the `id`
+     * const calendarEventWithIdOnly = await prisma.calendarEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CalendarEventCreateManyAndReturnArgs>(args?: SelectSubset<T, CalendarEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CalendarEvent.
+     * @param {CalendarEventDeleteArgs} args - Arguments to delete one CalendarEvent.
+     * @example
+     * // Delete one CalendarEvent
+     * const CalendarEvent = await prisma.calendarEvent.delete({
+     *   where: {
+     *     // ... filter to delete one CalendarEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CalendarEventDeleteArgs>(args: SelectSubset<T, CalendarEventDeleteArgs<ExtArgs>>): Prisma__CalendarEventClient<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CalendarEvent.
+     * @param {CalendarEventUpdateArgs} args - Arguments to update one CalendarEvent.
+     * @example
+     * // Update one CalendarEvent
+     * const calendarEvent = await prisma.calendarEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CalendarEventUpdateArgs>(args: SelectSubset<T, CalendarEventUpdateArgs<ExtArgs>>): Prisma__CalendarEventClient<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CalendarEvents.
+     * @param {CalendarEventDeleteManyArgs} args - Arguments to filter CalendarEvents to delete.
+     * @example
+     * // Delete a few CalendarEvents
+     * const { count } = await prisma.calendarEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CalendarEventDeleteManyArgs>(args?: SelectSubset<T, CalendarEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CalendarEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CalendarEvents
+     * const calendarEvent = await prisma.calendarEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CalendarEventUpdateManyArgs>(args: SelectSubset<T, CalendarEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CalendarEvents and returns the data updated in the database.
+     * @param {CalendarEventUpdateManyAndReturnArgs} args - Arguments to update many CalendarEvents.
+     * @example
+     * // Update many CalendarEvents
+     * const calendarEvent = await prisma.calendarEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CalendarEvents and only return the `id`
+     * const calendarEventWithIdOnly = await prisma.calendarEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CalendarEventUpdateManyAndReturnArgs>(args: SelectSubset<T, CalendarEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CalendarEvent.
+     * @param {CalendarEventUpsertArgs} args - Arguments to update or create a CalendarEvent.
+     * @example
+     * // Update or create a CalendarEvent
+     * const calendarEvent = await prisma.calendarEvent.upsert({
+     *   create: {
+     *     // ... data to create a CalendarEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CalendarEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CalendarEventUpsertArgs>(args: SelectSubset<T, CalendarEventUpsertArgs<ExtArgs>>): Prisma__CalendarEventClient<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CalendarEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarEventCountArgs} args - Arguments to filter CalendarEvents to count.
+     * @example
+     * // Count the number of CalendarEvents
+     * const count = await prisma.calendarEvent.count({
+     *   where: {
+     *     // ... the filter for the CalendarEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends CalendarEventCountArgs>(
+      args?: Subset<T, CalendarEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CalendarEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CalendarEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CalendarEventAggregateArgs>(args: Subset<T, CalendarEventAggregateArgs>): Prisma.PrismaPromise<GetCalendarEventAggregateType<T>>
+
+    /**
+     * Group by CalendarEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CalendarEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CalendarEventGroupByArgs['orderBy'] }
+        : { orderBy?: CalendarEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CalendarEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCalendarEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CalendarEvent model
+   */
+  readonly fields: CalendarEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CalendarEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CalendarEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    CreatedBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CalendarEvent model
+   */
+  interface CalendarEventFieldRefs {
+    readonly id: FieldRef<"CalendarEvent", 'String'>
+    readonly workspaceId: FieldRef<"CalendarEvent", 'String'>
+    readonly title: FieldRef<"CalendarEvent", 'String'>
+    readonly description: FieldRef<"CalendarEvent", 'String'>
+    readonly eventType: FieldRef<"CalendarEvent", 'String'>
+    readonly startDate: FieldRef<"CalendarEvent", 'DateTime'>
+    readonly endDate: FieldRef<"CalendarEvent", 'DateTime'>
+    readonly createdByUserId: FieldRef<"CalendarEvent", 'String'>
+    readonly createdAt: FieldRef<"CalendarEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CalendarEvent findUnique
+   */
+  export type CalendarEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventInclude<ExtArgs> | null
+    /**
+     * Filter, which CalendarEvent to fetch.
+     */
+    where: CalendarEventWhereUniqueInput
+  }
+
+  /**
+   * CalendarEvent findUniqueOrThrow
+   */
+  export type CalendarEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventInclude<ExtArgs> | null
+    /**
+     * Filter, which CalendarEvent to fetch.
+     */
+    where: CalendarEventWhereUniqueInput
+  }
+
+  /**
+   * CalendarEvent findFirst
+   */
+  export type CalendarEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventInclude<ExtArgs> | null
+    /**
+     * Filter, which CalendarEvent to fetch.
+     */
+    where?: CalendarEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CalendarEvents to fetch.
+     */
+    orderBy?: CalendarEventOrderByWithRelationInput | CalendarEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CalendarEvents.
+     */
+    cursor?: CalendarEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CalendarEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CalendarEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CalendarEvents.
+     */
+    distinct?: CalendarEventScalarFieldEnum | CalendarEventScalarFieldEnum[]
+  }
+
+  /**
+   * CalendarEvent findFirstOrThrow
+   */
+  export type CalendarEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventInclude<ExtArgs> | null
+    /**
+     * Filter, which CalendarEvent to fetch.
+     */
+    where?: CalendarEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CalendarEvents to fetch.
+     */
+    orderBy?: CalendarEventOrderByWithRelationInput | CalendarEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CalendarEvents.
+     */
+    cursor?: CalendarEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CalendarEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CalendarEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CalendarEvents.
+     */
+    distinct?: CalendarEventScalarFieldEnum | CalendarEventScalarFieldEnum[]
+  }
+
+  /**
+   * CalendarEvent findMany
+   */
+  export type CalendarEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventInclude<ExtArgs> | null
+    /**
+     * Filter, which CalendarEvents to fetch.
+     */
+    where?: CalendarEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CalendarEvents to fetch.
+     */
+    orderBy?: CalendarEventOrderByWithRelationInput | CalendarEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CalendarEvents.
+     */
+    cursor?: CalendarEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CalendarEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CalendarEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CalendarEvents.
+     */
+    distinct?: CalendarEventScalarFieldEnum | CalendarEventScalarFieldEnum[]
+  }
+
+  /**
+   * CalendarEvent create
+   */
+  export type CalendarEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CalendarEvent.
+     */
+    data: XOR<CalendarEventCreateInput, CalendarEventUncheckedCreateInput>
+  }
+
+  /**
+   * CalendarEvent createMany
+   */
+  export type CalendarEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CalendarEvents.
+     */
+    data: CalendarEventCreateManyInput | CalendarEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CalendarEvent createManyAndReturn
+   */
+  export type CalendarEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many CalendarEvents.
+     */
+    data: CalendarEventCreateManyInput | CalendarEventCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CalendarEvent update
+   */
+  export type CalendarEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CalendarEvent.
+     */
+    data: XOR<CalendarEventUpdateInput, CalendarEventUncheckedUpdateInput>
+    /**
+     * Choose, which CalendarEvent to update.
+     */
+    where: CalendarEventWhereUniqueInput
+  }
+
+  /**
+   * CalendarEvent updateMany
+   */
+  export type CalendarEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CalendarEvents.
+     */
+    data: XOR<CalendarEventUpdateManyMutationInput, CalendarEventUncheckedUpdateManyInput>
+    /**
+     * Filter which CalendarEvents to update
+     */
+    where?: CalendarEventWhereInput
+    /**
+     * Limit how many CalendarEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CalendarEvent updateManyAndReturn
+   */
+  export type CalendarEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * The data used to update CalendarEvents.
+     */
+    data: XOR<CalendarEventUpdateManyMutationInput, CalendarEventUncheckedUpdateManyInput>
+    /**
+     * Filter which CalendarEvents to update
+     */
+    where?: CalendarEventWhereInput
+    /**
+     * Limit how many CalendarEvents to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CalendarEvent upsert
+   */
+  export type CalendarEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CalendarEvent to update in case it exists.
+     */
+    where: CalendarEventWhereUniqueInput
+    /**
+     * In case the CalendarEvent found by the `where` argument doesn't exist, create a new CalendarEvent with this data.
+     */
+    create: XOR<CalendarEventCreateInput, CalendarEventUncheckedCreateInput>
+    /**
+     * In case the CalendarEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CalendarEventUpdateInput, CalendarEventUncheckedUpdateInput>
+  }
+
+  /**
+   * CalendarEvent delete
+   */
+  export type CalendarEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventInclude<ExtArgs> | null
+    /**
+     * Filter which CalendarEvent to delete.
+     */
+    where: CalendarEventWhereUniqueInput
+  }
+
+  /**
+   * CalendarEvent deleteMany
+   */
+  export type CalendarEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CalendarEvents to delete
+     */
+    where?: CalendarEventWhereInput
+    /**
+     * Limit how many CalendarEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CalendarEvent without action
+   */
+  export type CalendarEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: CalendarEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: CalendarEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CalendarEventInclude<ExtArgs> | null
   }
 
 
@@ -47413,6 +48929,8 @@ export namespace Prisma {
     explanation: string | null
     version: number | null
     isArchived: boolean | null
+    reviewStatus: string | null
+    reviewNote: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -47432,6 +48950,8 @@ export namespace Prisma {
     explanation: string | null
     version: number | null
     isArchived: boolean | null
+    reviewStatus: string | null
+    reviewNote: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -47454,6 +48974,8 @@ export namespace Prisma {
     explanation: number
     version: number
     isArchived: number
+    reviewStatus: number
+    reviewNote: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -47483,6 +49005,8 @@ export namespace Prisma {
     explanation?: true
     version?: true
     isArchived?: true
+    reviewStatus?: true
+    reviewNote?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -47502,6 +49026,8 @@ export namespace Prisma {
     explanation?: true
     version?: true
     isArchived?: true
+    reviewStatus?: true
+    reviewNote?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -47524,6 +49050,8 @@ export namespace Prisma {
     explanation?: true
     version?: true
     isArchived?: true
+    reviewStatus?: true
+    reviewNote?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -47633,6 +49161,8 @@ export namespace Prisma {
     explanation: string | null
     version: number
     isArchived: boolean
+    reviewStatus: string
+    reviewNote: string | null
     createdAt: Date
     updatedAt: Date
     _count: QuestionCountAggregateOutputType | null
@@ -47674,6 +49204,8 @@ export namespace Prisma {
     explanation?: boolean
     version?: boolean
     isArchived?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
@@ -47701,6 +49233,8 @@ export namespace Prisma {
     explanation?: boolean
     version?: boolean
     isArchived?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
@@ -47725,6 +49259,8 @@ export namespace Prisma {
     explanation?: boolean
     version?: boolean
     isArchived?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
@@ -47749,11 +49285,13 @@ export namespace Prisma {
     explanation?: boolean
     version?: boolean
     isArchived?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type QuestionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "createdByUserId" | "type" | "difficulty" | "subject" | "chapter" | "topic" | "learningOutcome" | "bloomLevel" | "tags" | "questionText" | "options" | "correctAnswer" | "explanation" | "version" | "isArchived" | "createdAt" | "updatedAt", ExtArgs["result"]["question"]>
+  export type QuestionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "createdByUserId" | "type" | "difficulty" | "subject" | "chapter" | "topic" | "learningOutcome" | "bloomLevel" | "tags" | "questionText" | "options" | "correctAnswer" | "explanation" | "version" | "isArchived" | "reviewStatus" | "reviewNote" | "createdAt" | "updatedAt", ExtArgs["result"]["question"]>
   export type QuestionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     CreatedBy?: boolean | UserDefaultArgs<ExtArgs>
@@ -47796,6 +49334,8 @@ export namespace Prisma {
       explanation: string | null
       version: number
       isArchived: boolean
+      reviewStatus: string
+      reviewNote: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["question"]>
@@ -48242,6 +49782,8 @@ export namespace Prisma {
     readonly explanation: FieldRef<"Question", 'String'>
     readonly version: FieldRef<"Question", 'Int'>
     readonly isArchived: FieldRef<"Question", 'Boolean'>
+    readonly reviewStatus: FieldRef<"Question", 'String'>
+    readonly reviewNote: FieldRef<"Question", 'String'>
     readonly createdAt: FieldRef<"Question", 'DateTime'>
     readonly updatedAt: FieldRef<"Question", 'DateTime'>
   }
@@ -51050,6 +52592,1195 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: SchoolLogInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LeaveRequest
+   */
+
+  export type AggregateLeaveRequest = {
+    _count: LeaveRequestCountAggregateOutputType | null
+    _min: LeaveRequestMinAggregateOutputType | null
+    _max: LeaveRequestMaxAggregateOutputType | null
+  }
+
+  export type LeaveRequestMinAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    requesterId: string | null
+    requesterRole: string | null
+    startDate: Date | null
+    endDate: Date | null
+    reason: string | null
+    status: string | null
+    reviewedByUserId: string | null
+    reviewNote: string | null
+    reviewedAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type LeaveRequestMaxAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    requesterId: string | null
+    requesterRole: string | null
+    startDate: Date | null
+    endDate: Date | null
+    reason: string | null
+    status: string | null
+    reviewedByUserId: string | null
+    reviewNote: string | null
+    reviewedAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type LeaveRequestCountAggregateOutputType = {
+    id: number
+    workspaceId: number
+    requesterId: number
+    requesterRole: number
+    startDate: number
+    endDate: number
+    reason: number
+    status: number
+    reviewedByUserId: number
+    reviewNote: number
+    reviewedAt: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type LeaveRequestMinAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    requesterId?: true
+    requesterRole?: true
+    startDate?: true
+    endDate?: true
+    reason?: true
+    status?: true
+    reviewedByUserId?: true
+    reviewNote?: true
+    reviewedAt?: true
+    createdAt?: true
+  }
+
+  export type LeaveRequestMaxAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    requesterId?: true
+    requesterRole?: true
+    startDate?: true
+    endDate?: true
+    reason?: true
+    status?: true
+    reviewedByUserId?: true
+    reviewNote?: true
+    reviewedAt?: true
+    createdAt?: true
+  }
+
+  export type LeaveRequestCountAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    requesterId?: true
+    requesterRole?: true
+    startDate?: true
+    endDate?: true
+    reason?: true
+    status?: true
+    reviewedByUserId?: true
+    reviewNote?: true
+    reviewedAt?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type LeaveRequestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LeaveRequest to aggregate.
+     */
+    where?: LeaveRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LeaveRequests to fetch.
+     */
+    orderBy?: LeaveRequestOrderByWithRelationInput | LeaveRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LeaveRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LeaveRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LeaveRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LeaveRequests
+    **/
+    _count?: true | LeaveRequestCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LeaveRequestMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LeaveRequestMaxAggregateInputType
+  }
+
+  export type GetLeaveRequestAggregateType<T extends LeaveRequestAggregateArgs> = {
+        [P in keyof T & keyof AggregateLeaveRequest]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLeaveRequest[P]>
+      : GetScalarType<T[P], AggregateLeaveRequest[P]>
+  }
+
+
+
+
+  export type LeaveRequestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LeaveRequestWhereInput
+    orderBy?: LeaveRequestOrderByWithAggregationInput | LeaveRequestOrderByWithAggregationInput[]
+    by: LeaveRequestScalarFieldEnum[] | LeaveRequestScalarFieldEnum
+    having?: LeaveRequestScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LeaveRequestCountAggregateInputType | true
+    _min?: LeaveRequestMinAggregateInputType
+    _max?: LeaveRequestMaxAggregateInputType
+  }
+
+  export type LeaveRequestGroupByOutputType = {
+    id: string
+    workspaceId: string
+    requesterId: string
+    requesterRole: string
+    startDate: Date
+    endDate: Date
+    reason: string
+    status: string
+    reviewedByUserId: string | null
+    reviewNote: string | null
+    reviewedAt: Date | null
+    createdAt: Date
+    _count: LeaveRequestCountAggregateOutputType | null
+    _min: LeaveRequestMinAggregateOutputType | null
+    _max: LeaveRequestMaxAggregateOutputType | null
+  }
+
+  type GetLeaveRequestGroupByPayload<T extends LeaveRequestGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LeaveRequestGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LeaveRequestGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LeaveRequestGroupByOutputType[P]>
+            : GetScalarType<T[P], LeaveRequestGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LeaveRequestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    requesterId?: boolean
+    requesterRole?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    reason?: boolean
+    status?: boolean
+    reviewedByUserId?: boolean
+    reviewNote?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    Requester?: boolean | UserDefaultArgs<ExtArgs>
+    ReviewedBy?: boolean | LeaveRequest$ReviewedByArgs<ExtArgs>
+  }, ExtArgs["result"]["leaveRequest"]>
+
+  export type LeaveRequestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    requesterId?: boolean
+    requesterRole?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    reason?: boolean
+    status?: boolean
+    reviewedByUserId?: boolean
+    reviewNote?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    Requester?: boolean | UserDefaultArgs<ExtArgs>
+    ReviewedBy?: boolean | LeaveRequest$ReviewedByArgs<ExtArgs>
+  }, ExtArgs["result"]["leaveRequest"]>
+
+  export type LeaveRequestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    requesterId?: boolean
+    requesterRole?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    reason?: boolean
+    status?: boolean
+    reviewedByUserId?: boolean
+    reviewNote?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    Requester?: boolean | UserDefaultArgs<ExtArgs>
+    ReviewedBy?: boolean | LeaveRequest$ReviewedByArgs<ExtArgs>
+  }, ExtArgs["result"]["leaveRequest"]>
+
+  export type LeaveRequestSelectScalar = {
+    id?: boolean
+    workspaceId?: boolean
+    requesterId?: boolean
+    requesterRole?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    reason?: boolean
+    status?: boolean
+    reviewedByUserId?: boolean
+    reviewNote?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+  }
+
+  export type LeaveRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "requesterId" | "requesterRole" | "startDate" | "endDate" | "reason" | "status" | "reviewedByUserId" | "reviewNote" | "reviewedAt" | "createdAt", ExtArgs["result"]["leaveRequest"]>
+  export type LeaveRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    Requester?: boolean | UserDefaultArgs<ExtArgs>
+    ReviewedBy?: boolean | LeaveRequest$ReviewedByArgs<ExtArgs>
+  }
+  export type LeaveRequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    Requester?: boolean | UserDefaultArgs<ExtArgs>
+    ReviewedBy?: boolean | LeaveRequest$ReviewedByArgs<ExtArgs>
+  }
+  export type LeaveRequestIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    Requester?: boolean | UserDefaultArgs<ExtArgs>
+    ReviewedBy?: boolean | LeaveRequest$ReviewedByArgs<ExtArgs>
+  }
+
+  export type $LeaveRequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LeaveRequest"
+    objects: {
+      Workspace: Prisma.$WorkspacePayload<ExtArgs>
+      Requester: Prisma.$UserPayload<ExtArgs>
+      ReviewedBy: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workspaceId: string
+      requesterId: string
+      requesterRole: string
+      startDate: Date
+      endDate: Date
+      reason: string
+      status: string
+      reviewedByUserId: string | null
+      reviewNote: string | null
+      reviewedAt: Date | null
+      createdAt: Date
+    }, ExtArgs["result"]["leaveRequest"]>
+    composites: {}
+  }
+
+  type LeaveRequestGetPayload<S extends boolean | null | undefined | LeaveRequestDefaultArgs> = $Result.GetResult<Prisma.$LeaveRequestPayload, S>
+
+  type LeaveRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LeaveRequestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LeaveRequestCountAggregateInputType | true
+    }
+
+  export interface LeaveRequestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LeaveRequest'], meta: { name: 'LeaveRequest' } }
+    /**
+     * Find zero or one LeaveRequest that matches the filter.
+     * @param {LeaveRequestFindUniqueArgs} args - Arguments to find a LeaveRequest
+     * @example
+     * // Get one LeaveRequest
+     * const leaveRequest = await prisma.leaveRequest.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LeaveRequestFindUniqueArgs>(args: SelectSubset<T, LeaveRequestFindUniqueArgs<ExtArgs>>): Prisma__LeaveRequestClient<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one LeaveRequest that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LeaveRequestFindUniqueOrThrowArgs} args - Arguments to find a LeaveRequest
+     * @example
+     * // Get one LeaveRequest
+     * const leaveRequest = await prisma.leaveRequest.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LeaveRequestFindUniqueOrThrowArgs>(args: SelectSubset<T, LeaveRequestFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LeaveRequestClient<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LeaveRequest that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeaveRequestFindFirstArgs} args - Arguments to find a LeaveRequest
+     * @example
+     * // Get one LeaveRequest
+     * const leaveRequest = await prisma.leaveRequest.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LeaveRequestFindFirstArgs>(args?: SelectSubset<T, LeaveRequestFindFirstArgs<ExtArgs>>): Prisma__LeaveRequestClient<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LeaveRequest that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeaveRequestFindFirstOrThrowArgs} args - Arguments to find a LeaveRequest
+     * @example
+     * // Get one LeaveRequest
+     * const leaveRequest = await prisma.leaveRequest.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LeaveRequestFindFirstOrThrowArgs>(args?: SelectSubset<T, LeaveRequestFindFirstOrThrowArgs<ExtArgs>>): Prisma__LeaveRequestClient<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more LeaveRequests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeaveRequestFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LeaveRequests
+     * const leaveRequests = await prisma.leaveRequest.findMany()
+     * 
+     * // Get first 10 LeaveRequests
+     * const leaveRequests = await prisma.leaveRequest.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const leaveRequestWithIdOnly = await prisma.leaveRequest.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LeaveRequestFindManyArgs>(args?: SelectSubset<T, LeaveRequestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a LeaveRequest.
+     * @param {LeaveRequestCreateArgs} args - Arguments to create a LeaveRequest.
+     * @example
+     * // Create one LeaveRequest
+     * const LeaveRequest = await prisma.leaveRequest.create({
+     *   data: {
+     *     // ... data to create a LeaveRequest
+     *   }
+     * })
+     * 
+     */
+    create<T extends LeaveRequestCreateArgs>(args: SelectSubset<T, LeaveRequestCreateArgs<ExtArgs>>): Prisma__LeaveRequestClient<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many LeaveRequests.
+     * @param {LeaveRequestCreateManyArgs} args - Arguments to create many LeaveRequests.
+     * @example
+     * // Create many LeaveRequests
+     * const leaveRequest = await prisma.leaveRequest.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LeaveRequestCreateManyArgs>(args?: SelectSubset<T, LeaveRequestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LeaveRequests and returns the data saved in the database.
+     * @param {LeaveRequestCreateManyAndReturnArgs} args - Arguments to create many LeaveRequests.
+     * @example
+     * // Create many LeaveRequests
+     * const leaveRequest = await prisma.leaveRequest.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LeaveRequests and only return the `id`
+     * const leaveRequestWithIdOnly = await prisma.leaveRequest.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LeaveRequestCreateManyAndReturnArgs>(args?: SelectSubset<T, LeaveRequestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a LeaveRequest.
+     * @param {LeaveRequestDeleteArgs} args - Arguments to delete one LeaveRequest.
+     * @example
+     * // Delete one LeaveRequest
+     * const LeaveRequest = await prisma.leaveRequest.delete({
+     *   where: {
+     *     // ... filter to delete one LeaveRequest
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LeaveRequestDeleteArgs>(args: SelectSubset<T, LeaveRequestDeleteArgs<ExtArgs>>): Prisma__LeaveRequestClient<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one LeaveRequest.
+     * @param {LeaveRequestUpdateArgs} args - Arguments to update one LeaveRequest.
+     * @example
+     * // Update one LeaveRequest
+     * const leaveRequest = await prisma.leaveRequest.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LeaveRequestUpdateArgs>(args: SelectSubset<T, LeaveRequestUpdateArgs<ExtArgs>>): Prisma__LeaveRequestClient<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more LeaveRequests.
+     * @param {LeaveRequestDeleteManyArgs} args - Arguments to filter LeaveRequests to delete.
+     * @example
+     * // Delete a few LeaveRequests
+     * const { count } = await prisma.leaveRequest.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LeaveRequestDeleteManyArgs>(args?: SelectSubset<T, LeaveRequestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LeaveRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeaveRequestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LeaveRequests
+     * const leaveRequest = await prisma.leaveRequest.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LeaveRequestUpdateManyArgs>(args: SelectSubset<T, LeaveRequestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LeaveRequests and returns the data updated in the database.
+     * @param {LeaveRequestUpdateManyAndReturnArgs} args - Arguments to update many LeaveRequests.
+     * @example
+     * // Update many LeaveRequests
+     * const leaveRequest = await prisma.leaveRequest.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more LeaveRequests and only return the `id`
+     * const leaveRequestWithIdOnly = await prisma.leaveRequest.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LeaveRequestUpdateManyAndReturnArgs>(args: SelectSubset<T, LeaveRequestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one LeaveRequest.
+     * @param {LeaveRequestUpsertArgs} args - Arguments to update or create a LeaveRequest.
+     * @example
+     * // Update or create a LeaveRequest
+     * const leaveRequest = await prisma.leaveRequest.upsert({
+     *   create: {
+     *     // ... data to create a LeaveRequest
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LeaveRequest we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LeaveRequestUpsertArgs>(args: SelectSubset<T, LeaveRequestUpsertArgs<ExtArgs>>): Prisma__LeaveRequestClient<$Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of LeaveRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeaveRequestCountArgs} args - Arguments to filter LeaveRequests to count.
+     * @example
+     * // Count the number of LeaveRequests
+     * const count = await prisma.leaveRequest.count({
+     *   where: {
+     *     // ... the filter for the LeaveRequests we want to count
+     *   }
+     * })
+    **/
+    count<T extends LeaveRequestCountArgs>(
+      args?: Subset<T, LeaveRequestCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LeaveRequestCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LeaveRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeaveRequestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LeaveRequestAggregateArgs>(args: Subset<T, LeaveRequestAggregateArgs>): Prisma.PrismaPromise<GetLeaveRequestAggregateType<T>>
+
+    /**
+     * Group by LeaveRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeaveRequestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LeaveRequestGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LeaveRequestGroupByArgs['orderBy'] }
+        : { orderBy?: LeaveRequestGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LeaveRequestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLeaveRequestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LeaveRequest model
+   */
+  readonly fields: LeaveRequestFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LeaveRequest.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LeaveRequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    Requester<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    ReviewedBy<T extends LeaveRequest$ReviewedByArgs<ExtArgs> = {}>(args?: Subset<T, LeaveRequest$ReviewedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LeaveRequest model
+   */
+  interface LeaveRequestFieldRefs {
+    readonly id: FieldRef<"LeaveRequest", 'String'>
+    readonly workspaceId: FieldRef<"LeaveRequest", 'String'>
+    readonly requesterId: FieldRef<"LeaveRequest", 'String'>
+    readonly requesterRole: FieldRef<"LeaveRequest", 'String'>
+    readonly startDate: FieldRef<"LeaveRequest", 'DateTime'>
+    readonly endDate: FieldRef<"LeaveRequest", 'DateTime'>
+    readonly reason: FieldRef<"LeaveRequest", 'String'>
+    readonly status: FieldRef<"LeaveRequest", 'String'>
+    readonly reviewedByUserId: FieldRef<"LeaveRequest", 'String'>
+    readonly reviewNote: FieldRef<"LeaveRequest", 'String'>
+    readonly reviewedAt: FieldRef<"LeaveRequest", 'DateTime'>
+    readonly createdAt: FieldRef<"LeaveRequest", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LeaveRequest findUnique
+   */
+  export type LeaveRequestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which LeaveRequest to fetch.
+     */
+    where: LeaveRequestWhereUniqueInput
+  }
+
+  /**
+   * LeaveRequest findUniqueOrThrow
+   */
+  export type LeaveRequestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which LeaveRequest to fetch.
+     */
+    where: LeaveRequestWhereUniqueInput
+  }
+
+  /**
+   * LeaveRequest findFirst
+   */
+  export type LeaveRequestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which LeaveRequest to fetch.
+     */
+    where?: LeaveRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LeaveRequests to fetch.
+     */
+    orderBy?: LeaveRequestOrderByWithRelationInput | LeaveRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LeaveRequests.
+     */
+    cursor?: LeaveRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LeaveRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LeaveRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LeaveRequests.
+     */
+    distinct?: LeaveRequestScalarFieldEnum | LeaveRequestScalarFieldEnum[]
+  }
+
+  /**
+   * LeaveRequest findFirstOrThrow
+   */
+  export type LeaveRequestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which LeaveRequest to fetch.
+     */
+    where?: LeaveRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LeaveRequests to fetch.
+     */
+    orderBy?: LeaveRequestOrderByWithRelationInput | LeaveRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LeaveRequests.
+     */
+    cursor?: LeaveRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LeaveRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LeaveRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LeaveRequests.
+     */
+    distinct?: LeaveRequestScalarFieldEnum | LeaveRequestScalarFieldEnum[]
+  }
+
+  /**
+   * LeaveRequest findMany
+   */
+  export type LeaveRequestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which LeaveRequests to fetch.
+     */
+    where?: LeaveRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LeaveRequests to fetch.
+     */
+    orderBy?: LeaveRequestOrderByWithRelationInput | LeaveRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LeaveRequests.
+     */
+    cursor?: LeaveRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LeaveRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LeaveRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LeaveRequests.
+     */
+    distinct?: LeaveRequestScalarFieldEnum | LeaveRequestScalarFieldEnum[]
+  }
+
+  /**
+   * LeaveRequest create
+   */
+  export type LeaveRequestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LeaveRequest.
+     */
+    data: XOR<LeaveRequestCreateInput, LeaveRequestUncheckedCreateInput>
+  }
+
+  /**
+   * LeaveRequest createMany
+   */
+  export type LeaveRequestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LeaveRequests.
+     */
+    data: LeaveRequestCreateManyInput | LeaveRequestCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LeaveRequest createManyAndReturn
+   */
+  export type LeaveRequestCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * The data used to create many LeaveRequests.
+     */
+    data: LeaveRequestCreateManyInput | LeaveRequestCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LeaveRequest update
+   */
+  export type LeaveRequestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LeaveRequest.
+     */
+    data: XOR<LeaveRequestUpdateInput, LeaveRequestUncheckedUpdateInput>
+    /**
+     * Choose, which LeaveRequest to update.
+     */
+    where: LeaveRequestWhereUniqueInput
+  }
+
+  /**
+   * LeaveRequest updateMany
+   */
+  export type LeaveRequestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LeaveRequests.
+     */
+    data: XOR<LeaveRequestUpdateManyMutationInput, LeaveRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which LeaveRequests to update
+     */
+    where?: LeaveRequestWhereInput
+    /**
+     * Limit how many LeaveRequests to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LeaveRequest updateManyAndReturn
+   */
+  export type LeaveRequestUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * The data used to update LeaveRequests.
+     */
+    data: XOR<LeaveRequestUpdateManyMutationInput, LeaveRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which LeaveRequests to update
+     */
+    where?: LeaveRequestWhereInput
+    /**
+     * Limit how many LeaveRequests to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LeaveRequest upsert
+   */
+  export type LeaveRequestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LeaveRequest to update in case it exists.
+     */
+    where: LeaveRequestWhereUniqueInput
+    /**
+     * In case the LeaveRequest found by the `where` argument doesn't exist, create a new LeaveRequest with this data.
+     */
+    create: XOR<LeaveRequestCreateInput, LeaveRequestUncheckedCreateInput>
+    /**
+     * In case the LeaveRequest was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LeaveRequestUpdateInput, LeaveRequestUncheckedUpdateInput>
+  }
+
+  /**
+   * LeaveRequest delete
+   */
+  export type LeaveRequestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
+    /**
+     * Filter which LeaveRequest to delete.
+     */
+    where: LeaveRequestWhereUniqueInput
+  }
+
+  /**
+   * LeaveRequest deleteMany
+   */
+  export type LeaveRequestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LeaveRequests to delete
+     */
+    where?: LeaveRequestWhereInput
+    /**
+     * Limit how many LeaveRequests to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * LeaveRequest.ReviewedBy
+   */
+  export type LeaveRequest$ReviewedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * LeaveRequest without action
+   */
+  export type LeaveRequestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeaveRequest
+     */
+    select?: LeaveRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeaveRequest
+     */
+    omit?: LeaveRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaveRequestInclude<ExtArgs> | null
   }
 
 
@@ -54609,6 +57340,8 @@ export namespace Prisma {
     shuffleQuestions: 'shuffleQuestions',
     shuffleOptions: 'shuffleOptions',
     status: 'status',
+    reviewStatus: 'reviewStatus',
+    reviewNote: 'reviewNote',
     scheduledStart: 'scheduledStart',
     scheduledEnd: 'scheduledEnd',
     createdAt: 'createdAt',
@@ -54788,6 +57521,21 @@ export namespace Prisma {
   };
 
   export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+  export const CalendarEventScalarFieldEnum: {
+    id: 'id',
+    workspaceId: 'workspaceId',
+    title: 'title',
+    description: 'description',
+    eventType: 'eventType',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    createdByUserId: 'createdByUserId',
+    createdAt: 'createdAt'
+  };
+
+  export type CalendarEventScalarFieldEnum = (typeof CalendarEventScalarFieldEnum)[keyof typeof CalendarEventScalarFieldEnum]
 
 
   export const ParentStudentLinkScalarFieldEnum: {
@@ -55028,6 +57776,8 @@ export namespace Prisma {
     explanation: 'explanation',
     version: 'version',
     isArchived: 'isArchived',
+    reviewStatus: 'reviewStatus',
+    reviewNote: 'reviewNote',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -55066,6 +57816,24 @@ export namespace Prisma {
   };
 
   export type SchoolLogScalarFieldEnum = (typeof SchoolLogScalarFieldEnum)[keyof typeof SchoolLogScalarFieldEnum]
+
+
+  export const LeaveRequestScalarFieldEnum: {
+    id: 'id',
+    workspaceId: 'workspaceId',
+    requesterId: 'requesterId',
+    requesterRole: 'requesterRole',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    reason: 'reason',
+    status: 'status',
+    reviewedByUserId: 'reviewedByUserId',
+    reviewNote: 'reviewNote',
+    reviewedAt: 'reviewedAt',
+    createdAt: 'createdAt'
+  };
+
+  export type LeaveRequestScalarFieldEnum = (typeof LeaveRequestScalarFieldEnum)[keyof typeof LeaveRequestScalarFieldEnum]
 
 
   export const PlatformSettingsScalarFieldEnum: {
@@ -55284,6 +58052,9 @@ export namespace Prisma {
     results?: ResultListRelationFilter
     teacherSubjects?: TeacherSubjectListRelationFilter
     timetableSlots?: TimetableSlotListRelationFilter
+    leaveRequests?: LeaveRequestListRelationFilter
+    reviewedLeaveRequests?: LeaveRequestListRelationFilter
+    calendarEvents?: CalendarEventListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -55326,6 +58097,9 @@ export namespace Prisma {
     results?: ResultOrderByRelationAggregateInput
     teacherSubjects?: TeacherSubjectOrderByRelationAggregateInput
     timetableSlots?: TimetableSlotOrderByRelationAggregateInput
+    leaveRequests?: LeaveRequestOrderByRelationAggregateInput
+    reviewedLeaveRequests?: LeaveRequestOrderByRelationAggregateInput
+    calendarEvents?: CalendarEventOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -55371,6 +58145,9 @@ export namespace Prisma {
     results?: ResultListRelationFilter
     teacherSubjects?: TeacherSubjectListRelationFilter
     timetableSlots?: TimetableSlotListRelationFilter
+    leaveRequests?: LeaveRequestListRelationFilter
+    reviewedLeaveRequests?: LeaveRequestListRelationFilter
+    calendarEvents?: CalendarEventListRelationFilter
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -55514,6 +58291,8 @@ export namespace Prisma {
     departments?: DepartmentListRelationFilter
     subjects?: SubjectListRelationFilter
     timetableSlots?: TimetableSlotListRelationFilter
+    leaveRequests?: LeaveRequestListRelationFilter
+    calendarEvents?: CalendarEventListRelationFilter
   }
 
   export type WorkspaceOrderByWithRelationInput = {
@@ -55542,6 +58321,8 @@ export namespace Prisma {
     departments?: DepartmentOrderByRelationAggregateInput
     subjects?: SubjectOrderByRelationAggregateInput
     timetableSlots?: TimetableSlotOrderByRelationAggregateInput
+    leaveRequests?: LeaveRequestOrderByRelationAggregateInput
+    calendarEvents?: CalendarEventOrderByRelationAggregateInput
   }
 
   export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
@@ -55573,6 +58354,8 @@ export namespace Prisma {
     departments?: DepartmentListRelationFilter
     subjects?: SubjectListRelationFilter
     timetableSlots?: TimetableSlotListRelationFilter
+    leaveRequests?: LeaveRequestListRelationFilter
+    calendarEvents?: CalendarEventListRelationFilter
   }, "id">
 
   export type WorkspaceOrderByWithAggregationInput = {
@@ -55743,6 +58526,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFilter<"Exam"> | boolean
     shuffleOptions?: BoolFilter<"Exam"> | boolean
     status?: StringFilter<"Exam"> | string
+    reviewStatus?: StringFilter<"Exam"> | string
+    reviewNote?: StringNullableFilter<"Exam"> | string | null
     scheduledStart?: DateTimeNullableFilter<"Exam"> | Date | string | null
     scheduledEnd?: DateTimeNullableFilter<"Exam"> | Date | string | null
     createdAt?: DateTimeFilter<"Exam"> | Date | string
@@ -55768,6 +58553,8 @@ export namespace Prisma {
     shuffleQuestions?: SortOrder
     shuffleOptions?: SortOrder
     status?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrderInput | SortOrder
     scheduledStart?: SortOrderInput | SortOrder
     scheduledEnd?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -55796,6 +58583,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFilter<"Exam"> | boolean
     shuffleOptions?: BoolFilter<"Exam"> | boolean
     status?: StringFilter<"Exam"> | string
+    reviewStatus?: StringFilter<"Exam"> | string
+    reviewNote?: StringNullableFilter<"Exam"> | string | null
     scheduledStart?: DateTimeNullableFilter<"Exam"> | Date | string | null
     scheduledEnd?: DateTimeNullableFilter<"Exam"> | Date | string | null
     createdAt?: DateTimeFilter<"Exam"> | Date | string
@@ -55821,6 +58610,8 @@ export namespace Prisma {
     shuffleQuestions?: SortOrder
     shuffleOptions?: SortOrder
     status?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrderInput | SortOrder
     scheduledStart?: SortOrderInput | SortOrder
     scheduledEnd?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -55849,6 +58640,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolWithAggregatesFilter<"Exam"> | boolean
     shuffleOptions?: BoolWithAggregatesFilter<"Exam"> | boolean
     status?: StringWithAggregatesFilter<"Exam"> | string
+    reviewStatus?: StringWithAggregatesFilter<"Exam"> | string
+    reviewNote?: StringNullableWithAggregatesFilter<"Exam"> | string | null
     scheduledStart?: DateTimeNullableWithAggregatesFilter<"Exam"> | Date | string | null
     scheduledEnd?: DateTimeNullableWithAggregatesFilter<"Exam"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Exam"> | Date | string
@@ -56776,6 +59569,84 @@ export namespace Prisma {
     isRead?: BoolWithAggregatesFilter<"Notification"> | boolean
     actionUrl?: StringNullableWithAggregatesFilter<"Notification"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
+  }
+
+  export type CalendarEventWhereInput = {
+    AND?: CalendarEventWhereInput | CalendarEventWhereInput[]
+    OR?: CalendarEventWhereInput[]
+    NOT?: CalendarEventWhereInput | CalendarEventWhereInput[]
+    id?: StringFilter<"CalendarEvent"> | string
+    workspaceId?: StringFilter<"CalendarEvent"> | string
+    title?: StringFilter<"CalendarEvent"> | string
+    description?: StringNullableFilter<"CalendarEvent"> | string | null
+    eventType?: StringFilter<"CalendarEvent"> | string
+    startDate?: DateTimeFilter<"CalendarEvent"> | Date | string
+    endDate?: DateTimeNullableFilter<"CalendarEvent"> | Date | string | null
+    createdByUserId?: StringFilter<"CalendarEvent"> | string
+    createdAt?: DateTimeFilter<"CalendarEvent"> | Date | string
+    Workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+    CreatedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type CalendarEventOrderByWithRelationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    eventType?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrderInput | SortOrder
+    createdByUserId?: SortOrder
+    createdAt?: SortOrder
+    Workspace?: WorkspaceOrderByWithRelationInput
+    CreatedBy?: UserOrderByWithRelationInput
+  }
+
+  export type CalendarEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CalendarEventWhereInput | CalendarEventWhereInput[]
+    OR?: CalendarEventWhereInput[]
+    NOT?: CalendarEventWhereInput | CalendarEventWhereInput[]
+    workspaceId?: StringFilter<"CalendarEvent"> | string
+    title?: StringFilter<"CalendarEvent"> | string
+    description?: StringNullableFilter<"CalendarEvent"> | string | null
+    eventType?: StringFilter<"CalendarEvent"> | string
+    startDate?: DateTimeFilter<"CalendarEvent"> | Date | string
+    endDate?: DateTimeNullableFilter<"CalendarEvent"> | Date | string | null
+    createdByUserId?: StringFilter<"CalendarEvent"> | string
+    createdAt?: DateTimeFilter<"CalendarEvent"> | Date | string
+    Workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+    CreatedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type CalendarEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    eventType?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrderInput | SortOrder
+    createdByUserId?: SortOrder
+    createdAt?: SortOrder
+    _count?: CalendarEventCountOrderByAggregateInput
+    _max?: CalendarEventMaxOrderByAggregateInput
+    _min?: CalendarEventMinOrderByAggregateInput
+  }
+
+  export type CalendarEventScalarWhereWithAggregatesInput = {
+    AND?: CalendarEventScalarWhereWithAggregatesInput | CalendarEventScalarWhereWithAggregatesInput[]
+    OR?: CalendarEventScalarWhereWithAggregatesInput[]
+    NOT?: CalendarEventScalarWhereWithAggregatesInput | CalendarEventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CalendarEvent"> | string
+    workspaceId?: StringWithAggregatesFilter<"CalendarEvent"> | string
+    title?: StringWithAggregatesFilter<"CalendarEvent"> | string
+    description?: StringNullableWithAggregatesFilter<"CalendarEvent"> | string | null
+    eventType?: StringWithAggregatesFilter<"CalendarEvent"> | string
+    startDate?: DateTimeWithAggregatesFilter<"CalendarEvent"> | Date | string
+    endDate?: DateTimeNullableWithAggregatesFilter<"CalendarEvent"> | Date | string | null
+    createdByUserId?: StringWithAggregatesFilter<"CalendarEvent"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CalendarEvent"> | Date | string
   }
 
   export type ParentStudentLinkWhereInput = {
@@ -58001,6 +60872,8 @@ export namespace Prisma {
     explanation?: StringNullableFilter<"Question"> | string | null
     version?: IntFilter<"Question"> | number
     isArchived?: BoolFilter<"Question"> | boolean
+    reviewStatus?: StringFilter<"Question"> | string
+    reviewNote?: StringNullableFilter<"Question"> | string | null
     createdAt?: DateTimeFilter<"Question"> | Date | string
     updatedAt?: DateTimeFilter<"Question"> | Date | string
     Workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
@@ -58027,6 +60900,8 @@ export namespace Prisma {
     explanation?: SortOrderInput | SortOrder
     version?: SortOrder
     isArchived?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     Workspace?: WorkspaceOrderByWithRelationInput
@@ -58056,6 +60931,8 @@ export namespace Prisma {
     explanation?: StringNullableFilter<"Question"> | string | null
     version?: IntFilter<"Question"> | number
     isArchived?: BoolFilter<"Question"> | boolean
+    reviewStatus?: StringFilter<"Question"> | string
+    reviewNote?: StringNullableFilter<"Question"> | string | null
     createdAt?: DateTimeFilter<"Question"> | Date | string
     updatedAt?: DateTimeFilter<"Question"> | Date | string
     Workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
@@ -58082,6 +60959,8 @@ export namespace Prisma {
     explanation?: SortOrderInput | SortOrder
     version?: SortOrder
     isArchived?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: QuestionCountOrderByAggregateInput
@@ -58112,6 +60991,8 @@ export namespace Prisma {
     explanation?: StringNullableWithAggregatesFilter<"Question"> | string | null
     version?: IntWithAggregatesFilter<"Question"> | number
     isArchived?: BoolWithAggregatesFilter<"Question"> | boolean
+    reviewStatus?: StringWithAggregatesFilter<"Question"> | string
+    reviewNote?: StringNullableWithAggregatesFilter<"Question"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Question"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Question"> | Date | string
   }
@@ -58287,6 +61168,102 @@ export namespace Prisma {
     role?: StringWithAggregatesFilter<"SchoolLog"> | string
     entityId?: StringWithAggregatesFilter<"SchoolLog"> | string
     timestamp?: DateTimeWithAggregatesFilter<"SchoolLog"> | Date | string
+  }
+
+  export type LeaveRequestWhereInput = {
+    AND?: LeaveRequestWhereInput | LeaveRequestWhereInput[]
+    OR?: LeaveRequestWhereInput[]
+    NOT?: LeaveRequestWhereInput | LeaveRequestWhereInput[]
+    id?: StringFilter<"LeaveRequest"> | string
+    workspaceId?: StringFilter<"LeaveRequest"> | string
+    requesterId?: StringFilter<"LeaveRequest"> | string
+    requesterRole?: StringFilter<"LeaveRequest"> | string
+    startDate?: DateTimeFilter<"LeaveRequest"> | Date | string
+    endDate?: DateTimeFilter<"LeaveRequest"> | Date | string
+    reason?: StringFilter<"LeaveRequest"> | string
+    status?: StringFilter<"LeaveRequest"> | string
+    reviewedByUserId?: StringNullableFilter<"LeaveRequest"> | string | null
+    reviewNote?: StringNullableFilter<"LeaveRequest"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"LeaveRequest"> | Date | string | null
+    createdAt?: DateTimeFilter<"LeaveRequest"> | Date | string
+    Workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+    Requester?: XOR<UserScalarRelationFilter, UserWhereInput>
+    ReviewedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type LeaveRequestOrderByWithRelationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    requesterId?: SortOrder
+    requesterRole?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    reason?: SortOrder
+    status?: SortOrder
+    reviewedByUserId?: SortOrderInput | SortOrder
+    reviewNote?: SortOrderInput | SortOrder
+    reviewedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    Workspace?: WorkspaceOrderByWithRelationInput
+    Requester?: UserOrderByWithRelationInput
+    ReviewedBy?: UserOrderByWithRelationInput
+  }
+
+  export type LeaveRequestWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: LeaveRequestWhereInput | LeaveRequestWhereInput[]
+    OR?: LeaveRequestWhereInput[]
+    NOT?: LeaveRequestWhereInput | LeaveRequestWhereInput[]
+    workspaceId?: StringFilter<"LeaveRequest"> | string
+    requesterId?: StringFilter<"LeaveRequest"> | string
+    requesterRole?: StringFilter<"LeaveRequest"> | string
+    startDate?: DateTimeFilter<"LeaveRequest"> | Date | string
+    endDate?: DateTimeFilter<"LeaveRequest"> | Date | string
+    reason?: StringFilter<"LeaveRequest"> | string
+    status?: StringFilter<"LeaveRequest"> | string
+    reviewedByUserId?: StringNullableFilter<"LeaveRequest"> | string | null
+    reviewNote?: StringNullableFilter<"LeaveRequest"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"LeaveRequest"> | Date | string | null
+    createdAt?: DateTimeFilter<"LeaveRequest"> | Date | string
+    Workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+    Requester?: XOR<UserScalarRelationFilter, UserWhereInput>
+    ReviewedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type LeaveRequestOrderByWithAggregationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    requesterId?: SortOrder
+    requesterRole?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    reason?: SortOrder
+    status?: SortOrder
+    reviewedByUserId?: SortOrderInput | SortOrder
+    reviewNote?: SortOrderInput | SortOrder
+    reviewedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: LeaveRequestCountOrderByAggregateInput
+    _max?: LeaveRequestMaxOrderByAggregateInput
+    _min?: LeaveRequestMinOrderByAggregateInput
+  }
+
+  export type LeaveRequestScalarWhereWithAggregatesInput = {
+    AND?: LeaveRequestScalarWhereWithAggregatesInput | LeaveRequestScalarWhereWithAggregatesInput[]
+    OR?: LeaveRequestScalarWhereWithAggregatesInput[]
+    NOT?: LeaveRequestScalarWhereWithAggregatesInput | LeaveRequestScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LeaveRequest"> | string
+    workspaceId?: StringWithAggregatesFilter<"LeaveRequest"> | string
+    requesterId?: StringWithAggregatesFilter<"LeaveRequest"> | string
+    requesterRole?: StringWithAggregatesFilter<"LeaveRequest"> | string
+    startDate?: DateTimeWithAggregatesFilter<"LeaveRequest"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"LeaveRequest"> | Date | string
+    reason?: StringWithAggregatesFilter<"LeaveRequest"> | string
+    status?: StringWithAggregatesFilter<"LeaveRequest"> | string
+    reviewedByUserId?: StringNullableWithAggregatesFilter<"LeaveRequest"> | string | null
+    reviewNote?: StringNullableWithAggregatesFilter<"LeaveRequest"> | string | null
+    reviewedAt?: DateTimeNullableWithAggregatesFilter<"LeaveRequest"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"LeaveRequest"> | Date | string
   }
 
   export type PlatformSettingsWhereInput = {
@@ -58575,6 +61552,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -58617,6 +61597,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -58659,6 +61642,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -58701,6 +61687,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -58861,6 +61850,8 @@ export namespace Prisma {
     departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateInput = {
@@ -58889,6 +61880,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUpdateInput = {
@@ -58917,6 +61910,8 @@ export namespace Prisma {
     departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateInput = {
@@ -58945,6 +61940,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateManyInput = {
@@ -59107,6 +62104,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -59132,6 +62131,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -59151,6 +62152,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59176,6 +62179,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59198,6 +62203,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -59215,6 +62222,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59235,6 +62244,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60181,6 +63192,88 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
     actionUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CalendarEventCreateInput = {
+    id?: string
+    title: string
+    description?: string | null
+    eventType: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    createdAt?: Date | string
+    Workspace: WorkspaceCreateNestedOneWithoutCalendarEventsInput
+    CreatedBy: UserCreateNestedOneWithoutCalendarEventsInput
+  }
+
+  export type CalendarEventUncheckedCreateInput = {
+    id?: string
+    workspaceId: string
+    title: string
+    description?: string | null
+    eventType: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    createdByUserId: string
+    createdAt?: Date | string
+  }
+
+  export type CalendarEventUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    eventType?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Workspace?: WorkspaceUpdateOneRequiredWithoutCalendarEventsNestedInput
+    CreatedBy?: UserUpdateOneRequiredWithoutCalendarEventsNestedInput
+  }
+
+  export type CalendarEventUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    eventType?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CalendarEventCreateManyInput = {
+    id?: string
+    workspaceId: string
+    title: string
+    description?: string | null
+    eventType: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    createdByUserId: string
+    createdAt?: Date | string
+  }
+
+  export type CalendarEventUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    eventType?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CalendarEventUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    eventType?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdByUserId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -61422,6 +64515,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Workspace: WorkspaceCreateNestedOneWithoutQuestionsInput
@@ -61448,6 +64543,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     examQuestions?: ExamQuestionUncheckedCreateNestedManyWithoutQuestionInput
@@ -61470,6 +64567,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Workspace?: WorkspaceUpdateOneRequiredWithoutQuestionsNestedInput
@@ -61496,6 +64595,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     examQuestions?: ExamQuestionUncheckedUpdateManyWithoutQuestionNestedInput
@@ -61520,6 +64621,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -61540,6 +64643,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61562,6 +64667,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61749,6 +64856,108 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     entityId?: StringFieldUpdateOperationsInput | string
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LeaveRequestCreateInput = {
+    id?: string
+    requesterRole: string
+    startDate: Date | string
+    endDate: Date | string
+    reason: string
+    status?: string
+    reviewNote?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    Workspace: WorkspaceCreateNestedOneWithoutLeaveRequestsInput
+    Requester: UserCreateNestedOneWithoutLeaveRequestsInput
+    ReviewedBy?: UserCreateNestedOneWithoutReviewedLeaveRequestsInput
+  }
+
+  export type LeaveRequestUncheckedCreateInput = {
+    id?: string
+    workspaceId: string
+    requesterId: string
+    requesterRole: string
+    startDate: Date | string
+    endDate: Date | string
+    reason: string
+    status?: string
+    reviewedByUserId?: string | null
+    reviewNote?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type LeaveRequestUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Workspace?: WorkspaceUpdateOneRequiredWithoutLeaveRequestsNestedInput
+    Requester?: UserUpdateOneRequiredWithoutLeaveRequestsNestedInput
+    ReviewedBy?: UserUpdateOneWithoutReviewedLeaveRequestsNestedInput
+  }
+
+  export type LeaveRequestUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    requesterId?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LeaveRequestCreateManyInput = {
+    id?: string
+    workspaceId: string
+    requesterId: string
+    requesterRole: string
+    startDate: Date | string
+    endDate: Date | string
+    reason: string
+    status?: string
+    reviewedByUserId?: string | null
+    reviewNote?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type LeaveRequestUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LeaveRequestUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    requesterId?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PlatformSettingsCreateInput = {
@@ -62212,6 +65421,18 @@ export namespace Prisma {
     none?: TimetableSlotWhereInput
   }
 
+  export type LeaveRequestListRelationFilter = {
+    every?: LeaveRequestWhereInput
+    some?: LeaveRequestWhereInput
+    none?: LeaveRequestWhereInput
+  }
+
+  export type CalendarEventListRelationFilter = {
+    every?: CalendarEventWhereInput
+    some?: CalendarEventWhereInput
+    none?: CalendarEventWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -62298,6 +65519,14 @@ export namespace Prisma {
   }
 
   export type TimetableSlotOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LeaveRequestOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CalendarEventOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -62738,6 +65967,8 @@ export namespace Prisma {
     shuffleQuestions?: SortOrder
     shuffleOptions?: SortOrder
     status?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrder
     scheduledStart?: SortOrder
     scheduledEnd?: SortOrder
     createdAt?: SortOrder
@@ -62763,6 +65994,8 @@ export namespace Prisma {
     shuffleQuestions?: SortOrder
     shuffleOptions?: SortOrder
     status?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrder
     scheduledStart?: SortOrder
     scheduledEnd?: SortOrder
     createdAt?: SortOrder
@@ -62783,6 +66016,8 @@ export namespace Prisma {
     shuffleQuestions?: SortOrder
     shuffleOptions?: SortOrder
     status?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrder
     scheduledStart?: SortOrder
     scheduledEnd?: SortOrder
     createdAt?: SortOrder
@@ -63429,6 +66664,42 @@ export namespace Prisma {
     message?: SortOrder
     isRead?: SortOrder
     actionUrl?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CalendarEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    eventType?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    createdByUserId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CalendarEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    eventType?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    createdByUserId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CalendarEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    eventType?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    createdByUserId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -64087,6 +67358,8 @@ export namespace Prisma {
     explanation?: SortOrder
     version?: SortOrder
     isArchived?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64110,6 +67383,8 @@ export namespace Prisma {
     explanation?: SortOrder
     version?: SortOrder
     isArchived?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64129,6 +67404,8 @@ export namespace Prisma {
     explanation?: SortOrder
     version?: SortOrder
     isArchived?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64231,6 +67508,51 @@ export namespace Prisma {
     role?: SortOrder
     entityId?: SortOrder
     timestamp?: SortOrder
+  }
+
+  export type LeaveRequestCountOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    requesterId?: SortOrder
+    requesterRole?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    reason?: SortOrder
+    status?: SortOrder
+    reviewedByUserId?: SortOrder
+    reviewNote?: SortOrder
+    reviewedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LeaveRequestMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    requesterId?: SortOrder
+    requesterRole?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    reason?: SortOrder
+    status?: SortOrder
+    reviewedByUserId?: SortOrder
+    reviewNote?: SortOrder
+    reviewedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LeaveRequestMinOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    requesterId?: SortOrder
+    requesterRole?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    reason?: SortOrder
+    status?: SortOrder
+    reviewedByUserId?: SortOrder
+    reviewNote?: SortOrder
+    reviewedAt?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type PlatformSettingsCountOrderByAggregateInput = {
@@ -64563,6 +67885,27 @@ export namespace Prisma {
     connect?: TimetableSlotWhereUniqueInput | TimetableSlotWhereUniqueInput[]
   }
 
+  export type LeaveRequestCreateNestedManyWithoutRequesterInput = {
+    create?: XOR<LeaveRequestCreateWithoutRequesterInput, LeaveRequestUncheckedCreateWithoutRequesterInput> | LeaveRequestCreateWithoutRequesterInput[] | LeaveRequestUncheckedCreateWithoutRequesterInput[]
+    connectOrCreate?: LeaveRequestCreateOrConnectWithoutRequesterInput | LeaveRequestCreateOrConnectWithoutRequesterInput[]
+    createMany?: LeaveRequestCreateManyRequesterInputEnvelope
+    connect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+  }
+
+  export type LeaveRequestCreateNestedManyWithoutReviewedByInput = {
+    create?: XOR<LeaveRequestCreateWithoutReviewedByInput, LeaveRequestUncheckedCreateWithoutReviewedByInput> | LeaveRequestCreateWithoutReviewedByInput[] | LeaveRequestUncheckedCreateWithoutReviewedByInput[]
+    connectOrCreate?: LeaveRequestCreateOrConnectWithoutReviewedByInput | LeaveRequestCreateOrConnectWithoutReviewedByInput[]
+    createMany?: LeaveRequestCreateManyReviewedByInputEnvelope
+    connect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+  }
+
+  export type CalendarEventCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<CalendarEventCreateWithoutCreatedByInput, CalendarEventUncheckedCreateWithoutCreatedByInput> | CalendarEventCreateWithoutCreatedByInput[] | CalendarEventUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: CalendarEventCreateOrConnectWithoutCreatedByInput | CalendarEventCreateOrConnectWithoutCreatedByInput[]
+    createMany?: CalendarEventCreateManyCreatedByInputEnvelope
+    connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+  }
+
   export type AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AssessmentAttemptCreateWithoutUserInput, AssessmentAttemptUncheckedCreateWithoutUserInput> | AssessmentAttemptCreateWithoutUserInput[] | AssessmentAttemptUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutUserInput | AssessmentAttemptCreateOrConnectWithoutUserInput[]
@@ -64742,6 +68085,27 @@ export namespace Prisma {
     connectOrCreate?: TimetableSlotCreateOrConnectWithoutTeacherInput | TimetableSlotCreateOrConnectWithoutTeacherInput[]
     createMany?: TimetableSlotCreateManyTeacherInputEnvelope
     connect?: TimetableSlotWhereUniqueInput | TimetableSlotWhereUniqueInput[]
+  }
+
+  export type LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput = {
+    create?: XOR<LeaveRequestCreateWithoutRequesterInput, LeaveRequestUncheckedCreateWithoutRequesterInput> | LeaveRequestCreateWithoutRequesterInput[] | LeaveRequestUncheckedCreateWithoutRequesterInput[]
+    connectOrCreate?: LeaveRequestCreateOrConnectWithoutRequesterInput | LeaveRequestCreateOrConnectWithoutRequesterInput[]
+    createMany?: LeaveRequestCreateManyRequesterInputEnvelope
+    connect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+  }
+
+  export type LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput = {
+    create?: XOR<LeaveRequestCreateWithoutReviewedByInput, LeaveRequestUncheckedCreateWithoutReviewedByInput> | LeaveRequestCreateWithoutReviewedByInput[] | LeaveRequestUncheckedCreateWithoutReviewedByInput[]
+    connectOrCreate?: LeaveRequestCreateOrConnectWithoutReviewedByInput | LeaveRequestCreateOrConnectWithoutReviewedByInput[]
+    createMany?: LeaveRequestCreateManyReviewedByInputEnvelope
+    connect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+  }
+
+  export type CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<CalendarEventCreateWithoutCreatedByInput, CalendarEventUncheckedCreateWithoutCreatedByInput> | CalendarEventCreateWithoutCreatedByInput[] | CalendarEventUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: CalendarEventCreateOrConnectWithoutCreatedByInput | CalendarEventCreateOrConnectWithoutCreatedByInput[]
+    createMany?: CalendarEventCreateManyCreatedByInputEnvelope
+    connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -65120,6 +68484,48 @@ export namespace Prisma {
     deleteMany?: TimetableSlotScalarWhereInput | TimetableSlotScalarWhereInput[]
   }
 
+  export type LeaveRequestUpdateManyWithoutRequesterNestedInput = {
+    create?: XOR<LeaveRequestCreateWithoutRequesterInput, LeaveRequestUncheckedCreateWithoutRequesterInput> | LeaveRequestCreateWithoutRequesterInput[] | LeaveRequestUncheckedCreateWithoutRequesterInput[]
+    connectOrCreate?: LeaveRequestCreateOrConnectWithoutRequesterInput | LeaveRequestCreateOrConnectWithoutRequesterInput[]
+    upsert?: LeaveRequestUpsertWithWhereUniqueWithoutRequesterInput | LeaveRequestUpsertWithWhereUniqueWithoutRequesterInput[]
+    createMany?: LeaveRequestCreateManyRequesterInputEnvelope
+    set?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    disconnect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    delete?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    connect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    update?: LeaveRequestUpdateWithWhereUniqueWithoutRequesterInput | LeaveRequestUpdateWithWhereUniqueWithoutRequesterInput[]
+    updateMany?: LeaveRequestUpdateManyWithWhereWithoutRequesterInput | LeaveRequestUpdateManyWithWhereWithoutRequesterInput[]
+    deleteMany?: LeaveRequestScalarWhereInput | LeaveRequestScalarWhereInput[]
+  }
+
+  export type LeaveRequestUpdateManyWithoutReviewedByNestedInput = {
+    create?: XOR<LeaveRequestCreateWithoutReviewedByInput, LeaveRequestUncheckedCreateWithoutReviewedByInput> | LeaveRequestCreateWithoutReviewedByInput[] | LeaveRequestUncheckedCreateWithoutReviewedByInput[]
+    connectOrCreate?: LeaveRequestCreateOrConnectWithoutReviewedByInput | LeaveRequestCreateOrConnectWithoutReviewedByInput[]
+    upsert?: LeaveRequestUpsertWithWhereUniqueWithoutReviewedByInput | LeaveRequestUpsertWithWhereUniqueWithoutReviewedByInput[]
+    createMany?: LeaveRequestCreateManyReviewedByInputEnvelope
+    set?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    disconnect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    delete?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    connect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    update?: LeaveRequestUpdateWithWhereUniqueWithoutReviewedByInput | LeaveRequestUpdateWithWhereUniqueWithoutReviewedByInput[]
+    updateMany?: LeaveRequestUpdateManyWithWhereWithoutReviewedByInput | LeaveRequestUpdateManyWithWhereWithoutReviewedByInput[]
+    deleteMany?: LeaveRequestScalarWhereInput | LeaveRequestScalarWhereInput[]
+  }
+
+  export type CalendarEventUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<CalendarEventCreateWithoutCreatedByInput, CalendarEventUncheckedCreateWithoutCreatedByInput> | CalendarEventCreateWithoutCreatedByInput[] | CalendarEventUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: CalendarEventCreateOrConnectWithoutCreatedByInput | CalendarEventCreateOrConnectWithoutCreatedByInput[]
+    upsert?: CalendarEventUpsertWithWhereUniqueWithoutCreatedByInput | CalendarEventUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: CalendarEventCreateManyCreatedByInputEnvelope
+    set?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    disconnect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    delete?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    update?: CalendarEventUpdateWithWhereUniqueWithoutCreatedByInput | CalendarEventUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: CalendarEventUpdateManyWithWhereWithoutCreatedByInput | CalendarEventUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: CalendarEventScalarWhereInput | CalendarEventScalarWhereInput[]
+  }
+
   export type AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AssessmentAttemptCreateWithoutUserInput, AssessmentAttemptUncheckedCreateWithoutUserInput> | AssessmentAttemptCreateWithoutUserInput[] | AssessmentAttemptUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AssessmentAttemptCreateOrConnectWithoutUserInput | AssessmentAttemptCreateOrConnectWithoutUserInput[]
@@ -65480,6 +68886,48 @@ export namespace Prisma {
     deleteMany?: TimetableSlotScalarWhereInput | TimetableSlotScalarWhereInput[]
   }
 
+  export type LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput = {
+    create?: XOR<LeaveRequestCreateWithoutRequesterInput, LeaveRequestUncheckedCreateWithoutRequesterInput> | LeaveRequestCreateWithoutRequesterInput[] | LeaveRequestUncheckedCreateWithoutRequesterInput[]
+    connectOrCreate?: LeaveRequestCreateOrConnectWithoutRequesterInput | LeaveRequestCreateOrConnectWithoutRequesterInput[]
+    upsert?: LeaveRequestUpsertWithWhereUniqueWithoutRequesterInput | LeaveRequestUpsertWithWhereUniqueWithoutRequesterInput[]
+    createMany?: LeaveRequestCreateManyRequesterInputEnvelope
+    set?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    disconnect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    delete?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    connect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    update?: LeaveRequestUpdateWithWhereUniqueWithoutRequesterInput | LeaveRequestUpdateWithWhereUniqueWithoutRequesterInput[]
+    updateMany?: LeaveRequestUpdateManyWithWhereWithoutRequesterInput | LeaveRequestUpdateManyWithWhereWithoutRequesterInput[]
+    deleteMany?: LeaveRequestScalarWhereInput | LeaveRequestScalarWhereInput[]
+  }
+
+  export type LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput = {
+    create?: XOR<LeaveRequestCreateWithoutReviewedByInput, LeaveRequestUncheckedCreateWithoutReviewedByInput> | LeaveRequestCreateWithoutReviewedByInput[] | LeaveRequestUncheckedCreateWithoutReviewedByInput[]
+    connectOrCreate?: LeaveRequestCreateOrConnectWithoutReviewedByInput | LeaveRequestCreateOrConnectWithoutReviewedByInput[]
+    upsert?: LeaveRequestUpsertWithWhereUniqueWithoutReviewedByInput | LeaveRequestUpsertWithWhereUniqueWithoutReviewedByInput[]
+    createMany?: LeaveRequestCreateManyReviewedByInputEnvelope
+    set?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    disconnect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    delete?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    connect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    update?: LeaveRequestUpdateWithWhereUniqueWithoutReviewedByInput | LeaveRequestUpdateWithWhereUniqueWithoutReviewedByInput[]
+    updateMany?: LeaveRequestUpdateManyWithWhereWithoutReviewedByInput | LeaveRequestUpdateManyWithWhereWithoutReviewedByInput[]
+    deleteMany?: LeaveRequestScalarWhereInput | LeaveRequestScalarWhereInput[]
+  }
+
+  export type CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<CalendarEventCreateWithoutCreatedByInput, CalendarEventUncheckedCreateWithoutCreatedByInput> | CalendarEventCreateWithoutCreatedByInput[] | CalendarEventUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: CalendarEventCreateOrConnectWithoutCreatedByInput | CalendarEventCreateOrConnectWithoutCreatedByInput[]
+    upsert?: CalendarEventUpsertWithWhereUniqueWithoutCreatedByInput | CalendarEventUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: CalendarEventCreateManyCreatedByInputEnvelope
+    set?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    disconnect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    delete?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    update?: CalendarEventUpdateWithWhereUniqueWithoutCreatedByInput | CalendarEventUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: CalendarEventUpdateManyWithWhereWithoutCreatedByInput | CalendarEventUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: CalendarEventScalarWhereInput | CalendarEventScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -65576,6 +69024,20 @@ export namespace Prisma {
     connect?: TimetableSlotWhereUniqueInput | TimetableSlotWhereUniqueInput[]
   }
 
+  export type LeaveRequestCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<LeaveRequestCreateWithoutWorkspaceInput, LeaveRequestUncheckedCreateWithoutWorkspaceInput> | LeaveRequestCreateWithoutWorkspaceInput[] | LeaveRequestUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: LeaveRequestCreateOrConnectWithoutWorkspaceInput | LeaveRequestCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: LeaveRequestCreateManyWorkspaceInputEnvelope
+    connect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+  }
+
+  export type CalendarEventCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<CalendarEventCreateWithoutWorkspaceInput, CalendarEventUncheckedCreateWithoutWorkspaceInput> | CalendarEventCreateWithoutWorkspaceInput[] | CalendarEventUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: CalendarEventCreateOrConnectWithoutWorkspaceInput | CalendarEventCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: CalendarEventCreateManyWorkspaceInputEnvelope
+    connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+  }
+
   export type WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput = {
     create?: XOR<WorkspaceMembershipCreateWithoutWorkspaceInput, WorkspaceMembershipUncheckedCreateWithoutWorkspaceInput> | WorkspaceMembershipCreateWithoutWorkspaceInput[] | WorkspaceMembershipUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMembershipCreateOrConnectWithoutWorkspaceInput | WorkspaceMembershipCreateOrConnectWithoutWorkspaceInput[]
@@ -65658,6 +69120,20 @@ export namespace Prisma {
     connectOrCreate?: TimetableSlotCreateOrConnectWithoutWorkspaceInput | TimetableSlotCreateOrConnectWithoutWorkspaceInput[]
     createMany?: TimetableSlotCreateManyWorkspaceInputEnvelope
     connect?: TimetableSlotWhereUniqueInput | TimetableSlotWhereUniqueInput[]
+  }
+
+  export type LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<LeaveRequestCreateWithoutWorkspaceInput, LeaveRequestUncheckedCreateWithoutWorkspaceInput> | LeaveRequestCreateWithoutWorkspaceInput[] | LeaveRequestUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: LeaveRequestCreateOrConnectWithoutWorkspaceInput | LeaveRequestCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: LeaveRequestCreateManyWorkspaceInputEnvelope
+    connect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+  }
+
+  export type CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<CalendarEventCreateWithoutWorkspaceInput, CalendarEventUncheckedCreateWithoutWorkspaceInput> | CalendarEventCreateWithoutWorkspaceInput[] | CalendarEventUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: CalendarEventCreateOrConnectWithoutWorkspaceInput | CalendarEventCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: CalendarEventCreateManyWorkspaceInputEnvelope
+    connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
   }
 
   export type WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput = {
@@ -65828,6 +69304,34 @@ export namespace Prisma {
     deleteMany?: TimetableSlotScalarWhereInput | TimetableSlotScalarWhereInput[]
   }
 
+  export type LeaveRequestUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<LeaveRequestCreateWithoutWorkspaceInput, LeaveRequestUncheckedCreateWithoutWorkspaceInput> | LeaveRequestCreateWithoutWorkspaceInput[] | LeaveRequestUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: LeaveRequestCreateOrConnectWithoutWorkspaceInput | LeaveRequestCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: LeaveRequestUpsertWithWhereUniqueWithoutWorkspaceInput | LeaveRequestUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: LeaveRequestCreateManyWorkspaceInputEnvelope
+    set?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    disconnect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    delete?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    connect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    update?: LeaveRequestUpdateWithWhereUniqueWithoutWorkspaceInput | LeaveRequestUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: LeaveRequestUpdateManyWithWhereWithoutWorkspaceInput | LeaveRequestUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: LeaveRequestScalarWhereInput | LeaveRequestScalarWhereInput[]
+  }
+
+  export type CalendarEventUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<CalendarEventCreateWithoutWorkspaceInput, CalendarEventUncheckedCreateWithoutWorkspaceInput> | CalendarEventCreateWithoutWorkspaceInput[] | CalendarEventUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: CalendarEventCreateOrConnectWithoutWorkspaceInput | CalendarEventCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: CalendarEventUpsertWithWhereUniqueWithoutWorkspaceInput | CalendarEventUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: CalendarEventCreateManyWorkspaceInputEnvelope
+    set?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    disconnect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    delete?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    update?: CalendarEventUpdateWithWhereUniqueWithoutWorkspaceInput | CalendarEventUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: CalendarEventUpdateManyWithWhereWithoutWorkspaceInput | CalendarEventUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: CalendarEventScalarWhereInput | CalendarEventScalarWhereInput[]
+  }
+
   export type WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput = {
     create?: XOR<WorkspaceMembershipCreateWithoutWorkspaceInput, WorkspaceMembershipUncheckedCreateWithoutWorkspaceInput> | WorkspaceMembershipCreateWithoutWorkspaceInput[] | WorkspaceMembershipUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMembershipCreateOrConnectWithoutWorkspaceInput | WorkspaceMembershipCreateOrConnectWithoutWorkspaceInput[]
@@ -65994,6 +69498,34 @@ export namespace Prisma {
     update?: TimetableSlotUpdateWithWhereUniqueWithoutWorkspaceInput | TimetableSlotUpdateWithWhereUniqueWithoutWorkspaceInput[]
     updateMany?: TimetableSlotUpdateManyWithWhereWithoutWorkspaceInput | TimetableSlotUpdateManyWithWhereWithoutWorkspaceInput[]
     deleteMany?: TimetableSlotScalarWhereInput | TimetableSlotScalarWhereInput[]
+  }
+
+  export type LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<LeaveRequestCreateWithoutWorkspaceInput, LeaveRequestUncheckedCreateWithoutWorkspaceInput> | LeaveRequestCreateWithoutWorkspaceInput[] | LeaveRequestUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: LeaveRequestCreateOrConnectWithoutWorkspaceInput | LeaveRequestCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: LeaveRequestUpsertWithWhereUniqueWithoutWorkspaceInput | LeaveRequestUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: LeaveRequestCreateManyWorkspaceInputEnvelope
+    set?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    disconnect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    delete?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    connect?: LeaveRequestWhereUniqueInput | LeaveRequestWhereUniqueInput[]
+    update?: LeaveRequestUpdateWithWhereUniqueWithoutWorkspaceInput | LeaveRequestUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: LeaveRequestUpdateManyWithWhereWithoutWorkspaceInput | LeaveRequestUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: LeaveRequestScalarWhereInput | LeaveRequestScalarWhereInput[]
+  }
+
+  export type CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<CalendarEventCreateWithoutWorkspaceInput, CalendarEventUncheckedCreateWithoutWorkspaceInput> | CalendarEventCreateWithoutWorkspaceInput[] | CalendarEventUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: CalendarEventCreateOrConnectWithoutWorkspaceInput | CalendarEventCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: CalendarEventUpsertWithWhereUniqueWithoutWorkspaceInput | CalendarEventUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: CalendarEventCreateManyWorkspaceInputEnvelope
+    set?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    disconnect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    delete?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+    update?: CalendarEventUpdateWithWhereUniqueWithoutWorkspaceInput | CalendarEventUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: CalendarEventUpdateManyWithWhereWithoutWorkspaceInput | CalendarEventUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: CalendarEventScalarWhereInput | CalendarEventScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutMembershipsInput = {
@@ -66818,6 +70350,34 @@ export namespace Prisma {
     delete?: WorkspaceWhereInput | boolean
     connect?: WorkspaceWhereUniqueInput
     update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutNotificationsInput, WorkspaceUpdateWithoutNotificationsInput>, WorkspaceUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type WorkspaceCreateNestedOneWithoutCalendarEventsInput = {
+    create?: XOR<WorkspaceCreateWithoutCalendarEventsInput, WorkspaceUncheckedCreateWithoutCalendarEventsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutCalendarEventsInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutCalendarEventsInput = {
+    create?: XOR<UserCreateWithoutCalendarEventsInput, UserUncheckedCreateWithoutCalendarEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCalendarEventsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutCalendarEventsNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutCalendarEventsInput, WorkspaceUncheckedCreateWithoutCalendarEventsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutCalendarEventsInput
+    upsert?: WorkspaceUpsertWithoutCalendarEventsInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutCalendarEventsInput, WorkspaceUpdateWithoutCalendarEventsInput>, WorkspaceUncheckedUpdateWithoutCalendarEventsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutCalendarEventsNestedInput = {
+    create?: XOR<UserCreateWithoutCalendarEventsInput, UserUncheckedCreateWithoutCalendarEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCalendarEventsInput
+    upsert?: UserUpsertWithoutCalendarEventsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCalendarEventsInput, UserUpdateWithoutCalendarEventsInput>, UserUncheckedUpdateWithoutCalendarEventsInput>
   }
 
   export type UserCreateNestedOneWithoutStudentLinksInput = {
@@ -68135,6 +71695,50 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSchoolLogsInput, UserUpdateWithoutSchoolLogsInput>, UserUncheckedUpdateWithoutSchoolLogsInput>
   }
 
+  export type WorkspaceCreateNestedOneWithoutLeaveRequestsInput = {
+    create?: XOR<WorkspaceCreateWithoutLeaveRequestsInput, WorkspaceUncheckedCreateWithoutLeaveRequestsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutLeaveRequestsInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutLeaveRequestsInput = {
+    create?: XOR<UserCreateWithoutLeaveRequestsInput, UserUncheckedCreateWithoutLeaveRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLeaveRequestsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutReviewedLeaveRequestsInput = {
+    create?: XOR<UserCreateWithoutReviewedLeaveRequestsInput, UserUncheckedCreateWithoutReviewedLeaveRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewedLeaveRequestsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutLeaveRequestsNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutLeaveRequestsInput, WorkspaceUncheckedCreateWithoutLeaveRequestsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutLeaveRequestsInput
+    upsert?: WorkspaceUpsertWithoutLeaveRequestsInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutLeaveRequestsInput, WorkspaceUpdateWithoutLeaveRequestsInput>, WorkspaceUncheckedUpdateWithoutLeaveRequestsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutLeaveRequestsNestedInput = {
+    create?: XOR<UserCreateWithoutLeaveRequestsInput, UserUncheckedCreateWithoutLeaveRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLeaveRequestsInput
+    upsert?: UserUpsertWithoutLeaveRequestsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLeaveRequestsInput, UserUpdateWithoutLeaveRequestsInput>, UserUncheckedUpdateWithoutLeaveRequestsInput>
+  }
+
+  export type UserUpdateOneWithoutReviewedLeaveRequestsNestedInput = {
+    create?: XOR<UserCreateWithoutReviewedLeaveRequestsInput, UserUncheckedCreateWithoutReviewedLeaveRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewedLeaveRequestsInput
+    upsert?: UserUpsertWithoutReviewedLeaveRequestsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewedLeaveRequestsInput, UserUpdateWithoutReviewedLeaveRequestsInput>, UserUncheckedUpdateWithoutReviewedLeaveRequestsInput>
+  }
+
   export type UserCreateNestedOneWithoutResultsInput = {
     create?: XOR<UserCreateWithoutResultsInput, UserUncheckedCreateWithoutResultsInput>
     connectOrCreate?: UserCreateOrConnectWithoutResultsInput
@@ -69051,6 +72655,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Workspace: WorkspaceCreateNestedOneWithoutQuestionsInput
@@ -69075,6 +72681,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     examQuestions?: ExamQuestionUncheckedCreateNestedManyWithoutQuestionInput
@@ -69102,6 +72710,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -69125,6 +72735,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -69354,6 +72966,114 @@ export namespace Prisma {
 
   export type TimetableSlotCreateManyTeacherInputEnvelope = {
     data: TimetableSlotCreateManyTeacherInput | TimetableSlotCreateManyTeacherInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LeaveRequestCreateWithoutRequesterInput = {
+    id?: string
+    requesterRole: string
+    startDate: Date | string
+    endDate: Date | string
+    reason: string
+    status?: string
+    reviewNote?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    Workspace: WorkspaceCreateNestedOneWithoutLeaveRequestsInput
+    ReviewedBy?: UserCreateNestedOneWithoutReviewedLeaveRequestsInput
+  }
+
+  export type LeaveRequestUncheckedCreateWithoutRequesterInput = {
+    id?: string
+    workspaceId: string
+    requesterRole: string
+    startDate: Date | string
+    endDate: Date | string
+    reason: string
+    status?: string
+    reviewedByUserId?: string | null
+    reviewNote?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type LeaveRequestCreateOrConnectWithoutRequesterInput = {
+    where: LeaveRequestWhereUniqueInput
+    create: XOR<LeaveRequestCreateWithoutRequesterInput, LeaveRequestUncheckedCreateWithoutRequesterInput>
+  }
+
+  export type LeaveRequestCreateManyRequesterInputEnvelope = {
+    data: LeaveRequestCreateManyRequesterInput | LeaveRequestCreateManyRequesterInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LeaveRequestCreateWithoutReviewedByInput = {
+    id?: string
+    requesterRole: string
+    startDate: Date | string
+    endDate: Date | string
+    reason: string
+    status?: string
+    reviewNote?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    Workspace: WorkspaceCreateNestedOneWithoutLeaveRequestsInput
+    Requester: UserCreateNestedOneWithoutLeaveRequestsInput
+  }
+
+  export type LeaveRequestUncheckedCreateWithoutReviewedByInput = {
+    id?: string
+    workspaceId: string
+    requesterId: string
+    requesterRole: string
+    startDate: Date | string
+    endDate: Date | string
+    reason: string
+    status?: string
+    reviewNote?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type LeaveRequestCreateOrConnectWithoutReviewedByInput = {
+    where: LeaveRequestWhereUniqueInput
+    create: XOR<LeaveRequestCreateWithoutReviewedByInput, LeaveRequestUncheckedCreateWithoutReviewedByInput>
+  }
+
+  export type LeaveRequestCreateManyReviewedByInputEnvelope = {
+    data: LeaveRequestCreateManyReviewedByInput | LeaveRequestCreateManyReviewedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CalendarEventCreateWithoutCreatedByInput = {
+    id?: string
+    title: string
+    description?: string | null
+    eventType: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    createdAt?: Date | string
+    Workspace: WorkspaceCreateNestedOneWithoutCalendarEventsInput
+  }
+
+  export type CalendarEventUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    workspaceId: string
+    title: string
+    description?: string | null
+    eventType: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type CalendarEventCreateOrConnectWithoutCreatedByInput = {
+    where: CalendarEventWhereUniqueInput
+    create: XOR<CalendarEventCreateWithoutCreatedByInput, CalendarEventUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type CalendarEventCreateManyCreatedByInputEnvelope = {
+    data: CalendarEventCreateManyCreatedByInput | CalendarEventCreateManyCreatedByInput[]
     skipDuplicates?: boolean
   }
 
@@ -69851,6 +73571,8 @@ export namespace Prisma {
     explanation?: StringNullableFilter<"Question"> | string | null
     version?: IntFilter<"Question"> | number
     isArchived?: BoolFilter<"Question"> | boolean
+    reviewStatus?: StringFilter<"Question"> | string
+    reviewNote?: StringNullableFilter<"Question"> | string | null
     createdAt?: DateTimeFilter<"Question"> | Date | string
     updatedAt?: DateTimeFilter<"Question"> | Date | string
   }
@@ -69888,6 +73610,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFilter<"Exam"> | boolean
     shuffleOptions?: BoolFilter<"Exam"> | boolean
     status?: StringFilter<"Exam"> | string
+    reviewStatus?: StringFilter<"Exam"> | string
+    reviewNote?: StringNullableFilter<"Exam"> | string | null
     scheduledStart?: DateTimeNullableFilter<"Exam"> | Date | string | null
     scheduledEnd?: DateTimeNullableFilter<"Exam"> | Date | string | null
     createdAt?: DateTimeFilter<"Exam"> | Date | string
@@ -70105,6 +73829,87 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"TimetableSlot"> | Date | string
   }
 
+  export type LeaveRequestUpsertWithWhereUniqueWithoutRequesterInput = {
+    where: LeaveRequestWhereUniqueInput
+    update: XOR<LeaveRequestUpdateWithoutRequesterInput, LeaveRequestUncheckedUpdateWithoutRequesterInput>
+    create: XOR<LeaveRequestCreateWithoutRequesterInput, LeaveRequestUncheckedCreateWithoutRequesterInput>
+  }
+
+  export type LeaveRequestUpdateWithWhereUniqueWithoutRequesterInput = {
+    where: LeaveRequestWhereUniqueInput
+    data: XOR<LeaveRequestUpdateWithoutRequesterInput, LeaveRequestUncheckedUpdateWithoutRequesterInput>
+  }
+
+  export type LeaveRequestUpdateManyWithWhereWithoutRequesterInput = {
+    where: LeaveRequestScalarWhereInput
+    data: XOR<LeaveRequestUpdateManyMutationInput, LeaveRequestUncheckedUpdateManyWithoutRequesterInput>
+  }
+
+  export type LeaveRequestScalarWhereInput = {
+    AND?: LeaveRequestScalarWhereInput | LeaveRequestScalarWhereInput[]
+    OR?: LeaveRequestScalarWhereInput[]
+    NOT?: LeaveRequestScalarWhereInput | LeaveRequestScalarWhereInput[]
+    id?: StringFilter<"LeaveRequest"> | string
+    workspaceId?: StringFilter<"LeaveRequest"> | string
+    requesterId?: StringFilter<"LeaveRequest"> | string
+    requesterRole?: StringFilter<"LeaveRequest"> | string
+    startDate?: DateTimeFilter<"LeaveRequest"> | Date | string
+    endDate?: DateTimeFilter<"LeaveRequest"> | Date | string
+    reason?: StringFilter<"LeaveRequest"> | string
+    status?: StringFilter<"LeaveRequest"> | string
+    reviewedByUserId?: StringNullableFilter<"LeaveRequest"> | string | null
+    reviewNote?: StringNullableFilter<"LeaveRequest"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"LeaveRequest"> | Date | string | null
+    createdAt?: DateTimeFilter<"LeaveRequest"> | Date | string
+  }
+
+  export type LeaveRequestUpsertWithWhereUniqueWithoutReviewedByInput = {
+    where: LeaveRequestWhereUniqueInput
+    update: XOR<LeaveRequestUpdateWithoutReviewedByInput, LeaveRequestUncheckedUpdateWithoutReviewedByInput>
+    create: XOR<LeaveRequestCreateWithoutReviewedByInput, LeaveRequestUncheckedCreateWithoutReviewedByInput>
+  }
+
+  export type LeaveRequestUpdateWithWhereUniqueWithoutReviewedByInput = {
+    where: LeaveRequestWhereUniqueInput
+    data: XOR<LeaveRequestUpdateWithoutReviewedByInput, LeaveRequestUncheckedUpdateWithoutReviewedByInput>
+  }
+
+  export type LeaveRequestUpdateManyWithWhereWithoutReviewedByInput = {
+    where: LeaveRequestScalarWhereInput
+    data: XOR<LeaveRequestUpdateManyMutationInput, LeaveRequestUncheckedUpdateManyWithoutReviewedByInput>
+  }
+
+  export type CalendarEventUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: CalendarEventWhereUniqueInput
+    update: XOR<CalendarEventUpdateWithoutCreatedByInput, CalendarEventUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<CalendarEventCreateWithoutCreatedByInput, CalendarEventUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type CalendarEventUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: CalendarEventWhereUniqueInput
+    data: XOR<CalendarEventUpdateWithoutCreatedByInput, CalendarEventUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type CalendarEventUpdateManyWithWhereWithoutCreatedByInput = {
+    where: CalendarEventScalarWhereInput
+    data: XOR<CalendarEventUpdateManyMutationInput, CalendarEventUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type CalendarEventScalarWhereInput = {
+    AND?: CalendarEventScalarWhereInput | CalendarEventScalarWhereInput[]
+    OR?: CalendarEventScalarWhereInput[]
+    NOT?: CalendarEventScalarWhereInput | CalendarEventScalarWhereInput[]
+    id?: StringFilter<"CalendarEvent"> | string
+    workspaceId?: StringFilter<"CalendarEvent"> | string
+    title?: StringFilter<"CalendarEvent"> | string
+    description?: StringNullableFilter<"CalendarEvent"> | string | null
+    eventType?: StringFilter<"CalendarEvent"> | string
+    startDate?: DateTimeFilter<"CalendarEvent"> | Date | string
+    endDate?: DateTimeNullableFilter<"CalendarEvent"> | Date | string | null
+    createdByUserId?: StringFilter<"CalendarEvent"> | string
+    createdAt?: DateTimeFilter<"CalendarEvent"> | Date | string
+  }
+
   export type WorkspaceMembershipCreateWithoutWorkspaceInput = {
     id?: string
     role?: string
@@ -70319,6 +74124,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     CreatedBy: UserCreateNestedOneWithoutQuestionsInput
@@ -70343,6 +74150,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     examQuestions?: ExamQuestionUncheckedCreateNestedManyWithoutQuestionInput
@@ -70370,6 +74179,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -70393,6 +74204,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -70528,6 +74341,76 @@ export namespace Prisma {
 
   export type TimetableSlotCreateManyWorkspaceInputEnvelope = {
     data: TimetableSlotCreateManyWorkspaceInput | TimetableSlotCreateManyWorkspaceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LeaveRequestCreateWithoutWorkspaceInput = {
+    id?: string
+    requesterRole: string
+    startDate: Date | string
+    endDate: Date | string
+    reason: string
+    status?: string
+    reviewNote?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    Requester: UserCreateNestedOneWithoutLeaveRequestsInput
+    ReviewedBy?: UserCreateNestedOneWithoutReviewedLeaveRequestsInput
+  }
+
+  export type LeaveRequestUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    requesterId: string
+    requesterRole: string
+    startDate: Date | string
+    endDate: Date | string
+    reason: string
+    status?: string
+    reviewedByUserId?: string | null
+    reviewNote?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type LeaveRequestCreateOrConnectWithoutWorkspaceInput = {
+    where: LeaveRequestWhereUniqueInput
+    create: XOR<LeaveRequestCreateWithoutWorkspaceInput, LeaveRequestUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type LeaveRequestCreateManyWorkspaceInputEnvelope = {
+    data: LeaveRequestCreateManyWorkspaceInput | LeaveRequestCreateManyWorkspaceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CalendarEventCreateWithoutWorkspaceInput = {
+    id?: string
+    title: string
+    description?: string | null
+    eventType: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    createdAt?: Date | string
+    CreatedBy: UserCreateNestedOneWithoutCalendarEventsInput
+  }
+
+  export type CalendarEventUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    title: string
+    description?: string | null
+    eventType: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    createdByUserId: string
+    createdAt?: Date | string
+  }
+
+  export type CalendarEventCreateOrConnectWithoutWorkspaceInput = {
+    where: CalendarEventWhereUniqueInput
+    create: XOR<CalendarEventCreateWithoutWorkspaceInput, CalendarEventUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type CalendarEventCreateManyWorkspaceInputEnvelope = {
+    data: CalendarEventCreateManyWorkspaceInput | CalendarEventCreateManyWorkspaceInput[]
     skipDuplicates?: boolean
   }
 
@@ -70798,6 +74681,38 @@ export namespace Prisma {
     data: XOR<TimetableSlotUpdateManyMutationInput, TimetableSlotUncheckedUpdateManyWithoutWorkspaceInput>
   }
 
+  export type LeaveRequestUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: LeaveRequestWhereUniqueInput
+    update: XOR<LeaveRequestUpdateWithoutWorkspaceInput, LeaveRequestUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<LeaveRequestCreateWithoutWorkspaceInput, LeaveRequestUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type LeaveRequestUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: LeaveRequestWhereUniqueInput
+    data: XOR<LeaveRequestUpdateWithoutWorkspaceInput, LeaveRequestUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type LeaveRequestUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: LeaveRequestScalarWhereInput
+    data: XOR<LeaveRequestUpdateManyMutationInput, LeaveRequestUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
+  export type CalendarEventUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: CalendarEventWhereUniqueInput
+    update: XOR<CalendarEventUpdateWithoutWorkspaceInput, CalendarEventUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<CalendarEventCreateWithoutWorkspaceInput, CalendarEventUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type CalendarEventUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: CalendarEventWhereUniqueInput
+    data: XOR<CalendarEventUpdateWithoutWorkspaceInput, CalendarEventUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type CalendarEventUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: CalendarEventScalarWhereInput
+    data: XOR<CalendarEventUpdateManyMutationInput, CalendarEventUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
   export type UserCreateWithoutMembershipsInput = {
     id: string
     username?: string | null
@@ -70837,6 +74752,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -70878,6 +74796,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -70910,6 +74831,8 @@ export namespace Prisma {
     departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutMembershipsInput = {
@@ -70937,6 +74860,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutMembershipsInput = {
@@ -70994,6 +74919,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -71035,6 +74963,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type WorkspaceUpsertWithoutMembershipsInput = {
@@ -71073,6 +75004,8 @@ export namespace Prisma {
     departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutMembershipsInput = {
@@ -71100,6 +75033,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserCreateWithoutStudentProfilesInput = {
@@ -71141,6 +75076,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutStudentProfilesInput = {
@@ -71182,6 +75120,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutStudentProfilesInput = {
@@ -71214,6 +75155,8 @@ export namespace Prisma {
     departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutStudentProfilesInput = {
@@ -71241,6 +75184,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutStudentProfilesInput = {
@@ -71298,6 +75243,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStudentProfilesInput = {
@@ -71339,6 +75287,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type WorkspaceUpsertWithoutStudentProfilesInput = {
@@ -71377,6 +75328,8 @@ export namespace Prisma {
     departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutStudentProfilesInput = {
@@ -71404,6 +75357,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateWithoutExamsInput = {
@@ -71431,6 +75386,8 @@ export namespace Prisma {
     departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutExamsInput = {
@@ -71458,6 +75415,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutExamsInput = {
@@ -71537,6 +75496,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutExamsInput = {
@@ -71578,6 +75540,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutExamsInput = {
@@ -71687,6 +75652,8 @@ export namespace Prisma {
     departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutExamsInput = {
@@ -71714,6 +75681,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ClassUpsertWithoutExamsInput = {
@@ -71805,6 +75774,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutExamsInput = {
@@ -71846,6 +75818,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ExamQuestionUpsertWithWhereUniqueWithoutExamInput = {
@@ -71903,6 +75878,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -71927,6 +75904,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -71955,6 +75934,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Workspace: WorkspaceCreateNestedOneWithoutQuestionsInput
@@ -71980,6 +75961,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     examAnswers?: ExamAnswerUncheckedCreateNestedManyWithoutQuestionInput
@@ -72012,6 +75995,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -72036,6 +76021,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -72070,6 +76057,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Workspace?: WorkspaceUpdateOneRequiredWithoutQuestionsNestedInput
@@ -72095,6 +76084,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     examAnswers?: ExamAnswerUncheckedUpdateManyWithoutQuestionNestedInput
@@ -72111,6 +76102,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -72135,6 +76128,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -72186,6 +76181,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutExamAttemptsInput = {
@@ -72227,6 +76225,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutExamAttemptsInput = {
@@ -72286,6 +76287,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -72310,6 +76313,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -72367,6 +76372,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutExamAttemptsInput = {
@@ -72408,6 +76416,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ExamAnswerUpsertWithWhereUniqueWithoutAttemptInput = {
@@ -72491,6 +76502,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Workspace: WorkspaceCreateNestedOneWithoutQuestionsInput
@@ -72516,6 +76529,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     examQuestions?: ExamQuestionUncheckedCreateNestedManyWithoutQuestionInput
@@ -72594,6 +76609,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Workspace?: WorkspaceUpdateOneRequiredWithoutQuestionsNestedInput
@@ -72619,6 +76636,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     examQuestions?: ExamQuestionUncheckedUpdateManyWithoutQuestionNestedInput
@@ -72726,6 +76745,8 @@ export namespace Prisma {
     departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutAssignmentsInput = {
@@ -72753,6 +76774,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutAssignmentsInput = {
@@ -72869,6 +76892,8 @@ export namespace Prisma {
     departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutAssignmentsInput = {
@@ -72896,6 +76921,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type AssessmentAttemptUpsertWithWhereUniqueWithoutAssignmentInput = {
@@ -72953,6 +76980,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutStudentInput = {
@@ -72994,6 +77024,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutStudentInput = {
@@ -73095,6 +77128,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStudentInput = {
@@ -73136,6 +77172,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type AssessmentAttemptUpsertWithWhereUniqueWithoutStudentInput = {
@@ -73253,6 +77292,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAttemptsInput = {
@@ -73294,6 +77336,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAttemptsInput = {
@@ -73443,6 +77488,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttemptsInput = {
@@ -73484,6 +77532,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type AssessmentAssignmentUpsertWithoutAttemptsInput = {
@@ -73711,6 +77762,8 @@ export namespace Prisma {
     departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutConversationsInput = {
@@ -73738,6 +77791,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutConversationsInput = {
@@ -73829,6 +77884,8 @@ export namespace Prisma {
     departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutConversationsInput = {
@@ -73856,6 +77913,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ConversationParticipantUpsertWithWhereUniqueWithoutConversationInput = {
@@ -73950,6 +78009,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutConversationLinksInput = {
@@ -73991,6 +78053,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutConversationLinksInput = {
@@ -74075,6 +78140,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutConversationLinksInput = {
@@ -74116,6 +78184,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ConversationCreateWithoutMessagesInput = {
@@ -74178,6 +78249,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -74219,6 +78293,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -74303,6 +78380,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -74344,6 +78424,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type WorkspaceCreateWithoutNotificationsInput = {
@@ -74371,6 +78454,8 @@ export namespace Prisma {
     departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutNotificationsInput = {
@@ -74398,6 +78483,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutNotificationsInput = {
@@ -74441,6 +78528,8 @@ export namespace Prisma {
     departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutNotificationsInput = {
@@ -74468,6 +78557,332 @@ export namespace Prisma {
     departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceCreateWithoutCalendarEventsInput = {
+    id: string
+    name: string
+    createdBy?: string | null
+    principalId?: string | null
+    status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
+    createdAt?: Date | string
+    memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
+    studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
+    assignments?: AssessmentAssignmentCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
+    classes?: ClassCreateNestedManyWithoutWorkspaceInput
+    materials?: MaterialCreateNestedManyWithoutWorkspaceInput
+    questions?: QuestionCreateNestedManyWithoutWorkspaceInput
+    exams?: ExamCreateNestedManyWithoutWorkspaceInput
+    conversations?: ConversationCreateNestedManyWithoutWorkspaceInput
+    departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
+    subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
+    timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutCalendarEventsInput = {
+    id: string
+    name: string
+    createdBy?: string | null
+    principalId?: string | null
+    status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
+    createdAt?: Date | string
+    memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
+    assignments?: AssessmentAssignmentUncheckedCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
+    classes?: ClassUncheckedCreateNestedManyWithoutWorkspaceInput
+    materials?: MaterialUncheckedCreateNestedManyWithoutWorkspaceInput
+    questions?: QuestionUncheckedCreateNestedManyWithoutWorkspaceInput
+    exams?: ExamUncheckedCreateNestedManyWithoutWorkspaceInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutWorkspaceInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
+    subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
+    timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutCalendarEventsInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutCalendarEventsInput, WorkspaceUncheckedCreateWithoutCalendarEventsInput>
+  }
+
+  export type UserCreateWithoutCalendarEventsInput = {
+    id: string
+    username?: string | null
+    name: string
+    email: string
+    passwordHash?: string | null
+    role?: string
+    isActive?: boolean
+    status?: string
+    workspaceId?: string | null
+    mode?: string | null
+    firstLogin?: boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
+    memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
+    studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
+    parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
+    studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutUserInput
+    classTeachers?: ClassTeacherCreateNestedManyWithoutTeacherInput
+    classStudents?: ClassStudentCreateNestedManyWithoutStudentInput
+    attendances?: AttendanceCreateNestedManyWithoutStudentInput
+    markedAttendances?: AttendanceCreateNestedManyWithoutMarkedByInput
+    updatedAttendances?: AttendanceCreateNestedManyWithoutUpdatedByInput
+    schoolAssignments?: AssignmentCreateNestedManyWithoutCreatorInput
+    feedbacks?: AssignmentFeedbackCreateNestedManyWithoutCreatorInput
+    submissions?: AssignmentSubmissionCreateNestedManyWithoutStudentInput
+    reviewedSubmissions?: AssignmentSubmissionCreateNestedManyWithoutReviewedByInput
+    rubrics?: RubricCreateNestedManyWithoutCreatedByInput
+    materials?: MaterialCreateNestedManyWithoutUploadedByInput
+    questions?: QuestionCreateNestedManyWithoutCreatedByInput
+    exams?: ExamCreateNestedManyWithoutCreatedByInput
+    examAttempts?: ExamAttemptCreateNestedManyWithoutStudentInput
+    conversationLinks?: ConversationParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    schoolLogs?: SchoolLogCreateNestedManyWithoutUserInput
+    results?: ResultCreateNestedManyWithoutStudentInput
+    teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
+    timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+  }
+
+  export type UserUncheckedCreateWithoutCalendarEventsInput = {
+    id: string
+    username?: string | null
+    name: string
+    email: string
+    passwordHash?: string | null
+    role?: string
+    isActive?: boolean
+    status?: string
+    workspaceId?: string | null
+    mode?: string | null
+    firstLogin?: boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
+    memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
+    studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
+    parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutUserInput
+    classTeachers?: ClassTeacherUncheckedCreateNestedManyWithoutTeacherInput
+    classStudents?: ClassStudentUncheckedCreateNestedManyWithoutStudentInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutStudentInput
+    markedAttendances?: AttendanceUncheckedCreateNestedManyWithoutMarkedByInput
+    updatedAttendances?: AttendanceUncheckedCreateNestedManyWithoutUpdatedByInput
+    schoolAssignments?: AssignmentUncheckedCreateNestedManyWithoutCreatorInput
+    feedbacks?: AssignmentFeedbackUncheckedCreateNestedManyWithoutCreatorInput
+    submissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+    reviewedSubmissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+    rubrics?: RubricUncheckedCreateNestedManyWithoutCreatedByInput
+    materials?: MaterialUncheckedCreateNestedManyWithoutUploadedByInput
+    questions?: QuestionUncheckedCreateNestedManyWithoutCreatedByInput
+    exams?: ExamUncheckedCreateNestedManyWithoutCreatedByInput
+    examAttempts?: ExamAttemptUncheckedCreateNestedManyWithoutStudentInput
+    conversationLinks?: ConversationParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    schoolLogs?: SchoolLogUncheckedCreateNestedManyWithoutUserInput
+    results?: ResultUncheckedCreateNestedManyWithoutStudentInput
+    teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
+    timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+  }
+
+  export type UserCreateOrConnectWithoutCalendarEventsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCalendarEventsInput, UserUncheckedCreateWithoutCalendarEventsInput>
+  }
+
+  export type WorkspaceUpsertWithoutCalendarEventsInput = {
+    update: XOR<WorkspaceUpdateWithoutCalendarEventsInput, WorkspaceUncheckedUpdateWithoutCalendarEventsInput>
+    create: XOR<WorkspaceCreateWithoutCalendarEventsInput, WorkspaceUncheckedCreateWithoutCalendarEventsInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutCalendarEventsInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutCalendarEventsInput, WorkspaceUncheckedUpdateWithoutCalendarEventsInput>
+  }
+
+  export type WorkspaceUpdateWithoutCalendarEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    principalId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
+    studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
+    assignments?: AssessmentAssignmentUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
+    classes?: ClassUpdateManyWithoutWorkspaceNestedInput
+    materials?: MaterialUpdateManyWithoutWorkspaceNestedInput
+    questions?: QuestionUpdateManyWithoutWorkspaceNestedInput
+    exams?: ExamUpdateManyWithoutWorkspaceNestedInput
+    conversations?: ConversationUpdateManyWithoutWorkspaceNestedInput
+    departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
+    subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
+    timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutCalendarEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    principalId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
+    assignments?: AssessmentAssignmentUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    classes?: ClassUncheckedUpdateManyWithoutWorkspaceNestedInput
+    materials?: MaterialUncheckedUpdateManyWithoutWorkspaceNestedInput
+    questions?: QuestionUncheckedUpdateManyWithoutWorkspaceNestedInput
+    exams?: ExamUncheckedUpdateManyWithoutWorkspaceNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
+    subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type UserUpsertWithoutCalendarEventsInput = {
+    update: XOR<UserUpdateWithoutCalendarEventsInput, UserUncheckedUpdateWithoutCalendarEventsInput>
+    create: XOR<UserCreateWithoutCalendarEventsInput, UserUncheckedCreateWithoutCalendarEventsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCalendarEventsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCalendarEventsInput, UserUncheckedUpdateWithoutCalendarEventsInput>
+  }
+
+  export type UserUpdateWithoutCalendarEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
+    memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
+    studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
+    parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
+    studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutUserNestedInput
+    classTeachers?: ClassTeacherUpdateManyWithoutTeacherNestedInput
+    classStudents?: ClassStudentUpdateManyWithoutStudentNestedInput
+    attendances?: AttendanceUpdateManyWithoutStudentNestedInput
+    markedAttendances?: AttendanceUpdateManyWithoutMarkedByNestedInput
+    updatedAttendances?: AttendanceUpdateManyWithoutUpdatedByNestedInput
+    schoolAssignments?: AssignmentUpdateManyWithoutCreatorNestedInput
+    feedbacks?: AssignmentFeedbackUpdateManyWithoutCreatorNestedInput
+    submissions?: AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+    reviewedSubmissions?: AssignmentSubmissionUpdateManyWithoutReviewedByNestedInput
+    rubrics?: RubricUpdateManyWithoutCreatedByNestedInput
+    materials?: MaterialUpdateManyWithoutUploadedByNestedInput
+    questions?: QuestionUpdateManyWithoutCreatedByNestedInput
+    exams?: ExamUpdateManyWithoutCreatedByNestedInput
+    examAttempts?: ExamAttemptUpdateManyWithoutStudentNestedInput
+    conversationLinks?: ConversationParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    schoolLogs?: SchoolLogUpdateManyWithoutUserNestedInput
+    results?: ResultUpdateManyWithoutStudentNestedInput
+    teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
+    timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCalendarEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
+    memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
+    studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
+    parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutUserNestedInput
+    classTeachers?: ClassTeacherUncheckedUpdateManyWithoutTeacherNestedInput
+    classStudents?: ClassStudentUncheckedUpdateManyWithoutStudentNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+    markedAttendances?: AttendanceUncheckedUpdateManyWithoutMarkedByNestedInput
+    updatedAttendances?: AttendanceUncheckedUpdateManyWithoutUpdatedByNestedInput
+    schoolAssignments?: AssignmentUncheckedUpdateManyWithoutCreatorNestedInput
+    feedbacks?: AssignmentFeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+    submissions?: AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    reviewedSubmissions?: AssignmentSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+    rubrics?: RubricUncheckedUpdateManyWithoutCreatedByNestedInput
+    materials?: MaterialUncheckedUpdateManyWithoutUploadedByNestedInput
+    questions?: QuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    exams?: ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+    examAttempts?: ExamAttemptUncheckedUpdateManyWithoutStudentNestedInput
+    conversationLinks?: ConversationParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    schoolLogs?: SchoolLogUncheckedUpdateManyWithoutUserNestedInput
+    results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
+    teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
+    timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
   }
 
   export type UserCreateWithoutStudentLinksInput = {
@@ -74509,6 +78924,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutStudentLinksInput = {
@@ -74550,6 +78968,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutStudentLinksInput = {
@@ -74596,6 +79017,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutParentLinksInput = {
@@ -74637,6 +79061,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutParentLinksInput = {
@@ -74694,6 +79121,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStudentLinksInput = {
@@ -74735,6 +79165,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutParentLinksInput = {
@@ -74787,6 +79220,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutParentLinksInput = {
@@ -74828,6 +79264,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type WorkspaceCreateWithoutClassesInput = {
@@ -74855,6 +79294,8 @@ export namespace Prisma {
     departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutClassesInput = {
@@ -74882,6 +79323,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutClassesInput = {
@@ -75089,6 +79532,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -75112,6 +79557,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -75204,6 +79651,8 @@ export namespace Prisma {
     departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutClassesInput = {
@@ -75231,6 +79680,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type DepartmentUpsertWithoutClassesInput = {
@@ -75397,6 +79848,8 @@ export namespace Prisma {
     conversations?: ConversationCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutDepartmentsInput = {
@@ -75424,6 +79877,8 @@ export namespace Prisma {
     conversations?: ConversationUncheckedCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutDepartmentsInput = {
@@ -75535,6 +79990,8 @@ export namespace Prisma {
     conversations?: ConversationUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutDepartmentsInput = {
@@ -75562,6 +80019,8 @@ export namespace Prisma {
     conversations?: ConversationUncheckedUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ClassUpsertWithWhereUniqueWithoutDepartmentInput = {
@@ -75621,6 +80080,8 @@ export namespace Prisma {
     conversations?: ConversationCreateNestedManyWithoutWorkspaceInput
     departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutSubjectsInput = {
@@ -75648,6 +80109,8 @@ export namespace Prisma {
     conversations?: ConversationUncheckedCreateNestedManyWithoutWorkspaceInput
     departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutSubjectsInput = {
@@ -75772,6 +80235,8 @@ export namespace Prisma {
     conversations?: ConversationUpdateManyWithoutWorkspaceNestedInput
     departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutSubjectsInput = {
@@ -75799,6 +80264,8 @@ export namespace Prisma {
     conversations?: ConversationUncheckedUpdateManyWithoutWorkspaceNestedInput
     departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type DepartmentUpsertWithoutSubjectsInput = {
@@ -75899,6 +80366,9 @@ export namespace Prisma {
     schoolLogs?: SchoolLogCreateNestedManyWithoutUserInput
     results?: ResultCreateNestedManyWithoutStudentInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutTeacherSubjectsInput = {
@@ -75940,6 +80410,9 @@ export namespace Prisma {
     schoolLogs?: SchoolLogUncheckedCreateNestedManyWithoutUserInput
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutTeacherSubjectsInput = {
@@ -76022,6 +80495,9 @@ export namespace Prisma {
     schoolLogs?: SchoolLogUpdateManyWithoutUserNestedInput
     results?: ResultUpdateManyWithoutStudentNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTeacherSubjectsInput = {
@@ -76063,6 +80539,9 @@ export namespace Prisma {
     schoolLogs?: SchoolLogUncheckedUpdateManyWithoutUserNestedInput
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type SubjectUpsertWithoutTeachersInput = {
@@ -76168,6 +80647,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutClassTeachersInput = {
@@ -76209,6 +80691,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutClassTeachersInput = {
@@ -76305,6 +80790,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutClassTeachersInput = {
@@ -76346,6 +80834,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ClassCreateWithoutStudentsInput = {
@@ -76420,6 +80911,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutClassStudentsInput = {
@@ -76461,6 +80955,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutClassStudentsInput = {
@@ -76557,6 +81054,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutClassStudentsInput = {
@@ -76598,6 +81098,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ClassCreateWithoutAttendancesInput = {
@@ -76672,6 +81175,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAttendancesInput = {
@@ -76713,6 +81219,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAttendancesInput = {
@@ -76759,6 +81268,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
@@ -76800,6 +81312,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMarkedAttendancesInput = {
@@ -76846,6 +81361,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutUpdatedAttendancesInput = {
@@ -76887,6 +81405,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutUpdatedAttendancesInput = {
@@ -76983,6 +81504,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttendancesInput = {
@@ -77024,6 +81548,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutMarkedAttendancesInput = {
@@ -77076,6 +81603,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
@@ -77117,6 +81647,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutUpdatedAttendancesInput = {
@@ -77169,6 +81702,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdatedAttendancesInput = {
@@ -77210,6 +81746,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ClassCreateWithoutAssignmentsInput = {
@@ -77284,6 +81823,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSchoolAssignmentsInput = {
@@ -77325,6 +81867,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSchoolAssignmentsInput = {
@@ -77516,6 +82061,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSchoolAssignmentsInput = {
@@ -77557,6 +82105,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type AssignmentFeedbackUpsertWithWhereUniqueWithoutAssignmentInput = {
@@ -77700,6 +82251,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRubricsInput = {
@@ -77741,6 +82295,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRubricsInput = {
@@ -77873,6 +82430,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRubricsInput = {
@@ -77914,6 +82474,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type RubricCriterionUpsertWithWhereUniqueWithoutRubricInput = {
@@ -78271,6 +82834,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutFeedbacksInput = {
@@ -78312,6 +82878,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutFeedbacksInput = {
@@ -78418,6 +82987,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFeedbacksInput = {
@@ -78459,6 +83031,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type AssignmentCreateWithoutSubmissionsInput = {
@@ -78543,6 +83118,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSubmissionsInput = {
@@ -78584,6 +83162,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSubmissionsInput = {
@@ -78630,6 +83211,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutReviewedSubmissionsInput = {
@@ -78671,6 +83255,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutReviewedSubmissionsInput = {
@@ -78803,6 +83390,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSubmissionsInput = {
@@ -78844,6 +83434,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutReviewedSubmissionsInput = {
@@ -78896,6 +83489,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedSubmissionsInput = {
@@ -78937,6 +83533,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type RubricScoreUpsertWithWhereUniqueWithoutSubmissionInput = {
@@ -78980,6 +83579,8 @@ export namespace Prisma {
     departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutQuestionsInput = {
@@ -79007,6 +83608,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutQuestionsInput = {
@@ -79053,6 +83656,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutQuestionsInput = {
@@ -79094,6 +83700,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutQuestionsInput = {
@@ -79193,6 +83802,8 @@ export namespace Prisma {
     departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutQuestionsInput = {
@@ -79220,6 +83831,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserUpsertWithoutQuestionsInput = {
@@ -79272,6 +83885,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuestionsInput = {
@@ -79313,6 +83929,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ExamQuestionUpsertWithWhereUniqueWithoutQuestionInput = {
@@ -79372,6 +83991,8 @@ export namespace Prisma {
     departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutMaterialsInput = {
@@ -79399,6 +84020,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutMaterialsInput = {
@@ -79478,6 +84101,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMaterialsInput = {
@@ -79519,6 +84145,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMaterialsInput = {
@@ -79562,6 +84191,8 @@ export namespace Prisma {
     departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutMaterialsInput = {
@@ -79589,6 +84220,8 @@ export namespace Prisma {
     departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ClassUpsertWithoutMaterialsInput = {
@@ -79680,6 +84313,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMaterialsInput = {
@@ -79721,6 +84357,9 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutSchoolLogsInput = {
@@ -79762,6 +84401,9 @@ export namespace Prisma {
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSchoolLogsInput = {
@@ -79803,6 +84445,9 @@ export namespace Prisma {
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSchoolLogsInput = {
@@ -79860,6 +84505,9 @@ export namespace Prisma {
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSchoolLogsInput = {
@@ -79901,6 +84549,525 @@ export namespace Prisma {
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type WorkspaceCreateWithoutLeaveRequestsInput = {
+    id: string
+    name: string
+    createdBy?: string | null
+    principalId?: string | null
+    status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
+    createdAt?: Date | string
+    memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
+    studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
+    assignments?: AssessmentAssignmentCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
+    classes?: ClassCreateNestedManyWithoutWorkspaceInput
+    materials?: MaterialCreateNestedManyWithoutWorkspaceInput
+    questions?: QuestionCreateNestedManyWithoutWorkspaceInput
+    exams?: ExamCreateNestedManyWithoutWorkspaceInput
+    conversations?: ConversationCreateNestedManyWithoutWorkspaceInput
+    departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
+    subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
+    timetableSlots?: TimetableSlotCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutLeaveRequestsInput = {
+    id: string
+    name: string
+    createdBy?: string | null
+    principalId?: string | null
+    status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
+    createdAt?: Date | string
+    memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
+    assignments?: AssessmentAssignmentUncheckedCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
+    classes?: ClassUncheckedCreateNestedManyWithoutWorkspaceInput
+    materials?: MaterialUncheckedCreateNestedManyWithoutWorkspaceInput
+    questions?: QuestionUncheckedCreateNestedManyWithoutWorkspaceInput
+    exams?: ExamUncheckedCreateNestedManyWithoutWorkspaceInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutWorkspaceInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
+    subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
+    timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutLeaveRequestsInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutLeaveRequestsInput, WorkspaceUncheckedCreateWithoutLeaveRequestsInput>
+  }
+
+  export type UserCreateWithoutLeaveRequestsInput = {
+    id: string
+    username?: string | null
+    name: string
+    email: string
+    passwordHash?: string | null
+    role?: string
+    isActive?: boolean
+    status?: string
+    workspaceId?: string | null
+    mode?: string | null
+    firstLogin?: boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
+    memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
+    studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
+    parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
+    studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutUserInput
+    classTeachers?: ClassTeacherCreateNestedManyWithoutTeacherInput
+    classStudents?: ClassStudentCreateNestedManyWithoutStudentInput
+    attendances?: AttendanceCreateNestedManyWithoutStudentInput
+    markedAttendances?: AttendanceCreateNestedManyWithoutMarkedByInput
+    updatedAttendances?: AttendanceCreateNestedManyWithoutUpdatedByInput
+    schoolAssignments?: AssignmentCreateNestedManyWithoutCreatorInput
+    feedbacks?: AssignmentFeedbackCreateNestedManyWithoutCreatorInput
+    submissions?: AssignmentSubmissionCreateNestedManyWithoutStudentInput
+    reviewedSubmissions?: AssignmentSubmissionCreateNestedManyWithoutReviewedByInput
+    rubrics?: RubricCreateNestedManyWithoutCreatedByInput
+    materials?: MaterialCreateNestedManyWithoutUploadedByInput
+    questions?: QuestionCreateNestedManyWithoutCreatedByInput
+    exams?: ExamCreateNestedManyWithoutCreatedByInput
+    examAttempts?: ExamAttemptCreateNestedManyWithoutStudentInput
+    conversationLinks?: ConversationParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    schoolLogs?: SchoolLogCreateNestedManyWithoutUserInput
+    results?: ResultCreateNestedManyWithoutStudentInput
+    teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
+    timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutLeaveRequestsInput = {
+    id: string
+    username?: string | null
+    name: string
+    email: string
+    passwordHash?: string | null
+    role?: string
+    isActive?: boolean
+    status?: string
+    workspaceId?: string | null
+    mode?: string | null
+    firstLogin?: boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
+    memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
+    studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
+    parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutUserInput
+    classTeachers?: ClassTeacherUncheckedCreateNestedManyWithoutTeacherInput
+    classStudents?: ClassStudentUncheckedCreateNestedManyWithoutStudentInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutStudentInput
+    markedAttendances?: AttendanceUncheckedCreateNestedManyWithoutMarkedByInput
+    updatedAttendances?: AttendanceUncheckedCreateNestedManyWithoutUpdatedByInput
+    schoolAssignments?: AssignmentUncheckedCreateNestedManyWithoutCreatorInput
+    feedbacks?: AssignmentFeedbackUncheckedCreateNestedManyWithoutCreatorInput
+    submissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+    reviewedSubmissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+    rubrics?: RubricUncheckedCreateNestedManyWithoutCreatedByInput
+    materials?: MaterialUncheckedCreateNestedManyWithoutUploadedByInput
+    questions?: QuestionUncheckedCreateNestedManyWithoutCreatedByInput
+    exams?: ExamUncheckedCreateNestedManyWithoutCreatedByInput
+    examAttempts?: ExamAttemptUncheckedCreateNestedManyWithoutStudentInput
+    conversationLinks?: ConversationParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    schoolLogs?: SchoolLogUncheckedCreateNestedManyWithoutUserInput
+    results?: ResultUncheckedCreateNestedManyWithoutStudentInput
+    teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
+    timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutLeaveRequestsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutLeaveRequestsInput, UserUncheckedCreateWithoutLeaveRequestsInput>
+  }
+
+  export type UserCreateWithoutReviewedLeaveRequestsInput = {
+    id: string
+    username?: string | null
+    name: string
+    email: string
+    passwordHash?: string | null
+    role?: string
+    isActive?: boolean
+    status?: string
+    workspaceId?: string | null
+    mode?: string | null
+    firstLogin?: boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    attempts?: AssessmentAttemptCreateNestedManyWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
+    memberships?: WorkspaceMembershipCreateNestedManyWithoutUserInput
+    studentLinks?: ParentStudentLinkCreateNestedManyWithoutStudentInput
+    parentLinks?: ParentStudentLinkCreateNestedManyWithoutParentInput
+    studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutUserInput
+    classTeachers?: ClassTeacherCreateNestedManyWithoutTeacherInput
+    classStudents?: ClassStudentCreateNestedManyWithoutStudentInput
+    attendances?: AttendanceCreateNestedManyWithoutStudentInput
+    markedAttendances?: AttendanceCreateNestedManyWithoutMarkedByInput
+    updatedAttendances?: AttendanceCreateNestedManyWithoutUpdatedByInput
+    schoolAssignments?: AssignmentCreateNestedManyWithoutCreatorInput
+    feedbacks?: AssignmentFeedbackCreateNestedManyWithoutCreatorInput
+    submissions?: AssignmentSubmissionCreateNestedManyWithoutStudentInput
+    reviewedSubmissions?: AssignmentSubmissionCreateNestedManyWithoutReviewedByInput
+    rubrics?: RubricCreateNestedManyWithoutCreatedByInput
+    materials?: MaterialCreateNestedManyWithoutUploadedByInput
+    questions?: QuestionCreateNestedManyWithoutCreatedByInput
+    exams?: ExamCreateNestedManyWithoutCreatedByInput
+    examAttempts?: ExamAttemptCreateNestedManyWithoutStudentInput
+    conversationLinks?: ConversationParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    schoolLogs?: SchoolLogCreateNestedManyWithoutUserInput
+    results?: ResultCreateNestedManyWithoutStudentInput
+    teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
+    timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutReviewedLeaveRequestsInput = {
+    id: string
+    username?: string | null
+    name: string
+    email: string
+    passwordHash?: string | null
+    role?: string
+    isActive?: boolean
+    status?: string
+    workspaceId?: string | null
+    mode?: string | null
+    firstLogin?: boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    attempts?: AssessmentAttemptUncheckedCreateNestedManyWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
+    memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutUserInput
+    studentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutStudentInput
+    parentLinks?: ParentStudentLinkUncheckedCreateNestedManyWithoutParentInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutUserInput
+    classTeachers?: ClassTeacherUncheckedCreateNestedManyWithoutTeacherInput
+    classStudents?: ClassStudentUncheckedCreateNestedManyWithoutStudentInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutStudentInput
+    markedAttendances?: AttendanceUncheckedCreateNestedManyWithoutMarkedByInput
+    updatedAttendances?: AttendanceUncheckedCreateNestedManyWithoutUpdatedByInput
+    schoolAssignments?: AssignmentUncheckedCreateNestedManyWithoutCreatorInput
+    feedbacks?: AssignmentFeedbackUncheckedCreateNestedManyWithoutCreatorInput
+    submissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+    reviewedSubmissions?: AssignmentSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+    rubrics?: RubricUncheckedCreateNestedManyWithoutCreatedByInput
+    materials?: MaterialUncheckedCreateNestedManyWithoutUploadedByInput
+    questions?: QuestionUncheckedCreateNestedManyWithoutCreatedByInput
+    exams?: ExamUncheckedCreateNestedManyWithoutCreatedByInput
+    examAttempts?: ExamAttemptUncheckedCreateNestedManyWithoutStudentInput
+    conversationLinks?: ConversationParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    schoolLogs?: SchoolLogUncheckedCreateNestedManyWithoutUserInput
+    results?: ResultUncheckedCreateNestedManyWithoutStudentInput
+    teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
+    timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutReviewedLeaveRequestsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReviewedLeaveRequestsInput, UserUncheckedCreateWithoutReviewedLeaveRequestsInput>
+  }
+
+  export type WorkspaceUpsertWithoutLeaveRequestsInput = {
+    update: XOR<WorkspaceUpdateWithoutLeaveRequestsInput, WorkspaceUncheckedUpdateWithoutLeaveRequestsInput>
+    create: XOR<WorkspaceCreateWithoutLeaveRequestsInput, WorkspaceUncheckedCreateWithoutLeaveRequestsInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutLeaveRequestsInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutLeaveRequestsInput, WorkspaceUncheckedUpdateWithoutLeaveRequestsInput>
+  }
+
+  export type WorkspaceUpdateWithoutLeaveRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    principalId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
+    studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
+    assignments?: AssessmentAssignmentUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
+    classes?: ClassUpdateManyWithoutWorkspaceNestedInput
+    materials?: MaterialUpdateManyWithoutWorkspaceNestedInput
+    questions?: QuestionUpdateManyWithoutWorkspaceNestedInput
+    exams?: ExamUpdateManyWithoutWorkspaceNestedInput
+    conversations?: ConversationUpdateManyWithoutWorkspaceNestedInput
+    departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
+    subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
+    timetableSlots?: TimetableSlotUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutLeaveRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    principalId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
+    assignments?: AssessmentAssignmentUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    classes?: ClassUncheckedUpdateManyWithoutWorkspaceNestedInput
+    materials?: MaterialUncheckedUpdateManyWithoutWorkspaceNestedInput
+    questions?: QuestionUncheckedUpdateManyWithoutWorkspaceNestedInput
+    exams?: ExamUncheckedUpdateManyWithoutWorkspaceNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
+    subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type UserUpsertWithoutLeaveRequestsInput = {
+    update: XOR<UserUpdateWithoutLeaveRequestsInput, UserUncheckedUpdateWithoutLeaveRequestsInput>
+    create: XOR<UserCreateWithoutLeaveRequestsInput, UserUncheckedCreateWithoutLeaveRequestsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutLeaveRequestsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutLeaveRequestsInput, UserUncheckedUpdateWithoutLeaveRequestsInput>
+  }
+
+  export type UserUpdateWithoutLeaveRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
+    memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
+    studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
+    parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
+    studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutUserNestedInput
+    classTeachers?: ClassTeacherUpdateManyWithoutTeacherNestedInput
+    classStudents?: ClassStudentUpdateManyWithoutStudentNestedInput
+    attendances?: AttendanceUpdateManyWithoutStudentNestedInput
+    markedAttendances?: AttendanceUpdateManyWithoutMarkedByNestedInput
+    updatedAttendances?: AttendanceUpdateManyWithoutUpdatedByNestedInput
+    schoolAssignments?: AssignmentUpdateManyWithoutCreatorNestedInput
+    feedbacks?: AssignmentFeedbackUpdateManyWithoutCreatorNestedInput
+    submissions?: AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+    reviewedSubmissions?: AssignmentSubmissionUpdateManyWithoutReviewedByNestedInput
+    rubrics?: RubricUpdateManyWithoutCreatedByNestedInput
+    materials?: MaterialUpdateManyWithoutUploadedByNestedInput
+    questions?: QuestionUpdateManyWithoutCreatedByNestedInput
+    exams?: ExamUpdateManyWithoutCreatedByNestedInput
+    examAttempts?: ExamAttemptUpdateManyWithoutStudentNestedInput
+    conversationLinks?: ConversationParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    schoolLogs?: SchoolLogUpdateManyWithoutUserNestedInput
+    results?: ResultUpdateManyWithoutStudentNestedInput
+    teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
+    timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutLeaveRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
+    memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
+    studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
+    parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutUserNestedInput
+    classTeachers?: ClassTeacherUncheckedUpdateManyWithoutTeacherNestedInput
+    classStudents?: ClassStudentUncheckedUpdateManyWithoutStudentNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+    markedAttendances?: AttendanceUncheckedUpdateManyWithoutMarkedByNestedInput
+    updatedAttendances?: AttendanceUncheckedUpdateManyWithoutUpdatedByNestedInput
+    schoolAssignments?: AssignmentUncheckedUpdateManyWithoutCreatorNestedInput
+    feedbacks?: AssignmentFeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+    submissions?: AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    reviewedSubmissions?: AssignmentSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+    rubrics?: RubricUncheckedUpdateManyWithoutCreatedByNestedInput
+    materials?: MaterialUncheckedUpdateManyWithoutUploadedByNestedInput
+    questions?: QuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    exams?: ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+    examAttempts?: ExamAttemptUncheckedUpdateManyWithoutStudentNestedInput
+    conversationLinks?: ConversationParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    schoolLogs?: SchoolLogUncheckedUpdateManyWithoutUserNestedInput
+    results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
+    teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
+    timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUpsertWithoutReviewedLeaveRequestsInput = {
+    update: XOR<UserUpdateWithoutReviewedLeaveRequestsInput, UserUncheckedUpdateWithoutReviewedLeaveRequestsInput>
+    create: XOR<UserCreateWithoutReviewedLeaveRequestsInput, UserUncheckedCreateWithoutReviewedLeaveRequestsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReviewedLeaveRequestsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReviewedLeaveRequestsInput, UserUncheckedUpdateWithoutReviewedLeaveRequestsInput>
+  }
+
+  export type UserUpdateWithoutReviewedLeaveRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUpdateManyWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
+    memberships?: WorkspaceMembershipUpdateManyWithoutUserNestedInput
+    studentLinks?: ParentStudentLinkUpdateManyWithoutStudentNestedInput
+    parentLinks?: ParentStudentLinkUpdateManyWithoutParentNestedInput
+    studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutUserNestedInput
+    classTeachers?: ClassTeacherUpdateManyWithoutTeacherNestedInput
+    classStudents?: ClassStudentUpdateManyWithoutStudentNestedInput
+    attendances?: AttendanceUpdateManyWithoutStudentNestedInput
+    markedAttendances?: AttendanceUpdateManyWithoutMarkedByNestedInput
+    updatedAttendances?: AttendanceUpdateManyWithoutUpdatedByNestedInput
+    schoolAssignments?: AssignmentUpdateManyWithoutCreatorNestedInput
+    feedbacks?: AssignmentFeedbackUpdateManyWithoutCreatorNestedInput
+    submissions?: AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+    reviewedSubmissions?: AssignmentSubmissionUpdateManyWithoutReviewedByNestedInput
+    rubrics?: RubricUpdateManyWithoutCreatedByNestedInput
+    materials?: MaterialUpdateManyWithoutUploadedByNestedInput
+    questions?: QuestionUpdateManyWithoutCreatedByNestedInput
+    exams?: ExamUpdateManyWithoutCreatedByNestedInput
+    examAttempts?: ExamAttemptUpdateManyWithoutStudentNestedInput
+    conversationLinks?: ConversationParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    schoolLogs?: SchoolLogUpdateManyWithoutUserNestedInput
+    results?: ResultUpdateManyWithoutStudentNestedInput
+    teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
+    timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReviewedLeaveRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    workspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: NullableStringFieldUpdateOperationsInput | string | null
+    firstLogin?: BoolFieldUpdateOperationsInput | boolean
+    notificationPrefs?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attempts?: AssessmentAttemptUncheckedUpdateManyWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
+    memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutUserNestedInput
+    studentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutStudentNestedInput
+    parentLinks?: ParentStudentLinkUncheckedUpdateManyWithoutParentNestedInput
+    studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutUserNestedInput
+    classTeachers?: ClassTeacherUncheckedUpdateManyWithoutTeacherNestedInput
+    classStudents?: ClassStudentUncheckedUpdateManyWithoutStudentNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+    markedAttendances?: AttendanceUncheckedUpdateManyWithoutMarkedByNestedInput
+    updatedAttendances?: AttendanceUncheckedUpdateManyWithoutUpdatedByNestedInput
+    schoolAssignments?: AssignmentUncheckedUpdateManyWithoutCreatorNestedInput
+    feedbacks?: AssignmentFeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+    submissions?: AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    reviewedSubmissions?: AssignmentSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+    rubrics?: RubricUncheckedUpdateManyWithoutCreatedByNestedInput
+    materials?: MaterialUncheckedUpdateManyWithoutUploadedByNestedInput
+    questions?: QuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    exams?: ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+    examAttempts?: ExamAttemptUncheckedUpdateManyWithoutStudentNestedInput
+    conversationLinks?: ConversationParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    schoolLogs?: SchoolLogUncheckedUpdateManyWithoutUserNestedInput
+    results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
+    teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
+    timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutResultsInput = {
@@ -79942,6 +85109,9 @@ export namespace Prisma {
     schoolLogs?: SchoolLogCreateNestedManyWithoutUserInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutResultsInput = {
@@ -79983,6 +85153,9 @@ export namespace Prisma {
     schoolLogs?: SchoolLogUncheckedCreateNestedManyWithoutUserInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
     timetableSlots?: TimetableSlotUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutResultsInput = {
@@ -80040,6 +85213,9 @@ export namespace Prisma {
     schoolLogs?: SchoolLogUpdateManyWithoutUserNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutResultsInput = {
@@ -80081,6 +85257,9 @@ export namespace Prisma {
     schoolLogs?: SchoolLogUncheckedUpdateManyWithoutUserNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
     timetableSlots?: TimetableSlotUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type WorkspaceCreateWithoutTimetableSlotsInput = {
@@ -80108,6 +85287,8 @@ export namespace Prisma {
     conversations?: ConversationCreateNestedManyWithoutWorkspaceInput
     departments?: DepartmentCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutTimetableSlotsInput = {
@@ -80135,6 +85316,8 @@ export namespace Prisma {
     conversations?: ConversationUncheckedCreateNestedManyWithoutWorkspaceInput
     departments?: DepartmentUncheckedCreateNestedManyWithoutWorkspaceInput
     subjects?: SubjectUncheckedCreateNestedManyWithoutWorkspaceInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutTimetableSlotsInput = {
@@ -80239,6 +85422,9 @@ export namespace Prisma {
     schoolLogs?: SchoolLogCreateNestedManyWithoutUserInput
     results?: ResultCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutTimetableSlotsInput = {
@@ -80280,6 +85466,9 @@ export namespace Prisma {
     schoolLogs?: SchoolLogUncheckedCreateNestedManyWithoutUserInput
     results?: ResultUncheckedCreateNestedManyWithoutStudentInput
     teacherSubjects?: TeacherSubjectUncheckedCreateNestedManyWithoutTeacherInput
+    leaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutRequesterInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutTimetableSlotsInput = {
@@ -80323,6 +85512,8 @@ export namespace Prisma {
     conversations?: ConversationUpdateManyWithoutWorkspaceNestedInput
     departments?: DepartmentUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutTimetableSlotsInput = {
@@ -80350,6 +85541,8 @@ export namespace Prisma {
     conversations?: ConversationUncheckedUpdateManyWithoutWorkspaceNestedInput
     departments?: DepartmentUncheckedUpdateManyWithoutWorkspaceNestedInput
     subjects?: SubjectUncheckedUpdateManyWithoutWorkspaceNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ClassUpsertWithoutTimetableSlotsInput = {
@@ -80472,6 +85665,9 @@ export namespace Prisma {
     schoolLogs?: SchoolLogUpdateManyWithoutUserNestedInput
     results?: ResultUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTimetableSlotsInput = {
@@ -80513,6 +85709,9 @@ export namespace Prisma {
     schoolLogs?: SchoolLogUncheckedUpdateManyWithoutUserNestedInput
     results?: ResultUncheckedUpdateManyWithoutStudentNestedInput
     teacherSubjects?: TeacherSubjectUncheckedUpdateManyWithoutTeacherNestedInput
+    leaveRequests?: LeaveRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    reviewedLeaveRequests?: LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type AssessmentAttemptCreateManyUserInput = {
@@ -80715,6 +85914,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -80732,6 +85933,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -80806,6 +86009,45 @@ export namespace Prisma {
     room?: string | null
     meetingUrl?: string | null
     createdByUserId: string
+    createdAt?: Date | string
+  }
+
+  export type LeaveRequestCreateManyRequesterInput = {
+    id?: string
+    workspaceId: string
+    requesterRole: string
+    startDate: Date | string
+    endDate: Date | string
+    reason: string
+    status?: string
+    reviewedByUserId?: string | null
+    reviewNote?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type LeaveRequestCreateManyReviewedByInput = {
+    id?: string
+    workspaceId: string
+    requesterId: string
+    requesterRole: string
+    startDate: Date | string
+    endDate: Date | string
+    reason: string
+    status?: string
+    reviewNote?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type CalendarEventCreateManyCreatedByInput = {
+    id?: string
+    workspaceId: string
+    title: string
+    description?: string | null
+    eventType: string
+    startDate: Date | string
+    endDate?: Date | string | null
     createdAt?: Date | string
   }
 
@@ -81388,6 +86630,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Workspace?: WorkspaceUpdateOneRequiredWithoutQuestionsNestedInput
@@ -81412,6 +86656,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     examQuestions?: ExamQuestionUncheckedUpdateManyWithoutQuestionNestedInput
@@ -81435,6 +86681,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -81450,6 +86698,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -81473,6 +86723,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -81494,6 +86746,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -81715,6 +86969,123 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LeaveRequestUpdateWithoutRequesterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Workspace?: WorkspaceUpdateOneRequiredWithoutLeaveRequestsNestedInput
+    ReviewedBy?: UserUpdateOneWithoutReviewedLeaveRequestsNestedInput
+  }
+
+  export type LeaveRequestUncheckedUpdateWithoutRequesterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LeaveRequestUncheckedUpdateManyWithoutRequesterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LeaveRequestUpdateWithoutReviewedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Workspace?: WorkspaceUpdateOneRequiredWithoutLeaveRequestsNestedInput
+    Requester?: UserUpdateOneRequiredWithoutLeaveRequestsNestedInput
+  }
+
+  export type LeaveRequestUncheckedUpdateWithoutReviewedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    requesterId?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LeaveRequestUncheckedUpdateManyWithoutReviewedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    requesterId?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CalendarEventUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    eventType?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Workspace?: WorkspaceUpdateOneRequiredWithoutCalendarEventsNestedInput
+  }
+
+  export type CalendarEventUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    eventType?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CalendarEventUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    eventType?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type WorkspaceMembershipCreateManyWorkspaceInput = {
     id?: string
     userId: string
@@ -81793,6 +87164,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -81810,6 +87183,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -81846,6 +87221,31 @@ export namespace Prisma {
     endTime: string
     room?: string | null
     meetingUrl?: string | null
+    createdByUserId: string
+    createdAt?: Date | string
+  }
+
+  export type LeaveRequestCreateManyWorkspaceInput = {
+    id?: string
+    requesterId: string
+    requesterRole: string
+    startDate: Date | string
+    endDate: Date | string
+    reason: string
+    status?: string
+    reviewedByUserId?: string | null
+    reviewNote?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type CalendarEventCreateManyWorkspaceInput = {
+    id?: string
+    title: string
+    description?: string | null
+    eventType: string
+    startDate: Date | string
+    endDate?: Date | string | null
     createdByUserId: string
     createdAt?: Date | string
   }
@@ -82065,6 +87465,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     CreatedBy?: UserUpdateOneRequiredWithoutQuestionsNestedInput
@@ -82089,6 +87491,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     examQuestions?: ExamQuestionUncheckedUpdateManyWithoutQuestionNestedInput
@@ -82112,6 +87516,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -82127,6 +87533,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82150,6 +87558,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82171,6 +87581,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82287,6 +87699,81 @@ export namespace Prisma {
     endTime?: StringFieldUpdateOperationsInput | string
     room?: NullableStringFieldUpdateOperationsInput | string | null
     meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LeaveRequestUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Requester?: UserUpdateOneRequiredWithoutLeaveRequestsNestedInput
+    ReviewedBy?: UserUpdateOneWithoutReviewedLeaveRequestsNestedInput
+  }
+
+  export type LeaveRequestUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requesterId?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LeaveRequestUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requesterId?: StringFieldUpdateOperationsInput | string
+    requesterRole?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CalendarEventUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    eventType?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CreatedBy?: UserUpdateOneRequiredWithoutCalendarEventsNestedInput
+  }
+
+  export type CalendarEventUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    eventType?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdByUserId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CalendarEventUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    eventType?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdByUserId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -82798,6 +88285,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -83003,6 +88492,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -83026,6 +88517,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -83047,6 +88540,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { decodeJwtPayload } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { requireSchoolAuth } from '@/lib/school/authz';
+import { mapAuthzError } from '@/lib/school/http';
 
 const mockResults = [
   {
@@ -32,7 +34,13 @@ const mockResults = [
 
 export async function GET() {
   try {
+    const ctx = await requireSchoolAuth();
+    const isStudent = ctx.role === 'student';
+
     const results = await prisma.result.findMany({
+      where: isStudent
+        ? { studentId: ctx.userId }
+        : { student: { workspaceId: ctx.workspaceId } },
       include: {
         student: {
           select: {
@@ -64,6 +72,9 @@ export async function GET() {
       data: formattedResults,
     });
   } catch (error: any) {
+    if (['UNAUTHORIZED', 'FORBIDDEN', 'NO_WORKSPACE', 'WORKSPACE_SUSPENDED'].includes(error?.message)) {
+      return mapAuthzError(error);
+    }
     console.error('[API_RESULTS_ERROR]', error);
     return NextResponse.json(
       {

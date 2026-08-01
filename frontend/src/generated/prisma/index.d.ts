@@ -8503,6 +8503,13 @@ export namespace Prisma {
     createdBy: string | null
     principalId: string | null
     status: string | null
+    institutionType: string | null
+    address: string | null
+    contactNumber: string | null
+    contactEmail: string | null
+    academicYear: string | null
+    term: string | null
+    semester: string | null
     createdAt: Date | null
   }
 
@@ -8512,6 +8519,13 @@ export namespace Prisma {
     createdBy: string | null
     principalId: string | null
     status: string | null
+    institutionType: string | null
+    address: string | null
+    contactNumber: string | null
+    contactEmail: string | null
+    academicYear: string | null
+    term: string | null
+    semester: string | null
     createdAt: Date | null
   }
 
@@ -8521,6 +8535,13 @@ export namespace Prisma {
     createdBy: number
     principalId: number
     status: number
+    institutionType: number
+    address: number
+    contactNumber: number
+    contactEmail: number
+    academicYear: number
+    term: number
+    semester: number
     createdAt: number
     _all: number
   }
@@ -8532,6 +8553,13 @@ export namespace Prisma {
     createdBy?: true
     principalId?: true
     status?: true
+    institutionType?: true
+    address?: true
+    contactNumber?: true
+    contactEmail?: true
+    academicYear?: true
+    term?: true
+    semester?: true
     createdAt?: true
   }
 
@@ -8541,6 +8569,13 @@ export namespace Prisma {
     createdBy?: true
     principalId?: true
     status?: true
+    institutionType?: true
+    address?: true
+    contactNumber?: true
+    contactEmail?: true
+    academicYear?: true
+    term?: true
+    semester?: true
     createdAt?: true
   }
 
@@ -8550,6 +8585,13 @@ export namespace Prisma {
     createdBy?: true
     principalId?: true
     status?: true
+    institutionType?: true
+    address?: true
+    contactNumber?: true
+    contactEmail?: true
+    academicYear?: true
+    term?: true
+    semester?: true
     createdAt?: true
     _all?: true
   }
@@ -8632,6 +8674,13 @@ export namespace Prisma {
     createdBy: string | null
     principalId: string | null
     status: string | null
+    institutionType: string | null
+    address: string | null
+    contactNumber: string | null
+    contactEmail: string | null
+    academicYear: string | null
+    term: string | null
+    semester: string | null
     createdAt: Date
     _count: WorkspaceCountAggregateOutputType | null
     _min: WorkspaceMinAggregateOutputType | null
@@ -8658,6 +8707,13 @@ export namespace Prisma {
     createdBy?: boolean
     principalId?: boolean
     status?: boolean
+    institutionType?: boolean
+    address?: boolean
+    contactNumber?: boolean
+    contactEmail?: boolean
+    academicYear?: boolean
+    term?: boolean
+    semester?: boolean
     createdAt?: boolean
     memberships?: boolean | Workspace$membershipsArgs<ExtArgs>
     studentProfiles?: boolean | Workspace$studentProfilesArgs<ExtArgs>
@@ -8680,6 +8736,13 @@ export namespace Prisma {
     createdBy?: boolean
     principalId?: boolean
     status?: boolean
+    institutionType?: boolean
+    address?: boolean
+    contactNumber?: boolean
+    contactEmail?: boolean
+    academicYear?: boolean
+    term?: boolean
+    semester?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["workspace"]>
 
@@ -8689,6 +8752,13 @@ export namespace Prisma {
     createdBy?: boolean
     principalId?: boolean
     status?: boolean
+    institutionType?: boolean
+    address?: boolean
+    contactNumber?: boolean
+    contactEmail?: boolean
+    academicYear?: boolean
+    term?: boolean
+    semester?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["workspace"]>
 
@@ -8698,10 +8768,17 @@ export namespace Prisma {
     createdBy?: boolean
     principalId?: boolean
     status?: boolean
+    institutionType?: boolean
+    address?: boolean
+    contactNumber?: boolean
+    contactEmail?: boolean
+    academicYear?: boolean
+    term?: boolean
+    semester?: boolean
     createdAt?: boolean
   }
 
-  export type WorkspaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdBy" | "principalId" | "status" | "createdAt", ExtArgs["result"]["workspace"]>
+  export type WorkspaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdBy" | "principalId" | "status" | "institutionType" | "address" | "contactNumber" | "contactEmail" | "academicYear" | "term" | "semester" | "createdAt", ExtArgs["result"]["workspace"]>
   export type WorkspaceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     memberships?: boolean | Workspace$membershipsArgs<ExtArgs>
     studentProfiles?: boolean | Workspace$studentProfilesArgs<ExtArgs>
@@ -8742,6 +8819,13 @@ export namespace Prisma {
       createdBy: string | null
       principalId: string | null
       status: string | null
+      institutionType: string | null
+      address: string | null
+      contactNumber: string | null
+      contactEmail: string | null
+      academicYear: string | null
+      term: string | null
+      semester: string | null
       createdAt: Date
     }, ExtArgs["result"]["workspace"]>
     composites: {}
@@ -9183,6 +9267,13 @@ export namespace Prisma {
     readonly createdBy: FieldRef<"Workspace", 'String'>
     readonly principalId: FieldRef<"Workspace", 'String'>
     readonly status: FieldRef<"Workspace", 'String'>
+    readonly institutionType: FieldRef<"Workspace", 'String'>
+    readonly address: FieldRef<"Workspace", 'String'>
+    readonly contactNumber: FieldRef<"Workspace", 'String'>
+    readonly contactEmail: FieldRef<"Workspace", 'String'>
+    readonly academicYear: FieldRef<"Workspace", 'String'>
+    readonly term: FieldRef<"Workspace", 'String'>
+    readonly semester: FieldRef<"Workspace", 'String'>
     readonly createdAt: FieldRef<"Workspace", 'DateTime'>
   }
     
@@ -12029,6 +12120,8 @@ export namespace Prisma {
     shuffleQuestions: boolean | null
     shuffleOptions: boolean | null
     status: string | null
+    reviewStatus: string | null
+    reviewNote: string | null
     scheduledStart: Date | null
     scheduledEnd: Date | null
     createdAt: Date | null
@@ -12049,6 +12142,8 @@ export namespace Prisma {
     shuffleQuestions: boolean | null
     shuffleOptions: boolean | null
     status: string | null
+    reviewStatus: string | null
+    reviewNote: string | null
     scheduledStart: Date | null
     scheduledEnd: Date | null
     createdAt: Date | null
@@ -12069,6 +12164,8 @@ export namespace Prisma {
     shuffleQuestions: number
     shuffleOptions: number
     status: number
+    reviewStatus: number
+    reviewNote: number
     scheduledStart: number
     scheduledEnd: number
     createdAt: number
@@ -12101,6 +12198,8 @@ export namespace Prisma {
     shuffleQuestions?: true
     shuffleOptions?: true
     status?: true
+    reviewStatus?: true
+    reviewNote?: true
     scheduledStart?: true
     scheduledEnd?: true
     createdAt?: true
@@ -12121,6 +12220,8 @@ export namespace Prisma {
     shuffleQuestions?: true
     shuffleOptions?: true
     status?: true
+    reviewStatus?: true
+    reviewNote?: true
     scheduledStart?: true
     scheduledEnd?: true
     createdAt?: true
@@ -12141,6 +12242,8 @@ export namespace Prisma {
     shuffleQuestions?: true
     shuffleOptions?: true
     status?: true
+    reviewStatus?: true
+    reviewNote?: true
     scheduledStart?: true
     scheduledEnd?: true
     createdAt?: true
@@ -12248,6 +12351,8 @@ export namespace Prisma {
     shuffleQuestions: boolean
     shuffleOptions: boolean
     status: string
+    reviewStatus: string
+    reviewNote: string | null
     scheduledStart: Date | null
     scheduledEnd: Date | null
     createdAt: Date
@@ -12287,6 +12392,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     scheduledStart?: boolean
     scheduledEnd?: boolean
     createdAt?: boolean
@@ -12313,6 +12420,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     scheduledStart?: boolean
     scheduledEnd?: boolean
     createdAt?: boolean
@@ -12336,6 +12445,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     scheduledStart?: boolean
     scheduledEnd?: boolean
     createdAt?: boolean
@@ -12359,13 +12470,15 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     scheduledStart?: boolean
     scheduledEnd?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ExamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "classId" | "createdByUserId" | "title" | "description" | "examType" | "subject" | "durationMinutes" | "passingPercentage" | "shuffleQuestions" | "shuffleOptions" | "status" | "scheduledStart" | "scheduledEnd" | "createdAt" | "updatedAt", ExtArgs["result"]["exam"]>
+  export type ExamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "classId" | "createdByUserId" | "title" | "description" | "examType" | "subject" | "durationMinutes" | "passingPercentage" | "shuffleQuestions" | "shuffleOptions" | "status" | "reviewStatus" | "reviewNote" | "scheduledStart" | "scheduledEnd" | "createdAt" | "updatedAt", ExtArgs["result"]["exam"]>
   export type ExamInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     Class?: boolean | ClassDefaultArgs<ExtArgs>
@@ -12408,6 +12521,8 @@ export namespace Prisma {
       shuffleQuestions: boolean
       shuffleOptions: boolean
       status: string
+      reviewStatus: string
+      reviewNote: string | null
       scheduledStart: Date | null
       scheduledEnd: Date | null
       createdAt: Date
@@ -12853,6 +12968,8 @@ export namespace Prisma {
     readonly shuffleQuestions: FieldRef<"Exam", 'Boolean'>
     readonly shuffleOptions: FieldRef<"Exam", 'Boolean'>
     readonly status: FieldRef<"Exam", 'String'>
+    readonly reviewStatus: FieldRef<"Exam", 'String'>
+    readonly reviewNote: FieldRef<"Exam", 'String'>
     readonly scheduledStart: FieldRef<"Exam", 'DateTime'>
     readonly scheduledEnd: FieldRef<"Exam", 'DateTime'>
     readonly createdAt: FieldRef<"Exam", 'DateTime'>
@@ -47137,6 +47254,8 @@ export namespace Prisma {
     explanation: string | null
     version: number | null
     isArchived: boolean | null
+    reviewStatus: string | null
+    reviewNote: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -47156,6 +47275,8 @@ export namespace Prisma {
     explanation: string | null
     version: number | null
     isArchived: boolean | null
+    reviewStatus: string | null
+    reviewNote: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -47178,6 +47299,8 @@ export namespace Prisma {
     explanation: number
     version: number
     isArchived: number
+    reviewStatus: number
+    reviewNote: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -47207,6 +47330,8 @@ export namespace Prisma {
     explanation?: true
     version?: true
     isArchived?: true
+    reviewStatus?: true
+    reviewNote?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -47226,6 +47351,8 @@ export namespace Prisma {
     explanation?: true
     version?: true
     isArchived?: true
+    reviewStatus?: true
+    reviewNote?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -47248,6 +47375,8 @@ export namespace Prisma {
     explanation?: true
     version?: true
     isArchived?: true
+    reviewStatus?: true
+    reviewNote?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -47357,6 +47486,8 @@ export namespace Prisma {
     explanation: string | null
     version: number
     isArchived: boolean
+    reviewStatus: string
+    reviewNote: string | null
     createdAt: Date
     updatedAt: Date
     _count: QuestionCountAggregateOutputType | null
@@ -47398,6 +47529,8 @@ export namespace Prisma {
     explanation?: boolean
     version?: boolean
     isArchived?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
@@ -47425,6 +47558,8 @@ export namespace Prisma {
     explanation?: boolean
     version?: boolean
     isArchived?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
@@ -47449,6 +47584,8 @@ export namespace Prisma {
     explanation?: boolean
     version?: boolean
     isArchived?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
@@ -47473,11 +47610,13 @@ export namespace Prisma {
     explanation?: boolean
     version?: boolean
     isArchived?: boolean
+    reviewStatus?: boolean
+    reviewNote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type QuestionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "createdByUserId" | "type" | "difficulty" | "subject" | "chapter" | "topic" | "learningOutcome" | "bloomLevel" | "tags" | "questionText" | "options" | "correctAnswer" | "explanation" | "version" | "isArchived" | "createdAt" | "updatedAt", ExtArgs["result"]["question"]>
+  export type QuestionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workspaceId" | "createdByUserId" | "type" | "difficulty" | "subject" | "chapter" | "topic" | "learningOutcome" | "bloomLevel" | "tags" | "questionText" | "options" | "correctAnswer" | "explanation" | "version" | "isArchived" | "reviewStatus" | "reviewNote" | "createdAt" | "updatedAt", ExtArgs["result"]["question"]>
   export type QuestionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     CreatedBy?: boolean | UserDefaultArgs<ExtArgs>
@@ -47520,6 +47659,8 @@ export namespace Prisma {
       explanation: string | null
       version: number
       isArchived: boolean
+      reviewStatus: string
+      reviewNote: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["question"]>
@@ -47966,6 +48107,8 @@ export namespace Prisma {
     readonly explanation: FieldRef<"Question", 'String'>
     readonly version: FieldRef<"Question", 'Int'>
     readonly isArchived: FieldRef<"Question", 'Boolean'>
+    readonly reviewStatus: FieldRef<"Question", 'String'>
+    readonly reviewNote: FieldRef<"Question", 'String'>
     readonly createdAt: FieldRef<"Question", 'DateTime'>
     readonly updatedAt: FieldRef<"Question", 'DateTime'>
   }
@@ -54255,6 +54398,13 @@ export namespace Prisma {
     createdBy: 'createdBy',
     principalId: 'principalId',
     status: 'status',
+    institutionType: 'institutionType',
+    address: 'address',
+    contactNumber: 'contactNumber',
+    contactEmail: 'contactEmail',
+    academicYear: 'academicYear',
+    term: 'term',
+    semester: 'semester',
     createdAt: 'createdAt'
   };
 
@@ -54296,6 +54446,8 @@ export namespace Prisma {
     shuffleQuestions: 'shuffleQuestions',
     shuffleOptions: 'shuffleOptions',
     status: 'status',
+    reviewStatus: 'reviewStatus',
+    reviewNote: 'reviewNote',
     scheduledStart: 'scheduledStart',
     scheduledEnd: 'scheduledEnd',
     createdAt: 'createdAt',
@@ -54715,6 +54867,8 @@ export namespace Prisma {
     explanation: 'explanation',
     version: 'version',
     isArchived: 'isArchived',
+    reviewStatus: 'reviewStatus',
+    reviewNote: 'reviewNote',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -55181,6 +55335,13 @@ export namespace Prisma {
     createdBy?: StringNullableFilter<"Workspace"> | string | null
     principalId?: StringNullableFilter<"Workspace"> | string | null
     status?: StringNullableFilter<"Workspace"> | string | null
+    institutionType?: StringNullableFilter<"Workspace"> | string | null
+    address?: StringNullableFilter<"Workspace"> | string | null
+    contactNumber?: StringNullableFilter<"Workspace"> | string | null
+    contactEmail?: StringNullableFilter<"Workspace"> | string | null
+    academicYear?: StringNullableFilter<"Workspace"> | string | null
+    term?: StringNullableFilter<"Workspace"> | string | null
+    semester?: StringNullableFilter<"Workspace"> | string | null
     createdAt?: DateTimeFilter<"Workspace"> | Date | string
     memberships?: WorkspaceMembershipListRelationFilter
     studentProfiles?: StudentWorkspaceProfileListRelationFilter
@@ -55202,6 +55363,13 @@ export namespace Prisma {
     createdBy?: SortOrderInput | SortOrder
     principalId?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
+    institutionType?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
+    contactNumber?: SortOrderInput | SortOrder
+    contactEmail?: SortOrderInput | SortOrder
+    academicYear?: SortOrderInput | SortOrder
+    term?: SortOrderInput | SortOrder
+    semester?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     memberships?: WorkspaceMembershipOrderByRelationAggregateInput
     studentProfiles?: StudentWorkspaceProfileOrderByRelationAggregateInput
@@ -55226,6 +55394,13 @@ export namespace Prisma {
     createdBy?: StringNullableFilter<"Workspace"> | string | null
     principalId?: StringNullableFilter<"Workspace"> | string | null
     status?: StringNullableFilter<"Workspace"> | string | null
+    institutionType?: StringNullableFilter<"Workspace"> | string | null
+    address?: StringNullableFilter<"Workspace"> | string | null
+    contactNumber?: StringNullableFilter<"Workspace"> | string | null
+    contactEmail?: StringNullableFilter<"Workspace"> | string | null
+    academicYear?: StringNullableFilter<"Workspace"> | string | null
+    term?: StringNullableFilter<"Workspace"> | string | null
+    semester?: StringNullableFilter<"Workspace"> | string | null
     createdAt?: DateTimeFilter<"Workspace"> | Date | string
     memberships?: WorkspaceMembershipListRelationFilter
     studentProfiles?: StudentWorkspaceProfileListRelationFilter
@@ -55247,6 +55422,13 @@ export namespace Prisma {
     createdBy?: SortOrderInput | SortOrder
     principalId?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
+    institutionType?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
+    contactNumber?: SortOrderInput | SortOrder
+    contactEmail?: SortOrderInput | SortOrder
+    academicYear?: SortOrderInput | SortOrder
+    term?: SortOrderInput | SortOrder
+    semester?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: WorkspaceCountOrderByAggregateInput
     _max?: WorkspaceMaxOrderByAggregateInput
@@ -55262,6 +55444,13 @@ export namespace Prisma {
     createdBy?: StringNullableWithAggregatesFilter<"Workspace"> | string | null
     principalId?: StringNullableWithAggregatesFilter<"Workspace"> | string | null
     status?: StringNullableWithAggregatesFilter<"Workspace"> | string | null
+    institutionType?: StringNullableWithAggregatesFilter<"Workspace"> | string | null
+    address?: StringNullableWithAggregatesFilter<"Workspace"> | string | null
+    contactNumber?: StringNullableWithAggregatesFilter<"Workspace"> | string | null
+    contactEmail?: StringNullableWithAggregatesFilter<"Workspace"> | string | null
+    academicYear?: StringNullableWithAggregatesFilter<"Workspace"> | string | null
+    term?: StringNullableWithAggregatesFilter<"Workspace"> | string | null
+    semester?: StringNullableWithAggregatesFilter<"Workspace"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Workspace"> | Date | string
   }
 
@@ -55395,6 +55584,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFilter<"Exam"> | boolean
     shuffleOptions?: BoolFilter<"Exam"> | boolean
     status?: StringFilter<"Exam"> | string
+    reviewStatus?: StringFilter<"Exam"> | string
+    reviewNote?: StringNullableFilter<"Exam"> | string | null
     scheduledStart?: DateTimeNullableFilter<"Exam"> | Date | string | null
     scheduledEnd?: DateTimeNullableFilter<"Exam"> | Date | string | null
     createdAt?: DateTimeFilter<"Exam"> | Date | string
@@ -55420,6 +55611,8 @@ export namespace Prisma {
     shuffleQuestions?: SortOrder
     shuffleOptions?: SortOrder
     status?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrderInput | SortOrder
     scheduledStart?: SortOrderInput | SortOrder
     scheduledEnd?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -55448,6 +55641,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFilter<"Exam"> | boolean
     shuffleOptions?: BoolFilter<"Exam"> | boolean
     status?: StringFilter<"Exam"> | string
+    reviewStatus?: StringFilter<"Exam"> | string
+    reviewNote?: StringNullableFilter<"Exam"> | string | null
     scheduledStart?: DateTimeNullableFilter<"Exam"> | Date | string | null
     scheduledEnd?: DateTimeNullableFilter<"Exam"> | Date | string | null
     createdAt?: DateTimeFilter<"Exam"> | Date | string
@@ -55473,6 +55668,8 @@ export namespace Prisma {
     shuffleQuestions?: SortOrder
     shuffleOptions?: SortOrder
     status?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrderInput | SortOrder
     scheduledStart?: SortOrderInput | SortOrder
     scheduledEnd?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -55501,6 +55698,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolWithAggregatesFilter<"Exam"> | boolean
     shuffleOptions?: BoolWithAggregatesFilter<"Exam"> | boolean
     status?: StringWithAggregatesFilter<"Exam"> | string
+    reviewStatus?: StringWithAggregatesFilter<"Exam"> | string
+    reviewNote?: StringNullableWithAggregatesFilter<"Exam"> | string | null
     scheduledStart?: DateTimeNullableWithAggregatesFilter<"Exam"> | Date | string | null
     scheduledEnd?: DateTimeNullableWithAggregatesFilter<"Exam"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Exam"> | Date | string
@@ -57653,6 +57852,8 @@ export namespace Prisma {
     explanation?: StringNullableFilter<"Question"> | string | null
     version?: IntFilter<"Question"> | number
     isArchived?: BoolFilter<"Question"> | boolean
+    reviewStatus?: StringFilter<"Question"> | string
+    reviewNote?: StringNullableFilter<"Question"> | string | null
     createdAt?: DateTimeFilter<"Question"> | Date | string
     updatedAt?: DateTimeFilter<"Question"> | Date | string
     Workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
@@ -57679,6 +57880,8 @@ export namespace Prisma {
     explanation?: SortOrderInput | SortOrder
     version?: SortOrder
     isArchived?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     Workspace?: WorkspaceOrderByWithRelationInput
@@ -57708,6 +57911,8 @@ export namespace Prisma {
     explanation?: StringNullableFilter<"Question"> | string | null
     version?: IntFilter<"Question"> | number
     isArchived?: BoolFilter<"Question"> | boolean
+    reviewStatus?: StringFilter<"Question"> | string
+    reviewNote?: StringNullableFilter<"Question"> | string | null
     createdAt?: DateTimeFilter<"Question"> | Date | string
     updatedAt?: DateTimeFilter<"Question"> | Date | string
     Workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
@@ -57734,6 +57939,8 @@ export namespace Prisma {
     explanation?: SortOrderInput | SortOrder
     version?: SortOrder
     isArchived?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: QuestionCountOrderByAggregateInput
@@ -57764,6 +57971,8 @@ export namespace Prisma {
     explanation?: StringNullableWithAggregatesFilter<"Question"> | string | null
     version?: IntWithAggregatesFilter<"Question"> | number
     isArchived?: BoolWithAggregatesFilter<"Question"> | boolean
+    reviewStatus?: StringWithAggregatesFilter<"Question"> | string
+    reviewNote?: StringNullableWithAggregatesFilter<"Question"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Question"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Question"> | Date | string
   }
@@ -58493,6 +58702,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
@@ -58514,6 +58730,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -58535,6 +58758,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
@@ -58556,6 +58786,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -58577,6 +58814,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
   }
 
@@ -58586,6 +58830,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -58595,6 +58846,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -58710,6 +58968,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -58735,6 +58995,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -58754,6 +59016,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58779,6 +59043,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58801,6 +59067,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -58818,6 +59086,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58838,6 +59108,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61025,6 +61297,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Workspace: WorkspaceCreateNestedOneWithoutQuestionsInput
@@ -61051,6 +61325,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     examQuestions?: ExamQuestionUncheckedCreateNestedManyWithoutQuestionInput
@@ -61073,6 +61349,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Workspace?: WorkspaceUpdateOneRequiredWithoutQuestionsNestedInput
@@ -61099,6 +61377,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     examQuestions?: ExamQuestionUncheckedUpdateManyWithoutQuestionNestedInput
@@ -61123,6 +61403,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -61143,6 +61425,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61165,6 +61449,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -62196,6 +62482,13 @@ export namespace Prisma {
     createdBy?: SortOrder
     principalId?: SortOrder
     status?: SortOrder
+    institutionType?: SortOrder
+    address?: SortOrder
+    contactNumber?: SortOrder
+    contactEmail?: SortOrder
+    academicYear?: SortOrder
+    term?: SortOrder
+    semester?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -62205,6 +62498,13 @@ export namespace Prisma {
     createdBy?: SortOrder
     principalId?: SortOrder
     status?: SortOrder
+    institutionType?: SortOrder
+    address?: SortOrder
+    contactNumber?: SortOrder
+    contactEmail?: SortOrder
+    academicYear?: SortOrder
+    term?: SortOrder
+    semester?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -62214,6 +62514,13 @@ export namespace Prisma {
     createdBy?: SortOrder
     principalId?: SortOrder
     status?: SortOrder
+    institutionType?: SortOrder
+    address?: SortOrder
+    contactNumber?: SortOrder
+    contactEmail?: SortOrder
+    academicYear?: SortOrder
+    term?: SortOrder
+    semester?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -62320,6 +62627,8 @@ export namespace Prisma {
     shuffleQuestions?: SortOrder
     shuffleOptions?: SortOrder
     status?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrder
     scheduledStart?: SortOrder
     scheduledEnd?: SortOrder
     createdAt?: SortOrder
@@ -62345,6 +62654,8 @@ export namespace Prisma {
     shuffleQuestions?: SortOrder
     shuffleOptions?: SortOrder
     status?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrder
     scheduledStart?: SortOrder
     scheduledEnd?: SortOrder
     createdAt?: SortOrder
@@ -62365,6 +62676,8 @@ export namespace Prisma {
     shuffleQuestions?: SortOrder
     shuffleOptions?: SortOrder
     status?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrder
     scheduledStart?: SortOrder
     scheduledEnd?: SortOrder
     createdAt?: SortOrder
@@ -63669,6 +63982,8 @@ export namespace Prisma {
     explanation?: SortOrder
     version?: SortOrder
     isArchived?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -63692,6 +64007,8 @@ export namespace Prisma {
     explanation?: SortOrder
     version?: SortOrder
     isArchived?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -63711,6 +64028,8 @@ export namespace Prisma {
     explanation?: SortOrder
     version?: SortOrder
     isArchived?: SortOrder
+    reviewStatus?: SortOrder
+    reviewNote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -68633,6 +68952,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Workspace: WorkspaceCreateNestedOneWithoutQuestionsInput
@@ -68657,6 +68978,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     examQuestions?: ExamQuestionUncheckedCreateNestedManyWithoutQuestionInput
@@ -68684,6 +69007,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -68707,6 +69032,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -69433,6 +69760,8 @@ export namespace Prisma {
     explanation?: StringNullableFilter<"Question"> | string | null
     version?: IntFilter<"Question"> | number
     isArchived?: BoolFilter<"Question"> | boolean
+    reviewStatus?: StringFilter<"Question"> | string
+    reviewNote?: StringNullableFilter<"Question"> | string | null
     createdAt?: DateTimeFilter<"Question"> | Date | string
     updatedAt?: DateTimeFilter<"Question"> | Date | string
   }
@@ -69470,6 +69799,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFilter<"Exam"> | boolean
     shuffleOptions?: BoolFilter<"Exam"> | boolean
     status?: StringFilter<"Exam"> | string
+    reviewStatus?: StringFilter<"Exam"> | string
+    reviewNote?: StringNullableFilter<"Exam"> | string | null
     scheduledStart?: DateTimeNullableFilter<"Exam"> | Date | string | null
     scheduledEnd?: DateTimeNullableFilter<"Exam"> | Date | string | null
     createdAt?: DateTimeFilter<"Exam"> | Date | string
@@ -69901,6 +70232,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     CreatedBy: UserCreateNestedOneWithoutQuestionsInput
@@ -69925,6 +70258,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     examQuestions?: ExamQuestionUncheckedCreateNestedManyWithoutQuestionInput
@@ -69952,6 +70287,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -69975,6 +70312,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -70473,6 +70812,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
     assignments?: AssessmentAssignmentCreateNestedManyWithoutWorkspaceInput
@@ -70493,6 +70839,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
     assignments?: AssessmentAssignmentUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -70622,6 +70975,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
     assignments?: AssessmentAssignmentUpdateManyWithoutWorkspaceNestedInput
@@ -70642,6 +71002,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
     assignments?: AssessmentAssignmentUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -70749,6 +71116,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
     assignments?: AssessmentAssignmentCreateNestedManyWithoutWorkspaceInput
@@ -70769,6 +71143,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
     assignments?: AssessmentAssignmentUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -70898,6 +71279,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
     assignments?: AssessmentAssignmentUpdateManyWithoutWorkspaceNestedInput
@@ -70918,6 +71306,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
     assignments?: AssessmentAssignmentUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -70938,6 +71333,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
@@ -70958,6 +71360,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -71180,6 +71589,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
@@ -71200,6 +71616,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -71401,6 +71824,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -71425,6 +71850,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -71453,6 +71880,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Workspace: WorkspaceCreateNestedOneWithoutQuestionsInput
@@ -71478,6 +71907,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     examAnswers?: ExamAnswerUncheckedCreateNestedManyWithoutQuestionInput
@@ -71510,6 +71941,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -71534,6 +71967,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -71568,6 +72003,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Workspace?: WorkspaceUpdateOneRequiredWithoutQuestionsNestedInput
@@ -71593,6 +72030,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     examAnswers?: ExamAnswerUncheckedUpdateManyWithoutQuestionNestedInput
@@ -71609,6 +72048,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -71633,6 +72074,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -71784,6 +72227,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -71808,6 +72253,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -71989,6 +72436,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Workspace: WorkspaceCreateNestedOneWithoutQuestionsInput
@@ -72014,6 +72463,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     examQuestions?: ExamQuestionUncheckedCreateNestedManyWithoutQuestionInput
@@ -72092,6 +72543,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Workspace?: WorkspaceUpdateOneRequiredWithoutQuestionsNestedInput
@@ -72117,6 +72570,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     examQuestions?: ExamQuestionUncheckedUpdateManyWithoutQuestionNestedInput
@@ -72205,6 +72660,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
@@ -72225,6 +72687,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -72334,6 +72803,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
@@ -72354,6 +72830,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -73162,6 +73645,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
@@ -73182,6 +73672,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -73266,6 +73763,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
@@ -73286,6 +73790,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -73794,6 +74305,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
@@ -73814,6 +74332,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -73850,6 +74375,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
@@ -73870,6 +74402,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -74250,6 +74789,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
@@ -74270,6 +74816,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -74489,6 +75042,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -74512,6 +75067,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -74585,6 +75142,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
@@ -74605,6 +75169,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -74764,6 +75335,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
@@ -74784,6 +75362,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -74888,6 +75473,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
@@ -74908,6 +75500,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -74960,6 +75559,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
@@ -74980,6 +75586,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -75097,6 +75710,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
@@ -75117,6 +75737,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -78291,6 +78918,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
@@ -78311,6 +78945,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -78490,6 +79131,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
@@ -78510,6 +79158,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -78655,6 +79310,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
@@ -78675,6 +79337,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -78831,6 +79500,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
@@ -78851,6 +79527,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -79363,6 +80046,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileCreateNestedManyWithoutWorkspaceInput
@@ -79383,6 +80073,13 @@ export namespace Prisma {
     createdBy?: string | null
     principalId?: string | null
     status?: string | null
+    institutionType?: string | null
+    address?: string | null
+    contactNumber?: string | null
+    contactEmail?: string | null
+    academicYear?: string | null
+    term?: string | null
+    semester?: string | null
     createdAt?: Date | string
     memberships?: WorkspaceMembershipUncheckedCreateNestedManyWithoutWorkspaceInput
     studentProfiles?: StudentWorkspaceProfileUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -79564,6 +80261,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUpdateManyWithoutWorkspaceNestedInput
@@ -79584,6 +80288,13 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     principalId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionType?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    academicYear?: NullableStringFieldUpdateOperationsInput | string | null
+    term?: NullableStringFieldUpdateOperationsInput | string | null
+    semester?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: WorkspaceMembershipUncheckedUpdateManyWithoutWorkspaceNestedInput
     studentProfiles?: StudentWorkspaceProfileUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -79961,6 +80672,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -79978,6 +80691,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -80634,6 +81349,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Workspace?: WorkspaceUpdateOneRequiredWithoutQuestionsNestedInput
@@ -80658,6 +81375,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     examQuestions?: ExamQuestionUncheckedUpdateManyWithoutQuestionNestedInput
@@ -80681,6 +81400,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -80696,6 +81417,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -80719,6 +81442,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -80740,6 +81465,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -81039,6 +81766,8 @@ export namespace Prisma {
     explanation?: string | null
     version?: number
     isArchived?: boolean
+    reviewStatus?: string
+    reviewNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -81056,6 +81785,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -81311,6 +82042,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     CreatedBy?: UserUpdateOneRequiredWithoutQuestionsNestedInput
@@ -81335,6 +82068,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     examQuestions?: ExamQuestionUncheckedUpdateManyWithoutQuestionNestedInput
@@ -81358,6 +82093,8 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     version?: IntFieldUpdateOperationsInput | number
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -81373,6 +82110,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -81396,6 +82135,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -81417,6 +82158,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82044,6 +82787,8 @@ export namespace Prisma {
     shuffleQuestions?: boolean
     shuffleOptions?: boolean
     status?: string
+    reviewStatus?: string
+    reviewNote?: string | null
     scheduledStart?: Date | string | null
     scheduledEnd?: Date | string | null
     createdAt?: Date | string
@@ -82249,6 +82994,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82272,6 +83019,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82293,6 +83042,8 @@ export namespace Prisma {
     shuffleQuestions?: BoolFieldUpdateOperationsInput | boolean
     shuffleOptions?: BoolFieldUpdateOperationsInput | boolean
     status?: StringFieldUpdateOperationsInput | string
+    reviewStatus?: StringFieldUpdateOperationsInput | string
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scheduledEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

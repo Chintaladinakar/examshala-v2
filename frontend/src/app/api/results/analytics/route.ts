@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { requireSchoolAuth } from '@/lib/school/authz';
+import { mapAuthzError } from '@/lib/school/http';
 
 export async function GET() {
   try {
-    const results = await prisma.result.findMany({});
-    
+    const ctx = await requireSchoolAuth();
+    const results = await prisma.result.findMany({ where: { studentId: ctx.userId } });
+
     if (results.length === 0) {
       // Mocked fallback analytics
       return NextResponse.json({
@@ -37,6 +40,9 @@ export async function GET() {
       }
     });
   } catch (error: any) {
+    if (['UNAUTHORIZED', 'FORBIDDEN', 'NO_WORKSPACE', 'WORKSPACE_SUSPENDED'].includes(error?.message)) {
+      return mapAuthzError(error);
+    }
     console.error('[API_RESULTS_ANALYTICS_ERROR]', error);
     return NextResponse.json(
       {

@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth.middleware';
 import prisma from '../lib/prisma';
+import { createNotification } from '../services/notification.service';
 
 const QUESTION_TYPES = ['mcq', 'true_false', 'short_answer', 'long_answer', 'coding', 'case_study', 'numerical', 'match', 'ordering'];
 const DIFFICULTIES = ['easy', 'medium', 'hard', 'expert'];
@@ -30,7 +31,7 @@ export const getQuestions = async (req: AuthRequest, res: Response): Promise<voi
     const page = parseInt(req.query.page as string) || 1;
     const limit = Math.min(parseInt(req.query.limit as string) || 20, 100);
     const skip = (page - 1) * limit;
-    const { subject, type, difficulty, search, tag } = req.query;
+    const { subject, type, difficulty, search, tag, reviewStatus } = req.query;
 
     const where: any = { workspaceId: user.workspaceId, isArchived: false };
     if (subject) where.subject = { equals: subject as string, mode: 'insensitive' };
@@ -38,6 +39,7 @@ export const getQuestions = async (req: AuthRequest, res: Response): Promise<voi
     if (difficulty) where.difficulty = difficulty as string;
     if (tag) where.tags = { has: tag as string };
     if (search) where.questionText = { contains: search as string, mode: 'insensitive' };
+    if (reviewStatus) where.reviewStatus = reviewStatus as string;
 
     const [questions, total] = await Promise.all([
       prisma.question.findMany({
@@ -89,6 +91,8 @@ export const createQuestion = async (req: AuthRequest, res: Response): Promise<v
       select: { id: true },
     });
 
+    const isPrincipalCreator = user.role.toLowerCase() === 'principal';
+
     const question = await prisma.question.create({
       data: {
         workspaceId: user.workspaceId,
@@ -105,6 +109,7 @@ export const createQuestion = async (req: AuthRequest, res: Response): Promise<v
         options: options ?? undefined,
         correctAnswer: correctAnswer ?? undefined,
         explanation: explanation || undefined,
+        reviewStatus: isPrincipalCreator ? 'approved' : 'pending',
       },
     });
 
@@ -258,6 +263,53 @@ export const bulkImportQuestions = async (req: AuthRequest, res: Response): Prom
     }
 
     res.status(201).json({ success: true, data: { importedCount: valid.length, rejected } });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const reviewQuestion = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const user = await loadRequestingUser(req);
+    if (!user || !user.workspaceId) {
+      res.status(400).json({ success: false, code: 'MISSING_WORKSPACE', message: 'Workspace mapping not found.' });
+      return;
+    }
+    if (user.role.toLowerCase() !== 'principal') {
+      res.status(403).json({ success: false, message: 'Only principals can review questions.' });
+      return;
+    }
+
+    const { id } = req.params;
+    const { action, reviewNote } = req.body;
+    if (!['approve', 'reject'].includes(action)) {
+      res.status(400).json({ success: false, message: "action must be 'approve' or 'reject'." });
+      return;
+    }
+
+    const question = await prisma.question.findUnique({ where: { id: id as string } });
+    if (!question || question.workspaceId !== user.workspaceId) {
+      res.status(404).json({ success: false, message: 'Question not found.' });
+      return;
+    }
+
+    const updated = await prisma.question.update({
+      where: { id: id as string },
+      data: { reviewStatus: action === 'approve' ? 'approved' : 'rejected', reviewNote: reviewNote || null },
+    });
+
+    await createNotification({
+      userId: question.createdByUserId,
+      workspaceId: user.workspaceId,
+      type: action === 'approve' ? 'question_approved' : 'question_rejected',
+      title: action === 'approve' ? 'Question approved' : 'Question needs changes',
+      message: action === 'approve'
+        ? 'Your question bank submission was approved.'
+        : `Your question bank submission was rejected.${reviewNote ? ` Note: ${reviewNote}` : ''}`,
+      actionUrl: '/question-bank',
+    });
+
+    res.json({ success: true, data: updated });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
   }

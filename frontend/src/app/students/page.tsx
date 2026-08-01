@@ -44,6 +44,7 @@ export default function StudentsPage() {
   const [formUniqueId, setFormUniqueId] = useState('');
   const [formClassId, setFormClassId] = useState('');
   const [createdPassword, setCreatedPassword] = useState<string | null>(null);
+  const [inviteEmailSent, setInviteEmailSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   const filtered = useMemo(() => {
@@ -95,6 +96,8 @@ export default function StudentsPage() {
 
       if (addMode === 'create' && res.generatedPassword) {
         setCreatedPassword(res.generatedPassword);
+      } else if (addMode === 'create' && res.credentialDelivery === 'email') {
+        setInviteEmailSent(true);
       } else {
         setAddOpen(false);
         setFormName('');
@@ -234,7 +237,34 @@ export default function StudentsPage() {
 
         {addOpen && (
           <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-2xs flex items-center justify-center p-4 z-50">
-            {createdPassword ? (
+            {inviteEmailSent ? (
+              <div className="bg-white w-full max-w-md rounded-2xl border shadow-xl p-6 space-y-4 text-center animate-fade-in">
+                <div className="w-12 h-12 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-xl">
+                  📧
+                </div>
+                <div className="space-y-1">
+                  <h2 className="text-base font-black text-slate-800">Student Account Created!</h2>
+                  <p className="text-[10px] text-slate-400 font-bold uppercase">Invitation email sent</p>
+                </div>
+                <p className="text-xs text-slate-600 font-semibold">
+                  A sign-in link and temporary password were emailed to <span className="font-bold text-slate-800">{formEmail}</span>.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInviteEmailSent(false);
+                    setAddOpen(false);
+                    setFormName('');
+                    setFormEmail('');
+                    setFormClassId('');
+                    setFormUniqueId('');
+                  }}
+                  className="w-full px-4 py-2 bg-teal-950 hover:bg-teal-900 text-white rounded-xl font-bold text-xs cursor-pointer transition-colors"
+                >
+                  Done
+                </button>
+              </div>
+            ) : createdPassword ? (
               <div className="bg-white w-full max-w-md rounded-2xl border shadow-xl p-6 space-y-4 text-center animate-fade-in">
                 <div className="w-12 h-12 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-xl">
                   🎉

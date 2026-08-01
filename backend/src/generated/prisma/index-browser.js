@@ -193,6 +193,8 @@ exports.Prisma.ExamScalarFieldEnum = {
   shuffleQuestions: 'shuffleQuestions',
   shuffleOptions: 'shuffleOptions',
   status: 'status',
+  reviewStatus: 'reviewStatus',
+  reviewNote: 'reviewNote',
   scheduledStart: 'scheduledStart',
   scheduledEnd: 'scheduledEnd',
   createdAt: 'createdAt',
@@ -329,6 +331,18 @@ exports.Prisma.NotificationScalarFieldEnum = {
   message: 'message',
   isRead: 'isRead',
   actionUrl: 'actionUrl',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CalendarEventScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  title: 'title',
+  description: 'description',
+  eventType: 'eventType',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  createdByUserId: 'createdByUserId',
   createdAt: 'createdAt'
 };
 
@@ -519,6 +533,8 @@ exports.Prisma.QuestionScalarFieldEnum = {
   explanation: 'explanation',
   version: 'version',
   isArchived: 'isArchived',
+  reviewStatus: 'reviewStatus',
+  reviewNote: 'reviewNote',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -548,6 +564,21 @@ exports.Prisma.SchoolLogScalarFieldEnum = {
   role: 'role',
   entityId: 'entityId',
   timestamp: 'timestamp'
+};
+
+exports.Prisma.LeaveRequestScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  requesterId: 'requesterId',
+  requesterRole: 'requesterRole',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  reason: 'reason',
+  status: 'status',
+  reviewedByUserId: 'reviewedByUserId',
+  reviewNote: 'reviewNote',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.PlatformSettingsScalarFieldEnum = {
@@ -635,6 +666,7 @@ exports.Prisma.ModelName = {
   ConversationParticipant: 'ConversationParticipant',
   Message: 'Message',
   Notification: 'Notification',
+  CalendarEvent: 'CalendarEvent',
   ParentStudentLink: 'ParentStudentLink',
   AuditLog: 'AuditLog',
   Invite: 'Invite',
@@ -655,6 +687,7 @@ exports.Prisma.ModelName = {
   Question: 'Question',
   Material: 'Material',
   SchoolLog: 'SchoolLog',
+  LeaveRequest: 'LeaveRequest',
   PlatformSettings: 'PlatformSettings',
   Result: 'Result',
   TimetableSlot: 'TimetableSlot'

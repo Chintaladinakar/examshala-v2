@@ -15,10 +15,21 @@ export default async function ResultsPage() {
 
   const decoded = decodeJwtPayload(token);
   const role = typeof decoded?.role === 'string' ? decoded.role.toLowerCase() : 'student';
+  const userId = typeof decoded?.userId === 'string' ? decoded.userId : null;
+
+  if (!userId) {
+    redirect('/signin');
+  }
 
   let resultsData: any[] = [];
   try {
+    const caller = await prisma.user.findUnique({ where: { id: userId as string }, select: { workspaceId: true } });
+    const isStudent = role === 'student';
+
     const dbResults = await prisma.result.findMany({
+      where: isStudent
+        ? { studentId: userId as string }
+        : { student: { workspaceId: caller?.workspaceId ?? '__none__' } },
       include: {
         student: {
           select: {

@@ -26,7 +26,8 @@ import {
   Menu,
   X,
   MessageSquare,
-  Clock
+  Clock,
+  CalendarOff
 } from 'lucide-react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -115,8 +116,10 @@ function buildLinks(role: string, mode: string): NavGroup[] {
   const assessmentLinks: NavLink[] = [];
   if (inPrincipalMode) {
     assessmentLinks.push(
+      { href: '/principal/exams', label: 'Exams', icon: FileText },
+      { href: '/principal/question-bank', label: 'Question Bank', icon: ClipboardList },
       { href: '/principal/ongoing-assessments', label: 'Ongoing Assessments', icon: ClipboardList },
-      { href: '/results', label: 'Results', icon: Trophy }
+      { href: '/principal/results', label: 'Results', icon: Trophy }
     );
   } else {
     assessmentLinks.push(
@@ -156,6 +159,7 @@ function buildLinks(role: string, mode: string): NavGroup[] {
     );
   }
   communicationLinks.push(
+    { href: inPrincipalMode ? '/principal/leave' : '/leave', label: 'Leave', icon: CalendarOff },
     { href: '/messages', label: 'Messages', icon: MessageSquare },
     { href: '/calendar', label: 'Calendar', icon: Calendar }
   );

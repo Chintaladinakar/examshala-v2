@@ -10,8 +10,10 @@ router.use(protect);
 // Teacher authoring
 router.post('/', requirePermission('exam.manage'), controller.createExam);
 router.get('/', requirePermission('exam.view'), controller.getExams);
+router.get('/institution-summary', requirePermission('exam.view'), controller.getInstitutionExamSummary);
 router.get('/:id', requirePermission('exam.view'), controller.getExamDetails);
 router.patch('/:id/status', requirePermission('exam.manage'), controller.updateExamStatus);
+router.patch('/:id/review', requirePermission('exam.approve'), controller.reviewExam);
 router.delete('/:id', requirePermission('exam.manage'), controller.deleteExam);
 router.get('/:id/results', requirePermission('exam.view'), controller.getExamResults);
 

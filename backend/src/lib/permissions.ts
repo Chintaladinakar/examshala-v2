@@ -9,6 +9,8 @@ export type Permission =
   | 'exam.view'
   | 'exam.attempt'
   | 'exam.manage'
+  | 'exam.approve'
+  | 'question.approve'
   | 'attendance.view'
   | 'attendance.mark'
   | 'result.view'
@@ -17,6 +19,9 @@ export type Permission =
   | 'announcement.manage'
   | 'timetable.view'
   | 'timetable.manage'
+  | 'leave.request'
+  | 'leave.manage'
+  | 'calendar.manage'
   | 'message.send';
 
 const STUDENT_PERMISSIONS: Permission[] = [
@@ -30,6 +35,7 @@ const STUDENT_PERMISSIONS: Permission[] = [
   'result.view',
   'announcement.view',
   'timetable.view',
+  'leave.request',
   'message.send',
 ];
 
@@ -49,12 +55,17 @@ const TEACHER_PERMISSIONS: Permission[] = [
   'announcement.view',
   'timetable.view',
   'timetable.manage',
+  'leave.request',
   'message.send',
 ];
 
 const PRINCIPAL_PERMISSIONS: Permission[] = [
   ...TEACHER_PERMISSIONS,
   'announcement.manage',
+  'exam.approve',
+  'question.approve',
+  'leave.manage',
+  'calendar.manage',
 ];
 
 const ROLE_PERMISSIONS: Record<string, Permission[]> = {
